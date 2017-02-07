@@ -6,10 +6,37 @@ page-login {
             right: 40px;	
 			bottom: 34px;
 		}
+        .position-top {
+			position: fixed;
+            left: 40px;
+            right: 40px;	
+			top: 54px;
+		}
 
         button {
-            margin-top: 12px !important;
+            margin-top: 10px !important;
             text-transform: none !important;
         }
 	}
+
+    p {
+        font-size: 0.8em;
+        color: #d2d2d2;
+    }
+
+    ion-label {
+        margin-left: 5px;
+    }
+
+    ion-input {
+        padding: 5px;
+    }
+
+    .invalid {
+        border-bottom: 1px solid #FF6153;
+    }
+
+    .error-message .item-inner {
+        border-bottom: 0 !important;
+    }
 }

@@ -10,6 +10,8 @@ import { ChatChannelPage } from '../pages/chat-channel/chat-channel';
 import { ChatMessagePage } from '../pages/chat-message/chat-message';
 import { LoginPage } from '../pages/login/login';
 import { AboutPage } from '../pages/about/about';
+import { ResetpasswordPage } from '../pages/resetpassword/resetpassword';
+import { SignupPage } from '../pages/signup/signup';
 
 import { AuthService } from '../providers/auth.service';
 import { ChatsService } from '../providers/chats.service';
@@ -17,11 +19,11 @@ import { ChatsService } from '../providers/chats.service';
 import { AngularFireModule } from 'angularfire2';
 
 export const firebaseConfig = {
-  apiKey: "FIREBASE_API_KEY",
-  authDomain: "FIREBASE_AUTH_DOMAIN",
-  databaseURL: "FIREBASE_DATABASE_URL",
-  storageBucket: "FIREBASE_STORAGE_BUCKET",
-  messagingSenderId: "FIREBASE_MESSAGING_SENDER_ID"
+    apiKey: "AIzaSyBQHf2p8RLOuw7i_DHdsfc8HHCFfwcIPEQ",
+    authDomain: "metbazaardev.firebaseapp.com",
+    databaseURL: "https://metbazaardev.firebaseio.com",
+    storageBucket: "metbazaardev.appspot.com",
+    messagingSenderId: "79899062384"
 };
 
 @NgModule({
@@ -34,7 +36,10 @@ export const firebaseConfig = {
     ChatChannelPage,
     ChatMessagePage,
     LoginPage,
-    AboutPage
+    AboutPage,
+    ResetpasswordPage,
+    SignupPage
+
   ],
   imports: [
     IonicModule.forRoot(MyApp),
@@ -50,7 +55,9 @@ export const firebaseConfig = {
     ChatChannelPage,
     ChatMessagePage,
     LoginPage,
-    AboutPage
+    AboutPage,
+    ResetpasswordPage,
+    SignupPage
   ],
   providers: [AuthService, ChatsService, {provide: ErrorHandler, useClass: IonicErrorHandler}]
 })

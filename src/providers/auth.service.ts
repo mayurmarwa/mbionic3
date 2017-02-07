@@ -23,6 +23,7 @@ export class AuthService {
   }
 
   login(mode: AuthMode) {
+     
     if (mode == AuthMode.GooglePlus)
       return this.signInWithGoogle();
     
@@ -31,6 +32,12 @@ export class AuthService {
 
     if (mode == AuthMode.Github)
       return this.signInWithGithub();
+  }
+
+  loginUser(newEmail: string, newPassword: string): any {
+      console.log("loginUser");
+      return this.af.auth.login({ email: newEmail, password: newPassword },
+          { provider: AuthProviders.Password, method: AuthMethods.Password });
   }
 
   /**
@@ -42,7 +49,7 @@ export class AuthService {
     
     return GooglePlus.login({
         'scopes': 'email profile',
-        'webClientId': 'YOUR_WEB_CLIENT_ID'
+        'webClientId': '468979984175-0v2kjc7nbh6j36286v61r54cingqa248.apps.googleusercontent.com'
       }).then( res => {
         return this.signInWithCredential(firebase.auth.GoogleAuthProvider.credential(res.idToken));
       }, (error) => Promise.reject(error));
@@ -92,6 +99,13 @@ export class AuthService {
     this.af.auth.logout();
   }
 
+  resetPassword(email: string): any {
+      return firebase.auth().sendPasswordResetEmail(email);
+  }
+  
+  signupUser(newEmail: string, newPassword: string): any {
+      return this.af.auth.createUser({ email: newEmail, password: newPassword });
+  }
   get currentUser(): Observable<any> {
     return this.af.auth.first().map(user => user.auth);
   };
