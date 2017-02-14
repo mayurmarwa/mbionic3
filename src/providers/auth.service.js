@@ -83,10 +83,22 @@ export var AuthService = (function () {
         return this.af.database.object('users/' + data.uid).set({
             uid: data.auth.uid,
             email: data.auth.email,
-            displayName: data.auth.displayName,
+            name: data.auth.displayName,
             photoURL: data.auth.photoURL,
             createdAt: firebase.database['ServerValue']['TIMESTAMP'],
             providerData: data.auth.providerData[0]
+        });
+    };
+    AuthService.prototype.createAccount2 = function (authdata, userdata) {
+        console.log(authdata.auth.uid, userdata.value.email, userdata.value.name);
+        return this.af.database.object('users/' + authdata.uid).set({
+            name: userdata.value.name,
+            mobile: userdata.value.mobile,
+            companyname: userdata.value.companyname,
+            email: userdata.value.email,
+            uid: authdata.auth.uid,
+            //photoURL: data.auth.photoURL,
+            createdAt: firebase.database['ServerValue']['TIMESTAMP'],
         });
     };
     AuthService.prototype.logout = function () {

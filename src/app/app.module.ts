@@ -2,6 +2,19 @@ import { NgModule, ErrorHandler } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 
+import { MarketPage } from '../pages/market/market';
+import { PricesPage } from '../pages/prices/prices';
+import { EnquiriesPage } from '../pages/enquiries/enquiries';
+import { NotificationsPage } from '../pages/notifications/notifications';
+import { MyProfilePage } from '../pages/my-profile/my-profile';
+import { MyProductsPage } from '../pages/my-products/my-products';
+import { SelectCategoryPage } from '../pages/select-category/select-category';
+import { AddProductPage } from '../pages/add-product/add-product';
+import { PostBuyRequirementsPage } from '../pages/post-buy-requirements/post-buy-requirements';
+import { BrowseRequirementsPage } from '../pages/browse-requirements/browse-requirements';
+import { DirectoryPage } from '../pages/directory/directory';
+import { SpeedDialPage } from '../pages/speed-dial/speed-dial';
+import { SettingsPage } from '../pages/settings/settings';
 import { TabsPage } from '../pages/tabs/tabs';
 import { TabContactsPage } from '../pages/tab-contacts/tab-contacts';
 import { TabProfilePage } from '../pages/tab-profile/tab-profile';
@@ -12,7 +25,9 @@ import { LoginPage } from '../pages/login/login';
 import { AboutPage } from '../pages/about/about';
 import { ResetpasswordPage } from '../pages/resetpassword/resetpassword';
 import { SignupPage } from '../pages/signup/signup';
+import { CreateProfilePage } from '../pages/create-profile/create-profile';
 
+import { ProfileData } from '../providers/profile-data';
 import { AuthService } from '../providers/auth.service';
 import { ChatsService } from '../providers/chats.service';
 
@@ -30,6 +45,19 @@ export const firebaseConfig = {
   declarations: [
     MyApp,
     TabsPage,
+    MarketPage,
+    PricesPage,
+    NotificationsPage,
+    EnquiriesPage,
+    MyProfilePage,
+    MyProductsPage,
+    SelectCategoryPage,
+    AddProductPage,
+    PostBuyRequirementsPage,
+    BrowseRequirementsPage,
+    DirectoryPage,
+    SpeedDialPage,
+    SettingsPage,
     TabContactsPage,
     TabProfilePage,
     TabChatsPage,
@@ -38,7 +66,8 @@ export const firebaseConfig = {
     LoginPage,
     AboutPage,
     ResetpasswordPage,
-    SignupPage
+    SignupPage,
+    CreateProfilePage
 
   ],
   imports: [
@@ -49,6 +78,19 @@ export const firebaseConfig = {
   entryComponents: [
     MyApp,
     TabsPage,
+    MarketPage,
+    PricesPage,
+    EnquiriesPage,
+    NotificationsPage,
+    MyProfilePage,
+    MyProductsPage,
+    SelectCategoryPage,
+    AddProductPage,
+    PostBuyRequirementsPage,
+    BrowseRequirementsPage,
+    DirectoryPage,
+    SpeedDialPage,
+    SettingsPage,
     TabContactsPage,
     TabProfilePage,
     TabChatsPage,
@@ -57,8 +99,9 @@ export const firebaseConfig = {
     LoginPage,
     AboutPage,
     ResetpasswordPage,
-    SignupPage
+    SignupPage,
+    CreateProfilePage
   ],
-  providers: [AuthService, ChatsService, {provide: ErrorHandler, useClass: IonicErrorHandler}]
+  providers: [AuthService, ChatsService, ProfileData, {provide: ErrorHandler, useClass: IonicErrorHandler}]
 })
 export class AppModule {}

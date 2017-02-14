@@ -31,10 +31,14 @@ export class SignupPage {
         public alertCtrl: AlertController, private app: App, private zone: NgZone) {
 
         this.signupForm = formBuilder.group({
+            name: ['', Validators.required],
+            mobile: ['', Validators.compose([Validators.minLength(10),Validators.required,Validators.maxLength(10)])],
+            companyname: ['', Validators.required],
             email: ['', Validators.compose([Validators.required,
             EmailValidator.isValid])],
             password: ['', Validators.compose([Validators.minLength(6),
-            Validators.required])]
+                Validators.required])],
+            
         });
     }
 
@@ -60,6 +64,9 @@ export class SignupPage {
         } else {
             this.authService.signupUser(this.signupForm.value.email,
                 this.signupForm.value.password).then(authData => {
+                    console.log(authData);
+                    console.log(this.signupForm.value);
+                    this.authService.createAccount2(authData,this.signupForm);
                     this.zone.run(() => {
                         this.app.getRootNav().setRoot(TabsPage);
                     });

@@ -5,6 +5,14 @@ import { StatusBar, Splashscreen } from 'ionic-native';
 import { TabsPage } from '../pages/tabs/tabs';
 import { AboutPage } from '../pages/about/about';
 import { LoginPage } from '../pages/login/login';
+import { TabProfilePage } from '../pages/tab-profile/tab-profile';
+import { MyProfilePage } from '../pages/my-profile/my-profile';
+import { MyProductsPage } from '../pages/my-products/my-products';
+import { PostBuyRequirementsPage } from '../pages/post-buy-requirements/post-buy-requirements';
+import { BrowseRequirementsPage } from '../pages/browse-requirements/browse-requirements';
+import { DirectoryPage } from '../pages/directory/directory';
+import { SpeedDialPage } from '../pages/speed-dial/speed-dial';
+import { SettingsPage } from '../pages/settings/settings';
 
 import { AuthService } from '../providers/auth.service';
 
@@ -46,7 +54,15 @@ export class MyApp {
     ];
 
     this.pushPages = [
-      { title: 'About', component: AboutPage },
+        { title: 'Profile', component: TabProfilePage },
+        { title: 'Post Buy Requirement', component: PostBuyRequirementsPage },
+        { title: 'Browse Requirements', component: BrowseRequirementsPage },
+        { title: 'My Products', component: MyProductsPage },
+        { title: 'Directory', component: DirectoryPage },
+        { title: 'Speed Dial', component: SpeedDialPage },
+        { title: 'Settings', component: SettingsPage },
+        { title: 'Share App', component: TabProfilePage },
+        { title: 'About', component: AboutPage },
     ];
 
   }

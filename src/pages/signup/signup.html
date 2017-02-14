@@ -11,6 +11,27 @@
     <form [formGroup]="signupForm" (submit)="signupUser()" novalidate>
 
         <ion-item>
+            <ion-label stacked>Name</ion-label>
+            <ion-input #name formControlName="name" type="text" (change)="elementChanged(name)"
+                       placeholder="Your Name">
+            </ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label stacked>Mobile  No.</ion-label>
+            <ion-input #mobile formControlName="mobile" type="number" (change)="elementChanged(mobile)"
+                       placeholder="10 Digit Number">
+            </ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label stacked>Company Name</ion-label>
+            <ion-input #companyname formControlName="companyname" type="text" (change)="elementChanged(companyname)"
+                       placeholder="Name of Business">
+            </ion-input>
+        </ion-item>
+
+        <ion-item>
             <ion-label stacked>Email</ion-label>
             <ion-input #email formControlName="email" type="email" (change)="elementChanged(email)"
                        placeholder="Your email address"
@@ -23,7 +44,7 @@
         <ion-item>
             <ion-label stacked>Password</ion-label>
             <ion-input #password formControlName="password" type="password" (change)="elementChanged(password)"
-                       placeholder="Your password"
+                       placeholder="Enter a Password"
                        [class.invalid]="!signupForm.controls.password.valid && (passwordChanged || submitAttempt)"></ion-input>
         </ion-item>
         <ion-item class="error-message" *ngIf="!signupForm.controls.password.valid  && (passwordChanged || submitAttempt)">

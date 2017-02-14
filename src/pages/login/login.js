@@ -12,6 +12,7 @@ import { NavController, LoadingController, ToastController, AlertController } fr
 import { TabsPage } from '../tabs/tabs';
 import { ResetpasswordPage } from '../resetpassword/resetpassword';
 import { SignupPage } from '../signup/signup';
+import { CreateProfilePage } from '../create-profile/create-profile';
 import { FormBuilder, Validators } from '@angular/forms';
 import { AuthService, AuthMode } from '../../providers/auth.service';
 import { EmailValidator } from '../../validators/email';
@@ -103,11 +104,12 @@ export var LoginPage = (function () {
             _this.authService.getFullProfile(data.uid)
                 .first()
                 .subscribe(function (user) {
-                if (user.$value != null) {
+                if (!(user.$value !== null)) {
+                    console.log("Null User");
                     _this.authService.createAccount(data)
                         .then(function (_) {
                         loading.dismiss();
-                        _this.navCtrl.setRoot(TabsPage);
+                        _this.navCtrl.setRoot(CreateProfilePage, { userid: data.uid });
                     }, function (error) { return _this.showMessage(error.message || 'Unknown error'); });
                 }
                 else {

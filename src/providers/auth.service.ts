@@ -16,7 +16,7 @@ export enum AuthMode {
 
 @Injectable()
 export class AuthService {
-  constructor(public af: AngularFire, private platform: Platform) {}
+    constructor(public af: AngularFire, private platform: Platform) {}
 
   getAuth(): Observable<FirebaseAuthState> {
     return this.af.auth;
@@ -88,11 +88,27 @@ export class AuthService {
         {
             uid         : data.auth.uid,
             email       : data.auth.email,
-            displayName : data.auth.displayName,
+            name        : data.auth.displayName,
             photoURL    : data.auth.photoURL,
             createdAt   : firebase.database['ServerValue']['TIMESTAMP'],
             providerData: data.auth.providerData[0]
         });
+  }
+
+  createAccount2(authdata, userdata): firebase.Promise_Instance<void> {
+      console.log(authdata.auth.uid, userdata.value.email, userdata.value.name);
+      return this.af.database.object('users/' + authdata.uid).set(
+          {
+              name: userdata.value.name,
+              mobile: userdata.value.mobile,
+              companyname: userdata.value.companyname,
+              email: userdata.value.email,
+              uid: authdata.auth.uid,
+              //photoURL: data.auth.photoURL,
+              createdAt: firebase.database['ServerValue']['TIMESTAMP'],
+              //providerData: authdata.auth.provider
+             
+          });
   }
 
   logout() {

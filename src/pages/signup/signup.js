@@ -35,10 +35,13 @@ export var SignupPage = (function () {
         this.passwordChanged = false;
         this.submitAttempt = false;
         this.signupForm = formBuilder.group({
+            name: ['', Validators.required],
+            mobile: ['', Validators.compose([Validators.minLength(10), Validators.required, Validators.maxLength(10)])],
+            companyname: ['', Validators.required],
             email: ['', Validators.compose([Validators.required,
                     EmailValidator.isValid])],
             password: ['', Validators.compose([Validators.minLength(6),
-                    Validators.required])]
+                    Validators.required])],
         });
     }
     /**
@@ -62,6 +65,9 @@ export var SignupPage = (function () {
         }
         else {
             this.authService.signupUser(this.signupForm.value.email, this.signupForm.value.password).then(function (authData) {
+                console.log(authData);
+                console.log(_this.signupForm.value);
+                _this.authService.createAccount2(authData, _this.signupForm);
                 _this.zone.run(function () {
                     _this.app.getRootNav().setRoot(TabsPage);
                 });

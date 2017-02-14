@@ -4,6 +4,7 @@ import { NavController, LoadingController, ToastController, AlertController } fr
 import { TabsPage } from '../tabs/tabs';
 import { ResetpasswordPage } from '../resetpassword/resetpassword';
 import { SignupPage } from '../signup/signup';
+import { CreateProfilePage } from '../create-profile/create-profile';
 import { FormBuilder, Validators } from '@angular/forms'
 import { AuthService, AuthMode } from '../../providers/auth.service';
 import { EmailValidator } from '../../validators/email';
@@ -116,11 +117,12 @@ export class LoginPage {
         this.authService.getFullProfile(data.uid)
           .first()
           .subscribe((user) => {
-            if (user.$value != null) {
+              if (!(user.$value !== null)) {
+                  console.log("Null User");
               this.authService.createAccount(data)
                 .then( _=> {
                   loading.dismiss();
-                  this.navCtrl.setRoot(TabsPage);
+                  this.navCtrl.setRoot(CreateProfilePage, { userid: data.uid });
                 }, (error)=> this.showMessage(error.message || 'Unknown error'));
             } else {
               loading.dismiss();

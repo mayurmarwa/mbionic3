@@ -20,6 +20,8 @@ import { LoginPage } from '../pages/login/login';
 import { AboutPage } from '../pages/about/about';
 import { ResetpasswordPage } from '../pages/resetpassword/resetpassword';
 import { SignupPage } from '../pages/signup/signup';
+import { CreateProfilePage } from '../pages/create-profile/create-profile';
+import { ProfileData } from '../providers/profile-data';
 import { AuthService } from '../providers/auth.service';
 import { ChatsService } from '../providers/chats.service';
 import { AngularFireModule } from 'angularfire2';
@@ -46,7 +48,8 @@ export var AppModule = (function () {
                 LoginPage,
                 AboutPage,
                 ResetpasswordPage,
-                SignupPage
+                SignupPage,
+                CreateProfilePage
             ],
             imports: [
                 IonicModule.forRoot(MyApp),
@@ -64,9 +67,10 @@ export var AppModule = (function () {
                 LoginPage,
                 AboutPage,
                 ResetpasswordPage,
-                SignupPage
+                SignupPage,
+                CreateProfilePage
             ],
-            providers: [AuthService, ChatsService, { provide: ErrorHandler, useClass: IonicErrorHandler }]
+            providers: [AuthService, ChatsService, ProfileData, { provide: ErrorHandler, useClass: IonicErrorHandler }]
         }), 
         __metadata('design:paramtypes', [])
     ], AppModule);
