@@ -14,6 +14,150 @@
 
 
 <ion-content padding>
-    
-    <h2>{{catid}}</h2>
+    <!--<div [ngSwitch]="category.catid">
+        <h2 *ngSwitchCase="'1'">{{category.title}}</h2>
+        <h2 *ngSwitchCase="'2'">Stainless Steel Sheets</h2>
+        <h2 *ngSwitchCase="'3'">Stainless Steel Sheets</h2>
+        <h2 *ngSwitchDefault>Unkown Category</h2>
+        
+        <happy-hero    *ngSwitchCase="'happy'"    [hero]="hero"></happy-hero>
+  <sad-hero      *ngSwitchCase="'sad'"      [hero]="hero"></sad-hero>
+  <confused-hero *ngSwitchCase="'confused'" [hero]="hero"></confused-hero>
+  <unknown-hero  *ngSwitchDefault           [hero]="hero"></unknown-hero>
+    </div>
+   <h2>{{catid}}</h2>-->
+    <button ion-button icon-left>
+        <ion-icon name="image"></ion-icon>
+        Upload Product Image
+    </button>
+    <h2>{{category.title}}</h2>
+    <!--<h2 *ngIf="category.fields.grade">{{category.fields.grade}}</h2>-->
+
+    <form [formGroup]="productForm" (submit)="submitProduct()" >
+
+        <ion-item>
+            <ion-label stacked>Name</ion-label>
+            <ion-input #name formControlName="name" type="text" 
+                       placeholder="Your Name" [(ngModel)]="category.title">
+            </ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label stacked>Grade</ion-label>
+            <ion-input #grade formControlName="grade" type="text"
+                       placeholder="Enter Grade">
+            </ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label stacked>Finish</ion-label>
+            <ion-input #finish formControlName="finish" type="text"
+                       placeholder="Select">
+            </ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label stacked>Thickness</ion-label>
+            <ion-input #thickness formControlName="thickness" type="number"
+                       placeholder="Enter Thickness (mm)">
+            </ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label stacked>Width</ion-label>
+            <ion-input #width formControlName="width" type="number"
+                       placeholder="Enter Width (mm)">
+            </ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label stacked>Length</ion-label>
+            <ion-input #length formControlName="length" type="number"
+                       placeholder="Enter Length (mm)">
+            </ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label stacked>Weight</ion-label>
+            <ion-input #weight formControlName="weight" type="number"
+                       placeholder="Enter Weight (kg)">
+            </ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label stacked>Nos.</ion-label>
+            <ion-input #nos formControlName="nos" type="number"
+                       placeholder="Enter Quantity">
+            </ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label stacked>Market Rate</ion-label>
+            <ion-input #mrate formControlName="mrate" type="number"
+                       placeholder="Rs/Kg">
+            </ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label stacked>Kalamboli Rate</ion-label>
+            <ion-input #krate formControlName="krate" type="number"
+                       placeholder="Rs/Kg">
+            </ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label stacked>Standard Composition</ion-label>
+            <ion-input #composition formControlName="composition" type="text"
+                       placeholder="Enter Composition">
+            </ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label stacked>Origin</ion-label>
+            <ion-input #origin formControlName="origin" type="text"
+                       placeholder="Enter Origin">
+            </ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label stacked>Brand</ion-label>
+            <ion-input #brand formControlName="brand" type="text"
+                       placeholder="Enter Brand">
+            </ion-input>
+        </ion-item>
+
+        <ion-input type="text" hidden [(ngModel)]="currentuser.uid" formControlName="uid"></ion-input>
+
+        <!--<ion-item>
+            <ion-label stacked>Mobile  No.</ion-label>
+            <ion-input #mobile formControlName="mobile" type="number" 
+                       placeholder="10 Digit Number">
+            </ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label stacked>Company Name</ion-label>
+            <ion-input #companyname formControlName="companyname" type="text" 
+                       placeholder="Name of Business">
+            </ion-input>
+        </ion-item>
+
+
+        <ion-item>
+            <ion-label stacked>Email</ion-label>
+            <ion-input #email formControlName="email" type="email" 
+                       placeholder="Your email address"
+                       [class.invalid]="!signupForm.controls.email.valid && (emailChanged || submitAttempt)"></ion-input>
+        </ion-item>
+        <ion-item class="error-message" *ngIf="!signupForm.controls.email.valid  && (emailChanged || submitAttempt)">
+            <p>Please enter a valid email.</p>
+        </ion-item>
+
+        <ion-item>
+            <ion-label stacked>Password</ion-label>
+            <ion-input #password formControlName="password" type="password"
+                       placeholder="Enter a Password"
+                      ></ion-input>
+        </ion-item>
+        <ion-item class="error-message" *ngIf="!productForm.controls.password.valid">
+            <p>Your password needs more than 6 characters.</p>
+        </ion-item>-->
+
+        <button ion-button block type="submit">
+            Submit
+        </button>
+
+    </form>
+
 </ion-content>

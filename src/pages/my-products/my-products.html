@@ -14,8 +14,23 @@
 
 
 <ion-content padding>
+
     <ion-fab right bottom>
         <button ion-fab color="light"  (click)="selectcat()"><ion-icon name="add"></ion-icon></button>
         
     </ion-fab>
+
+    <ion-list>
+        <ion-item *ngFor="let myproduct of myproducts | async" (click)="detailpage(myproduct)">
+            <!--<ion-thumbnail item-left>
+                <img src="{{category.imgURL}}">
+            </ion-thumbnail>-->
+           
+            {{myproduct.name}}
+            {{myproduct.grade}}
+            {{myproduct.mrate}}
+            {{myproduct.krate}}
+            {{myproduct.isLive}}
+        </ion-item>
+    </ion-list>
 </ion-content>

@@ -16,7 +16,7 @@
 <ion-content padding>
 
     <ion-list>
-        <ion-item *ngFor="let category of categories | async" (click)="detailpage(category.catid)">
+        <ion-item *ngFor="let category of categories | async" (click)="detailpage(category)">
             <ion-thumbnail item-left>
                 <img src="{{category.imgURL}}">
             </ion-thumbnail>

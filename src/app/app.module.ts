@@ -10,6 +10,7 @@ import { MyProfilePage } from '../pages/my-profile/my-profile';
 import { MyProductsPage } from '../pages/my-products/my-products';
 import { SelectCategoryPage } from '../pages/select-category/select-category';
 import { AddProductPage } from '../pages/add-product/add-product';
+import { EditProductPage } from '../pages/edit-product/edit-product';
 import { PostBuyRequirementsPage } from '../pages/post-buy-requirements/post-buy-requirements';
 import { BrowseRequirementsPage } from '../pages/browse-requirements/browse-requirements';
 import { DirectoryPage } from '../pages/directory/directory';
@@ -28,6 +29,7 @@ import { SignupPage } from '../pages/signup/signup';
 import { CreateProfilePage } from '../pages/create-profile/create-profile';
 
 import { ProfileData } from '../providers/profile-data';
+import { ProductData } from '../providers/product-data';
 import { AuthService } from '../providers/auth.service';
 import { ChatsService } from '../providers/chats.service';
 
@@ -53,6 +55,7 @@ export const firebaseConfig = {
     MyProductsPage,
     SelectCategoryPage,
     AddProductPage,
+    EditProductPage,
     PostBuyRequirementsPage,
     BrowseRequirementsPage,
     DirectoryPage,
@@ -86,6 +89,7 @@ export const firebaseConfig = {
     MyProductsPage,
     SelectCategoryPage,
     AddProductPage,
+    EditProductPage,
     PostBuyRequirementsPage,
     BrowseRequirementsPage,
     DirectoryPage,
@@ -102,6 +106,6 @@ export const firebaseConfig = {
     SignupPage,
     CreateProfilePage
   ],
-  providers: [AuthService, ChatsService, ProfileData, {provide: ErrorHandler, useClass: IonicErrorHandler}]
+  providers: [AuthService, ChatsService, ProfileData, ProductData, {provide: ErrorHandler, useClass: IonicErrorHandler}]
 })
 export class AppModule {}

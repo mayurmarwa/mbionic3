@@ -25,9 +25,9 @@ export class SelectCategoryPage {
     console.log('ionViewDidLoad SelectCategoryPage');
   }
 
-  detailpage(catid) {
+  detailpage(category) {
 
-      this.navCtrl.push(AddProductPage, {catid: catid});
+      this.navCtrl.push(AddProductPage, {category: category});
   }
 
 }

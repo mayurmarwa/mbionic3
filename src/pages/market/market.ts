@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, ModalController } from 'ionic-angular';
 import { NotificationsPage } from '../notifications/notifications';
+import { AngularFire, FirebaseListObservable } from 'angularfire2';
+
 /*
   Generated class for the Market page.
 
@@ -12,6 +14,8 @@ import { NotificationsPage } from '../notifications/notifications';
   templateUrl: 'market.html'
 })
 export class MarketPage {
+
+    productList: FirebaseListObservable<any>;
 
     constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController) {}
 
