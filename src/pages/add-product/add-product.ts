@@ -30,7 +30,7 @@ export class AddProductPage {
         this.currentuser = firebase.auth().currentUser;
         //this.cattitle = this.category.title + " ";
         this.products = af.database.list('/products');
-        this.userProducts = af.database.list('/users' + this.currentuser.uid + '/products' ); 
+        this.userProducts = af.database.list('/users/' + this.currentuser.uid + '/products' ); 
         
         //this.catDetails = this.af.database.object('productcategories/' + this.catid);
         this.productForm = formBuilder.group({

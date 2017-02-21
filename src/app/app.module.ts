@@ -11,6 +11,9 @@ import { MyProductsPage } from '../pages/my-products/my-products';
 import { SelectCategoryPage } from '../pages/select-category/select-category';
 import { AddProductPage } from '../pages/add-product/add-product';
 import { EditProductPage } from '../pages/edit-product/edit-product';
+import { ProductPagePage } from '../pages/product-page/product-page';
+import { SendEnquiryPage } from '../pages/send-enquiry/send-enquiry';
+import { EnquiryDetailsPage } from '../pages/enquiry-details/enquiry-details';
 import { PostBuyRequirementsPage } from '../pages/post-buy-requirements/post-buy-requirements';
 import { BrowseRequirementsPage } from '../pages/browse-requirements/browse-requirements';
 import { DirectoryPage } from '../pages/directory/directory';
@@ -56,6 +59,9 @@ export const firebaseConfig = {
     SelectCategoryPage,
     AddProductPage,
     EditProductPage,
+	ProductPagePage,
+	SendEnquiryPage,
+	EnquiryDetailsPage,
     PostBuyRequirementsPage,
     BrowseRequirementsPage,
     DirectoryPage,
@@ -90,6 +96,9 @@ export const firebaseConfig = {
     SelectCategoryPage,
     AddProductPage,
     EditProductPage,
+	ProductPagePage,
+	SendEnquiryPage,
+	EnquiryDetailsPage,
     PostBuyRequirementsPage,
     BrowseRequirementsPage,
     DirectoryPage,

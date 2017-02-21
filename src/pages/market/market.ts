@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { NavController, NavParams, ModalController } from 'ionic-angular';
 import { NotificationsPage } from '../notifications/notifications';
 import { AngularFire, FirebaseListObservable } from 'angularfire2';
+import { ProductPagePage } from '../product-page/product-page';
+
 
 /*
   Generated class for the Market page.
@@ -17,16 +19,18 @@ export class MarketPage {
 
     productList: FirebaseListObservable<any>;
 
-    constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController) {}
+    constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController, public af: AngularFire) {
+	
+	 this.productList = af.database.list('/products',{query: {orderByChild: 'mrate'}});
+	}
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad MarketPage');
   }
 
-  openChannelPage(ev: any) {
-      //let modal = this.modalCtrl.create(NotificationsPage);
-      //modal.present();
-      this.navCtrl.push(NotificationsPage);
+  openproductpage(product) {
+
+      this.navCtrl.push(ProductPagePage, {product: product});
   }
 
 }

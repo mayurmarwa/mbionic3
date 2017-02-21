@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+import { AngularFire, FirebaseListObservable } from 'angularfire2';
+import firebase from 'firebase';
+import { EnquiryDetailsPage } from '../enquiry-details/enquiry-details';
 
 /*
   Generated class for the Enquiries page.
@@ -13,10 +16,20 @@ import { NavController, NavParams } from 'ionic-angular';
 })
 export class EnquiriesPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {}
+	public enquiryList: FirebaseListObservable<any>;	
+	public currentuser: any;
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, public af: AngularFire) {
+		this.currentuser = firebase.auth().currentUser;
+		this.enquiryList = af.database.list('/users/' + this.currentuser.uid + '/enquiries' );
+  }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad EnquiriesPage');
+  }
+  openenquirypage(enquiry){
+
+		this.navCtrl.push(EnquiryDetailsPage, {enquiry: enquiry});  
   }
 
 }
