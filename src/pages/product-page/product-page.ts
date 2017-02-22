@@ -26,7 +26,7 @@ export class ProductPagePage {
   }
 
   sendEnquiry(){
-	 this.navCtrl.push(SendEnquiryPage, {productID: this.product.$key,seller: this.product.uid});
+	 this.navCtrl.push(SendEnquiryPage, {productName: this.product.name,seller: this.product.uid});
 	
 
   }

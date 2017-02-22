@@ -15,4 +15,21 @@
 
 <ion-content padding>
 
+    <ion-list>
+        <ion-item *ngFor="let requirement of requirementList | async" (click)="openrequirementpage(requirement)">
+            <ion-card>
+                <ion-card-content>
+                    <ion-card-title>
+                        {{requirement.category}}
+                    </ion-card-title>
+                    <p>
+                        {{requirement.quantity}} {{requirement.unit}}
+                        <br>
+                        {{requirement.bid}}
+                    </p>
+                </ion-card-content>
+            </ion-card>
+        </ion-item>
+    </ion-list>
+
 </ion-content>

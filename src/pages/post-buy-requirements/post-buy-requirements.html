@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>PostBuyRequirements</ion-title>
+    <ion-title>Post Buy Requirement</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -15,4 +15,46 @@
 
 <ion-content padding>
 
+    <form [formGroup]="requirementForm" (submit)="submitRequirement()">
+
+        <ion-item>
+            <ion-label stacked>Product Category</ion-label>
+            <ion-input #category formControlName="category" type="text"
+                       placeholder="Product Category">
+            </ion-input>
+        </ion-item>
+  
+            <ion-item>
+                <ion-label stacked>Quantity</ion-label>
+                <ion-input #quantity formControlName="quantity" type="number"
+                           placeholder="Required Quantity">
+                </ion-input>
+            </ion-item>
+       
+                <ion-item>
+                    <ion-label stacked>Unit</ion-label>
+                    <ion-input #unit formControlName="unit" type="text"
+                               placeholder="Select unit">
+                    </ion-input>
+                </ion-item>
+             
+                    <ion-item>
+                        <ion-label stacked>Bid price</ion-label>
+                        <ion-input #bid formControlName="bid" type="number"
+                                   placeholder="Your Bid Price">
+                        </ion-input>
+                    </ion-item>
+                    
+                        <ion-item>
+                            <ion-label stacked>Details</ion-label>
+                            <ion-input #details formControlName="details" type="text"
+                                       placeholder="Requirement Details...">
+                            </ion-input>
+                        </ion-item>
+                        
+                            <ion-input type="text" hidden [(ngModel)]="currentuser.uid" formControlName="uid"></ion-input>
+                            <button ion-button block type="submit">
+                                Submit
+                            </button>
+            </form>
 </ion-content>

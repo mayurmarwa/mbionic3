@@ -1,3 +1,14 @@
 page-enquiry-details {
-
+    .sent {
+    position: absolute;
+    left: 0px;
+    width: 200px;
+    padding: 10px;
+    }
+    .received {
+    position: absolute;
+    right: 0px;
+    width: 200px;
+    padding: 10px;
+    }
 }

@@ -19,13 +19,13 @@ export class SendEnquiryPage {
 	public enquiryForm;
 	public currentuser: any;
 	public sellerID: any;
-	public productID: any;
+	public productName: any;
 	public userEnquiries: any;
 	public sellerEnquiries:any;
   constructor(public navCtrl: NavController, public navParams: NavParams,public formBuilder: FormBuilder,public af: AngularFire) {
   
 		this.sellerID = navParams.get("seller");
-		this.productID = navParams.get("productID");
+		this.productName = navParams.get("productName");
         this.currentuser = firebase.auth().currentUser;
 		this.userEnquiries = af.database.list('/users/' + this.currentuser.uid + '/enquiries' );
 		this.sellerEnquiries = af.database.list('/users/' + this.sellerID + '/enquiries' ); 
@@ -50,7 +50,9 @@ export class SendEnquiryPage {
   this.af.database.object('users/' + this.currentuser.uid + '/enquiries/' + data.key).update(
               {
 
-                  type: 'sent'
+                  type: 'sent',
+				  otheruser: this.sellerID,
+				  productName: this.productName
                   //detials: this.productForm.value.name,
                   
               }
@@ -68,13 +70,12 @@ export class SendEnquiryPage {
               {
 
                   type: 'received',
-				  details: this.enquiryForm.value
+				  otheruser: this.currentuser.uid,
+				  productName: this.productName,
+				  details: this.enquiryForm.value.details
                   //detials: this.productForm.value.name,
                   
               }
-
-
-
           ).then(info => { 
 
               console.log("successrcv");

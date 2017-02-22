@@ -20,4 +20,30 @@
             {{this.enquiry.type}}
         </ion-item>
 
+    <ion-list>
+        <ion-item  *ngFor="let message of messageList | async">
+            <ion-label item-right>{{message.text}}</ion-label>
+            <ion-avatar item-left>
+                <img src="/assets/img/noimage.png">
+            </ion-avatar>
+        </ion-item>
+    </ion-list>
+
 </ion-content>
+<ion-footer>
+    <form #f="ngForm">
+        <ion-grid>
+            <ion-row>
+                <ion-col width-80>                    
+                        <ion-input type="text" [(ngModel)]="chatBox" name="chatText" required placeholder="Message..."></ion-input>                                          
+                </ion-col>
+                <ion-col>
+                    <button  ion-button full (click)="send(f.value,f.valid)" [disabled]="f.valid === false" icon-right>
+                        Send
+                        <ion-icon name="send"></ion-icon>
+                    </button>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </form>
+</ion-footer>

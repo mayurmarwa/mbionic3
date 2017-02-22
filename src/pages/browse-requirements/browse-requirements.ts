@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+import { AngularFire, FirebaseListObservable } from 'angularfire2';
+import { RequirementDetailsPage } from '../requirement-details/requirement-details';
 
 /*
   Generated class for the BrowseRequirements page.
@@ -13,10 +15,19 @@ import { NavController, NavParams } from 'ionic-angular';
 })
 export class BrowseRequirementsPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {}
+	 requirementList: FirebaseListObservable<any>;
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, public af: AngularFire) {
+  
+	this.requirementList = af.database.list('/requirements');
+  }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad BrowseRequirementsPage');
   }
 
+  openrequirementpage(requirement) {
+
+      this.navCtrl.push(RequirementDetailsPage, {requirement: requirement});
+  }
 }
