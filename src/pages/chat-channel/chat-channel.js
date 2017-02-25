@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { Component } from '@angular/core';
 import { NavController, NavParams, ViewController } from 'ionic-angular';
-export var ChatChannelPage = (function () {
+var ChatChannelPage = (function () {
     function ChatChannelPage(navCtrl, navParams, viewCtrl) {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
@@ -20,13 +20,16 @@ export var ChatChannelPage = (function () {
     ChatChannelPage.prototype.dismiss = function () {
         this.viewCtrl.dismiss();
     };
-    ChatChannelPage = __decorate([
-        Component({
-            selector: 'page-chat-channel',
-            templateUrl: 'chat-channel.html'
-        }), 
-        __metadata('design:paramtypes', [NavController, NavParams, ViewController])
-    ], ChatChannelPage);
     return ChatChannelPage;
 }());
+ChatChannelPage = __decorate([
+    Component({
+        selector: 'page-chat-channel',
+        templateUrl: 'chat-channel.html'
+    }),
+    __metadata("design:paramtypes", [NavController,
+        NavParams,
+        ViewController])
+], ChatChannelPage);
+export { ChatChannelPage };
 //# sourceMappingURL=chat-channel.js.map

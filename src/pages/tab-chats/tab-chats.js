@@ -10,7 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 import { Component } from '@angular/core';
 import { NavController, NavParams, ModalController } from 'ionic-angular';
 import { ChatChannelPage } from '../chat-channel/chat-channel';
-export var TabChatsPage = (function () {
+var TabChatsPage = (function () {
     function TabChatsPage(navCtrl, navParams, modalCtrl) {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
@@ -22,13 +22,16 @@ export var TabChatsPage = (function () {
         var modal = this.modalCtrl.create(ChatChannelPage);
         modal.present();
     };
-    TabChatsPage = __decorate([
-        Component({
-            selector: 'page-tab-chats',
-            templateUrl: 'tab-chats.html'
-        }), 
-        __metadata('design:paramtypes', [NavController, NavParams, ModalController])
-    ], TabChatsPage);
     return TabChatsPage;
 }());
+TabChatsPage = __decorate([
+    Component({
+        selector: 'page-tab-chats',
+        templateUrl: 'tab-chats.html'
+    }),
+    __metadata("design:paramtypes", [NavController,
+        NavParams,
+        ModalController])
+], TabChatsPage);
+export { TabChatsPage };
 //# sourceMappingURL=tab-chats.js.map

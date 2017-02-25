@@ -16,7 +16,7 @@ import firebase from 'firebase';
   See https://angular.io/docs/ts/latest/guide/dependency-injection.html
   for more info on providers and Angular 2 DI.
 */
-export var ProfileData = (function () {
+var ProfileData = (function () {
     function ProfileData() {
         /**
         * Here we create the references I told you about 2 seconds ago ??
@@ -101,10 +101,11 @@ export var ProfileData = (function () {
             console.log(error);
         });
     };
-    ProfileData = __decorate([
-        Injectable(), 
-        __metadata('design:paramtypes', [])
-    ], ProfileData);
     return ProfileData;
 }());
+ProfileData = __decorate([
+    Injectable(),
+    __metadata("design:paramtypes", [])
+], ProfileData);
+export { ProfileData };
 //# sourceMappingURL=profile-data.js.map

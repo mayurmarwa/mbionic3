@@ -13,7 +13,7 @@ import { LoadingController } from 'ionic-angular';
 import { AuthService } from '../../providers/auth.service';
 import { ProfileData } from '../../providers/profile-data';
 import firebase from 'firebase';
-export var TabProfilePage = (function () {
+var TabProfilePage = (function () {
     function TabProfilePage(authService, loadingCtrl, profileData, alertCtrl) {
         var _this = this;
         this.authService = authService;
@@ -229,13 +229,17 @@ export var TabProfilePage = (function () {
         });
         alert.present();
     };
-    TabProfilePage = __decorate([
-        Component({
-            selector: 'page-tab-profile',
-            templateUrl: 'tab-profile.html'
-        }), 
-        __metadata('design:paramtypes', [AuthService, LoadingController, ProfileData, AlertController])
-    ], TabProfilePage);
     return TabProfilePage;
 }());
+TabProfilePage = __decorate([
+    Component({
+        selector: 'page-tab-profile',
+        templateUrl: 'tab-profile.html'
+    }),
+    __metadata("design:paramtypes", [AuthService,
+        LoadingController,
+        ProfileData,
+        AlertController])
+], TabProfilePage);
+export { TabProfilePage };
 //# sourceMappingURL=tab-profile.js.map

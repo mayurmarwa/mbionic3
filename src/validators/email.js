@@ -1,4 +1,4 @@
-export var EmailValidator = (function () {
+var EmailValidator = (function () {
     function EmailValidator() {
     }
     EmailValidator.isValid = function (control) {
@@ -10,4 +10,5 @@ export var EmailValidator = (function () {
     };
     return EmailValidator;
 }());
+export { EmailValidator };
 //# sourceMappingURL=email.js.map

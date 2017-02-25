@@ -9,19 +9,20 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-export var TabContactsPage = (function () {
+var TabContactsPage = (function () {
     function TabContactsPage(navCtrl, navParams) {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
     }
     TabContactsPage.prototype.ionViewDidLoad = function () { };
-    TabContactsPage = __decorate([
-        Component({
-            selector: 'page-tab-contacts',
-            templateUrl: 'tab-contacts.html'
-        }), 
-        __metadata('design:paramtypes', [NavController, NavParams])
-    ], TabContactsPage);
     return TabContactsPage;
 }());
+TabContactsPage = __decorate([
+    Component({
+        selector: 'page-tab-contacts',
+        templateUrl: 'tab-contacts.html'
+    }),
+    __metadata("design:paramtypes", [NavController, NavParams])
+], TabContactsPage);
+export { TabContactsPage };
 //# sourceMappingURL=tab-contacts.js.map

@@ -10,14 +10,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
-export var ChatsService = (function () {
+var ChatsService = (function () {
     function ChatsService(http) {
         this.http = http;
     }
-    ChatsService = __decorate([
-        Injectable(), 
-        __metadata('design:paramtypes', [Http])
-    ], ChatsService);
     return ChatsService;
 }());
+ChatsService = __decorate([
+    Injectable(),
+    __metadata("design:paramtypes", [Http])
+], ChatsService);
+export { ChatsService };
 //# sourceMappingURL=chats.service.js.map

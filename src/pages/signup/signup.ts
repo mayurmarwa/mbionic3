@@ -24,7 +24,7 @@ export class SignupPage {
     emailChanged: boolean = false;
     passwordChanged: boolean = false;
     submitAttempt: boolean = false;
-    loading;
+	loading;
 
     constructor(public nav: NavController, public authService: AuthService,
         public formBuilder: FormBuilder, public loadingCtrl: LoadingController,

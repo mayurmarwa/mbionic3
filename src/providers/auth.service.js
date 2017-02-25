@@ -20,7 +20,7 @@ export var AuthMode;
     AuthMode[AuthMode["Github"] = 2] = "Github";
 })(AuthMode || (AuthMode = {}));
 ;
-export var AuthService = (function () {
+var AuthService = (function () {
     function AuthService(af, platform) {
         this.af = af;
         this.platform = platform;
@@ -31,10 +31,15 @@ export var AuthService = (function () {
     AuthService.prototype.login = function (mode) {
         if (mode == AuthMode.GooglePlus)
             return this.signInWithGoogle();
-        if (mode == AuthMode.Facebook)
-            return this.signInWithFacebook();
+        /**if (mode == AuthMode.Facebook)
+          return this.signInWithFacebook();
+    
         if (mode == AuthMode.Github)
-            return this.signInWithGithub();
+          return this.signInWithGithub();**/
+    };
+    AuthService.prototype.login2 = function () {
+        //if (mode == AuthMode.Facebook)
+        return this.signInWithFacebook();
     };
     AuthService.prototype.loginUser = function (newEmail, newPassword) {
         console.log("loginUser");
@@ -61,7 +66,7 @@ export var AuthService = (function () {
         var _this = this;
         if (!this.platform.is('cordova'))
             return this.signInWithProvider(AuthProviders.Facebook);
-        return Facebook.login(['email', 'public_profile'])
+        Facebook.login(['email', 'public_profile'])
             .then(function (res) {
             return _this.signInWithCredential(firebase.auth.FacebookAuthProvider.credential(res.authResponse.accessToken));
         }, function (error) { return Promise.reject(error); });
@@ -121,10 +126,11 @@ export var AuthService = (function () {
     AuthService.prototype.getFullProfile = function (uid) {
         return this.af.database.object('users/' + uid);
     };
-    AuthService = __decorate([
-        Injectable(), 
-        __metadata('design:paramtypes', [AngularFire, Platform])
-    ], AuthService);
     return AuthService;
 }());
+AuthService = __decorate([
+    Injectable(),
+    __metadata("design:paramtypes", [AngularFire, Platform])
+], AuthService);
+export { AuthService };
 //# sourceMappingURL=auth.service.js.map

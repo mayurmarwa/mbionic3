@@ -27,11 +27,18 @@ export class AuthService {
     if (mode == AuthMode.GooglePlus)
       return this.signInWithGoogle();
     
-    if (mode == AuthMode.Facebook)
+    /**if (mode == AuthMode.Facebook)
       return this.signInWithFacebook();
 
     if (mode == AuthMode.Github)
-      return this.signInWithGithub();
+      return this.signInWithGithub();**/
+  }
+
+  login2() {
+
+      //if (mode == AuthMode.Facebook)
+          return this.signInWithFacebook();
+
   }
 
   loginUser(newEmail: string, newPassword: string): any {
@@ -62,7 +69,7 @@ export class AuthService {
     if (!this.platform.is('cordova'))
       return this.signInWithProvider(AuthProviders.Facebook);
     
-    return Facebook.login(['email', 'public_profile'])
+    Facebook.login(['email', 'public_profile'])
       .then(res => {
         return this.signInWithCredential(firebase.auth.FacebookAuthProvider.credential(res.authResponse.accessToken));
       }, (error) => Promise.reject(error));

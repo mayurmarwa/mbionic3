@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+import { AngularFire, FirebaseListObservable } from 'angularfire2';
+
 
 /*
   Generated class for the Directory page.
@@ -12,8 +14,13 @@ import { NavController, NavParams } from 'ionic-angular';
   templateUrl: 'directory.html'
 })
 export class DirectoryPage {
+	
+	directoryList: FirebaseListObservable<any>;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {}
+  constructor(public navCtrl: NavController, public navParams: NavParams, public af: AngularFire) {
+  
+	this.directoryList = af.database.list('/driectory',{query: {orderByChild: 'name'}});
+  }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad DirectoryPage');

@@ -7,12 +7,65 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>requirementDetails</ion-title>
+    <ion-title>Requirement Details</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
+    <!--<ion-card class="profile-top">
+        <ion-row>
+            <ion-col>
+                <div class="profile-photo">
+                    <img src="/assets/img/noimage.png">
+                </div>
+            </ion-col>
+        </ion-row>
+    </ion-card>-->
+    <ion-item>
+        <ion-label color="primary" stacked>Category</ion-label>
+        <ion-input type="text" value={{this.requirement.category}} disabled></ion-input>
+    </ion-item>
+    <ion-grid>
+        <ion-row>
+            <ion-col width-50>
+                <ion-item>
+                    <ion-label color="primary" stacked>Quanitity</ion-label>
+                    <ion-input value={{this.requirement.quantity}} disabled></ion-input>
 
+                </ion-item>
+            </ion-col>
+            <ion-col width-50>
+                <ion-item>
+                    <ion-label color="primary" stacked>Unit</ion-label>
+                    <ion-input value={{this.requirement.unit}} disabled></ion-input>
+
+                </ion-item>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col width-50>
+                <ion-item>
+                    <ion-label color="primary" stacked>Bid</ion-label>
+                    <ion-input value={{this.requirement.bid}} disabled></ion-input>
+
+                </ion-item>
+            </ion-col>           
+        </ion-row>
+        <ion-row>
+            <ion-col width-50>
+                <ion-item>
+                    <ion-label color="primary" stacked>Details</ion-label>
+                    <ion-input value={{this.requirement.details}} disabled></ion-input>
+
+                </ion-item>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+
+    <button ion-button round icon-left (click)="sendQuote()">
+        <ion-icon name="send"></ion-icon>
+        Send Quotation
+    </button>
 </ion-content>

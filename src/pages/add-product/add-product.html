@@ -26,7 +26,7 @@
   <unknown-hero  *ngSwitchDefault           [hero]="hero"></unknown-hero>
     </div>
    <h2>{{catid}}</h2>-->
-    <button ion-button icon-left>
+    <button ion-button icon-left (click)="presentActionSheet()">
         <ion-icon name="image"></ion-icon>
         Upload Product Image
     </button>
@@ -49,9 +49,14 @@
         </ion-item>
         <ion-item>
             <ion-label stacked>Finish</ion-label>
-            <ion-input #finish formControlName="finish" type="text"
-                       placeholder="Select">
-            </ion-input>
+            
+            <ion-select  #finish formControlName="finish">
+                <ion-option value="HR">HR</ion-option>
+                <ion-option value="CR">CR</ion-option>
+                <ion-option value="BA">BA</ion-option>
+                <ion-option value="No.8">No.8</ion-option>
+                <ion-option value="Matt PVC">MAtt PVC</ion-option>                
+            </ion-select>
         </ion-item>
         <ion-item>
             <ion-label stacked>Thickness</ion-label>
@@ -86,13 +91,13 @@
         <ion-item>
             <ion-label stacked>Market Rate</ion-label>
             <ion-input #mrate formControlName="mrate" type="number"
-                       placeholder="Rs/Kg">
+                       placeholder="Rs/Kg" [(ngModel)]="mrateTrue" [required]="krateTrue === NULL">
             </ion-input>
         </ion-item>
         <ion-item>
             <ion-label stacked>Kalamboli Rate</ion-label>
             <ion-input #krate formControlName="krate" type="number"
-                       placeholder="Rs/Kg">
+                       placeholder="Rs/Kg" [(ngModel)]="krateTrue" [required]="mrateTrue === NULL">
             </ion-input>
         </ion-item>
 

@@ -8,22 +8,26 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Component } from '@angular/core';
-import { TabChatsPage } from '../tab-chats/tab-chats';
-import { TabContactsPage } from '../tab-contacts/tab-contacts';
-import { TabProfilePage } from '../tab-profile/tab-profile';
-export var TabsPage = (function () {
+import { MarketPage } from '../market/market';
+import { PricesPage } from '../prices/prices';
+import { EnquiriesPage } from '../enquiries/enquiries';
+var TabsPage = (function () {
     function TabsPage() {
-        this.tab1Root = TabChatsPage;
-        this.tab2Root = TabContactsPage;
-        this.tab3Root = TabProfilePage;
+        //this.tab1Root = TabChatsPage;
+        //this.tab2Root = TabContactsPage;
+        //this.tab3Root = TabProfilePage;
+        this.tab1Root = MarketPage;
+        this.tab2Root = PricesPage;
+        this.tab3Root = EnquiriesPage;
     }
-    TabsPage = __decorate([
-        Component({
-            selector: 'page-tabs',
-            templateUrl: 'tabs.html'
-        }), 
-        __metadata('design:paramtypes', [])
-    ], TabsPage);
     return TabsPage;
 }());
+TabsPage = __decorate([
+    Component({
+        selector: 'page-tabs',
+        templateUrl: 'tabs.html'
+    }),
+    __metadata("design:paramtypes", [])
+], TabsPage);
+export { TabsPage };
 //# sourceMappingURL=tabs.js.map

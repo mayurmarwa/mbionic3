@@ -16,6 +16,7 @@ import { SendEnquiryPage } from '../pages/send-enquiry/send-enquiry';
 import { EnquiryDetailsPage } from '../pages/enquiry-details/enquiry-details';
 import { PostBuyRequirementsPage } from '../pages/post-buy-requirements/post-buy-requirements';
 import { BrowseRequirementsPage } from '../pages/browse-requirements/browse-requirements';
+import { SendQuotationPage } from '../pages/send-quotation/send-quotation';
 import { RequirementDetailsPage } from '../pages/requirement-details/requirement-details';
 import { DirectoryPage } from '../pages/directory/directory';
 import { SpeedDialPage } from '../pages/speed-dial/speed-dial';
@@ -65,6 +66,7 @@ export const firebaseConfig = {
 	EnquiryDetailsPage,
     PostBuyRequirementsPage,
     BrowseRequirementsPage,
+	SendQuotationPage,
 	RequirementDetailsPage,
     DirectoryPage,
     SpeedDialPage,
@@ -103,6 +105,7 @@ export const firebaseConfig = {
 	EnquiryDetailsPage,
     PostBuyRequirementsPage,
     BrowseRequirementsPage,
+	SendQuotationPage,
 	RequirementDetailsPage,
     DirectoryPage,
     SpeedDialPage,

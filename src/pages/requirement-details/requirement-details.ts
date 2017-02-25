@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
-
+import { NavController, NavParams, AlertController  } from 'ionic-angular';
+import { SendQuotationPage } from '../send-quotation/send-quotation'
 /*
   Generated class for the RequirementDetails page.
 
@@ -15,13 +15,21 @@ export class RequirementDetailsPage {
 
 	public requirement: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,public alertCtrl: AlertController) {
 	this.requirement = navParams.get("requirement");
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad RequirementDetailsPage');
-	console.log(this.requirement);
+	//console.log(this.requirement);
   }
 
+  sendQuote(){
+	 this.navCtrl.push(SendQuotationPage, {requirement: this.requirement});
+		//console.log('Send Quote');
+		
+  }
+  
+
+  
 }

@@ -22,7 +22,7 @@ import { NgZone } from '@angular/core';
   See http://ionicframework.com/docs/v2/components/#navigation for more info on
   Ionic pages and navigation.
 */
-export var SignupPage = (function () {
+var SignupPage = (function () {
     function SignupPage(nav, authService, formBuilder, loadingCtrl, alertCtrl, app, zone) {
         this.nav = nav;
         this.authService = authService;
@@ -92,13 +92,16 @@ export var SignupPage = (function () {
     SignupPage.prototype.ionViewDidLoad = function () {
         console.log('ionViewDidLoad SignupPage');
     };
-    SignupPage = __decorate([
-        Component({
-            selector: 'page-signup',
-            templateUrl: 'signup.html'
-        }), 
-        __metadata('design:paramtypes', [NavController, AuthService, FormBuilder, LoadingController, AlertController, App, NgZone])
-    ], SignupPage);
     return SignupPage;
 }());
+SignupPage = __decorate([
+    Component({
+        selector: 'page-signup',
+        templateUrl: 'signup.html'
+    }),
+    __metadata("design:paramtypes", [NavController, AuthService,
+        FormBuilder, LoadingController,
+        AlertController, App, NgZone])
+], SignupPage);
+export { SignupPage };
 //# sourceMappingURL=signup.js.map

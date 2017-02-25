@@ -13,8 +13,15 @@ import { StatusBar, Splashscreen } from 'ionic-native';
 import { TabsPage } from '../pages/tabs/tabs';
 import { AboutPage } from '../pages/about/about';
 import { LoginPage } from '../pages/login/login';
+import { TabProfilePage } from '../pages/tab-profile/tab-profile';
+import { MyProductsPage } from '../pages/my-products/my-products';
+import { PostBuyRequirementsPage } from '../pages/post-buy-requirements/post-buy-requirements';
+import { BrowseRequirementsPage } from '../pages/browse-requirements/browse-requirements';
+import { DirectoryPage } from '../pages/directory/directory';
+import { SpeedDialPage } from '../pages/speed-dial/speed-dial';
+import { SettingsPage } from '../pages/settings/settings';
 import { AuthService } from '../providers/auth.service';
-export var MyApp = (function () {
+var MyApp = (function () {
     function MyApp(platform, loadingCtrl, authService) {
         var _this = this;
         this.platform = platform;
@@ -38,6 +45,14 @@ export var MyApp = (function () {
             { title: 'Home', component: TabsPage }
         ];
         this.pushPages = [
+            { title: 'Profile', component: TabProfilePage },
+            { title: 'Post Buy Requirement', component: PostBuyRequirementsPage },
+            { title: 'Browse Requirements', component: BrowseRequirementsPage },
+            { title: 'My Products', component: MyProductsPage },
+            { title: 'Directory', component: DirectoryPage },
+            { title: 'Speed Dial', component: SpeedDialPage },
+            { title: 'Settings', component: SettingsPage },
+            { title: 'Share App', component: TabProfilePage },
             { title: 'About', component: AboutPage },
         ];
     }
@@ -61,16 +76,19 @@ export var MyApp = (function () {
         this.authService.logout();
         this.nav.setRoot(LoginPage);
     };
-    __decorate([
-        ViewChild(Nav), 
-        __metadata('design:type', Nav)
-    ], MyApp.prototype, "nav", void 0);
-    MyApp = __decorate([
-        Component({
-            templateUrl: 'app.html'
-        }), 
-        __metadata('design:paramtypes', [Platform, LoadingController, AuthService])
-    ], MyApp);
     return MyApp;
 }());
+__decorate([
+    ViewChild(Nav),
+    __metadata("design:type", Nav)
+], MyApp.prototype, "nav", void 0);
+MyApp = __decorate([
+    Component({
+        templateUrl: 'app.html'
+    }),
+    __metadata("design:paramtypes", [Platform,
+        LoadingController,
+        AuthService])
+], MyApp);
+export { MyApp };
 //# sourceMappingURL=app.component.js.map

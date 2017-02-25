@@ -19,7 +19,7 @@ import { EmailValidator } from '../../validators/email';
   See http://ionicframework.com/docs/v2/components/#navigation for more info on
   Ionic pages and navigation.
 */
-export var ResetpasswordPage = (function () {
+var ResetpasswordPage = (function () {
     function ResetpasswordPage(authData, formBuilder, nav, alertCtrl) {
         this.authData = authData;
         this.formBuilder = formBuilder;
@@ -78,13 +78,15 @@ export var ResetpasswordPage = (function () {
     ResetpasswordPage.prototype.ionViewDidLoad = function () {
         console.log('ionViewDidLoad ResetpasswordPage');
     };
-    ResetpasswordPage = __decorate([
-        Component({
-            selector: 'page-resetpassword',
-            templateUrl: 'resetpassword.html'
-        }), 
-        __metadata('design:paramtypes', [AuthService, FormBuilder, NavController, AlertController])
-    ], ResetpasswordPage);
     return ResetpasswordPage;
 }());
+ResetpasswordPage = __decorate([
+    Component({
+        selector: 'page-resetpassword',
+        templateUrl: 'resetpassword.html'
+    }),
+    __metadata("design:paramtypes", [AuthService, FormBuilder,
+        NavController, AlertController])
+], ResetpasswordPage);
+export { ResetpasswordPage };
 //# sourceMappingURL=resetpassword.js.map

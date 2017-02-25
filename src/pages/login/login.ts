@@ -11,6 +11,7 @@ import { EmailValidator } from '../../validators/email';
 import { App } from 'ionic-angular';
 import { NgZone } from '@angular/core';
 
+
 @Component({
   selector: 'page-login',
   templateUrl: 'login.html'
@@ -43,7 +44,7 @@ export class LoginPage {
    * login with facebook
    */
   loginWithFacebook() {
-    this.login(AuthMode.Facebook)
+    this.login2()
   }
 
   /**
@@ -108,10 +109,10 @@ export class LoginPage {
       console.log('ionViewDidLoad LoginPage');
   }
 
-  private login(mode: AuthMode) {
+  private login(mode) {
     let loading = this.loadingCtrl.create();
     loading.present();
-
+    
     this.authService.login(mode)
       .then((data) => {
         this.authService.getFullProfile(data.uid)
@@ -136,6 +137,36 @@ export class LoginPage {
         loading.dismiss();
         this.showMessage(error.message || 'Unknown error');
     });
+  }
+
+  private login2() {
+      let loading = this.loadingCtrl.create();
+      loading.present();
+
+      this.authService.login2()
+          .then((data) => {
+              this.authService.getFullProfile(data.uid)
+                  .first()
+                  .subscribe((user) => {
+                      if (!(user.$value !== null)) {
+                          console.log("Null User");
+                          this.authService.createAccount(data)
+                              .then(_ => {
+                                  loading.dismiss();
+                                  this.navCtrl.setRoot(CreateProfilePage, { userid: data.uid });
+                              }, (error) => this.showMessage(error.message || 'Unknown error'));
+                      } else {
+                          loading.dismiss();
+                          this.navCtrl.setRoot(TabsPage);
+                      }
+                  }, (error) => {
+                      loading.dismiss();
+                      this.showMessage(error.message || 'Unknown error');
+                  });
+          }, (error) => {
+              loading.dismiss();
+              this.showMessage(error.message || 'Unknown error');
+          });
   }
 
   private showMessage(message: string) {

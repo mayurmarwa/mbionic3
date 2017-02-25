@@ -20,7 +20,7 @@ import { App } from 'ionic-angular';
   See http://ionicframework.com/docs/v2/components/#navigation for more info on
   Ionic pages and navigation.
 */
-export var CreateProfilePage = (function () {
+var CreateProfilePage = (function () {
     function CreateProfilePage(af, navCtrl, navParams, formBuilder, loadingCtrl, alertCtrl, app) {
         this.af = af;
         this.navCtrl = navCtrl;
@@ -58,17 +58,24 @@ export var CreateProfilePage = (function () {
                 companyname: this.profileForm.value.companyname,
                 address: this.profileForm.value.address,
                 companyprofile: this.profileForm.value.companyprofile
+                //email: userdata.value.email,
+                //uid: authdata.auth.uid,
+                //photoURL: data.auth.photoURL,
+                //createdAt: firebase.database['ServerValue']['TIMESTAMP'],
+                //providerData: authdata.auth.provider
             });
             this.app.getRootNav().setRoot(TabsPage);
         }
     };
-    CreateProfilePage = __decorate([
-        Component({
-            selector: 'page-create-profile',
-            templateUrl: 'create-profile.html'
-        }), 
-        __metadata('design:paramtypes', [AngularFire, NavController, NavParams, FormBuilder, LoadingController, AlertController, App])
-    ], CreateProfilePage);
     return CreateProfilePage;
 }());
+CreateProfilePage = __decorate([
+    Component({
+        selector: 'page-create-profile',
+        templateUrl: 'create-profile.html'
+    }),
+    __metadata("design:paramtypes", [AngularFire, NavController, NavParams, FormBuilder, LoadingController,
+        AlertController, App])
+], CreateProfilePage);
+export { CreateProfilePage };
 //# sourceMappingURL=create-profile.js.map

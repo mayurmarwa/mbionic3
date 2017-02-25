@@ -18,7 +18,7 @@ import { AuthService, AuthMode } from '../../providers/auth.service';
 import { EmailValidator } from '../../validators/email';
 import { App } from 'ionic-angular';
 import { NgZone } from '@angular/core';
-export var LoginPage = (function () {
+var LoginPage = (function () {
     function LoginPage(navCtrl, loadingCtrl, toastCtrl, authService, formBuilder, alertCtrl, app, zone) {
         this.navCtrl = navCtrl;
         this.loadingCtrl = loadingCtrl;
@@ -41,7 +41,7 @@ export var LoginPage = (function () {
      * login with facebook
      */
     LoginPage.prototype.loginWithFacebook = function () {
-        this.login(AuthMode.Facebook);
+        this.login2();
     };
     /**
      * login with google
@@ -125,16 +125,54 @@ export var LoginPage = (function () {
             _this.showMessage(error.message || 'Unknown error');
         });
     };
+    LoginPage.prototype.login2 = function () {
+        var _this = this;
+        var loading = this.loadingCtrl.create();
+        loading.present();
+        this.authService.login2()
+            .then(function (data) {
+            _this.authService.getFullProfile(data.uid)
+                .first()
+                .subscribe(function (user) {
+                if (!(user.$value !== null)) {
+                    console.log("Null User");
+                    _this.authService.createAccount(data)
+                        .then(function (_) {
+                        loading.dismiss();
+                        _this.navCtrl.setRoot(CreateProfilePage, { userid: data.uid });
+                    }, function (error) { return _this.showMessage(error.message || 'Unknown error'); });
+                }
+                else {
+                    loading.dismiss();
+                    _this.navCtrl.setRoot(TabsPage);
+                }
+            }, function (error) {
+                loading.dismiss();
+                _this.showMessage(error.message || 'Unknown error');
+            });
+        }, function (error) {
+            loading.dismiss();
+            _this.showMessage(error.message || 'Unknown error');
+        });
+    };
     LoginPage.prototype.showMessage = function (message) {
         this.toastCtrl.create({ message: message, duration: 3000 }).present();
     };
-    LoginPage = __decorate([
-        Component({
-            selector: 'page-login',
-            templateUrl: 'login.html'
-        }), 
-        __metadata('design:paramtypes', [NavController, LoadingController, ToastController, AuthService, FormBuilder, AlertController, App, NgZone])
-    ], LoginPage);
     return LoginPage;
 }());
+LoginPage = __decorate([
+    Component({
+        selector: 'page-login',
+        templateUrl: 'login.html'
+    }),
+    __metadata("design:paramtypes", [NavController,
+        LoadingController,
+        ToastController,
+        AuthService,
+        FormBuilder,
+        AlertController,
+        App,
+        NgZone])
+], LoginPage);
+export { LoginPage };
 //# sourceMappingURL=login.js.map

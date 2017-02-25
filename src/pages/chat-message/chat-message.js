@@ -15,7 +15,7 @@ import { NavController, NavParams } from 'ionic-angular';
   See http://ionicframework.com/docs/v2/components/#navigation for more info on
   Ionic pages and navigation.
 */
-export var ChatMessagePage = (function () {
+var ChatMessagePage = (function () {
     function ChatMessagePage(navCtrl, navParams) {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
@@ -23,13 +23,14 @@ export var ChatMessagePage = (function () {
     ChatMessagePage.prototype.ionViewDidLoad = function () {
         console.log('ionViewDidLoad ChatMessagePage');
     };
-    ChatMessagePage = __decorate([
-        Component({
-            selector: 'page-chat-message',
-            templateUrl: 'chat-message.html'
-        }), 
-        __metadata('design:paramtypes', [NavController, NavParams])
-    ], ChatMessagePage);
     return ChatMessagePage;
 }());
+ChatMessagePage = __decorate([
+    Component({
+        selector: 'page-chat-message',
+        templateUrl: 'chat-message.html'
+    }),
+    __metadata("design:paramtypes", [NavController, NavParams])
+], ChatMessagePage);
+export { ChatMessagePage };
 //# sourceMappingURL=chat-message.js.map
