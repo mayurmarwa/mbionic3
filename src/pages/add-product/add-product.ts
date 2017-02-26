@@ -3,7 +3,7 @@ import { NavController, NavParams, ActionSheetController} from 'ionic-angular';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Camera, File, Transfer, FilePath } from 'ionic-native';
 import { NgSwitch, NgSwitchCase, NgSwitchDefault } from '@angular/common';
-import { AngularFire, FirebaseListObservable } from 'angularfire2';
+import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
 import { AuthService } from '../../providers/auth.service';
 import firebase from 'firebase';
 
@@ -25,14 +25,25 @@ export class AddProductPage {
     //public cattitle: string;
     products: FirebaseListObservable<any>;
     userProducts: FirebaseListObservable<any>;
-    public productForm;
+    public coilsForm;
+    public sheetsForm;
+    public seamlessForm;
+    public squareForm;
+    public anglesForm;
+    public roundbarsForm;
     lastImage: string = null;
     public productImage: any = null;
     public productImageRef: any;
     public productImageURL: string = "/assets/img/noimage.png"
     public mrateTrue: number = null;
     public krateTrue: number = null;
-
+    public typeOD: boolean = true;
+    public allValid: boolean = false;
+    public gradeList: FirebaseListObservable<any>;
+    public selectedGrade: any;
+    public selectedGradeItem: any;
+    public compositiontxt:string;
+    
     constructor(public navCtrl: NavController, public navParams: NavParams, public af: AngularFire, public formBuilder: FormBuilder, public authService: AuthService, public actionSheetCtrl: ActionSheetController) {
         this.category = navParams.get("category");
         this.currentuser = firebase.auth().currentUser;
@@ -40,23 +51,25 @@ export class AddProductPage {
         this.products = af.database.list('/products');
         this.userProducts = af.database.list('/users/' + this.currentuser.uid + '/products'); 
         this.productImageRef = firebase.storage().ref('/productImages/');
-        
+        this.gradeList = af.database.list('/grades');
+        this.compositiontxt = null;
         //this.catDetails = this.af.database.object('productcategories/' + this.catid);
-        this.productForm = formBuilder.group({
+        this.coilsForm = formBuilder.group({
             name: ['', Validators.required],
             grade: ['', Validators.required],
-            finish: ['', Validators.required],
+            finish: ['HR', Validators.required],
             thickness: ['', Validators.required],
             width: ['', Validators.required],
-            length: ['', Validators.required],
             weight: ['', Validators.required],
-            nos: ['', Validators.required],
             mrate: ['',],
             krate: ['',],
             composition: ['', Validators.required],
             origin: ['', Validators.required],
             brand: ['', Validators.required],
+            mtc: ['Available', Validators.required],
+            catid: ['', Validators.required],
             uid: ['', Validators.required],
+            islive: ['true',Validators.required]
             //mobile: ['', Validators.compose([Validators.minLength(10), Validators.required, Validators.maxLength(10)])],
             //companyname: ['', Validators.required],
             //email: ['', Validators.compose([Validators.required,
@@ -65,26 +78,159 @@ export class AddProductPage {
             //Validators.required])],
 
         });
+
+        this.sheetsForm = formBuilder.group({
+            name: ['', Validators.required],
+            grade: ['', Validators.required],
+            finish: ['HR', Validators.required],
+            thickness: ['', Validators.required],
+            width: ['', Validators.required],
+            length: ['', Validators.required],
+            weight: ['',],
+            nos: ['', Validators.required],
+            mrate: ['',],
+            krate: ['',],
+            composition: ['', Validators.required],
+            origin: ['', Validators.required],
+            brand: ['', Validators.required],
+            mtc: ['Available', Validators.required],
+            catid: ['', Validators.required],
+            uid: ['', Validators.required],
+            islive: ['true', Validators.required]           
+
+        });
+
+        this.seamlessForm = formBuilder.group({
+            name: ['', Validators.required],
+            grade: ['', Validators.required],
+            composition: ['', Validators.required],
+            type: ['OD', Validators.required],
+            swg: ['',],
+            mm: ['',],
+            sch: ['',],
+            finish:['Polished',],
+            quantity: ['', Validators.required],
+            unit: ['Kg', Validators.required],             
+            mrate: ['',],
+            krate: ['',],            
+            origin: ['', Validators.required],
+            brand: ['',],
+            mtc: ['',],
+            catid: ['', Validators.required],
+            uid: ['', Validators.required],
+            islive: ['true', Validators.required]
+
+        });
+
+        this.squareForm = formBuilder.group({
+            name: ['', Validators.required],
+            grade: ['', Validators.required],
+            composition: ['', Validators.required],
+            sizes: ['', Validators.required],
+            thickness: ['', Validators.required],            
+            finish: ['Polished', Validators.required],
+            quantity: ['', Validators.required],
+            unit: ['Kg', Validators.required],
+            mrate: ['',],
+            krate: ['',],
+            origin: ['', Validators.required],
+            brand: ['',],          
+            catid: ['', Validators.required],
+            uid: ['', Validators.required],
+            islive: ['true', Validators.required]
+
+        });
+           
     }
+
+    replacer(key, value) {
+        if (key == "Grade") return undefined;
+        else if (key == "Other") return undefined;
+        else if (value == "-") return undefined;
+        else return value;
+    }
+    gradeSelected() {
+       
+            
+        this.af.database.object('/grades/' + this.selectedGrade)
+            .subscribe(
+            (result) => {
+                
+                this.selectedGradeItem = result;
+            });
+        
+        this.compositiontxt = JSON.stringify(this.selectedGradeItem, this.replacer);
+        this.compositiontxt = this.compositiontxt.replace(/\"|{|}/g, "")
+        //console.log(this.composition.replace(/\"|{|}/g, ""));
+       
+    }
+
 
   ionViewDidLoad() {
       console.log('ionViewDidLoad AddProductPage');
       console.log(this.currentuser.uid);
-  }
-  submitProduct() {
+    }
 
-      if (!this.productForm.valid) {
+  onTypeChange() {
+
+      console.log(this.typeOD);
+      console.log(this.seamlessForm.value.type);
+
+      if (this.seamlessForm.value.type === "OD") {
+          this.typeOD = true;
+      }
+      else {
+          this.typeOD = false;
+      }
+      console.log(this.typeOD);
+
+  }
+
+  submitProduct(productForm) {
+
+      if (!productForm.valid) {
           console.log("invalid");
       }
       else {        
-     
-          if ((this.productForm.value.mrate == null && this.productForm.value.krate == null) || ((this.productForm.value.mrate === "" && (this.productForm.value.krate === "" || this.productForm.value.krate === null)) || (this.productForm.value.krate === "" && (this.productForm.value.mrate === "" || this.productForm.value.mrate === null)) )) {
+
+          if (this.category.catid === "4a" || this.category.catid === "4b" || this.category.catid === "4c") {
+              if (productForm.value.type === "OD") {
+                  if ((productForm.value.swg == null && productForm.value.mm == null) || ((productForm.value.swg === "" && (productForm.value.mm === "" || productForm.value.mm === null)) || (productForm.value.mm === "" && (productForm.value.swg === "" || productForm.value.swg === null)))) {
+                      console.log("Enter either thickness");
+                    
+                      this.allValid = false;
+
+                  }
+                  else {
+                      this.allValid = true;
+                  }
+
+              }
+              else {
+                  if (productForm.value.sch == null || productForm.value.mm == null || productForm.value.sch === "" || productForm.value.mm === "") {
+                      console.log("Enter both thickness");
+
+                      this.allValid = false;
+
+                  }
+                  else {
+                      this.allValid = true;
+                  }
+
+              }
+            
+          }
+          if ((productForm.value.mrate == null && productForm.value.krate == null) || ((productForm.value.mrate === "" && (productForm.value.krate === "" || productForm.value.krate === null)) || (productForm.value.krate === "" && (productForm.value.mrate === "" || productForm.value.mrate === null)))) {
               console.log("Enter either price");
+              this.allValid = false;
 
           }
           else {
-              console.log(this.productForm.value);
-              this.products.push(this.productForm.value).then(data => {
+              this.allValid = true;
+          }
+          if(this.allValid) {
+              console.log( productForm.value);
+              this.products.push( productForm.value).then(data => {
 
 
                   if (this.productImage != null) {
@@ -107,10 +253,10 @@ export class AddProductPage {
                       {
 
                           islive: true,
-                          name: this.productForm.value.name,
-                          grade: this.productForm.value.grade,
-                          mrate: this.productForm.value.mrate,
-                          krate: this.productForm.value.krate,
+                          name: productForm.value.name,
+                          grade: productForm.value.grade,
+                          mrate: productForm.value.mrate,
+                          krate: productForm.value.krate,
                           productImage: this.productImageURL
                       }
 
