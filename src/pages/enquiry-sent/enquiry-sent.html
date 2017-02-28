@@ -15,7 +15,12 @@
 
 <ion-content padding>
     <p>Your enquiry has been sent to the seller. Check enquiries tab for details.</p>
+    <ion-list>
+        <button ion-button block (click)="viewProfile()">
+            View Profile
+        </button>
     <button ion-button block (click)="sendMessage()">
         Message
     </button>
+    </ion-list>
 </ion-content>

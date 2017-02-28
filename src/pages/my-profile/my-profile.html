@@ -7,12 +7,50 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>MyProfile</ion-title>
+    <ion-title>User Profile</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
+    <ion-list>
+         <ion-item>
+                <ion-avatar item-left>
+                    <img src="assets/img/noimage.png">
+                </ion-avatar>
+                <h2>{{userProfile?.name}}</h2>
+                <p>{{userProfile?.companyname}}</p>
+            </ion-item>
+        <ion-item>
+            <ion-grid>
+                <ion-row>
+                    <ion-col width-33>
+                        Mobile
+                    </ion-col>
+                    <ion-col *ngIf="userProfile?.mobile">
+                        {{userProfile?.mobile}}
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col width-33>
+                        Email
+                    </ion-col>
+                    <ion-col *ngIf="userProfile?.email">
+                        {{userProfile?.email}}
+                    </ion-col>                   
+                </ion-row>
+            </ion-grid>
+        </ion-item>      
 
+        <ion-item *ngIf="userProfile?.address">
+            <h2>Company Address</h2>
+            <p>{{userProfile?.address}}</p>           
+        </ion-item>
+        <ion-item *ngIf="userProfile?.companyprofile">
+            <h2>Company Profile</h2>
+            <p>{{userProfile?.companyprofile}}</p>
+        </ion-item>          
+    </ion-list>
 </ion-content>
+

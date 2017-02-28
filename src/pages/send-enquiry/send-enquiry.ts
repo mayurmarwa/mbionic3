@@ -3,6 +3,7 @@ import { NavController, NavParams, AlertController, LoadingController } from 'io
 import { FormBuilder, Validators } from '@angular/forms';
 import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
 import firebase from 'firebase';
+import { AuthService } from '../../providers/auth.service';
 import { EnquirySentPage } from '../enquiry-sent/enquiry-sent';
 import { Observable } from 'rxjs/Observable'; 
 
@@ -20,14 +21,16 @@ export class SendEnquiryPage {
 
 	public enquiryForm;
 	public currentuser: any;
-	public sellerID: any;
+    public sellerID: any;
+    public seller: any;
+    public user: any;
 	public product: any;
 	public userEnquiries: any;
     public sellerEnquiries: any;
     public enquiry: any;
     public loading: any;
     
-    constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public af: AngularFire, public alertCtrl: AlertController, public loadingCtrl: LoadingController) {
+    constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public af: AngularFire, public alertCtrl: AlertController, public loadingCtrl: LoadingController, public authService: AuthService) {
   
       this.product = navParams.get("product");
       this.sellerID = this.product.uid;		
@@ -43,7 +46,31 @@ export class SendEnquiryPage {
 
         });
 
-    
+        this.authService.getFullProfile(this.sellerID)
+            .subscribe(user => {
+                //loading.dismiss();
+                // this.user.displayName = user.displayName;
+                //this.user.email = user.email || user.providerData[0].email || 'Not set yet.';
+                //this.user.photoURL = user.photoURL || this.user.photoURL;
+                this.seller = user;
+                //console.log(this.seller);
+            }, (error) => {
+                //loading.dismiss();
+                console.log('Error: ' + JSON.stringify(error));
+            });
+
+        this.authService.getFullProfile(this.currentuser.uid)
+            .subscribe(user => {
+                //loading.dismiss();
+                // this.user.displayName = user.displayName;
+                //this.user.email = user.email || user.providerData[0].email || 'Not set yet.';
+                //this.user.photoURL = user.photoURL || this.user.photoURL;
+                this.user = user;
+                //console.log(this.user);
+            }, (error) => {
+                //loading.dismiss();
+                console.log('Error: ' + JSON.stringify(error));
+            });
 	
   }
   
@@ -97,8 +124,14 @@ export class SendEnquiryPage {
               {
 
                   type: 'sent',
-				  otheruser: this.sellerID,
-				  productName: this.product.name
+                  otheruser: this.sellerID,
+                  otheruserName: this.seller.name,
+                  otheruserNo: this.seller.mobile,
+                  product: this.product,
+                  productName: this.product.name,
+                  productUnit: this.product.unit,
+                  productMrate: this.product.mrate,
+                  productKrate: this.product.krate
                   //detials: this.productForm.value.name,
                   
               }
@@ -117,8 +150,18 @@ export class SendEnquiryPage {
               {
 
                   type: 'received',
-				  otheruser: this.currentuser.uid,
-				  productName: this.product.name,
+                  otheruser: this.currentuser.uid,
+                  otheruserName: this.user.name,
+                  otheruserNo: this.user.mobile,
+                  product: this.product,
+                  productName: this.product.name,
+                  productUnit: this.product.unit,
+                  productMrate: this.product.mrate,
+                  productKrate: this.product.krate,
+                  rate: this.enquiryForm.value.rate,
+                  quantity: this.enquiryForm.value.quantity,
+                  unit: this.enquiryForm.value.unit,
+                  payment: this.enquiryForm.value.payment,
 				  details: this.enquiryForm.value.details
                   //detials: this.productForm.value.name,
                   
@@ -135,7 +178,7 @@ export class SendEnquiryPage {
 
         setTimeout(() => {
             this.navCtrl.pop({animate: false});
-            this.navCtrl.push(EnquirySentPage, { enquiryID: data.key, sellerID: this.sellerID }, {animate: false});
+            this.navCtrl.push(EnquirySentPage, { enquiryID: data.key, sellerID: this.sellerID, uid: this.currentuser.uid }, {animate: false});
         }, 1000);
 
         setTimeout(() => {

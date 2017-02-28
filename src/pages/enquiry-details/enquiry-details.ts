@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { AngularFire, FirebaseListObservable } from 'angularfire2';
 import firebase from 'firebase';
+import { MyProfilePage } from '../my-profile/my-profile';
+import { ProductPagePage } from '../product-page/product-page';
 
 /*
   Generated class for the EnquiryDetails page.
@@ -25,7 +27,7 @@ export class EnquiryDetailsPage {
 		this.currentuser = firebase.auth().currentUser;
 		this.messageList = af.database.list('/users/' + this.currentuser.uid + '/enquiries/' + this.enquiry.$key + '/messgaes/' );
 		this.otherUserList = af.database.list('/users/' + this.enquiry.otheruser + '/enquiries/' + this.enquiry.$key + '/messgaes/' );
-		
+        //console.log(this.enquiry);
   }
 
   ionViewDidLoad() {
@@ -34,7 +36,7 @@ export class EnquiryDetailsPage {
 
   send(chatBox){
 		
-			console.log(chatBox);
+			//console.log(chatBox);
 			this.messageList.push({
 									
 				text: this.chatBox,
@@ -47,6 +49,14 @@ export class EnquiryDetailsPage {
 			})
 			this.chatBox = '';
 
+  }
+
+  viewProfile() {
+      this.navCtrl.push(MyProfilePage, {userID: this.enquiry.otheruser});
+  }
+
+  viewProduct() {
+      this.navCtrl.push(ProductPagePage, { product: this.enquiry.product });
   }
 
 }
