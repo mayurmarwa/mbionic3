@@ -21,7 +21,7 @@
     </ion-fab>
 
     <ion-list>
-        <ion-item *ngFor="let myproduct of myproducts | async" (click)="detailpage(myproduct)">
+        <ion-item *ngFor="let myproduct of productListRev | async" (click)="detailpage(myproduct)">
             <!--<ion-thumbnail item-left>
                 <img src="{{category.imgURL}}">
             </ion-thumbnail>-->

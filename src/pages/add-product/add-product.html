@@ -35,8 +35,8 @@
 
     
 
-    <div *ngIf="category.catid === 1">
-        <form [formGroup]="coilsForm" (submit)="submitProduct(coilsForm)">
+    <div *ngIf="category.catid === 1 || category.catid === '8a' || category.catid === '9a' ">
+        <form [formGroup]="coilsForm" (submit)="showConfirm(coilsForm)">
 
             <ion-item>
                 <ion-label stacked>Name</ion-label>
@@ -44,7 +44,13 @@
                            placeholder="Your Name" [(ngModel)]="category.title">
                 </ion-input>
             </ion-item>
-            <ion-item>
+            <ion-item *ngIf="category.catid != 1">
+                <ion-label stacked>Grade</ion-label>
+                <ion-input #grade formControlName="grade" type="text"
+                           placeholder="Enter Grade">
+                </ion-input>
+            </ion-item>
+            <ion-item *ngIf="category.catid === 1">
                 <ion-label>Grade</ion-label>
                 <ion-select #grade formControlName="grade" [(ngModel)]="selectedGrade" (ionChange)="gradeSelected()" >
                     <ion-option *ngFor="let grade of gradeList | async" [value]="grade.$key">{{grade.Grade}}</ion-option>
@@ -93,7 +99,7 @@
                 </ion-input>
             </ion-item>
 
-            <ion-item>
+            <ion-item *ngIf="category.catid === 1">
                 <ion-label stacked>Standard Composition</ion-label>
                 <ion-input #composition formControlName="composition" type="text"
                            placeholder="Enter Composition" [(ngModel)]="compositiontxt">
@@ -122,6 +128,7 @@
                 </ion-select>
             </ion-item>
             <ion-input type="text" hidden [(ngModel)]="category.catid" formControlName="catid"></ion-input>
+            <ion-input type="text" hidden [(ngModel)]="gradeval" formControlName="gradeval"></ion-input>
             <ion-input type="text" hidden [(ngModel)]="currentuser.uid" formControlName="uid"></ion-input>
             <ion-input type="text" hidden formControlName="islive"></ion-input>
 
@@ -168,8 +175,8 @@
     </div>
 
 
-    <div *ngIf="category.catid === 2 || category.catid === 3">
-        <form [formGroup]="sheetsForm" (submit)="submitProduct(sheetsForm)">
+    <div *ngIf="category.catid === 2 || category.catid === 3 || category.catid === '8b' || category.catid === '9b' ">
+        <form [formGroup]="sheetsForm" (submit)="showConfirm(sheetsForm)">
 
             <ion-item>
                 <ion-label stacked>Name</ion-label>
@@ -177,7 +184,13 @@
                            placeholder="Your Name" [(ngModel)]="category.title">
                 </ion-input>
             </ion-item>
-            <ion-item>
+            <ion-item *ngIf="category.catid === '8b' || category.catid === '9b' ">
+                <ion-label stacked>Grade</ion-label>
+                <ion-input #grade formControlName="grade" type="text"
+                           placeholder="Enter Grade">
+                </ion-input>
+            </ion-item>
+            <ion-item *ngIf="category.catid === 2 || category.catid === 3">
                 <ion-label>Grade</ion-label>
                 <ion-select #grade formControlName="grade" [(ngModel)]="selectedGrade" (ionChange)="gradeSelected()">
                     <ion-option *ngFor="let grade of gradeList | async" [value]="grade.$key">{{grade.Grade}}</ion-option>
@@ -237,7 +250,7 @@
                 </ion-input>
             </ion-item>
 
-            <ion-item>
+            <ion-item *ngIf="category.catid === 2 || category.catid === 3">
                 <ion-label stacked>Standard Composition</ion-label>
                 <ion-input #composition formControlName="composition" type="text"
                            placeholder="Enter Composition" [(ngModel)]="compositiontxt">
@@ -266,6 +279,7 @@
                 </ion-select>
             </ion-item>
             <ion-input type="text" hidden [(ngModel)]="category.catid" formControlName="catid"></ion-input>
+            <ion-input type="text" hidden [(ngModel)]="gradeval" formControlName="gradeval"></ion-input>
             <ion-input type="text" hidden [(ngModel)]="currentuser.uid" formControlName="uid"></ion-input>
             <ion-input type="text" hidden formControlName="islive"></ion-input>
 
@@ -276,8 +290,8 @@
         </form>
     </div>
 
-    <div *ngIf="category.catid === '4a' || category.catid === '4b' || category.catid === '4c' ">
-        <form [formGroup]="seamlessForm" (submit)="submitProduct(seamlessForm)">
+    <div *ngIf="category.catid === '4a' || category.catid === '4b' || category.catid === '4c' || category.catid === '8c1' || category.catid === '8c2' || category.catid === '8c3' || category.catid === '9c1' || category.catid === '9c2' || category.catid === '9c3' ">
+        <form [formGroup]="seamlessForm" (submit)="showConfirm(seamlessForm)">
 
             <ion-item>
                 <ion-label stacked>Name</ion-label>
@@ -285,7 +299,13 @@
                            placeholder="Your Name" [(ngModel)]="category.title">
                 </ion-input>
             </ion-item>
-            <ion-item>
+            <ion-item *ngIf="category.catid === '8c1' || category.catid === '8c2' || category.catid === '8c3' || category.catid === '9c1' || category.catid === '9c2' || category.catid === '9c3' ">
+                <ion-label stacked>Grade</ion-label>
+                <ion-input #grade formControlName="grade" type="text"
+                           placeholder="Enter Grade" >
+                </ion-input>
+            </ion-item>
+            <ion-item *ngIf="category.catid === '4a' || category.catid === '4b' || category.catid === '4c' ">
                 <ion-label>Grade</ion-label>
                 <ion-select #grade formControlName="grade" [(ngModel)]="selectedGrade" (ionChange)="gradeSelected()">
                     <ion-option *ngFor="let grade of gradeList | async" [value]="grade.$key">{{grade.Grade}}</ion-option>
@@ -330,7 +350,7 @@
                     </ion-col>
                 </ion-row>
             </ion-grid>
-            <ion-item *ngIf="typeOD === true && category.catid === '4b' ">
+            <ion-item *ngIf="typeOD === true && (category.catid === '4b' || category.catid === '8c2' || category.catid === '9c2' ) ">
                 <ion-label stacked>Finish</ion-label>
                 <ion-select #finish formControlName="finish">
                     <ion-option value="Polished" selected="true">Polished</ion-option>
@@ -386,7 +406,7 @@
                 </ion-input>
             </ion-item>
 
-            <ion-item *ngIf="category.catid != '4c' ">
+            <ion-item *ngIf="category.catid != '4c' && category.catid != '8c3' && category.catid != '9c3'  ">
                 <ion-label>MTC (optional)</ion-label>
                 <ion-select #mtc formControlName="mtc">
                     <ion-option value="Available">Available</ion-option>
@@ -394,6 +414,7 @@
                 </ion-select>
             </ion-item>
             <ion-input type="text" hidden [(ngModel)]="category.catid" formControlName="catid"></ion-input>
+            <ion-input type="text" hidden [(ngModel)]="gradeval" formControlName="gradeval"></ion-input>
             <ion-input type="text" hidden [(ngModel)]="currentuser.uid" formControlName="uid"></ion-input>
             <ion-input type="text" hidden formControlName="islive"></ion-input>
 
@@ -404,8 +425,8 @@
         </form>
     </div>
 
-    <div *ngIf="category.catid === '4d' ">
-        <form [formGroup]="squareForm" (submit)="submitProduct(squareForm)">
+    <div *ngIf="category.catid === '4d' || category.catid === '8c4' || category.catid === '9c4' ">
+        <form [formGroup]="squareForm" (submit)="showConfirm(squareForm)">
 
             <ion-item>
                 <ion-label stacked>Name</ion-label>
@@ -413,13 +434,19 @@
                            placeholder="Your Name" [(ngModel)]="category.title">
                 </ion-input>
             </ion-item>
-            <ion-item>
+            <ion-item *ngIf="category.catid === '8c4' || category.catid === '9c4' " >
+                <ion-label stacked>Grade</ion-label>
+                <ion-input #grade formControlName="grade" type="text"
+                           placeholder="Enter Grade">
+                </ion-input>
+            </ion-item>
+            <ion-item *ngIf="category.catid === '4d' ">
                 <ion-label>Grade</ion-label>
                 <ion-select #grade formControlName="grade" [(ngModel)]="selectedGrade" (ionChange)="gradeSelected()">
                     <ion-option *ngFor="let grade of gradeList | async" [value]="grade.$key">{{grade.Grade}}</ion-option>
                 </ion-select>
             </ion-item>
-            <ion-item>
+            <ion-item *ngIf="category.catid === '4d' ">
                 <ion-label stacked>Chemical Composition</ion-label>
                 <ion-input #composition formControlName="composition" type="text"
                            placeholder="Enter Composition" [(ngModel)]="compositiontxt">
@@ -494,6 +521,7 @@
             </ion-item>
             
             <ion-input type="text" hidden [(ngModel)]="category.catid" formControlName="catid"></ion-input>
+            <ion-input type="text" hidden [(ngModel)]="gradeval" formControlName="gradeval"></ion-input>
             <ion-input type="text" hidden [(ngModel)]="currentuser.uid" formControlName="uid"></ion-input>
             <ion-input type="text" hidden formControlName="islive"></ion-input>
 
@@ -504,4 +532,411 @@
         </form>
     </div>
 
+    <div *ngIf="category.catid === 5">
+        <form [formGroup]="flatsForm" (submit)="showConfirm(flatsForm)">
+
+            <ion-item>
+                <ion-label stacked>Name</ion-label>
+                <ion-input #name formControlName="name" type="text"
+                           placeholder="Your Name" [(ngModel)]="category.title">
+                </ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label>Grade</ion-label>
+                <ion-select #grade formControlName="grade" [(ngModel)]="selectedGrade" (ionChange)="gradeSelected()">
+                    <ion-option *ngFor="let grade of gradeList | async" [value]="grade.$key">{{grade.Grade}}</ion-option>
+                </ion-select>
+            </ion-item>
+            <ion-item>
+                <ion-label stacked>Chemical Composition</ion-label>
+                <ion-input #composition formControlName="composition" type="text"
+                           placeholder="Enter Composition" [(ngModel)]="compositiontxt">
+                </ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label stacked>Width</ion-label>
+                <ion-input #width formControlName="width" type="number"
+                           placeholder="Enter Width (mm)" min="0" step="0.01">
+                </ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label stacked>Thickness</ion-label>
+                <ion-input #thickness formControlName="thickness" type="number"
+                           placeholder="Enter Thickness (mm)" min="0" step="0.01">
+                </ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label stacked>Length</ion-label>
+                <ion-input #length formControlName="length" type="number"
+                           placeholder="Enter Length (mtrs)" min="0" step="0.01">
+                </ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label stacked>Quality</ion-label>
+                <ion-select #quality formControlName="quality" >
+                    <ion-option value="Original" selected="true">Original</ion-option>
+                    <ion-option value="Rolled">Rolled</ion-option>
+                </ion-select>
+            </ion-item>
+            <ion-grid>
+                <ion-row>
+                    <ion-col>
+                        <ion-item>
+                            <ion-label stacked>Quantity</ion-label>
+                            <ion-input #quantity formControlName="quantity" type="number"
+                                       placeholder="Enter Quantity" min="0">
+                            </ion-input>
+                        </ion-item>
+                    </ion-col>
+                    <ion-col>
+                        <ion-item>
+                            <ion-label stacked>Unit</ion-label>
+                            <ion-select #unit formControlName="unit">
+                                <ion-option value="Mtrs">Mtrs</ion-option>
+                                <ion-option value="Nos">Nos</ion-option>
+                            </ion-select>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+            <ion-item>
+                <ion-label stacked>Market Rate</ion-label>
+                <ion-input #mrate formControlName="mrate" type="number"
+                           placeholder="Rs/Unit" [(ngModel)]="mrateTrue" min="0" step="0.01">
+                </ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label stacked>Kalamboli Rate</ion-label>
+                <ion-input #krate formControlName="krate" type="number"
+                           placeholder="Rs/Unit" [(ngModel)]="krateTrue" min="0" step="0.01">
+                </ion-input>
+            </ion-item>
+
+            <ion-item>
+                <ion-label stacked>Origin (optional)</ion-label>
+                <ion-input #origin formControlName="origin" type="text"
+                           placeholder="Enter Origin">
+                </ion-input>
+            </ion-item>
+
+            <ion-item>
+                <ion-label stacked>Brand (optional)</ion-label>
+                <ion-input #brand formControlName="brand" type="text"
+                           placeholder="Enter Brand">
+                </ion-input>
+            </ion-item>
+
+            <ion-item >
+                <ion-label>MTC (optional)</ion-label>
+                <ion-select #mtc formControlName="mtc">
+                    <ion-option value="Available">Available</ion-option>
+                    <ion-option value="Not Available">Not Available</ion-option>
+                </ion-select>
+            </ion-item>
+            <ion-input type="text" hidden [(ngModel)]="category.catid" formControlName="catid"></ion-input>
+            <ion-input type="text" hidden [(ngModel)]="gradeval" formControlName="gradeval"></ion-input>
+            <ion-input type="text" hidden [(ngModel)]="currentuser.uid" formControlName="uid"></ion-input>
+            <ion-input type="text" hidden formControlName="islive"></ion-input>
+
+            <button ion-button block type="submit">
+                Submit
+            </button>
+
+        </form>
+    </div>
+
+    <div *ngIf="category.catid === 6">
+        <form [formGroup]="anglesForm" (submit)="showConfirm(anglesForm)">
+
+            <ion-item>
+                <ion-label stacked>Name</ion-label>
+                <ion-input #name formControlName="name" type="text"
+                           placeholder="Your Name" [(ngModel)]="category.title">
+                </ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label>Grade</ion-label>
+                <ion-select #grade formControlName="grade" [(ngModel)]="selectedGrade" (ionChange)="gradeSelected()">
+                    <ion-option *ngFor="let grade of gradeList | async" [value]="grade.$key">{{grade.Grade}}</ion-option>
+                </ion-select>
+            </ion-item>
+            <ion-item>
+                <ion-label stacked>Chemical Composition</ion-label>
+                <ion-input #composition formControlName="composition" type="text"
+                           placeholder="Enter Composition" [(ngModel)]="compositiontxt">
+                </ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label stacked>Sizes</ion-label>
+                <ion-input #sizes formControlName="sizes" type="text"
+                           placeholder="Enter Sizes">
+                </ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label stacked>Thickness</ion-label>
+                <ion-input #thickness formControlName="thickness" type="number"
+                           placeholder="Enter Thickness (mm)" min="0" step="0.01">
+                </ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label stacked>Length</ion-label>
+                <ion-input #length formControlName="length" type="number"
+                           placeholder="Enter Length (mtrs)" min="0" step="0.01">
+                </ion-input>
+            </ion-item>            
+            <ion-grid>
+                <ion-row>
+                    <ion-col>
+                        <ion-item>
+                            <ion-label stacked>Quantity</ion-label>
+                            <ion-input #quantity formControlName="quantity" type="number"
+                                       placeholder="Enter Quantity" min="0">
+                            </ion-input>
+                        </ion-item>
+                    </ion-col>
+                    <ion-col>
+                        <ion-item>
+                            <ion-label stacked>Unit</ion-label>
+                            <ion-select #unit formControlName="unit">
+                                <ion-option value="Mtrs">Mtrs</ion-option>
+                                <ion-option value="Nos">Nos</ion-option>
+                            </ion-select>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+            <ion-item>
+                <ion-label stacked>Market Rate</ion-label>
+                <ion-input #mrate formControlName="mrate" type="number"
+                           placeholder="Rs/Unit" [(ngModel)]="mrateTrue" min="0" step="0.01">
+                </ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label stacked>Kalamboli Rate</ion-label>
+                <ion-input #krate formControlName="krate" type="number"
+                           placeholder="Rs/Unit" [(ngModel)]="krateTrue" min="0" step="0.01">
+                </ion-input>
+            </ion-item>
+
+            <ion-item>
+                <ion-label stacked>Origin (optional)</ion-label>
+                <ion-input #origin formControlName="origin" type="text"
+                           placeholder="Enter Origin">
+                </ion-input>
+            </ion-item>
+
+            <ion-item>
+                <ion-label stacked>Brand (optional)</ion-label>
+                <ion-input #brand formControlName="brand" type="text"
+                           placeholder="Enter Brand">
+                </ion-input>
+            </ion-item>
+
+            <ion-item>
+                <ion-label>MTC (optional)</ion-label>
+                <ion-select #mtc formControlName="mtc">
+                    <ion-option value="Available">Available</ion-option>
+                    <ion-option value="Not Available">Not Available</ion-option>
+                </ion-select>
+            </ion-item>
+            <ion-input type="text" hidden [(ngModel)]="category.catid" formControlName="catid"></ion-input>
+            <ion-input type="text" hidden [(ngModel)]="gradeval" formControlName="gradeval"></ion-input>
+            <ion-input type="text" hidden [(ngModel)]="currentuser.uid" formControlName="uid"></ion-input>
+            <ion-input type="text" hidden formControlName="islive"></ion-input>
+
+            <button ion-button block type="submit">
+                Submit
+            </button>
+
+        </form>
+    </div>
+
+    <div *ngIf="category.catid === 7 || category.catid === '8d' || category.catid === '9d' ">
+    <form [formGroup]="roundbarsForm" (submit)="showConfirm(roundbarsForm)">
+
+        <ion-item>
+            <ion-label stacked>Name</ion-label>
+            <ion-input #name formControlName="name" type="text"
+                       placeholder="Enter Name" [(ngModel)]="category.title">
+            </ion-input>
+        </ion-item>
+        <ion-item *ngIf="category.catid != 7">
+            <ion-label stacked>Grade</ion-label>
+            <ion-input #grade formControlName="grade" type="text"
+                       placeholder="Enter Grade">
+            </ion-input>
+        </ion-item>
+        <ion-item *ngIf="category.catid === 7">
+            <ion-label>Grade</ion-label>
+            <ion-select #grade formControlName="grade" [(ngModel)]="selectedGrade" (ionChange)="gradeSelected()">
+                <ion-option *ngFor="let grade of gradeList | async" [value]="grade.$key">{{grade.Grade}}</ion-option>
+            </ion-select>
+        </ion-item>
+        <ion-item *ngIf="category.catid === 7">
+            <ion-label stacked>Chemical Composition</ion-label>
+            <ion-input #composition formControlName="composition" type="text"
+                       placeholder="Enter Composition" [(ngModel)]="compositiontxt">
+            </ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label stacked>Category</ion-label>
+            <ion-select #pcategory formControlName="pcategory">
+                <ion-option value="Black">Black</ion-option>
+                <ion-option value="Polish Bright">Polish Bright</ion-option>
+                <ion-option value="Export Bright">Export Bright</ion-option>
+            </ion-select>
+        </ion-item>
+        <ion-item>
+            <ion-label stacked>Sizes</ion-label>
+            <ion-input #sizes formControlName="sizes" type="text"
+                       placeholder="Enter Sizes">
+            </ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label stacked>Thickness</ion-label>
+            <ion-input #thickness formControlName="thickness" type="text"
+                       placeholder="Enter Thickness">
+            </ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label stacked>Length</ion-label>
+            <ion-input #length formControlName="length" type="number"
+                       placeholder="Enter Length (mtrs)" min="0" step="0.01">
+            </ion-input>
+        </ion-item>
+        <ion-grid>
+            <ion-row>
+                <ion-col>
+                    <ion-item>
+                        <ion-label stacked>Quantity</ion-label>
+                        <ion-input #quantity formControlName="quantity" type="number"
+                                   placeholder="Enter Quantity" min="0">
+                        </ion-input>
+                    </ion-item>
+                </ion-col>
+                <ion-col>
+                    <ion-item>
+                        <ion-label stacked>Unit</ion-label>
+                        <ion-select #unit formControlName="unit">
+                            <ion-option value="Mtrs">Mtrs</ion-option>
+                            <ion-option value="Nos">Nos</ion-option>
+                        </ion-select>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+        <ion-item>
+            <ion-label stacked>Ultra Guarantee</ion-label>
+            <ion-select #guarantee formControlName="guarantee">
+                <ion-option value="Yes">Yes</ion-option>
+                <ion-option value="No">No</ion-option>
+            </ion-select>
+        </ion-item>
+        <ion-item>
+            <ion-label stacked>Market Rate</ion-label>
+            <ion-input #mrate formControlName="mrate" type="number"
+                       placeholder="Rs/Unit" [(ngModel)]="mrateTrue" min="0" step="0.01">
+            </ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label stacked>Kalamboli Rate</ion-label>
+            <ion-input #krate formControlName="krate" type="number"
+                       placeholder="Rs/Unit" [(ngModel)]="krateTrue" min="0" step="0.01">
+            </ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label stacked>Origin (optional)</ion-label>
+            <ion-input #origin formControlName="origin" type="text"
+                       placeholder="Enter Origin">
+            </ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label stacked>Brand (optional)</ion-label>
+            <ion-input #brand formControlName="brand" type="text"
+                       placeholder="Enter Brand">
+            </ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label>MTC (optional)</ion-label>
+            <ion-select #mtc formControlName="mtc">
+                <ion-option value="Available">Available</ion-option>
+                <ion-option value="Not Available">Not Available</ion-option>
+            </ion-select>
+        </ion-item>
+        <ion-input type="text" hidden [(ngModel)]="category.catid" formControlName="catid"></ion-input>
+        <ion-input type="text" hidden [(ngModel)]="gradeval" formControlName="gradeval"></ion-input>
+        <ion-input type="text" hidden [(ngModel)]="currentuser.uid" formControlName="uid"></ion-input>
+        <ion-input type="text" hidden formControlName="islive"></ion-input>
+
+        <button ion-button block type="submit">
+            Submit
+        </button>
+
+    </form>
+    </div>
+
+    <div *ngIf="category.catid === 10">
+        <form [formGroup]="deadForm" (submit)="showConfirm(deadForm)">
+
+            <ion-item>
+                <ion-label stacked>Name</ion-label>
+                <ion-input #name formControlName="name" type="text"
+                           placeholder="Enter Name" [(ngModel)]="category.title">
+                </ion-input>
+            </ion-item> 
+            <ion-item>
+                <ion-label stacked>Details</ion-label>
+                <ion-input #details formControlName="details" type="text"
+                           placeholder="Enter Details">
+                </ion-input>
+            </ion-item>            
+            <ion-grid>
+                <ion-row>
+                    <ion-col>
+                        <ion-item>
+                            <ion-label stacked>Quantity</ion-label>
+                            <ion-input #quantity formControlName="quantity" type="number"
+                                       placeholder="Enter Quantity" min="0">
+                            </ion-input>
+                        </ion-item>
+                    </ion-col>
+                    <ion-col>
+                        <ion-item>
+                            <ion-label stacked>Unit</ion-label>
+                            <ion-select #unit formControlName="unit">
+                                <ion-option value="Kg">Kg</ion-option>
+                                <ion-option value="Ton">Ton</ion-option>
+                                <ion-option value="Mtrs">Mtrs</ion-option>
+                                <ion-option value="Nos">Nos</ion-option>
+                            </ion-select>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>           
+            <ion-item>
+                <ion-label stacked>Market Rate</ion-label>
+                <ion-input #mrate formControlName="mrate" type="number"
+                           placeholder="Rs/Unit" [(ngModel)]="mrateTrue" min="0" step="0.01">
+                </ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label stacked>Kalamboli Rate</ion-label>
+                <ion-input #krate formControlName="krate" type="number"
+                           placeholder="Rs/Unit" [(ngModel)]="krateTrue" min="0" step="0.01">
+                </ion-input>
+            </ion-item>
+            <ion-input type="text" hidden [(ngModel)]="category.catid" formControlName="catid"></ion-input>
+            <ion-input type="text" hidden [(ngModel)]="gradeval" formControlName="gradeval"></ion-input>
+            <ion-input type="text" hidden [(ngModel)]="currentuser.uid" formControlName="uid"></ion-input>
+            <ion-input type="text" hidden formControlName="islive"></ion-input>
+
+            <button ion-button block type="submit">
+                Submit
+            </button>
+
+        </form>
+    </div>
 </ion-content>

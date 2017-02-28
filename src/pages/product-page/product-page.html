@@ -23,28 +23,122 @@
             </ion-col>
         </ion-row>
     </ion-card>
-    <ion-item>
-        <ion-label color="primary" stacked>Name</ion-label>
-        <ion-input type="text" value={{this.product.name}} disabled></ion-input>
-    </ion-item>
     <ion-grid>
         <ion-row>
-            <ion-col width-50>
-                <ion-item>
-                    <ion-label color="primary" stacked>Grade</ion-label>
-                    <ion-input value={{this.product.grade}} disabled></ion-input>
-                    
-                </ion-item>
-                </ion-col>
-            <ion-col width-50>
-                <ion-item>
-                    <ion-label color="primary" stacked>Grade</ion-label>
-                    <ion-input value={{this.product.grade}} disabled></ion-input>
-                   
-                </ion-item>
+            <ion-col width-50 *ngIf="product?.name">
+                <h2>{{product?.name}}</h2>
+            </ion-col>   
+            <ion-col>
+                <ion-row *ngIf="product?.mrate">
+                    Market Rate: Rs.{{product?.mrate}}/{{product?.unit}}
+                </ion-row>
+                <ion-row *ngIf="product?.krate">
+                    Kalamboli Rate: Rs.{{product?.krate}}/{{product?.unit}}
+                </ion-row>
+            </ion-col>                     
+        </ion-row>
+    </ion-grid>
+    <h4>Specifications</h4>
+    <ion-list>        
+    <ion-grid>
+        <ion-row>
+            <ion-col width-20 *ngIf="product?.gradeval">
+                 Grade: {{product?.gradeval}}
+             </ion-col>
+            <ion-col *ngIf="product?.composition">
+                ({{product?.composition}})
             </ion-col>
             </ion-row>
+        <ion-row *ngIf="product?.category">
+            <ion-col>
+                Category: {{product?.category}}
+            </ion-col>
+        </ion-row>
+        <ion-row *ngIf="product?.sizes">
+            <ion-col>
+                Sizes: {{product?.sizes}}
+            </ion-col>
+        </ion-row>
+        <ion-row *ngIf="product?.finish">
+            <ion-col>
+                Finish: {{product?.finish}}
+            </ion-col>
+        </ion-row>
+        <ion-row *ngIf="product?.type">
+            <ion-col>
+                Type: {{product?.type}}
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col *ngIf="product?.swg">
+                SWG: {{product?.swg}}
+            </ion-col>
+            <ion-col *ngIf="product?.sch">
+                SCH: {{product?.sch}}
+            </ion-col>
+            <ion-col *ngIf="product?.mm">
+                MM: {{product?.mm}}
+            </ion-col>
+        </ion-row>
+        <ion-row *ngIf="product?.quantity">
+            <ion-col>
+                Quantity: {{product?.quantity}} {{product?.unit}}
+            </ion-col>
+        </ion-row>
+        <ion-row *ngIf="product?.guarantee">
+            <ion-col>
+               Ultra Guarantee: {{product?.guarantee}}
+            </ion-col>
+        </ion-row>
+        <ion-row *ngIf="product?.details">
+            <ion-col>
+                Details: {{product?.details}}
+            </ion-col>
+        </ion-row>
+        <ion-row>            
+            <ion-col *ngIf="product?.thickness">
+                Thickness: {{product?.thickness}} mm
+            </ion-col>
+            <ion-col *ngIf="product?.width">
+                Width: {{product?.width}} mm
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col *ngIf="product?.weight">
+                Weight: {{product?.weight}} Kg
+            </ion-col>
+            <ion-col *ngIf="product?.length && (product.catid === 5 || product.catid === 6)">
+                Length: {{product?.length}} Mtrs
+            </ion-col>
+            <ion-col *ngIf="product?.length && product.catid != 5 && product.catid != 6">
+                Length: {{product?.length}} mm
+            </ion-col>
+        </ion-row>
+        <ion-row *ngIf="product?.nos">
+            <ion-col>
+                Nos: {{product?.nos}}
+            </ion-col>
+        </ion-row>
+        <ion-row *ngIf="product?.quality">
+            <ion-col>
+                Quanlity: {{product?.quality}}
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col *ngIf="product?.origin">
+                Origin: {{product?.origin}}
+            </ion-col>
+            <ion-col *ngIf="product?.brand">
+                Brand: {{product?.brand}}
+            </ion-col>
+        </ion-row>
+        <ion-row *ngIf="product?.mtc">
+            <ion-col>
+                MTC: {{product?.mtc}}
+            </ion-col>
+        </ion-row>
         </ion-grid>
+      </ion-list>
 
     <button ion-button round icon-left (click)="sendEnquiry()">
         <ion-icon name="send"></ion-icon>

@@ -4,6 +4,7 @@ import { AngularFire, FirebaseListObservable } from 'angularfire2';
 import { SelectCategoryPage } from '../select-category/select-category';
 import { EditProductPage } from '../edit-product/edit-product';
 import firebase from 'firebase';
+import { Observable } from 'rxjs/Observable';
 
 /*
   Generated class for the MyProducts page.
@@ -19,12 +20,13 @@ export class MyProductsPage {
 
     myproducts: FirebaseListObservable<any>;
     currentuser: any;
+    productListRev: Observable<any>;
 
     constructor(public navCtrl: NavController, public navParams: NavParams, public af: AngularFire) {
 
         this.currentuser = firebase.auth().currentUser;
-        this.myproducts = af.database.list('/users/' + this.currentuser.uid + '/products/');
-        
+        this.myproducts = af.database.list('/users/' + this.currentuser.uid + '/products/', { query: { orderByChild: 'timestamp' } });
+        this.productListRev = this.myproducts.map((arr) => { return arr.reverse(); });
     }
 
   ionViewDidLoad() {

@@ -3,6 +3,8 @@ import { NavController, NavParams, ModalController } from 'ionic-angular';
 import { NotificationsPage } from '../notifications/notifications';
 import { AngularFire, FirebaseListObservable } from 'angularfire2';
 import { ProductPagePage } from '../product-page/product-page';
+import { Observable } from 'rxjs/Observable';
+
 
 
 /*
@@ -18,11 +20,13 @@ import { ProductPagePage } from '../product-page/product-page';
 export class MarketPage {
 
     productList: FirebaseListObservable<any>;
+    productListRev: Observable<any>;
 
     constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController, public af: AngularFire) {
 	
-	 this.productList = af.database.list('/products',{query: {orderByChild: 'mrate'}});
-	}
+	 this.productList = af.database.list('/products',{query: {orderByChild: 'timestamp' }});
+     this.productListRev = this.productList.map((arr) => { return arr.reverse(); });
+    }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad MarketPage');

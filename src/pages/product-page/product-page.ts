@@ -22,11 +22,12 @@ export class ProductPagePage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ProductPagePage');
+      console.log('ionViewDidLoad ProductPagePage');
+      console.log(this.product);
   }
 
   sendEnquiry(){
-	 this.navCtrl.push(SendEnquiryPage, {productName: this.product.name,seller: this.product.uid});
+	 this.navCtrl.push(SendEnquiryPage, {product: this.product});
 	
 
   }

@@ -14,11 +14,58 @@
 
 
 <ion-content padding>
-    <form [formGroup]="enquiryForm" (submit)="submitEnquiry()">
+    <form [formGroup]="enquiryForm" (submit)="showConfirm(enquiryForm)">
 
+        Choose A Rate:
+        <ion-list radio-group #rate formControlName="rate">     
+            <ion-item>
+                <ion-label>Market Rate: Rs.{{product?.mrate}}/{{product?.unit}}</ion-label>
+                <ion-radio value="mrate" checked></ion-radio>
+            </ion-item>
+            <ion-item>
+                <ion-label>Kalamboli Rate: Rs.{{product?.krate}}/{{product?.unit}}</ion-label>
+                <ion-radio value="krate"></ion-radio>
+            </ion-item>            
+        </ion-list>
+
+        Enter Desired Quantity:
+        <ion-grid>
+            <ion-row>
+                <ion-col>
+                    <ion-item>
+                        <ion-label stacked>Quantity</ion-label>
+                        <ion-input #quantity formControlName="quantity" type="number"
+                                   placeholder="Enter Quantity" min="0">
+                        </ion-input>
+                    </ion-item>
+                </ion-col>
+                <ion-col>
+                    <ion-item>
+                        <ion-label stacked>Unit</ion-label>
+                        <ion-select #unit formControlName="unit">
+                            <ion-option value="Kg" selected="true">Kg</ion-option>
+                            <ion-option value="Ton" selected="true">Ton</ion-option>
+                            <ion-option value="Mtrs">Mtrs</ion-option>
+                            <ion-option value="Nos">Nos</ion-option>
+                        </ion-select>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+        </ion-grid> 
+        Preferred Payment Method:
+        <ion-list radio-group #payment formControlName="payment">
+            <ion-item>
+                <ion-label>Cash</ion-label>
+                <ion-radio value="cash" checked></ion-radio>
+            </ion-item>
+            <ion-item>
+                <ion-label>45 Days Credit</ion-label>
+                <ion-radio value="credit"></ion-radio>
+            </ion-item>
+        </ion-list>
         <ion-item>
             <ion-label stacked>Details</ion-label>
-            <ion-input #name formControlName="details" type="text"
+            <ion-input #details formControlName="details" type="text"
                        placeholder="Any other details">
             </ion-input>
         </ion-item>

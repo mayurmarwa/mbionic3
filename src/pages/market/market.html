@@ -30,7 +30,7 @@
 <ion-content padding>
 
     <ion-list>
-        <ion-item *ngFor="let product of productList | async" (click)="openproductpage(product)">
+        <ion-item *ngFor="let product of productListRev | async" (click)="openproductpage(product)">
             <ion-card>
                 <img src="/assets/img/noimage.png" />
                 <ion-card-content>

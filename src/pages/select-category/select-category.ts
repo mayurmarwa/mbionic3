@@ -16,8 +16,9 @@ import { AddProductPage } from '../add-product/add-product';
 export class SelectCategoryPage {
 
     categories: FirebaseListObservable<any>;
+    public parentcat: any;
 
-    constructor(public navCtrl: NavController, public navParams: NavParams, af: AngularFire) {
+    constructor(public navCtrl: NavController, public navParams: NavParams, public af: AngularFire) {
         this.categories = af.database.list('/productcategories',{query: {orderByChild: 'catid'}});
     }
 
@@ -27,7 +28,18 @@ export class SelectCategoryPage {
 
   detailpage(category) {
 
-      this.navCtrl.push(AddProductPage, {category: category});
+      if (category.catid === 4 || category.catid === 8 || category.catid === 9 ) {
+
+          this.categories = this.af.database.list('/productcategories/' + category.$key + '/subcategories/', { query: { orderByChild: 'oid' } });
+          this.parentcat = category.$key;
+      }
+      else if (category.catid === '8c' || category.catid === '9c') {
+
+          this.categories = this.af.database.list('/productcategories/' + this.parentcat + '/subcategories/' + category.$key + '/types/', { query: { orderByChild: 'oid' } });
+      }
+      else {
+          this.navCtrl.push(AddProductPage, { category: category });
+      }
   }
 
 }

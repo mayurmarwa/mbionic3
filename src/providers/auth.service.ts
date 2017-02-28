@@ -136,4 +136,8 @@ export class AuthService {
   getFullProfile(uid: string): Observable<any> {
     return this.af.database.object('users/' + uid);
   }
+
+  getEnquiry(uid: string, eqid: string): Observable<any> {
+      return this.af.database.object('users/' + uid + '/enquiries/' + eqid);
+  }
 }
