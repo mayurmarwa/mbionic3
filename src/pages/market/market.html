@@ -32,38 +32,18 @@
     <ion-list>
         <ion-item *ngFor="let product of productListRev | async" (click)="openproductpage(product)">
             <ion-card>
-                <img src="/assets/img/noimage.png" />
                 <ion-card-content>
                     <ion-card-title>
                         {{product.name}}
                     </ion-card-title>
                     <p>
-                        {{product.mrate}}
+                        Market Rate: Rs.{{product.mrate}}/{{product.unit}}
                         <br>
-                        {{product.krate}}
+                        Kalamboli Rate: Rs.{{product.krate}}/{{product.unit}}
                     </p>
                 </ion-card-content>
             </ion-card>
         </ion-item>
     </ion-list>
 
-    <ion-grid>
-        <ion-row *ngFor="let product of productList | async">
-            <ion-col width-50>
-                <ion-card class="product-card" (click)="openproductpage(product)">
-                    <img src="/assets/img/noimage.png" />
-                    <ion-card-content>
-                        <ion-card-title text-wrap>
-                            {{product.name}}
-                        </ion-card-title>
-                        <p>
-                            {{product.mrate}}
-                            <br>
-                            {{product.krate}}
-                        </p>
-                    </ion-card-content>
-                </ion-card>
-            </ion-col>
-        </ion-row>
-    </ion-grid>
 </ion-content>

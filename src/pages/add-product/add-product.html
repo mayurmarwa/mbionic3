@@ -44,6 +44,16 @@
                            placeholder="Your Name" [(ngModel)]="category.title">
                 </ion-input>
             </ion-item>
+            <ion-item  *ngIf="category.catid === '9a' ">
+                <ion-label stacked>Product Type</ion-label>
+                <ion-select #ptype formControlName="ptype">
+                    <ion-option value="Hastealloy" selected="true">Hastealloy</ion-option>
+                    <ion-option value="Inconel">Inconel</ion-option>
+                    <ion-option value="Monel">Monel</ion-option>
+                    <ion-option value="Titanium">Titanium</ion-option>
+                    <ion-option value="Others">Others</ion-option>
+                </ion-select>
+            </ion-item>
             <ion-item *ngIf="category.catid != 1">
                 <ion-label stacked>Grade</ion-label>
                 <ion-input #grade formControlName="grade" type="text"
@@ -86,6 +96,7 @@
                            placeholder="Enter Weight (kg)" min="0" step="0.01">
                 </ion-input>
             </ion-item>
+            Rate (Enter one or both)
             <ion-item>
                 <ion-label stacked>Market Rate</ion-label>
                 <ion-input #mrate formControlName="mrate" type="number"
@@ -184,6 +195,16 @@
                            placeholder="Your Name" [(ngModel)]="category.title">
                 </ion-input>
             </ion-item>
+            <ion-item *ngIf="category.catid === '9b' ">
+                <ion-label stacked>Product Type</ion-label>
+                <ion-select #ptype formControlName="ptype">
+                    <ion-option value="Hastealloy" selected="true">Hastealloy</ion-option>
+                    <ion-option value="Inconel">Inconel</ion-option>
+                    <ion-option value="Monel">Monel</ion-option>
+                    <ion-option value="Titanium">Titanium</ion-option>
+                    <ion-option value="Others">Others</ion-option>
+                </ion-select>
+            </ion-item>
             <ion-item *ngIf="category.catid === '8b' || category.catid === '9b' ">
                 <ion-label stacked>Grade</ion-label>
                 <ion-input #grade formControlName="grade" type="text"
@@ -225,7 +246,14 @@
                            placeholder="Enter Length (mm)" min="0" step="0.01">
                 </ion-input>
             </ion-item>
-            <ion-item>
+
+            <ion-item *ngIf="category.catid === 3">
+                <ion-label stacked>Weight </ion-label>
+                <ion-input #weight formControlName="weight" type="number"
+                           placeholder="Enter Weight (kg)" min="0" step="0.01">
+                </ion-input>
+            </ion-item>           
+             <ion-item *ngIf="category.catid != 3">
                 <ion-label stacked>Weight (optional)</ion-label>
                 <ion-input #weight formControlName="weight" type="number"
                            placeholder="Enter Weight (kg)" min="0" step="0.01">
@@ -298,6 +326,16 @@
                 <ion-input #name formControlName="name" type="text"
                            placeholder="Your Name" [(ngModel)]="category.title">
                 </ion-input>
+            </ion-item>
+            <ion-item *ngIf="category.catid === '9c1' || category.catid === '9c2' || category.catid === '9c3' ">
+                <ion-label stacked>Product Type</ion-label>
+                <ion-select #ptype formControlName="ptype">
+                    <ion-option value="Hastealloy" selected="true">Hastealloy</ion-option>
+                    <ion-option value="Inconel">Inconel</ion-option>
+                    <ion-option value="Monel">Monel</ion-option>
+                    <ion-option value="Titanium">Titanium</ion-option>
+                    <ion-option value="Others">Others</ion-option>
+                </ion-select>
             </ion-item>
             <ion-item *ngIf="category.catid === '8c1' || category.catid === '8c2' || category.catid === '8c3' || category.catid === '9c1' || category.catid === '9c2' || category.catid === '9c3' ">
                 <ion-label stacked>Grade</ion-label>
@@ -434,6 +472,16 @@
                            placeholder="Your Name" [(ngModel)]="category.title">
                 </ion-input>
             </ion-item>
+            <ion-item *ngIf="category.catid === '9c4' ">
+                <ion-label stacked>Product Type</ion-label>
+                <ion-select #ptype formControlName="ptype">
+                    <ion-option value="Hastealloy" selected="true">Hastealloy</ion-option>
+                    <ion-option value="Inconel">Inconel</ion-option>
+                    <ion-option value="Monel">Monel</ion-option>
+                    <ion-option value="Titanium">Titanium</ion-option>
+                    <ion-option value="Others">Others</ion-option>
+                </ion-select>
+            </ion-item>
             <ion-item *ngIf="category.catid === '8c4' || category.catid === '9c4' " >
                 <ion-label stacked>Grade</ion-label>
                 <ion-input #grade formControlName="grade" type="text"
@@ -453,7 +501,7 @@
                 </ion-input>
             </ion-item>
             <ion-item>
-                <ion-label stacked>Sizes</ion-label>
+                <ion-label stacked>Sizes (Eg. 11 x 22 x 33)</ion-label>
                 <ion-input #sizes formControlName="sizes" type="text"
                            placeholder="Enter Sizes">
                 </ion-input>
@@ -667,7 +715,7 @@
                 </ion-input>
             </ion-item>
             <ion-item>
-                <ion-label stacked>Sizes</ion-label>
+                <ion-label stacked>Sizes (Eg. 11 x 22 x 33)</ion-label>
                 <ion-input #sizes formControlName="sizes" type="text"
                            placeholder="Enter Sizes">
                 </ion-input>
@@ -760,6 +808,16 @@
                        placeholder="Enter Name" [(ngModel)]="category.title">
             </ion-input>
         </ion-item>
+        <ion-item *ngIf="category.catid === '9d' ">
+            <ion-label stacked>Product Type</ion-label>
+            <ion-select #ptype formControlName="ptype">
+                <ion-option value="Hastealloy" selected="true">Hastealloy</ion-option>
+                <ion-option value="Inconel">Inconel</ion-option>
+                <ion-option value="Monel">Monel</ion-option>
+                <ion-option value="Titanium">Titanium</ion-option>
+                <ion-option value="Others">Others</ion-option>
+            </ion-select>
+        </ion-item>
         <ion-item *ngIf="category.catid != 7">
             <ion-label stacked>Grade</ion-label>
             <ion-input #grade formControlName="grade" type="text"
@@ -787,7 +845,7 @@
             </ion-select>
         </ion-item>
         <ion-item>
-            <ion-label stacked>Sizes</ion-label>
+            <ion-label stacked>Sizes (Eg. 11 x 22 x 33)</ion-label>
             <ion-input #sizes formControlName="sizes" type="text"
                        placeholder="Enter Sizes">
             </ion-input>
@@ -929,7 +987,6 @@
                 </ion-input>
             </ion-item>
             <ion-input type="text" hidden [(ngModel)]="category.catid" formControlName="catid"></ion-input>
-            <ion-input type="text" hidden [(ngModel)]="gradeval" formControlName="gradeval"></ion-input>
             <ion-input type="text" hidden [(ngModel)]="currentuser.uid" formControlName="uid"></ion-input>
             <ion-input type="text" hidden formControlName="islive"></ion-input>
 

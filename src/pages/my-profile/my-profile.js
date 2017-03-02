@@ -9,6 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+import { AuthService } from '../../providers/auth.service';
 /*
   Generated class for the MyProfile page.
 
@@ -16,9 +17,24 @@ import { NavController, NavParams } from 'ionic-angular';
   Ionic pages and navigation.
 */
 var MyProfilePage = (function () {
-    function MyProfilePage(navCtrl, navParams) {
+    function MyProfilePage(navCtrl, navParams, authService) {
+        var _this = this;
         this.navCtrl = navCtrl;
         this.navParams = navParams;
+        this.authService = authService;
+        this.userID = navParams.get("userID");
+        this.authService.getFullProfile(this.userID)
+            .subscribe(function (user) {
+            //loading.dismiss();
+            // this.user.displayName = user.displayName;
+            //this.user.email = user.email || user.providerData[0].email || 'Not set yet.';
+            //this.user.photoURL = user.photoURL || this.user.photoURL;
+            _this.userProfile = user;
+            console.log(_this.userProfile);
+        }, function (error) {
+            //loading.dismiss();
+            console.log('Error: ' + JSON.stringify(error));
+        });
     }
     MyProfilePage.prototype.ionViewDidLoad = function () {
         console.log('ionViewDidLoad MyProfilePage');
@@ -30,7 +46,7 @@ MyProfilePage = __decorate([
         selector: 'page-my-profile',
         templateUrl: 'my-profile.html'
     }),
-    __metadata("design:paramtypes", [NavController, NavParams])
+    __metadata("design:paramtypes", [NavController, NavParams, AuthService])
 ], MyProfilePage);
 export { MyProfilePage };
 //# sourceMappingURL=my-profile.js.map

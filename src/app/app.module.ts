@@ -1,6 +1,7 @@
 import { NgModule, ErrorHandler } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
+import { CustomIconsModule } from 'ionic2-custom-icons';
 
 import { MarketPage } from '../pages/market/market';
 import { PricesPage } from '../pages/prices/prices';
@@ -87,7 +88,8 @@ export const firebaseConfig = {
   ],
   imports: [
     IonicModule.forRoot(MyApp),
-    AngularFireModule.initializeApp(firebaseConfig)
+    AngularFireModule.initializeApp(firebaseConfig),
+    CustomIconsModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

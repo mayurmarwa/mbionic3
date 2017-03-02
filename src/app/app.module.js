@@ -7,6 +7,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 import { NgModule, ErrorHandler } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
+import { CustomIconsModule } from 'ionic2-custom-icons';
 import { MarketPage } from '../pages/market/market';
 import { PricesPage } from '../pages/prices/prices';
 import { EnquiriesPage } from '../pages/enquiries/enquiries';
@@ -18,6 +19,7 @@ import { AddProductPage } from '../pages/add-product/add-product';
 import { EditProductPage } from '../pages/edit-product/edit-product';
 import { ProductPagePage } from '../pages/product-page/product-page';
 import { SendEnquiryPage } from '../pages/send-enquiry/send-enquiry';
+import { EnquirySentPage } from '../pages/enquiry-sent/enquiry-sent';
 import { EnquiryDetailsPage } from '../pages/enquiry-details/enquiry-details';
 import { PostBuyRequirementsPage } from '../pages/post-buy-requirements/post-buy-requirements';
 import { BrowseRequirementsPage } from '../pages/browse-requirements/browse-requirements';
@@ -70,6 +72,7 @@ AppModule = __decorate([
             EditProductPage,
             ProductPagePage,
             SendEnquiryPage,
+            EnquirySentPage,
             EnquiryDetailsPage,
             PostBuyRequirementsPage,
             BrowseRequirementsPage,
@@ -91,7 +94,8 @@ AppModule = __decorate([
         ],
         imports: [
             IonicModule.forRoot(MyApp),
-            AngularFireModule.initializeApp(firebaseConfig)
+            AngularFireModule.initializeApp(firebaseConfig),
+            CustomIconsModule
         ],
         bootstrap: [IonicApp],
         entryComponents: [
@@ -108,6 +112,7 @@ AppModule = __decorate([
             EditProductPage,
             ProductPagePage,
             SendEnquiryPage,
+            EnquirySentPage,
             EnquiryDetailsPage,
             PostBuyRequirementsPage,
             BrowseRequirementsPage,

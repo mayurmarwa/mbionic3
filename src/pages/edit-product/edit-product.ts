@@ -78,7 +78,7 @@ export class EditProductPage {
               {
                   name: 'grade',
                   placeholder: 'Grade',
-                  value: this.product.grade
+                  value: this.product.gradeval
               },
               /**{
                   name: 'lastName',
@@ -432,6 +432,344 @@ export class EditProductPage {
                   text: 'Save',
                   handler: data => {
                       this.productData.updateBrand(this.product.$key, data.brand);
+                  }
+              }
+          ]
+      });
+      alert.present();
+  }
+
+  updateCategory() {
+      let alert = this.alertCtrl.create({
+          message: "Category",
+          inputs: [
+              {
+                  name: 'category',
+                  placeholder: 'Category',
+                  value: this.product.category
+
+              },
+              /**{
+                  name: 'lastName',
+                  placeholder: 'Your last name',
+                  value: this.userProfile.lastName
+              },**/
+          ],
+          buttons: [
+              {
+                  text: 'Cancel',
+              },
+              {
+                  text: 'Save',
+                  handler: data => {
+                      this.productData.updateCategory(this.product.$key, data.category);
+                  }
+              }
+          ]
+      });
+      alert.present();
+  }
+
+  updateSizes() {
+      let alert = this.alertCtrl.create({
+          message: "Sizes",
+          inputs: [
+              {
+                  name: 'sizes',
+                  placeholder: 'Sizes',
+                  value: this.product.sizes
+
+              },
+          ],
+          buttons: [
+              {
+                  text: 'Cancel',
+              },
+              {
+                  text: 'Save',
+                  handler: data => {
+                      this.productData.updateSizes(this.product.$key, data.sizes);
+                  }
+              }
+          ]
+      });
+      alert.present();
+  }
+
+  updateType() {
+      let alert = this.alertCtrl.create({
+          message: "Type",
+          inputs: [
+              {
+                  name: 'type',
+                  placeholder: 'Type',
+                  value: this.product.type
+
+              },
+          ],
+          buttons: [
+              {
+                  text: 'Cancel',
+              },
+              {
+                  text: 'Save',
+                  handler: data => {
+                      this.productData.updateType(this.product.$key, data.type);
+                  }
+              }
+          ]
+      });
+      alert.present();
+  }
+
+  updateSwg() {
+      let alert = this.alertCtrl.create({
+          message: "SWG",
+          inputs: [
+              {
+                  name: 'swg',
+                  placeholder: 'SWG',
+                  value: this.product.swg
+
+              },
+          ],
+          buttons: [
+              {
+                  text: 'Cancel',
+              },
+              {
+                  text: 'Save',
+                  handler: data => {
+                      this.productData.updateSwg(this.product.$key, data.swg);
+                  }
+              }
+          ]
+      });
+      alert.present();
+  }
+
+  updateSch() {
+      let alert = this.alertCtrl.create({
+          message: "SCH",
+          inputs: [
+              {
+                  name: 'sch',
+                  placeholder: 'SCH',
+                  value: this.product.sch
+
+              },
+          ],
+          buttons: [
+              {
+                  text: 'Cancel',
+              },
+              {
+                  text: 'Save',
+                  handler: data => {
+                      this.productData.updateSch(this.product.$key, data.sch);
+                  }
+              }
+          ]
+      });
+      alert.present();
+  }
+
+  updateMm() {
+      let alert = this.alertCtrl.create({
+          message: "MM",
+          inputs: [
+              {
+                  name: 'mm',
+                  placeholder: 'MM',
+                  value: this.product.mm
+
+              },
+          ],
+          buttons: [
+              {
+                  text: 'Cancel',
+              },
+              {
+                  text: 'Save',
+                  handler: data => {
+                      this.productData.updateMm(this.product.$key, data.mm);
+                  }
+              }
+          ]
+      });
+      alert.present();
+  }
+
+  updateQuantity() {
+      let alert = this.alertCtrl.create({
+          message: "Quantity",
+          inputs: [
+              {
+                  name: 'quantity',
+                  placeholder: 'Quantity',
+                  value: this.product.quantity
+
+              },
+          ],
+          buttons: [
+              {
+                  text: 'Cancel',
+              },
+              {
+                  text: 'Save',
+                  handler: data => {
+                      this.productData.updateQuantity(this.product.$key, data.quantity);
+                  }
+              }
+          ]
+      });
+      alert.present();
+  }
+
+  updateUnit() {
+      let alert = this.alertCtrl.create({
+          message: "Unit",
+          inputs: [
+              {
+                  name: 'unit',
+                  placeholder: 'Unit',
+                  value: this.product.unit
+
+              },
+          ],
+          buttons: [
+              {
+                  text: 'Cancel',
+              },
+              {
+                  text: 'Save',
+                  handler: data => {
+                      this.productData.updateUnit(this.product.$key, data.unit);
+                  }
+              }
+          ]
+      });
+      alert.present();
+  }
+
+  updateGuarantee() {
+      let alert = this.alertCtrl.create({
+          message: "Guarantee",
+          inputs: [
+              {
+                  name: 'guarantee',
+                  placeholder: 'Ultra Guarantee',
+                  value: this.product.guarantee
+
+              },
+          ],
+          buttons: [
+              {
+                  text: 'Cancel',
+              },
+              {
+                  text: 'Save',
+                  handler: data => {
+                      this.productData.updateGuarantee(this.product.$key, data.guarantee);
+                  }
+              }
+          ]
+      });
+      alert.present();
+  }
+
+  updateQuality() {
+      let alert = this.alertCtrl.create({
+          message: "Quality",
+          inputs: [
+              {
+                  name: 'quality',
+                  placeholder: 'Ultra Quality',
+                  value: this.product.quality
+
+              },
+          ],
+          buttons: [
+              {
+                  text: 'Cancel',
+              },
+              {
+                  text: 'Save',
+                  handler: data => {
+                      this.productData.updateQuality(this.product.$key, data.quality);
+                  }
+              }
+          ]
+      });
+      alert.present();
+  }
+
+  updateMtc() {
+      let alert = this.alertCtrl.create({
+          message: "Mtc",
+          inputs: [
+              {
+                  name: 'mtc',
+                  placeholder: 'MTC',
+                  value: this.product.mtc
+
+              },
+          ],
+          buttons: [
+              {
+                  text: 'Cancel',
+              },
+              {
+                  text: 'Save',
+                  handler: data => {
+                      this.productData.updateMtc(this.product.$key, data.mtc);
+                  }
+              }
+          ]
+      });
+      alert.present();
+  }
+
+  updatePtype() {
+      let alert = this.alertCtrl.create({
+          message: "Product Type",
+          inputs: [
+              {
+                  name: 'ptype',
+                  placeholder: 'Product Type',
+                  value: this.product.ptype
+
+              },
+          ],
+          buttons: [
+              {
+                  text: 'Cancel',
+              },
+              {
+                  text: 'Save',
+                  handler: data => {
+                      this.productData.updatePtype(this.product.$key, data.ptype);
+                  }
+              }
+          ]
+      });
+      alert.present();
+  }
+
+
+  confirmDelete() {
+      let alert = this.alertCtrl.create({
+          title: 'Delete Product?',
+          message: 'Do you want to delete this product?',      
+          buttons: [
+              {
+                  text: 'Cancel',
+              },
+              {
+                  text: 'Confirm',
+                  handler: data => {
+                      this.productData.deleteProduct(this.product.$key);
+                      this.navCtrl.pop();
                   }
               }
           ]

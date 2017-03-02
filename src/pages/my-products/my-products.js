@@ -25,7 +25,8 @@ var MyProductsPage = (function () {
         this.navParams = navParams;
         this.af = af;
         this.currentuser = firebase.auth().currentUser;
-        this.myproducts = af.database.list('/users/' + this.currentuser.uid + '/products/');
+        this.myproducts = af.database.list('/users/' + this.currentuser.uid + '/products/', { query: { orderByChild: 'timestamp' } });
+        this.productListRev = this.myproducts.map(function (arr) { return arr.reverse(); });
     }
     MyProductsPage.prototype.ionViewDidLoad = function () {
         console.log('ionViewDidLoad MyProductsPage');

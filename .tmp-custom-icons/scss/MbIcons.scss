@@ -1,0 +1,170 @@
+@font-face {
+  font-family: "MbIcons";
+  src: url('../assets/fonts/MbIcons.eot');
+  src: url('../assets/fonts/MbIcons.eot?#iefix') format('eot'),
+  url('../assets/fonts/MbIcons.woff2') format('woff2'),
+  url('../assets/fonts/MbIcons.woff') format('woff'),
+  url('../assets/fonts/MbIcons.ttf') format('truetype'),
+  url('../assets/fonts/MbIcons.svg#MbIcons') format('svg');
+}
+
+@mixin mb-styles {
+  font-family: "MbIcons";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: normal;
+  // speak: none; // only necessary if not using the private unicode range (firstGlyph option)
+  text-decoration: none;
+  text-transform: none;
+}
+
+%mb {
+  @include mb-styles;
+}
+
+@function mb-char($filename) {
+  $char: "";
+
+  @if $filename == All icons-11 {
+  $char: "\E001";
+}
+  @if $filename == All icons-12 {
+  $char: "\E002";
+}
+  @if $filename == All icons-16 {
+  $char: "\E003";
+}
+  @if $filename == All icons-17 {
+  $char: "\E004";
+}
+  @if $filename == All icons-19 {
+  $char: "\E005";
+}
+  @if $filename == All icons-20 {
+  $char: "\E006";
+}
+  @if $filename == dialer {
+  $char: "\E007";
+}
+  @if $filename == directory {
+  $char: "\E008";
+}
+  @if $filename == heart-fill {
+  $char: "\E009";
+}
+  @if $filename == heart {
+  $char: "\E00A";
+}
+  @if $filename == home {
+  $char: "\E00B";
+}
+  @if $filename == logout {
+  $char: "\E00C";
+}
+  @if $filename == menu {
+  $char: "\E00D";
+}
+  @if $filename == message {
+  $char: "\E00E";
+}
+  @if $filename == post {
+  $char: "\E00F";
+}
+  @if $filename == prices {
+  $char: "\E010";
+}
+  @if $filename == products {
+  $char: "\E011";
+}
+  @if $filename == profile {
+  $char: "\E012";
+}
+  @if $filename == search {
+  $char: "\E013";
+}
+  @if $filename == settings {
+  $char: "\E014";
+}
+  @if $filename == upload {
+  $char: "\E015";
+}
+
+@return $char;
+}
+
+@mixin mb($filename, $insert: before, $extend: true) {
+&:#{$insert} {
+  @if $extend {
+    @extend %mb;
+  } @else {
+    @include mb-styles;
+  }
+  content: mb-char($filename);
+}
+}
+
+.mb-All icons-11 {
+  @include mb(All icons-11);
+}
+.mb-All icons-12 {
+  @include mb(All icons-12);
+}
+.mb-All icons-16 {
+  @include mb(All icons-16);
+}
+.mb-All icons-17 {
+  @include mb(All icons-17);
+}
+.mb-All icons-19 {
+  @include mb(All icons-19);
+}
+.mb-All icons-20 {
+  @include mb(All icons-20);
+}
+.mb-dialer {
+  @include mb(dialer);
+}
+.mb-directory {
+  @include mb(directory);
+}
+.mb-heart-fill {
+  @include mb(heart-fill);
+}
+.mb-heart {
+  @include mb(heart);
+}
+.mb-home {
+  @include mb(home);
+}
+.mb-logout {
+  @include mb(logout);
+}
+.mb-menu {
+  @include mb(menu);
+}
+.mb-message {
+  @include mb(message);
+}
+.mb-post {
+  @include mb(post);
+}
+.mb-prices {
+  @include mb(prices);
+}
+.mb-products {
+  @include mb(products);
+}
+.mb-profile {
+  @include mb(profile);
+}
+.mb-search {
+  @include mb(search);
+}
+.mb-settings {
+  @include mb(settings);
+}
+.mb-upload {
+  @include mb(upload);
+}

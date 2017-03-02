@@ -21,13 +21,23 @@ var SelectCategoryPage = (function () {
     function SelectCategoryPage(navCtrl, navParams, af) {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
+        this.af = af;
         this.categories = af.database.list('/productcategories', { query: { orderByChild: 'catid' } });
     }
     SelectCategoryPage.prototype.ionViewDidLoad = function () {
         console.log('ionViewDidLoad SelectCategoryPage');
     };
     SelectCategoryPage.prototype.detailpage = function (category) {
-        this.navCtrl.push(AddProductPage, { category: category });
+        if (category.catid === 4 || category.catid === 8 || category.catid === 9) {
+            this.categories = this.af.database.list('/productcategories/' + category.$key + '/subcategories/', { query: { orderByChild: 'oid' } });
+            this.parentcat = category.$key;
+        }
+        else if (category.catid === '8c' || category.catid === '9c') {
+            this.categories = this.af.database.list('/productcategories/' + this.parentcat + '/subcategories/' + category.$key + '/types/', { query: { orderByChild: 'oid' } });
+        }
+        else {
+            this.navCtrl.push(AddProductPage, { category: category });
+        }
     };
     return SelectCategoryPage;
 }());

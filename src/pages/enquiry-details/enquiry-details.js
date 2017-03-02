@@ -11,6 +11,8 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { AngularFire } from 'angularfire2';
 import firebase from 'firebase';
+import { MyProfilePage } from '../my-profile/my-profile';
+import { ProductPagePage } from '../product-page/product-page';
 /*
   Generated class for the EnquiryDetails page.
 
@@ -26,12 +28,13 @@ var EnquiryDetailsPage = (function () {
         this.currentuser = firebase.auth().currentUser;
         this.messageList = af.database.list('/users/' + this.currentuser.uid + '/enquiries/' + this.enquiry.$key + '/messgaes/');
         this.otherUserList = af.database.list('/users/' + this.enquiry.otheruser + '/enquiries/' + this.enquiry.$key + '/messgaes/');
+        //console.log(this.enquiry);
     }
     EnquiryDetailsPage.prototype.ionViewDidLoad = function () {
         console.log('ionViewDidLoad EnquiryDetailsPage');
     };
     EnquiryDetailsPage.prototype.send = function (chatBox) {
-        console.log(chatBox);
+        //console.log(chatBox);
         this.messageList.push({
             text: this.chatBox,
             type: 'sent'
@@ -41,6 +44,12 @@ var EnquiryDetailsPage = (function () {
             type: 'received'
         });
         this.chatBox = '';
+    };
+    EnquiryDetailsPage.prototype.viewProfile = function () {
+        this.navCtrl.push(MyProfilePage, { userID: this.enquiry.otheruser });
+    };
+    EnquiryDetailsPage.prototype.viewProduct = function () {
+        this.navCtrl.push(ProductPagePage, { product: this.enquiry.product });
     };
     return EnquiryDetailsPage;
 }());

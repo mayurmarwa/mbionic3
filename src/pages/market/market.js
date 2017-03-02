@@ -23,7 +23,8 @@ var MarketPage = (function () {
         this.navParams = navParams;
         this.modalCtrl = modalCtrl;
         this.af = af;
-        this.productList = af.database.list('/products', { query: { orderByChild: 'mrate' } });
+        this.productList = af.database.list('/products', { query: { orderByChild: 'timestamp' } });
+        this.productListRev = this.productList.map(function (arr) { return arr.reverse(); });
     }
     MarketPage.prototype.ionViewDidLoad = function () {
         console.log('ionViewDidLoad MarketPage');

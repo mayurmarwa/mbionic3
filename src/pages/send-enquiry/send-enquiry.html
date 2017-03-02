@@ -18,12 +18,14 @@
 
         Choose A Rate:
         <ion-list radio-group #rate formControlName="rate">     
-            <ion-item>
-                <ion-label>Market Rate: Rs.{{product?.mrate}}/{{product?.unit}}</ion-label>
+            <ion-item *ngIf="product?.mrate">
+                <ion-label *ngIf="product?.unit">Market Rate: {{product?.mrate | currency:"INR":true}}/{{product?.unit}}</ion-label>
+                <ion-label *ngIf="!product?.unit">Market Rate: {{product?.mrate | currency:"INR":true}}/Kg</ion-label>
                 <ion-radio value="mrate" checked></ion-radio>
             </ion-item>
-            <ion-item>
-                <ion-label>Kalamboli Rate: Rs.{{product?.krate}}/{{product?.unit}}</ion-label>
+            <ion-item *ngIf="product?.krate">
+                <ion-label *ngIf="product?.unit">Kalamboli Rate: {{product?.krate | currency:"INR":true}}/{{product?.unit}}</ion-label>
+                <ion-label *ngIf="!product?.unit">Kalamboli Rate: {{product?.krate | currency:"INR":true}}/Kg</ion-label>
                 <ion-radio value="krate"></ion-radio>
             </ion-item>            
         </ion-list>

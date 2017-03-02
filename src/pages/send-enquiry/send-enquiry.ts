@@ -29,6 +29,7 @@ export class SendEnquiryPage {
     public sellerEnquiries: any;
     public enquiry: any;
     public loading: any;
+    public productunit: any;
     
     constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public af: AngularFire, public alertCtrl: AlertController, public loadingCtrl: LoadingController, public authService: AuthService) {
   
@@ -45,6 +46,13 @@ export class SendEnquiryPage {
             details: ['',]    
 
         });
+
+        if (!this.product.unit) {
+            this.productunit = "Kg";
+        }
+        else {
+            this.productunit = this.product.unit;
+        }     
 
         this.authService.getFullProfile(this.sellerID)
             .subscribe(user => {
@@ -129,7 +137,7 @@ export class SendEnquiryPage {
                   otheruserNo: this.seller.mobile,
                   product: this.product,
                   productName: this.product.name,
-                  productUnit: this.product.unit,
+                  productUnit: this.productunit,
                   productMrate: this.product.mrate,
                   productKrate: this.product.krate
                   //detials: this.productForm.value.name,
@@ -155,7 +163,7 @@ export class SendEnquiryPage {
                   otheruserNo: this.user.mobile,
                   product: this.product,
                   productName: this.product.name,
-                  productUnit: this.product.unit,
+                  productUnit: this.productunit,
                   productMrate: this.product.mrate,
                   productKrate: this.product.krate,
                   rate: this.enquiryForm.value.rate,

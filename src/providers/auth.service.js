@@ -126,6 +126,9 @@ var AuthService = (function () {
     AuthService.prototype.getFullProfile = function (uid) {
         return this.af.database.object('users/' + uid);
     };
+    AuthService.prototype.getEnquiry = function (uid, eqid) {
+        return this.af.database.object('users/' + uid + '/enquiries/' + eqid);
+    };
     return AuthService;
 }());
 AuthService = __decorate([

@@ -47,10 +47,10 @@ var ProductData = (function () {
     };
     ProductData.prototype.updateGrade = function (key, Grade) {
         this.myProductList.child(key).update({
-            grade: Grade
+            gradeval: Grade
         });
-        return this.productList.child(key).update({
-            grade: Grade,
+        this.productList.child(key).update({
+            gradeval: Grade
         });
     };
     ProductData.prototype.updateFinish = function (key, Finish) {
@@ -113,6 +113,70 @@ var ProductData = (function () {
         return this.productList.child(key).update({
             brand: Brand,
         });
+    };
+    ProductData.prototype.updateCategory = function (key, Category) {
+        return this.productList.child(key).update({
+            pcategory: Category,
+        });
+    };
+    ProductData.prototype.updatePtype = function (key, Ptype) {
+        return this.productList.child(key).update({
+            ptype: Ptype,
+        });
+    };
+    ProductData.prototype.updateSizes = function (key, Sizes) {
+        return this.productList.child(key).update({
+            sizes: Sizes,
+        });
+    };
+    ProductData.prototype.updateType = function (key, Type) {
+        return this.productList.child(key).update({
+            type: Type,
+        });
+    };
+    ProductData.prototype.updateSwg = function (key, Swg) {
+        return this.productList.child(key).update({
+            swg: Swg,
+        });
+    };
+    ProductData.prototype.updateSch = function (key, Sch) {
+        return this.productList.child(key).update({
+            sch: Sch,
+        });
+    };
+    ProductData.prototype.updateMm = function (key, MM) {
+        return this.productList.child(key).update({
+            mm: MM,
+        });
+    };
+    ProductData.prototype.updateQuantity = function (key, quantity) {
+        return this.productList.child(key).update({
+            quantity: quantity,
+        });
+    };
+    ProductData.prototype.updateUnit = function (key, unit) {
+        return this.productList.child(key).update({
+            unit: unit,
+        });
+    };
+    ProductData.prototype.updateGuarantee = function (key, guarantee) {
+        return this.productList.child(key).update({
+            guarantee: guarantee,
+        });
+    };
+    ProductData.prototype.updateQuality = function (key, quality) {
+        return this.productList.child(key).update({
+            quality: quality,
+        });
+    };
+    ProductData.prototype.updateMtc = function (key, mtc) {
+        return this.productList.child(key).update({
+            mtc: mtc,
+        });
+    };
+    ProductData.prototype.deleteProduct = function (key) {
+        this.productList.child(key).remove();
+        this.myProductList.child(key).remove();
     };
     return ProductData;
 }());

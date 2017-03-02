@@ -51,11 +51,12 @@ export class ProductData {
 
         this.myProductList.child(key).update({
 
-            grade: Grade
+            gradeval: Grade
         });
-      return this.productList.child(key).update({
-          grade: Grade,
-          //lastName: lastName,
+       this.productList.child(key).update({
+
+          gradeval: Grade
+          
       });
   }
   updateFinish(key: any, Finish: string): any {
@@ -136,4 +137,92 @@ export class ProductData {
       });
   } 
 
+  updateCategory(key: any, Category: string): any {
+      return this.productList.child(key).update({
+          pcategory: Category,
+          //lastName: lastName,
+      });
+  } 
+  updatePtype(key: any, Ptype: string): any {
+      return this.productList.child(key).update({
+          ptype: Ptype,
+          //lastName: lastName,
+      });
+  } 
+
+  updateSizes(key: any, Sizes: string): any {
+      return this.productList.child(key).update({
+          sizes: Sizes,
+          //lastName: lastName,
+      });
+  } 
+  updateType(key: any, Type: string): any {
+      return this.productList.child(key).update({
+          type: Type,
+          //lastName: lastName,
+      });
+  } 
+
+  updateSwg(key: any, Swg: string): any {
+      return this.productList.child(key).update({
+          swg: Swg,
+          //lastName: lastName,
+      });
+  } 
+
+  updateSch(key: any, Sch: string): any {
+      return this.productList.child(key).update({
+          sch: Sch,
+          //lastName: lastName,
+      });
+  } 
+
+  updateMm(key: any, MM: string): any {
+      return this.productList.child(key).update({
+          mm: MM,
+          //lastName: lastName,
+      });
+  } 
+
+  updateQuantity(key: any, quantity: string): any {
+      return this.productList.child(key).update({
+          quantity: quantity,
+          //lastName: lastName,
+      });
+  }
+
+  updateUnit(key: any, unit: string): any {
+      return this.productList.child(key).update({
+          unit: unit,
+          //lastName: lastName,
+      });
+  } 
+  updateGuarantee(key: any, guarantee: string): any {
+      return this.productList.child(key).update({
+          guarantee: guarantee,
+          //lastName: lastName,
+      });
+  } 
+
+  updateQuality(key: any, quality: string): any {
+      return this.productList.child(key).update({
+          quality: quality,
+          //lastName: lastName,
+      });
+  }
+
+  updateMtc(key: any, mtc: string): any {
+      return this.productList.child(key).update({
+          mtc: mtc,
+          //lastName: lastName,
+      });
+  } 
+
+
+  deleteProduct(key: any): any {
+      
+      this.productList.child(key).remove();
+      this.myProductList.child(key).remove();
+    
+  }
 }

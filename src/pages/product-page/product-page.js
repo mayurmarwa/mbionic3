@@ -24,9 +24,10 @@ var ProductPagePage = (function () {
     }
     ProductPagePage.prototype.ionViewDidLoad = function () {
         console.log('ionViewDidLoad ProductPagePage');
+        console.log(this.product);
     };
     ProductPagePage.prototype.sendEnquiry = function () {
-        this.navCtrl.push(SendEnquiryPage, { productName: this.product.name, seller: this.product.uid });
+        this.navCtrl.push(SendEnquiryPage, { product: this.product });
     };
     return ProductPagePage;
 }());

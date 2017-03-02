@@ -7,8 +7,14 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>editProduct</ion-title>
-  </ion-navbar>
+    <ion-title>Edit Product</ion-title>
+
+      <ion-buttons end>
+          <button ion-button (click)="confirmDelete()" clear>
+              <ion-icon name="trash"></ion-icon>
+          </button>
+       </ion-buttons>
+</ion-navbar>
 
 </ion-header>
 
@@ -40,132 +46,6 @@
                         {{product?.name}}
                     </ion-col>
                     <ion-col class="placeholder-profile" *ngIf="!product?.name">
-                        <span>
-                            Tap here to edit.
-                        </span>
-                    </ion-col>
-                </ion-row>
-            </ion-grid>
-        </ion-item>
-
-        <ion-item (click)="updateGrade()">
-            <ion-grid>
-                <ion-row>
-                    <ion-col width-33>
-                        Grade
-                    </ion-col>
-                    <ion-col *ngIf="product?.grade">
-                        {{product?.grade}}
-                    </ion-col>
-                    <ion-col class="placeholder-profile" *ngIf="!product?.grade">
-                        <span>
-                            Tap here to edit.
-                        </span>
-                    </ion-col>
-                </ion-row>
-            </ion-grid>
-        </ion-item>
-
-        <ion-item (click)="updateFinish()">
-            <ion-grid>
-                <ion-row>
-                    <ion-col width-33>
-                        Finish
-                    </ion-col>
-                    <ion-col *ngIf="product?.finish">
-                        {{product?.finish}}
-                    </ion-col>
-                    <ion-col class="placeholder-profile" *ngIf="!product?.finish">
-                        <span>
-                            Tap here to edit.
-                        </span>
-                    </ion-col>
-                </ion-row>
-            </ion-grid>
-        </ion-item>
-
-        <ion-item (click)="updateThickness()">
-            <ion-grid>
-                <ion-row>
-                    <ion-col width-33>
-                        Thickness
-                    </ion-col>
-                    <ion-col *ngIf="product?.thickness">
-                        {{product?.thickness}}
-                    </ion-col>
-                    <ion-col class="placeholder-profile" *ngIf="!product?.thickness">
-                        <span>
-                            Tap here to edit.
-                        </span>
-                    </ion-col>
-                </ion-row>
-            </ion-grid>
-        </ion-item>
-
-        <ion-item (click)="updateWidth()">
-            <ion-grid>
-                <ion-row>
-                    <ion-col width-33>
-                        Width
-                    </ion-col>
-                    <ion-col *ngIf="product?.width">
-                        {{product?.width}}
-                    </ion-col>
-                    <ion-col class="placeholder-profile" *ngIf="!product?.width">
-                        <span>
-                            Tap here to edit.
-                        </span>
-                    </ion-col>
-                </ion-row>
-            </ion-grid>
-        </ion-item>
-
-        <ion-item (click)="updateLength()">
-            <ion-grid>
-                <ion-row>
-                    <ion-col width-33>
-                        Length
-                    </ion-col>
-                    <ion-col *ngIf="product?.length">
-                        {{product?.length}}
-                    </ion-col>
-                    <ion-col class="placeholder-profile" *ngIf="!product?.length">
-                        <span>
-                            Tap here to edit.
-                        </span>
-                    </ion-col>
-                </ion-row>
-            </ion-grid>
-        </ion-item>
-
-        <ion-item (click)="updateWeight()">
-            <ion-grid>
-                <ion-row>
-                    <ion-col width-33>
-                        Weight
-                    </ion-col>
-                    <ion-col *ngIf="product?.weight">
-                        {{product?.weight}}
-                    </ion-col>
-                    <ion-col class="placeholder-profile" *ngIf="!product?.weight">
-                        <span>
-                            Tap here to edit.
-                        </span>
-                    </ion-col>
-                </ion-row>
-            </ion-grid>
-        </ion-item>
-
-        <ion-item (click)="updateNos()">
-            <ion-grid>
-                <ion-row>
-                    <ion-col width-33>
-                        Nos.
-                    </ion-col>
-                    <ion-col *ngIf="product?.nos">
-                        {{product?.nos}}
-                    </ion-col>
-                    <ion-col class="placeholder-profile" *ngIf="!product?.nos">
                         <span>
                             Tap here to edit.
                         </span>
@@ -210,6 +90,261 @@
             </ion-grid>
         </ion-item>
 
+        <ion-item (click)="updateGrade()">
+            <ion-grid>
+                <ion-row>
+                    <ion-col width-33>
+                        Grade
+                    </ion-col>
+                    <ion-col *ngIf="product?.gradeval">
+                        {{product?.gradeval}}
+                    </ion-col>
+                    <ion-col class="placeholder-profile" *ngIf="!product?.gradeval">
+                        <span>
+                            Tap here to edit.
+                        </span>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </ion-item>
+
+        <ion-item *ngIf="product?.ptype" (click)="updatePtype()">
+            <ion-grid>
+                <ion-row>
+                    <ion-col width-33>
+                        Product Type
+                    </ion-col>
+                    <ion-col *ngIf="product?.ptype">
+                        {{product?.ptype}}
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </ion-item>
+
+        <ion-item *ngIf="product?.pcategory" (click)="updateCategory()">
+            <ion-grid>
+                <ion-row>
+                    <ion-col width-33>
+                        Category
+                    </ion-col>
+                    <ion-col *ngIf="product?.pcategory">
+                        {{product?.pcategory}}
+                    </ion-col>                   
+                </ion-row>
+            </ion-grid>
+        </ion-item>
+
+        <ion-item *ngIf="product?.sizes" (click)="updateSizes()">
+            <ion-grid>
+                <ion-row>
+                    <ion-col width-33>
+                        Sizes
+                    </ion-col>
+                    <ion-col *ngIf="product?.sizes">
+                        {{product?.sizes}}
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </ion-item>
+        
+        <ion-item *ngIf="product?.finish" (click)="updateFinish()">
+            <ion-grid>
+                <ion-row>
+                    <ion-col width-33>
+                        Finish
+                    </ion-col>
+                    <ion-col *ngIf="product?.finish">
+                        {{product?.finish}}
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </ion-item>
+
+        <ion-item *ngIf="product?.type" (click)="updateType()">
+            <ion-grid>
+                <ion-row>
+                    <ion-col width-33>
+                        Type
+                    </ion-col>
+                    <ion-col *ngIf="product?.type">
+                        {{product?.type}}
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </ion-item>
+
+        <ion-item *ngIf="product?.swg" (click)="updateSwg()">
+            <ion-grid>
+                <ion-row>
+                    <ion-col width-33>
+                        SWG
+                    </ion-col>
+                    <ion-col *ngIf="product?.swg">
+                        {{product?.swg}}
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </ion-item>
+
+        <ion-item *ngIf="product?.sch" (click)="updateSch()">
+            <ion-grid>
+                <ion-row>
+                    <ion-col width-33>
+                        SCH
+                    </ion-col>
+                    <ion-col *ngIf="product?.sch">
+                        {{product?.sch}}
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </ion-item>
+        <ion-item *ngIf="product?.mm" (click)="updateMm()">
+            <ion-grid>
+                <ion-row>
+                    <ion-col width-33>
+                        MM
+                    </ion-col>
+                    <ion-col *ngIf="product?.mm">
+                        {{product?.mm}}
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </ion-item>
+        <ion-item *ngIf="product?.quantity" (click)="updateQuantity()">
+            <ion-grid>
+                <ion-row>
+                    <ion-col width-33>
+                        Quantity
+                    </ion-col>
+                    <ion-col *ngIf="product?.quantity">
+                        {{product?.quantity}}
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </ion-item>
+        <ion-item *ngIf="product?.unit" (click)="updateUnit()">
+            <ion-grid>
+                <ion-row>
+                    <ion-col width-33>
+                        Unit
+                    </ion-col>
+                    <ion-col *ngIf="product?.unit">
+                        {{product?.unit}}
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </ion-item>
+        <ion-item *ngIf="product?.guarantee" (click)="updateGuarantee()">
+            <ion-grid>
+                <ion-row>
+                    <ion-col width-33>
+                        Ultra Guarantee
+                    </ion-col>
+                    <ion-col *ngIf="product?.unit">
+                        {{product?.guarantee}}
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </ion-item>        
+        <ion-item *ngIf="product?.thickness" (click)="updateThickness()">
+            <ion-grid>
+                <ion-row>
+                    <ion-col width-33>
+                        Thickness
+                    </ion-col>
+                    <ion-col *ngIf="product?.thickness">
+                        {{product?.thickness}}
+                    </ion-col>
+                    <ion-col class="placeholder-profile" *ngIf="!product?.thickness">
+                        <span>
+                            Tap here to edit.
+                        </span>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </ion-item>
+
+        <ion-item *ngIf="product?.width" (click)="updateWidth()">
+            <ion-grid>
+                <ion-row>
+                    <ion-col width-33>
+                        Width
+                    </ion-col>
+                    <ion-col *ngIf="product?.width">
+                        {{product?.width}}
+                    </ion-col>
+                    <ion-col class="placeholder-profile" *ngIf="!product?.width">
+                        <span>
+                            Tap here to edit.
+                        </span>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </ion-item>
+
+        <ion-item *ngIf="product?.length" (click)="updateLength()">
+            <ion-grid>
+                <ion-row>
+                    <ion-col width-33>
+                        Length
+                    </ion-col>
+                    <ion-col *ngIf="product?.length">
+                        {{product?.length}}
+                    </ion-col>
+                    <ion-col class="placeholder-profile" *ngIf="!product?.length">
+                        <span>
+                            Tap here to edit.
+                        </span>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </ion-item>
+
+        <ion-item *ngIf="product?.weight" (click)="updateWeight()">
+            <ion-grid>
+                <ion-row>
+                    <ion-col width-33>
+                        Weight
+                    </ion-col>
+                    <ion-col *ngIf="product?.weight">
+                        {{product?.weight}}
+                    </ion-col>
+                    <ion-col class="placeholder-profile" *ngIf="!product?.weight">
+                        <span>
+                            Tap here to edit.
+                        </span>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </ion-item>
+
+        <ion-item *ngIf="product?.nos" (click)="updateNos()">
+            <ion-grid>
+                <ion-row>
+                    <ion-col width-33>
+                        Nos.
+                    </ion-col>
+                    <ion-col *ngIf="product?.nos">
+                        {{product?.nos}}
+                    </ion-col>                    
+                </ion-row>
+            </ion-grid>
+        </ion-item>
+
+        <ion-item *ngIf="product?.quality" (click)="updateQuality()">
+            <ion-grid>
+                <ion-row>
+                    <ion-col width-33>
+                        Quality
+                    </ion-col>
+                    <ion-col *ngIf="product?.quality">
+                        {{product?.quality}}
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </ion-item>
+
+        
         <ion-item (click)="updateComposition()">
             <ion-grid>
                 <ion-row>
@@ -256,6 +391,24 @@
                         {{product?.brand}}
                     </ion-col>
                     <ion-col class="placeholder-profile" *ngIf="!product?.brand">
+                        <span>
+                            Tap here to edit.
+                        </span>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </ion-item>
+
+        <ion-item (click)="updateMtc()">
+            <ion-grid>
+                <ion-row>
+                    <ion-col width-33>
+                        MTC
+                    </ion-col>
+                    <ion-col *ngIf="product?.mtc">
+                        {{product?.mtc}}
+                    </ion-col>
+                    <ion-col class="placeholder-profile" *ngIf="!product?.mtc">
                         <span>
                             Tap here to edit.
                         </span>

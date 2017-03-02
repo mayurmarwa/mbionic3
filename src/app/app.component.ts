@@ -25,8 +25,8 @@ export class MyApp {
 
   rootPage: any;
 
-  openPages: Array<{title: string, component: any}>;
-  pushPages: Array<{title: string, component: any}>;
+  openPages: Array<{title: string, component: any, icon: string}>;
+  pushPages: Array<{title: string, component: any, icon: string}>;
 
   constructor(
     public platform: Platform,
@@ -50,19 +50,19 @@ export class MyApp {
 
     // used for an example of ngFor and navigation
     this.openPages = [
-      { title: 'Home', component: TabsPage }
+      { title: 'Home', component: TabsPage, icon: 'home'  }
     ];
 
     this.pushPages = [
-        { title: 'Profile', component: TabProfilePage },
-        { title: 'Post Buy Requirement', component: PostBuyRequirementsPage },
-        { title: 'Browse Requirements', component: BrowseRequirementsPage },
-        { title: 'My Products', component: MyProductsPage },
-        { title: 'Directory', component: DirectoryPage },
-        { title: 'Speed Dial', component: SpeedDialPage },
-        { title: 'Settings', component: SettingsPage },
-        { title: 'Share App', component: TabProfilePage },
-        { title: 'About', component: AboutPage },
+        { title: 'Profile', component: TabProfilePage, icon: 'profile' },
+        { title: 'Post Buy Requirement', component: PostBuyRequirementsPage, icon: 'post' },
+        { title: 'Browse Requirements', component: BrowseRequirementsPage, icon: 'search' },
+        { title: 'My Products', component: MyProductsPage, icon: 'products' },
+        { title: 'Directory', component: DirectoryPage, icon: 'directory' },
+        { title: 'Speed Dial', component: SpeedDialPage, icon: 'dialer' },
+        { title: 'Settings', component: SettingsPage, icon: 'settings' },
+        { title: 'Share App', component: TabProfilePage, icon: 'share' },
+        { title: 'About', component: AboutPage, icon: 'about' },
     ];
 
   }

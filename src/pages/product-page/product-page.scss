@@ -1,18 +1,22 @@
 page-product-page {
     
-    .specifications{
-           
-        h5{
-        font-size: 14px;
-        font-weight: bold;
-        }
-        p{
-        font-size: 14px;
+    .product-details{
+        background-color:#f1f4f5;
+        color:#898989;
         
-        }
-
     }
-    
+    h2{
+        color:#000000;
+    }
+    h4{
+        color:#515151;
+    }
+    .product-price{
+
+        font-size: 1.5rem;
+        color: map-get($colors, secondary)
+    }
+        
 
     .profile-top {
             width: 100%;

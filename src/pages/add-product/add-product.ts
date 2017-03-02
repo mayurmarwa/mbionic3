@@ -63,6 +63,7 @@ export class AddProductPage {
         //this.catDetails = this.af.database.object('productcategories/' + this.catid);
         this.coilsForm = formBuilder.group({
             name: ['', Validators.required],
+            ptype: ['Hastealloy',],
             grade: ['', Validators.required],
             gradeval: ['base', Validators.required],
             finish: ['HR', Validators.required],
@@ -89,6 +90,7 @@ export class AddProductPage {
 
         this.sheetsForm = formBuilder.group({
             name: ['', Validators.required],
+            ptype: ['Hastealloy',],
             grade: ['', Validators.required],
             gradeval: ['base', Validators.required],
             finish: ['HR', Validators.required],
@@ -111,9 +113,10 @@ export class AddProductPage {
 
         this.seamlessForm = formBuilder.group({
             name: ['', Validators.required],
+            ptype: ['Hastealloy',],
             grade: ['', Validators.required],
             gradeval: ['base', Validators.required],
-            composition: ['', Validators.required],
+            composition: ['',],
             type: ['OD', Validators.required],
             swg: ['',],
             mm: ['',],
@@ -134,6 +137,7 @@ export class AddProductPage {
 
         this.squareForm = formBuilder.group({
             name: ['', Validators.required],
+            ptype: ['Hastealloy',],
             grade: ['', Validators.required],
             gradeval: ['base', Validators.required],
             composition: ['',],
@@ -197,6 +201,7 @@ export class AddProductPage {
 
         this.roundbarsForm = formBuilder.group({
             name: ['', Validators.required],
+            ptype: ['Hastealloy',],
             grade: ['', Validators.required],
             gradeval: ['base', Validators.required],
             composition: ['',],
@@ -243,13 +248,18 @@ export class AddProductPage {
             alert.present();
         }        
         else {
+           
 
             if (this.category.catid === "8c1" || this.category.catid === "8c2" || this.category.catid === "8c3" || this.category.catid === "8c4" || this.category.catid === "8d" || this.category.catid === "8a" || this.category.catid === "8b" || this.category.catid === "9c1" || this.category.catid === "9c2" || this.category.catid === "9c3" || this.category.catid === "9c4" || this.category.catid === "9d" || this.category.catid === "9a" || this.category.catid === "9b") {
                 productForm.value.gradeval = productForm.value.grade;
             }
+            if (this.category.catid === '4a' || this.category.catid === '4c' || this.category.catid === '8c1' || this.category.catid === '9c1' || this.category.catid === '8c3' || this.category.catid === '9c3') {
+                productForm.value.finish = null;
+            }
 
             if (this.category.catid === "4a" || this.category.catid === "4b" || this.category.catid === "4c" || this.category.catid === "8c1" || this.category.catid === "8c2" || this.category.catid === "8c3" || this.category.catid === "9c1" || this.category.catid === "9c2" || this.category.catid === "9c3") {
                 if (productForm.value.type === "OD") {
+                    productForm.value.sch = null;
                     if ((productForm.value.swg == null && productForm.value.mm == null) || ((productForm.value.swg === "" && (productForm.value.mm === "" || productForm.value.mm === null)) || (productForm.value.mm === "" && (productForm.value.swg === "" || productForm.value.swg === null)))) {
 
                         this.allValid = false;
@@ -266,6 +276,8 @@ export class AddProductPage {
 
                 }
                 else {
+                    productForm.value.swg = null;
+                    productForm.value.finish = null;
                     if (productForm.value.sch == null || productForm.value.mm == null || productForm.value.sch === "" || productForm.value.mm === "") {
                         this.allValid = false;
                         let alert = this.alertCtrl.create({
@@ -282,6 +294,21 @@ export class AddProductPage {
 
                 }
 
+            }
+            else if (this.category.catid === 3) {
+                if (productForm.value.weight == null || productForm.value.weight === "") {
+
+                    this.allValid = false;
+                    let alert = this.alertCtrl.create({
+                        title: 'Enter Weight!',
+                        subTitle: 'Enter values for weight',
+                        buttons: ['OK']
+                    });
+                    alert.present();
+                }
+                else {
+                    this.allValid = true;
+                }
             }
             else {
                 this.allValid = true;
@@ -435,6 +462,7 @@ export class AddProductPage {
                           {
 
                               islive: true,
+                              timestamp: firebase.database['ServerValue']['TIMESTAMP'],
                               name: productForm.value.name,
                               grade: productForm.value.grade,
                               mrate: productForm.value.mrate,
