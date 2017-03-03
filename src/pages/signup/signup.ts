@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { LoadingController, AlertController } from 'ionic-angular';
 import { FormBuilder, Validators } from '@angular/forms';
-import { AuthService, AuthMode } from '../../providers/auth.service';
+import { AuthService } from '../../providers/auth.service';
 import { TabsPage } from '../tabs/tabs';
 import { EmailValidator } from '../../validators/email';
 import { App } from 'ionic-angular';

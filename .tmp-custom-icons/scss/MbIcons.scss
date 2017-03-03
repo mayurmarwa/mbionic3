@@ -33,62 +33,68 @@
   @if $filename == All icons-12 {
   $char: "\E002";
 }
-  @if $filename == All icons-16 {
+  @if $filename == All icons-17 {
   $char: "\E003";
 }
-  @if $filename == All icons-17 {
+  @if $filename == All icons-19 {
   $char: "\E004";
 }
-  @if $filename == All icons-19 {
+  @if $filename == All icons-20 {
   $char: "\E005";
 }
-  @if $filename == All icons-20 {
+  @if $filename == dialer {
   $char: "\E006";
 }
-  @if $filename == dialer {
+  @if $filename == directory {
   $char: "\E007";
 }
-  @if $filename == directory {
+  @if $filename == facebook {
   $char: "\E008";
 }
-  @if $filename == heart-fill {
+  @if $filename == google {
   $char: "\E009";
 }
-  @if $filename == heart {
+  @if $filename == heart-fill {
   $char: "\E00A";
 }
-  @if $filename == home {
+  @if $filename == heart {
   $char: "\E00B";
 }
-  @if $filename == logout {
+  @if $filename == home {
   $char: "\E00C";
 }
-  @if $filename == menu {
+  @if $filename == lock {
   $char: "\E00D";
 }
-  @if $filename == message {
+  @if $filename == logout {
   $char: "\E00E";
 }
-  @if $filename == post {
+  @if $filename == menu {
   $char: "\E00F";
 }
-  @if $filename == prices {
+  @if $filename == message {
   $char: "\E010";
 }
-  @if $filename == products {
+  @if $filename == post {
   $char: "\E011";
 }
-  @if $filename == profile {
+  @if $filename == prices {
   $char: "\E012";
 }
-  @if $filename == search {
+  @if $filename == products {
   $char: "\E013";
 }
-  @if $filename == settings {
+  @if $filename == profile {
   $char: "\E014";
 }
-  @if $filename == upload {
+  @if $filename == search {
   $char: "\E015";
+}
+  @if $filename == settings {
+  $char: "\E016";
+}
+  @if $filename == upload {
+  $char: "\E017";
 }
 
 @return $char;
@@ -111,9 +117,6 @@
 .mb-All icons-12 {
   @include mb(All icons-12);
 }
-.mb-All icons-16 {
-  @include mb(All icons-16);
-}
 .mb-All icons-17 {
   @include mb(All icons-17);
 }
@@ -129,6 +132,12 @@
 .mb-directory {
   @include mb(directory);
 }
+.mb-facebook {
+  @include mb(facebook);
+}
+.mb-google {
+  @include mb(google);
+}
 .mb-heart-fill {
   @include mb(heart-fill);
 }
@@ -137,6 +146,9 @@
 }
 .mb-home {
   @include mb(home);
+}
+.mb-lock {
+  @include mb(lock);
 }
 .mb-logout {
   @include mb(logout);

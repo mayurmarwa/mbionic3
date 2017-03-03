@@ -52,9 +52,6 @@ var LoginPage = (function () {
     /**
      * login with Github
      */
-    LoginPage.prototype.loginWithGithub = function () {
-        this.login(AuthMode.Github);
-    };
     LoginPage.prototype.elementChanged = function (input) {
         var field = input.inputControl.name;
         this[field + "Changed"] = true;

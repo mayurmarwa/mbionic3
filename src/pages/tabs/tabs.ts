@@ -4,10 +4,6 @@ import { MarketPage } from '../market/market';
 import { PricesPage } from '../prices/prices';
 import { EnquiriesPage } from '../enquiries/enquiries';
 
-import { TabChatsPage } from '../tab-chats/tab-chats';
-import { TabContactsPage } from '../tab-contacts/tab-contacts';
-import { TabProfilePage } from '../tab-profile/tab-profile';
-
 
 @Component({
   selector: 'page-tabs',

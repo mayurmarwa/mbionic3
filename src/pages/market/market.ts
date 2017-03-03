@@ -37,4 +37,9 @@ export class MarketPage {
       this.navCtrl.push(ProductPagePage, {product: product});
   }
 
+  opennotificationsPage(product) {
+
+      this.navCtrl.push(NotificationsPage);
+  }
+
 }

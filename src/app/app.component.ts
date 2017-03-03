@@ -6,7 +6,6 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { AboutPage } from '../pages/about/about';
 import { LoginPage } from '../pages/login/login';
 import { TabProfilePage } from '../pages/tab-profile/tab-profile';
-import { MyProfilePage } from '../pages/my-profile/my-profile';
 import { MyProductsPage } from '../pages/my-products/my-products';
 import { PostBuyRequirementsPage } from '../pages/post-buy-requirements/post-buy-requirements';
 import { BrowseRequirementsPage } from '../pages/browse-requirements/browse-requirements';

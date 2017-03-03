@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
 import { FormBuilder, Validators } from '@angular/forms';
-import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
+import { AngularFire } from 'angularfire2';
 import firebase from 'firebase';
 import { AuthService } from '../../providers/auth.service';
 import { EnquirySentPage } from '../enquiry-sent/enquiry-sent';
-import { Observable } from 'rxjs/Observable'; 
+
 
 /*
   Generated class for the SendEnquiry page.

@@ -13,21 +13,21 @@
         <ion-item>
             <ion-label stacked>Name</ion-label>
             <ion-input #name formControlName="name" type="text" (change)="elementChanged(name)"
-                       placeholder="Your Name">
+                       placeholder="Your Name" [class.invalid]="!signupForm.controls.name.valid && submitAttempt">
             </ion-input>
         </ion-item>
 
         <ion-item>
             <ion-label stacked>Mobile  No.</ion-label>
             <ion-input #mobile formControlName="mobile" type="number" (change)="elementChanged(mobile)"
-                       placeholder="10 Digit Number">
+                       placeholder="10 Digit Number" [class.invalid]="!signupForm.controls.mobile.valid && submitAttempt">
             </ion-input>
         </ion-item>
 
         <ion-item>
             <ion-label stacked>Company Name</ion-label>
             <ion-input #companyname formControlName="companyname" type="text" (change)="elementChanged(companyname)"
-                       placeholder="Name of Business">
+                       placeholder="Name of Business" [class.invalid]="!signupForm.controls.companyname.valid && submitAttempt">
             </ion-input>
         </ion-item>
 
@@ -51,10 +51,12 @@
             <p>Your password needs more than 6 characters.</p>
         </ion-item>
 
-        <button ion-button block type="submit">
-            Create an Account
-        </button>
+        <div text-center >
+            <button ion-button round type="submit">
+                Create Account
+            </button>
+         </div>
 
-    </form>
+</form>
 
 </ion-content>

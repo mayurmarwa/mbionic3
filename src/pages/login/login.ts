@@ -57,9 +57,6 @@ export class LoginPage {
   /**
    * login with Github
    */
-  loginWithGithub() {
-    this.login(AuthMode.Github);
-  }
 
   elementChanged(input) {
       let field = input.inputControl.name;

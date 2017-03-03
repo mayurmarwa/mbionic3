@@ -26,10 +26,14 @@
   <unknown-hero  *ngSwitchDefault           [hero]="hero"></unknown-hero>
     </div>
    <h2>{{category.catid}}</h2>-->
-    <button ion-button icon-left (click)="presentActionSheet()">
-        <ion-icon name="image"></ion-icon>
-        Upload Product Image
-    </button>
+    <div text-center>
+        <img [src]="productImage" *ngIf="productImage != null">
+
+        <button ion-button icon-left (click)="presentActionSheet()">
+            <ion-icon name="image"></ion-icon>
+            Upload Product Image
+        </button>
+    </div>
     <h2>{{category.title}}</h2>
     <!--<h2 *ngIf="category.fields.grade">{{category.fields.grade}}</h2>-->
 

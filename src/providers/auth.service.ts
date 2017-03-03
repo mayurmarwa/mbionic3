@@ -10,8 +10,7 @@ import firebase from 'firebase';
 
 export enum AuthMode {
   Facebook,
-  GooglePlus,
-  Github
+  GooglePlus
 };
 
 @Injectable()
@@ -78,9 +77,6 @@ export class AuthService {
   /**
    * sign in with github
    */
-  private signInWithGithub() {
-    return this.signInWithProvider(AuthProviders.Github);
-  }
 
   private signInWithProvider(provider: any, method: any = AuthMethods.Popup ) {
     return this.af.auth.login({ provider: provider, method: method })

@@ -9,6 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { Component } from '@angular/core';
 import { NavController, NavParams, ModalController } from 'ionic-angular';
+import { NotificationsPage } from '../notifications/notifications';
 import { AngularFire } from 'angularfire2';
 import { ProductPagePage } from '../product-page/product-page';
 /*
@@ -31,6 +32,9 @@ var MarketPage = (function () {
     };
     MarketPage.prototype.openproductpage = function (product) {
         this.navCtrl.push(ProductPagePage, { product: product });
+    };
+    MarketPage.prototype.opennotificationsPage = function (product) {
+        this.navCtrl.push(NotificationsPage);
     };
     return MarketPage;
 }());

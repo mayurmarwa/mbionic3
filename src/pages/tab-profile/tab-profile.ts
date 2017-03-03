@@ -1,4 +1,4 @@
-import { NavController, AlertController } from 'ionic-angular';
+import { AlertController } from 'ionic-angular';
 import { Component } from '@angular/core';
 import { LoadingController } from 'ionic-angular';
 import { AuthService } from '../../providers/auth.service';

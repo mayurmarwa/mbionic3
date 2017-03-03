@@ -17,7 +17,6 @@ export var AuthMode;
 (function (AuthMode) {
     AuthMode[AuthMode["Facebook"] = 0] = "Facebook";
     AuthMode[AuthMode["GooglePlus"] = 1] = "GooglePlus";
-    AuthMode[AuthMode["Github"] = 2] = "Github";
 })(AuthMode || (AuthMode = {}));
 ;
 var AuthService = (function () {
@@ -74,9 +73,6 @@ var AuthService = (function () {
     /**
      * sign in with github
      */
-    AuthService.prototype.signInWithGithub = function () {
-        return this.signInWithProvider(AuthProviders.Github);
-    };
     AuthService.prototype.signInWithProvider = function (provider, method) {
         if (method === void 0) { method = AuthMethods.Popup; }
         return this.af.auth.login({ provider: provider, method: method });

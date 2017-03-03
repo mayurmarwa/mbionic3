@@ -5,57 +5,66 @@
 </ion-header>
 
 <ion-content padding>
-    <div class="position-top">
-    <form [formGroup]="loginForm" (submit)="loginUser()" novalidate>
+    <div text-center>
+        <img src="/assets/img/logo.png">
 
-        <ion-item>
-            <ion-label stacked>Email</ion-label>
-            <ion-input #email formControlName="email" type="email" (change)="elementChanged(email)"
-                       placeholder="Your email address"
-                       [class.invalid]="!loginForm.controls.email.valid &&
-          (emailChanged || submitAttempt)"></ion-input>
-        </ion-item>
-        <ion-item class="error-message" *ngIf="!loginForm.controls.email.valid  &&
-      (emailChanged || submitAttempt)">
-            <p>Please enter a valid email.</p>
-        </ion-item>
-
-        <ion-item>
-            <ion-label stacked>Password</ion-label>
-            <ion-input #password formControlName="password" type="password"
-                       (change)="elementChanged(password)"
-                       placeholder="Your password"
-                       [class.invalid]="!loginForm.controls.password.valid &&
-          (passwordChanged || submitAttempt)"></ion-input>
-        </ion-item>
-        <ion-item class="error-message" *ngIf="!loginForm.controls.password.valid  &&
-      (passwordChanged || submitAttempt)">
-            <p>Your password needs more than 6 characters.</p>
-        </ion-item>
-
-        <button ion-button block type="submit">
-            Login
-        </button>
-
-    </form>
-        <button ion-button block clear (click)="goToResetPassword()">
-            I forgot my password ??
-        </button>
-
-        <button ion-button block clear (click)="createAccount()">
-            Create a new account
-        </button>
+        <div text-center >
+            <p>Not a member yet?<a (click)="createAccount()"> Sign Up! </a></p>
         </div>
 
-  <div class="position-bottom">
-    <button ion-button block color="facebook" (click)="loginWithFacebook()">
-      Log in with Facebook
-    </button>
-    <button ion-button block color="google" (click)="loginWithGoogle()">
-      Log in with Google
-    </button>
-    <button ion-button block color="favorite" (click)="loginWithGithub()">
-      Log in with Github
-    </button>
-  </div>
+            <form [formGroup]="loginForm" (submit)="loginUser()" novalidate>
+
+                <ion-item >
+                    <custom-icon set="mb" name="profile" item-left></custom-icon>
+                    <!--<ion-label>Email</ion-label>-->
+                    <ion-input #email formControlName="email" type="email" (change)="elementChanged(email)"
+                               placeholder="Enter Email Address"
+                               [class.invalid]="!loginForm.controls.email.valid &&
+          (emailChanged || submitAttempt)"></ion-input>
+                </ion-item>
+                <ion-item class="error-message" *ngIf="!loginForm.controls.email.valid  &&
+      (emailChanged || submitAttempt)">
+                    <p>Please enter a valid email.</p>
+                </ion-item>
+
+                <ion-item>
+                    <custom-icon set="mb" name="lock" item-left></custom-icon>
+                    <!--<ion-label>Password</ion-label>-->
+                    <ion-input #password formControlName="password" type="password"
+                               (change)="elementChanged(password)"
+                               placeholder="Enter Password"
+                               [class.invalid]="!loginForm.controls.password.valid &&
+          (passwordChanged || submitAttempt)"></ion-input>
+                </ion-item>
+                <ion-item class="error-message" *ngIf="!loginForm.controls.password.valid  &&
+      (passwordChanged || submitAttempt)">
+                    <p>Your password needs more than 6 characters.</p>
+                </ion-item>
+                <div text-center>
+                    <button ion-button round type="submit" style="width: 20rem;margin-top: 4rem !important;">
+                        Login
+                    </button>
+                </div>
+
+            </form>
+            <button ion-button block clear color="#bdbdbd" (click)="goToResetPassword()">
+                Forgot Password
+            </button>
+
+            <!--/div>
+
+        <div class="position-bottom">-->
+            <div text-center>
+                <p>OR</p>
+                <button ion-button icon-left round color="google" (click)="loginWithGoogle()" style="width: 20rem;margin-top: 1rem !important;">
+                    <ion-icon name="googleplus"></ion-icon>
+                    Login With Google                    
+                </button>
+                <br />
+                <button ion-button icon-only round color="facebook" (click)="loginWithFacebook()" style="width: 20rem;margin-top: 2rem !important;">
+                    <ion-icon name="facebook"></ion-icon>
+                    Login With Facebook
+                </button>
+            </div>
+        </div>
 </ion-content>

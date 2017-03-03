@@ -32,13 +32,13 @@ var AddProductPage = (function () {
         this.alertCtrl = alertCtrl;
         this.loadingCtrl = loadingCtrl;
         this.lastImage = null;
-        this.productImage = null;
         this.productImageURL = "/assets/img/noimage.png";
         this.mrateTrue = null;
         this.krateTrue = null;
         this.typeOD = true;
         this.allValid = false;
         this.priceValid = false;
+        this.imageValid = false;
         this.category = navParams.get("category");
         this.currentuser = firebase.auth().currentUser;
         //this.cattitle = this.category.title + " ";
@@ -220,6 +220,21 @@ var AddProductPage = (function () {
             alert_1.present();
         }
         else {
+            if (this.productImage == null) {
+                var alert_2 = this.alertCtrl.create({
+                    title: 'Add Image!',
+                    subTitle: 'Please add an image for your product',
+                    buttons: ['OK']
+                });
+                alert_2.present();
+                this.imageValid = true;
+            }
+            else {
+                this.imageValid = true;
+            }
+            if (this.category.catid != "9a" && this.category.catid != "9b" && this.category.catid != "9c1" && this.category.catid != "9c2" && this.category.catid != "9c3" && this.category.catid != "9c4" && this.category.catid != "9d") {
+                productForm.value.ptype = null;
+            }
             if (this.category.catid === "8c1" || this.category.catid === "8c2" || this.category.catid === "8c3" || this.category.catid === "8c4" || this.category.catid === "8d" || this.category.catid === "8a" || this.category.catid === "8b" || this.category.catid === "9c1" || this.category.catid === "9c2" || this.category.catid === "9c3" || this.category.catid === "9c4" || this.category.catid === "9d" || this.category.catid === "9a" || this.category.catid === "9b") {
                 productForm.value.gradeval = productForm.value.grade;
             }
@@ -231,12 +246,12 @@ var AddProductPage = (function () {
                     productForm.value.sch = null;
                     if ((productForm.value.swg == null && productForm.value.mm == null) || ((productForm.value.swg === "" && (productForm.value.mm === "" || productForm.value.mm === null)) || (productForm.value.mm === "" && (productForm.value.swg === "" || productForm.value.swg === null)))) {
                         this.allValid = false;
-                        var alert_2 = this.alertCtrl.create({
+                        var alert_3 = this.alertCtrl.create({
                             title: 'Enter Thickness!',
                             subTitle: 'Enter values for either SWG or MM or both',
                             buttons: ['OK']
                         });
-                        alert_2.present();
+                        alert_3.present();
                     }
                     else {
                         this.allValid = true;
@@ -247,12 +262,12 @@ var AddProductPage = (function () {
                     productForm.value.finish = null;
                     if (productForm.value.sch == null || productForm.value.mm == null || productForm.value.sch === "" || productForm.value.mm === "") {
                         this.allValid = false;
-                        var alert_3 = this.alertCtrl.create({
+                        var alert_4 = this.alertCtrl.create({
                             title: 'Enter Thickness!',
                             subTitle: 'Enter values for SCH and MM',
                             buttons: ['OK']
                         });
-                        alert_3.present();
+                        alert_4.present();
                     }
                     else {
                         this.allValid = true;
@@ -262,12 +277,12 @@ var AddProductPage = (function () {
             else if (this.category.catid === 3) {
                 if (productForm.value.weight == null || productForm.value.weight === "") {
                     this.allValid = false;
-                    var alert_4 = this.alertCtrl.create({
+                    var alert_5 = this.alertCtrl.create({
                         title: 'Enter Weight!',
                         subTitle: 'Enter values for weight',
                         buttons: ['OK']
                     });
-                    alert_4.present();
+                    alert_5.present();
                 }
                 else {
                     this.allValid = true;
@@ -278,17 +293,17 @@ var AddProductPage = (function () {
             }
             if ((productForm.value.mrate == null && productForm.value.krate == null) || ((productForm.value.mrate === "" && (productForm.value.krate === "" || productForm.value.krate === null)) || (productForm.value.krate === "" && (productForm.value.mrate === "" || productForm.value.mrate === null)))) {
                 this.priceValid = false;
-                var alert_5 = this.alertCtrl.create({
+                var alert_6 = this.alertCtrl.create({
                     title: 'Enter Price',
                     subTitle: 'Enter either Market Rate or Kalamboli rate or both ',
                     buttons: ['OK']
                 });
-                alert_5.present();
+                alert_6.present();
             }
             else {
                 this.priceValid = true;
             }
-            if (this.allValid && this.priceValid) {
+            if (this.allValid && this.priceValid && this.imageValid) {
                 var confirm_1 = this.alertCtrl.create({
                     title: 'Submit Product?',
                     message: 'Do you want to post this product to the market?',
@@ -349,7 +364,7 @@ var AddProductPage = (function () {
         this.loading = this.loadingCtrl.create({
             content: 'Submitting, Please Wait...'
         });
-        if (this.allValid && this.priceValid) {
+        if (this.allValid && this.priceValid && this.imageValid) {
             console.log(productForm.value);
             this.products.push(productForm.value).then(function (data) {
                 if (_this.productImage != null) {
@@ -360,54 +375,103 @@ var AddProductPage = (function () {
                             .child('profilePicture')
                             .set(savedPicture.downloadURL);**/
                         _this.productImageURL = savedPicture.downloadURL;
-                    });
-                }
-                _this.af.database.object('products/' + data.key).update({
-                    islive: true,
-                    timestamp: firebase.database['ServerValue']['TIMESTAMP'],
-                    productImage: _this.productImageURL
-                });
-                if (_this.category.catid === 10) {
-                    _this.af.database.object('users/' + _this.currentuser.uid + '/products/' + data.key).set({
-                        islive: true,
-                        timestamp: firebase.database['ServerValue']['TIMESTAMP'],
-                        name: productForm.value.name,
-                        mrate: productForm.value.mrate,
-                        krate: productForm.value.krate,
-                        productImage: _this.productImageURL
-                    }).then(function (info) {
-                        //console.log("success");
-                        _this.loading.present();
-                        setTimeout(function () {
-                            _this.navCtrl.popToRoot({ animate: false });
-                            _this.navCtrl.push(MyProductsPage, { animate: false });
-                            //this.navCtrl.pop({ animate: false });
-                        }, 1000);
-                        setTimeout(function () {
-                            _this.loading.dismiss();
-                        }, 3000);
+                        _this.af.database.object('products/' + data.key).update({
+                            islive: true,
+                            timestamp: firebase.database['ServerValue']['TIMESTAMP'],
+                            productImage: _this.productImageURL
+                        });
+                        if (_this.category.catid === 10) {
+                            _this.af.database.object('users/' + _this.currentuser.uid + '/products/' + data.key).set({
+                                islive: true,
+                                timestamp: firebase.database['ServerValue']['TIMESTAMP'],
+                                name: productForm.value.name,
+                                mrate: productForm.value.mrate,
+                                krate: productForm.value.krate,
+                                productImage: _this.productImageURL
+                            }).then(function (info) {
+                                //console.log("success");
+                                _this.loading.present();
+                                setTimeout(function () {
+                                    _this.navCtrl.popToRoot({ animate: false });
+                                    _this.navCtrl.push(MyProductsPage, { animate: false });
+                                    //this.navCtrl.pop({ animate: false });
+                                }, 1000);
+                                setTimeout(function () {
+                                    _this.loading.dismiss();
+                                }, 3000);
+                            });
+                        }
+                        else {
+                            _this.af.database.object('users/' + _this.currentuser.uid + '/products/' + data.key).set({
+                                islive: true,
+                                timestamp: firebase.database['ServerValue']['TIMESTAMP'],
+                                name: productForm.value.name,
+                                grade: productForm.value.grade,
+                                mrate: productForm.value.mrate,
+                                krate: productForm.value.krate,
+                                productImage: _this.productImageURL
+                            }).then(function (info) {
+                                //console.log("success");
+                                _this.loading.present();
+                                setTimeout(function () {
+                                    _this.navCtrl.popToRoot({ animate: false });
+                                    _this.navCtrl.push(MyProductsPage, { animate: false });
+                                }, 1000);
+                                setTimeout(function () {
+                                    _this.loading.dismiss();
+                                }, 3000);
+                            });
+                        }
                     });
                 }
                 else {
-                    _this.af.database.object('users/' + _this.currentuser.uid + '/products/' + data.key).set({
+                    _this.af.database.object('products/' + data.key).update({
                         islive: true,
                         timestamp: firebase.database['ServerValue']['TIMESTAMP'],
-                        name: productForm.value.name,
-                        grade: productForm.value.grade,
-                        mrate: productForm.value.mrate,
-                        krate: productForm.value.krate,
                         productImage: _this.productImageURL
-                    }).then(function (info) {
-                        //console.log("success");
-                        _this.loading.present();
-                        setTimeout(function () {
-                            _this.navCtrl.popToRoot({ animate: false });
-                            _this.navCtrl.push(MyProductsPage, { animate: false });
-                        }, 1000);
-                        setTimeout(function () {
-                            _this.loading.dismiss();
-                        }, 3000);
                     });
+                    if (_this.category.catid === 10) {
+                        _this.af.database.object('users/' + _this.currentuser.uid + '/products/' + data.key).set({
+                            islive: true,
+                            timestamp: firebase.database['ServerValue']['TIMESTAMP'],
+                            name: productForm.value.name,
+                            mrate: productForm.value.mrate,
+                            krate: productForm.value.krate,
+                            productImage: _this.productImageURL
+                        }).then(function (info) {
+                            //console.log("success");
+                            _this.loading.present();
+                            setTimeout(function () {
+                                _this.navCtrl.popToRoot({ animate: false });
+                                _this.navCtrl.push(MyProductsPage, { animate: false });
+                                //this.navCtrl.pop({ animate: false });
+                            }, 1000);
+                            setTimeout(function () {
+                                _this.loading.dismiss();
+                            }, 3000);
+                        });
+                    }
+                    else {
+                        _this.af.database.object('users/' + _this.currentuser.uid + '/products/' + data.key).set({
+                            islive: true,
+                            timestamp: firebase.database['ServerValue']['TIMESTAMP'],
+                            name: productForm.value.name,
+                            grade: productForm.value.grade,
+                            mrate: productForm.value.mrate,
+                            krate: productForm.value.krate,
+                            productImage: _this.productImageURL
+                        }).then(function (info) {
+                            //console.log("success");
+                            _this.loading.present();
+                            setTimeout(function () {
+                                _this.navCtrl.popToRoot({ animate: false });
+                                _this.navCtrl.push(MyProductsPage, { animate: false });
+                            }, 1000);
+                            setTimeout(function () {
+                                _this.loading.dismiss();
+                            }, 3000);
+                        });
+                    }
                 }
             });
         }
@@ -445,14 +509,13 @@ var AddProductPage = (function () {
             quality: 95,
             destinationType: Camera.DestinationType.DATA_URL,
             sourceType: Camera.PictureSourceType.CAMERA,
-            allowEdit: true,
+            allowEdit: false,
             encodingType: Camera.EncodingType.PNG,
             targetWidth: 500,
             targetHeight: 500,
             saveToPhotoAlbum: true
         }).then(function (imageData) {
             _this.productImage = imageData;
-            //console.log(this.productImage);
         }, function (error) {
             console.log("ERROR -> " + JSON.stringify(error));
         });
@@ -463,14 +526,13 @@ var AddProductPage = (function () {
             quality: 95,
             destinationType: Camera.DestinationType.DATA_URL,
             sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
-            allowEdit: true,
+            allowEdit: false,
             encodingType: Camera.EncodingType.PNG,
             targetWidth: 500,
             targetHeight: 500,
             saveToPhotoAlbum: true
         }).then(function (imageData) {
             _this.productImage = imageData;
-            //console.log(this.productImage);
         }, function (error) {
             console.log("ERROR -> " + JSON.stringify(error));
         });

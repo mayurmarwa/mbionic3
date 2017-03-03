@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, ActionSheetController, AlertController, LoadingController} from 'ionic-angular';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Camera, File, Transfer, FilePath } from 'ionic-native';
-import { NgSwitch, NgSwitchCase, NgSwitchDefault } from '@angular/common';
-import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
+import { Camera } from 'ionic-native';
+import { AngularFire, FirebaseListObservable} from 'angularfire2';
 import { AuthService } from '../../providers/auth.service';
 import firebase from 'firebase';
 import { MyProductsPage } from '../my-products/my-products';
@@ -36,7 +35,7 @@ export class AddProductPage {
     public roundbarsForm;
     public deadForm;
     lastImage: string = null;
-    public productImage: any = null;
+    public productImage: string;
     public productImageRef: any;
     public productImageURL: string = "/assets/img/noimage.png"
     public mrateTrue: number = null;
@@ -44,6 +43,7 @@ export class AddProductPage {
     public typeOD: boolean = true;
     public allValid: boolean = false;
     public priceValid: boolean = false;
+    public imageValid: boolean = false;
     public gradeList: FirebaseListObservable<any>;
     public selectedGrade: any;
     public selectedGradeItem: any;
@@ -248,7 +248,21 @@ export class AddProductPage {
             alert.present();
         }        
         else {
-           
+            if (this.productImage == null) {
+                let alert = this.alertCtrl.create({
+                    title: 'Add Image!',
+                    subTitle: 'Please add an image for your product',
+                    buttons: ['OK']
+                });
+                alert.present();
+                this.imageValid = true;
+            }
+            else {
+                this.imageValid = true;
+            }
+            if (this.category.catid != "9a" && this.category.catid != "9b" && this.category.catid != "9c1" && this.category.catid != "9c2" && this.category.catid != "9c3" && this.category.catid != "9c4" && this.category.catid != "9d"){
+                productForm.value.ptype = null;
+            }
 
             if (this.category.catid === "8c1" || this.category.catid === "8c2" || this.category.catid === "8c3" || this.category.catid === "8c4" || this.category.catid === "8d" || this.category.catid === "8a" || this.category.catid === "8b" || this.category.catid === "9c1" || this.category.catid === "9c2" || this.category.catid === "9c3" || this.category.catid === "9c4" || this.category.catid === "9d" || this.category.catid === "9a" || this.category.catid === "9b") {
                 productForm.value.gradeval = productForm.value.grade;
@@ -328,7 +342,7 @@ export class AddProductPage {
             }
 
 
-        if (this.allValid && this.priceValid){
+        if (this.allValid && this.priceValid && this.imageValid){
             let confirm = this.alertCtrl.create({
                 title: 'Submit Product?',
                 message: 'Do you want to post this product to the market?',
@@ -402,7 +416,7 @@ export class AddProductPage {
       });
 
             
-          if(this.allValid && this.priceValid) {
+          if(this.allValid && this.priceValid && this.imageValid) {
               console.log( productForm.value);
               this.products.push( productForm.value).then(data => {
 
@@ -415,80 +429,155 @@ export class AddProductPage {
                                   .child('profilePicture')
                                   .set(savedPicture.downloadURL);**/
                               this.productImageURL = savedPicture.downloadURL;
+                              this.af.database.object('products/' + data.key).update(
+                                  {
+                                      islive: true,
+                                      timestamp: firebase.database['ServerValue']['TIMESTAMP'],
+                                      productImage: this.productImageURL
+                                  }
+                              )
+                              if (this.category.catid === 10) {
+                                  this.af.database.object('users/' + this.currentuser.uid + '/products/' + data.key).set(
+                                      {
+
+                                          islive: true,
+                                          timestamp: firebase.database['ServerValue']['TIMESTAMP'],
+                                          name: productForm.value.name,
+                                          mrate: productForm.value.mrate,
+                                          krate: productForm.value.krate,
+                                          productImage: this.productImageURL
+                                      }
+
+
+
+                                  ).then(info => {
+                                      //console.log("success");
+                                      this.loading.present();
+
+                                      setTimeout(() => {
+                                          this.navCtrl.popToRoot({ animate: false });
+                                          this.navCtrl.push(MyProductsPage, { animate: false });
+                                          //this.navCtrl.pop({ animate: false });
+                                      }, 1000);
+
+                                      setTimeout(() => {
+                                          this.loading.dismiss();
+                                      }, 3000);
+
+
+
+                                  })
+                              }
+                              else {
+
+                                  this.af.database.object('users/' + this.currentuser.uid + '/products/' + data.key).set(
+                                      {
+
+                                          islive: true,
+                                          timestamp: firebase.database['ServerValue']['TIMESTAMP'],
+                                          name: productForm.value.name,
+                                          grade: productForm.value.grade,
+                                          mrate: productForm.value.mrate,
+                                          krate: productForm.value.krate,
+                                          productImage: this.productImageURL
+                                      }
+
+
+
+                                  ).then(info => {
+
+                                      //console.log("success");
+                                      this.loading.present();
+
+                                      setTimeout(() => {
+                                          this.navCtrl.popToRoot({ animate: false });
+                                          this.navCtrl.push(MyProductsPage, { animate: false });
+                                      }, 1000);
+
+                                      setTimeout(() => {
+                                          this.loading.dismiss();
+                                      }, 3000);
+
+                                  })
+
+                              }
                           });
                   }
-                  this.af.database.object('products/' + data.key).update(
-                      {
-                          islive: true,
-                          timestamp: firebase.database['ServerValue']['TIMESTAMP'],
-                          productImage: this.productImageURL
-                      }
-                  )
-                  if (this.category.catid === 10) {
-                      this.af.database.object('users/' + this.currentuser.uid + '/products/' + data.key).set(
-                          {
-
-                              islive: true,
-                              timestamp: firebase.database['ServerValue']['TIMESTAMP'],
-                              name: productForm.value.name,                              
-                              mrate: productForm.value.mrate,
-                              krate: productForm.value.krate,
-                              productImage: this.productImageURL
-                          }
-
-
-
-                      ).then(info => {
-                          //console.log("success");
-                          this.loading.present();
-
-                          setTimeout(() => {
-                              this.navCtrl.popToRoot({ animate: false });
-                              this.navCtrl.push(MyProductsPage,{ animate: false });
-                              //this.navCtrl.pop({ animate: false });
-                          }, 1000);
-
-                          setTimeout(() => {
-                              this.loading.dismiss();
-                          }, 3000);
-                          
-                         
-
-                      })
-                  }
                   else {
-
-                      this.af.database.object('users/' + this.currentuser.uid + '/products/' + data.key).set(
+                      this.af.database.object('products/' + data.key).update(
                           {
-
                               islive: true,
                               timestamp: firebase.database['ServerValue']['TIMESTAMP'],
-                              name: productForm.value.name,
-                              grade: productForm.value.grade,
-                              mrate: productForm.value.mrate,
-                              krate: productForm.value.krate,
                               productImage: this.productImageURL
                           }
+                      )
+                      if (this.category.catid === 10) {
+                          this.af.database.object('users/' + this.currentuser.uid + '/products/' + data.key).set(
+                              {
+
+                                  islive: true,
+                                  timestamp: firebase.database['ServerValue']['TIMESTAMP'],
+                                  name: productForm.value.name,
+                                  mrate: productForm.value.mrate,
+                                  krate: productForm.value.krate,
+                                  productImage: this.productImageURL
+                              }
 
 
 
-                      ).then(info => {
+                          ).then(info => {
+                              //console.log("success");
+                              this.loading.present();
 
-                          //console.log("success");
-                          this.loading.present();
+                              setTimeout(() => {
+                                  this.navCtrl.popToRoot({ animate: false });
+                                  this.navCtrl.push(MyProductsPage, { animate: false });
+                                  //this.navCtrl.pop({ animate: false });
+                              }, 1000);
 
-                          setTimeout(() => {
-                              this.navCtrl.popToRoot({ animate: false });
-                              this.navCtrl.push(MyProductsPage, { animate: false });
-                          }, 1000);
+                              setTimeout(() => {
+                                  this.loading.dismiss();
+                              }, 3000);
 
-                          setTimeout(() => {
-                              this.loading.dismiss();
-                          }, 3000);
 
-                      })
 
+                          })
+                      }
+                      else {
+
+                          this.af.database.object('users/' + this.currentuser.uid + '/products/' + data.key).set(
+                              {
+
+                                  islive: true,
+                                  timestamp: firebase.database['ServerValue']['TIMESTAMP'],
+                                  name: productForm.value.name,
+                                  grade: productForm.value.grade,
+                                  mrate: productForm.value.mrate,
+                                  krate: productForm.value.krate,
+                                  productImage: this.productImageURL
+                              }
+
+
+
+                          ).then(info => {
+
+                              //console.log("success");
+                              this.loading.present();
+
+                              setTimeout(() => {
+                                  this.navCtrl.popToRoot({ animate: false });
+                                  this.navCtrl.push(MyProductsPage, { animate: false });
+                              }, 1000);
+
+                              setTimeout(() => {
+                                  this.loading.dismiss();
+                              }, 3000);
+
+                          })
+
+                      }
                   }
+                  
               })
           }
       }
@@ -525,14 +614,13 @@ export class AddProductPage {
           quality: 95,
           destinationType: Camera.DestinationType.DATA_URL,
           sourceType: Camera.PictureSourceType.CAMERA,
-          allowEdit: true,
+          allowEdit: false,
           encodingType: Camera.EncodingType.PNG,
           targetWidth: 500,
           targetHeight: 500,
           saveToPhotoAlbum: true
       }).then(imageData => {
           this.productImage = imageData;
-          //console.log(this.productImage);
       }, error => {
           console.log("ERROR -> " + JSON.stringify(error));
       });
@@ -543,14 +631,13 @@ export class AddProductPage {
           quality: 95,
           destinationType: Camera.DestinationType.DATA_URL,
           sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
-          allowEdit: true,
+          allowEdit: false,
           encodingType: Camera.EncodingType.PNG,
           targetWidth: 500,
           targetHeight: 500,
           saveToPhotoAlbum: true
       }).then(imageData => {
           this.productImage = imageData;
-          //console.log(this.productImage);
       }, error => {
           console.log("ERROR -> " + JSON.stringify(error));
       });
