@@ -9,6 +9,14 @@
   <ion-navbar>
     <ion-title>Enquiries</ion-title>
   </ion-navbar>
+    <ion-segment [(ngModel)]="segment" (ionChange)="updateEnquiryList()">
+        <ion-segment-button value="received">
+            Received
+        </ion-segment-button>
+        <ion-segment-button value="sent">
+            Sent
+        </ion-segment-button>
+    </ion-segment>
 
 </ion-header>
 

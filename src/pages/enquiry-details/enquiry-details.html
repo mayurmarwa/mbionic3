@@ -13,62 +13,75 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content>
 
-    <ion-grid >
-        <ion-row>
-            <ion-col width-80>
-                {{enquiry?.productName}}
-            </ion-col>            
-            <ion-col>
-                <button ion-button clear small (click)="viewProduct()">Details</button>
-            </ion-col>
-        </ion-row>
-        <ion-row>
-            <ion-col>
-                Requirement: {{enquiry?.quantity}} {{enquiry?.unit}}
-            </ion-col>
-            <ion-col *ngIf="enquiry?.rate === 'mrate' ">
-                Market Rate: Rs. {{enquiry?.productMrate}}/{{enquiry?.productUnit}}
-            </ion-col>
-            <ion-col *ngIf="enquiry?.rate === 'krate' ">
-                Kalamboli Rate: Rs. {{enquiry?.productKrate}}/{{enquiry?.productUnit}}
-            </ion-col>
-        </ion-row>
-        <ion-row *ngIf="enquiry?.payment === 'cash' ">
-            Preferred Payment Mode: Cash
-        </ion-row>
-        <ion-row *ngIf="enquiry?.payment === ' credit' ">
-            Preferred Payment Mode: 45 Days Credit
-        </ion-row>
+    <div class="details">
+        <ion-grid>
+            <ion-row ion-item no-lines>
+                <ion-col width-80>
+                    <h2>{{enquiry?.productName}}</h2>
+                </ion-col>
+                <button ion-button item-right clear small (click)="viewProduct()">Details</button>
+            </ion-row>
+            <div class="details-content">
+                <ion-row>
+                    <ion-col>
+                        Requirement: {{enquiry?.quantity}} {{enquiry?.unit}}
+                    </ion-col>
+                    <ion-col *ngIf="enquiry?.rate === 'mrate' ">
+                        Market Rate: Rs. {{enquiry?.productMrate}}/{{enquiry?.productUnit}}
+                    </ion-col>
+                    <ion-col *ngIf="enquiry?.rate === 'krate' ">
+                        Kalamboli Rate: Rs. {{enquiry?.productKrate}}/{{enquiry?.productUnit}}
+                    </ion-col>
+                </ion-row>
+                <ion-row *ngIf="enquiry?.payment === 'cash' ">
+                    <ion-col>
+                        Preferred Payment Mode: Cash
+                    </ion-col>
+                </ion-row>
+                <ion-row ion-item *ngIf="enquiry?.payment === ' credit' ">
+                    <ion-col>
+                        Preferred Payment Mode: 45 Days Credit
+                    </ion-col>
+                </ion-row>
 
-        <ion-row *ngIf="enquiry?.details">
-            Details: {{enquiry?.details}}
-        </ion-row>
+                <ion-row *ngIf="enquiry?.details">
+                    <ion-col>
+                        Details: {{enquiry?.details}}
+                    </ion-col>
+                </ion-row>
+            </div>
+            <ion-row ion-item *ngIf="enquiry?.type === 'sent' ">
+                <ion-col width-80>
+                    <h2>Seller: {{enquiry?.otheruserName}} | {{enquiry?.otheruserNo}}</h2>
+                </ion-col>
+                <button ion-button item-right clear small (click)="viewProfile()">Profile</button>
+            </ion-row>
+            <ion-row *ngIf="enquiry?.type === 'received' ">
+                <ion-col width-80>
+                    <h2>Buyer: {{enquiry?.otheruserName}} | {{enquiry?.otheruserNo}}</h2>
+                </ion-col>
+                    <button ion-button item-right clear small (click)="viewProfile()">Profile</button>              
+            </ion-row>
+        </ion-grid>
+    </div>
 
-        <ion-row *ngIf="enquiry?.type === 'sent' ">
-            <ion-col width-80>
-                Seller: {{enquiry?.otheruserName}} | {{enquiry?.otheruserNo}}
-            </ion-col>
-            <ion-col>
-                <button ion-button clear small (click)="viewProfile()">Profile</button>
-            </ion-col>
-           
-        </ion-row>
-        <ion-row *ngIf="enquiry?.type === 'received' ">
-            <ion-col width-80>
-                Buyer: {{enquiry?.otheruserName}} | {{enquiry?.otheruserNo}}
-            </ion-col>
-            <ion-col>
-                <button ion-button clear small (click)="viewProfile()">Profile</button>
-            </ion-col>            
-        </ion-row>       
-    </ion-grid>       
-
-    <ion-list>
-        <ion-item  *ngFor="let message of messageList | async">
-            <ion-label item-right>{{message.text}}</ion-label>            
-        </ion-item>
+    
+    <ion-list class="chat" no-lines>
+        <div *ngFor="let message of messageList | async">
+            <div class="spacer-10"></div>
+            <div text-right *ngIf="message.type === 'sent' ">
+                <div text-wrap class="sent">
+                    <p>{{message.text}}</p>
+                </div>
+            </div>   
+            <div *ngIf="message.type === 'received' ">
+                <div text-wrap class="received">
+                    <p>{{message.text}}</p>
+                </div>
+            </div>            
+        </div>
     </ion-list>
 
 </ion-content>

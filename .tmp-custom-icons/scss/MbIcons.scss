@@ -27,7 +27,7 @@
 @function mb-char($filename) {
   $char: "";
 
-  @if $filename == All icons-11 {
+  @if $filename == about {
   $char: "\E001";
 }
   @if $filename == All icons-12 {
@@ -36,65 +36,71 @@
   @if $filename == All icons-17 {
   $char: "\E003";
 }
-  @if $filename == All icons-19 {
+  @if $filename == dialer {
   $char: "\E004";
 }
-  @if $filename == All icons-20 {
+  @if $filename == directory {
   $char: "\E005";
 }
-  @if $filename == dialer {
+  @if $filename == facebook {
   $char: "\E006";
 }
-  @if $filename == directory {
+  @if $filename == google {
   $char: "\E007";
 }
-  @if $filename == facebook {
+  @if $filename == heart-fill {
   $char: "\E008";
 }
-  @if $filename == google {
+  @if $filename == heart {
   $char: "\E009";
 }
-  @if $filename == heart-fill {
+  @if $filename == home {
   $char: "\E00A";
 }
-  @if $filename == heart {
+  @if $filename == lock {
   $char: "\E00B";
 }
-  @if $filename == home {
+  @if $filename == logout {
   $char: "\E00C";
 }
-  @if $filename == lock {
+  @if $filename == menu {
   $char: "\E00D";
 }
-  @if $filename == logout {
+  @if $filename == message {
   $char: "\E00E";
 }
-  @if $filename == menu {
+  @if $filename == post {
   $char: "\E00F";
 }
-  @if $filename == message {
+  @if $filename == prices {
   $char: "\E010";
 }
-  @if $filename == post {
+  @if $filename == products {
   $char: "\E011";
 }
-  @if $filename == prices {
+  @if $filename == profile {
   $char: "\E012";
 }
-  @if $filename == products {
+  @if $filename == search {
   $char: "\E013";
 }
-  @if $filename == profile {
+  @if $filename == settings {
   $char: "\E014";
 }
-  @if $filename == search {
+  @if $filename == share {
   $char: "\E015";
 }
-  @if $filename == settings {
+  @if $filename == star {
   $char: "\E016";
 }
-  @if $filename == upload {
+  @if $filename == tick {
   $char: "\E017";
+}
+  @if $filename == unit {
+  $char: "\E018";
+}
+  @if $filename == upload {
+  $char: "\E019";
 }
 
 @return $char;
@@ -111,20 +117,14 @@
 }
 }
 
-.mb-All icons-11 {
-  @include mb(All icons-11);
+.mb-about {
+  @include mb(about);
 }
 .mb-All icons-12 {
   @include mb(All icons-12);
 }
 .mb-All icons-17 {
   @include mb(All icons-17);
-}
-.mb-All icons-19 {
-  @include mb(All icons-19);
-}
-.mb-All icons-20 {
-  @include mb(All icons-20);
 }
 .mb-dialer {
   @include mb(dialer);
@@ -176,6 +176,18 @@
 }
 .mb-settings {
   @include mb(settings);
+}
+.mb-share {
+  @include mb(share);
+}
+.mb-star {
+  @include mb(star);
+}
+.mb-tick {
+  @include mb(tick);
+}
+.mb-unit {
+  @include mb(unit);
 }
 .mb-upload {
   @include mb(upload);

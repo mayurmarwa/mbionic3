@@ -516,6 +516,7 @@ var AddProductPage = (function () {
             saveToPhotoAlbum: true
         }).then(function (imageData) {
             _this.productImage = imageData;
+            _this.productPreview = "data:image/jpeg;base64," + imageData;
         }, function (error) {
             console.log("ERROR -> " + JSON.stringify(error));
         });
@@ -533,6 +534,7 @@ var AddProductPage = (function () {
             saveToPhotoAlbum: true
         }).then(function (imageData) {
             _this.productImage = imageData;
+            _this.productPreview = "data:image/jpeg;base64," + imageData;
         }, function (error) {
             console.log("ERROR -> " + JSON.stringify(error));
         });

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
 import { FormBuilder, Validators } from '@angular/forms';
 import { AngularFire, FirebaseListObservable } from 'angularfire2';
 import firebase from 'firebase';
@@ -18,9 +18,10 @@ export class PostBuyRequirementsPage {
 
 	requirements: FirebaseListObservable<any>;
 	currentuser: any;
-	requirementForm: any;
+    requirementForm: any;
+    public loading: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public af: AngularFire, public formBuilder: FormBuilder) {
+    constructor(public navCtrl: NavController, public navParams: NavParams, public af: AngularFire, public formBuilder: FormBuilder, public alertCtrl: AlertController, public loadingCtrl: LoadingController) {
   
 		this.currentuser = firebase.auth().currentUser;
         this.requirements = af.database.list('/requirements');
@@ -38,9 +39,40 @@ export class PostBuyRequirementsPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad PostBuyRequirementsPage');
   }
+  showConfirm(requirementForm) {
+      if (!requirementForm.valid) {
+          let alert = this.alertCtrl.create({
+              title: 'Invalid Entries!',
+              subTitle: 'Please fill all required entries',
+              buttons: ['OK']
+          });
+          alert.present();
+      }
+      else {
+          let confirm = this.alertCtrl.create({
+              title: 'Post Requirement?',
+              message: 'Do you want to post this requirement to the market?',
+              buttons: [
+                  {
+                      text: 'No',
+
+                  },
+                  {
+                      text: 'Agree',
+                      handler: () => {
+                          this.submitRequirement();
+                      }
+                  }
+              ]
+          });
+          confirm.present();
+      }
+}
 
   submitRequirement() {
-
+      this.loading = this.loadingCtrl.create({
+          content: 'Requrement Posted, Going Home...'
+      });
       
       console.log(this.requirementForm.value);
       this.requirements.push(this.requirementForm.value).then(data => {
@@ -57,12 +89,21 @@ export class PostBuyRequirementsPage {
 
           ).then(info => { 
 
-              console.log("success");
-              this.navCtrl.pop();
+                  this.loading.present();
+
+                  setTimeout(() => {
+                      this.navCtrl.pop({ animate: false });
+                      
+                  }, 1000);
+
+                  setTimeout(() => {
+                      this.loading.dismiss();
+                  }, 3000);
+
+              })
               
 
               })
-      })
 
   }
 

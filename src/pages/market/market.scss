@@ -9,4 +9,20 @@ page-market {
       }
 
   }
+  scroll-content{
+	background-color: rgb(41, 221, 171);
+}
+
+ion-scroll.item{
+	height: 100%;
+}
+
+ion-col{
+	padding: 16px;
+	border: solid 1px #DDD;
+	background-color: rgb(221, 41, 91);
+	color: #FFF;
+	border-radius: 3px;
+	margin: 5px;
+}
 }

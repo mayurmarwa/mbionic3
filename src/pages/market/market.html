@@ -10,7 +10,7 @@
         <button ion-button menuToggle>
             <ion-icon name="menu"></ion-icon>
         </button>
-        <ion-title>Market</ion-title>
+        <ion-title>Home</ion-title>
         <!--<ion-buttons end>
              <button ion-button (click)="openChannelPage($event)" clear>
                 <ion-icon name="add"></ion-icon>
@@ -29,21 +29,114 @@
 
 <ion-content padding>
 
-    <ion-list>
-        <ion-item *ngFor="let product of productListRev | async" (click)="openproductpage(product)">
-            <ion-card>
-                <ion-card-content>
-                    <ion-card-title>
-                        {{product.name}}
-                    </ion-card-title>
-                    <p>
-                        Market Rate: Rs.{{product.mrate}}/{{product.unit}}
-                        <br>
-                        Kalamboli Rate: Rs.{{product.krate}}/{{product.unit}}
-                    </p>
-                </ion-card-content>
-            </ion-card>
-        </ion-item>
-    </ion-list>
+   <!--<ion-scroll scrollX="true" class="item">
+        <ion-row>
+            <ion-col width-20>
+                <h2>Crash Bandicoot</h2>
+                <h3>Lorem ipsum</h3>
+                <h4>Dolor sit amet</h4>
+            </ion-col>
+            <ion-col width-20>
+                <h2>The Legend of Zelda</h2>
+                <h3>Lorem ipsum</h3>
+                <h4>Dolor sit amet</h4>
+            </ion-col>
+            <ion-col width-20>
+                <h2>Mario Kart</h2>
+                <h3>Lorem ipsum</h3>
+                <h4>Dolor sit amet</h4>
+            </ion-col>
+            <ion-col width-20>
+                <h2>Doom</h2>
+                <h3>Lorem ipsum</h3>
+                <h4>Dolor sit amet</h4>
+            </ion-col>
+            <ion-col width-20>
+                <h2>Pokémon</h2>
+                <h3>Lorem ipsum</h3>
+                <h4>Dolor sit amet</h4>
+            </ion-col>
+            <ion-col width-20>
+                <h2>Final Fantasy</h2>
+                <h3>Lorem ipsum</h3>
+                <h4>Dolor sit amet</h4>
+            </ion-col>
+            <ion-col width-20>
+                <h2>Shovel Knight</h2>
+                <h3>Lorem ipsum</h3>
+                <h4>Dolor sit amet</h4>
+            </ion-col>
+            <ion-col width-20>
+                <h2>Crash Bandicoot</h2>
+                <h3>Lorem ipsum</h3>
+                <h4>Dolor sit amet</h4>
+            </ion-col>
+            <ion-col width-20>
+                <h2>The Legend of Zelda</h2>
+                <h3>Lorem ipsum</h3>
+                <h4>Dolor sit amet</h4>
+            </ion-col>
+            <ion-col width-20>
+                <h2>Mario Kart</h2>
+                <h3>Lorem ipsum</h3>
+                <h4>Dolor sit amet</h4>
+            </ion-col>
+            <ion-col width-20>
+                <h2>Doom</h2>
+                <h3>Lorem ipsum</h3>
+                <h4>Dolor sit amet</h4>
+            </ion-col>
+            <ion-col width-20>
+                <h2>Pokémon</h2>
+                <h3>Lorem ipsum</h3>
+                <h4>Dolor sit amet</h4>
+            </ion-col>
+            <ion-col width-20>
+                <h2>Final Fantasy</h2>
+                <h3>Lorem ipsum</h3>
+                <h4>Dolor sit amet</h4>
+            </ion-col>
+            <ion-col width-20>
+                <h2>Shovel Knight</h2>
+                <h3>Lorem ipsum</h3>
+                <h4>Dolor sit amet</h4>
+            </ion-col>
+        </ion-row>
+    </ion-scroll>--> 
+
+
+            Select A Category
+            <ion-scroll scrollX="true" class="item" style="height: 40%">
+                <ion-row>
+                    <ion-col no-lines text-center width-33  ion-item *ngFor="let category of categories | async" (click)="categoryProducts(category)">
+                        <ion-avatar >
+                            <img src="{{category.imgURL}}">
+                        </ion-avatar>
+                        {{category.title}}
+                    </ion-col>
+                </ion-row>
+            </ion-scroll>            
+
+
+
+        <ion-list  [virtualScroll]="productListRev | async">
+            <ion-item *virtualItem="let product" (click)="openproductpage(product)" approxItemHeight="150px">
+                <ion-card>
+                    <ion-card-content>
+                        <ion-thumbnail item-left>
+                            <img src="{{product.productImage}}">
+                        </ion-thumbnail>                        
+                        <ion-card-title>
+                            {{product.name}}
+                        </ion-card-title>
+                        <p>
+                            Market Rate: Rs.{{product.mrate | currency:"INR":true}}/{{product.unit}}
+                            <br>
+                            Kalamboli Rate: Rs.{{product.krate | currency:"INR":true}}/{{product.unit}}
+                        </p>
+                    </ion-card-content>
+                </ion-card>
+            </ion-item>
+        </ion-list>
 
 </ion-content>

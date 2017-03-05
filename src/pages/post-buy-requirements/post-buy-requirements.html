@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Post Buy Requirement</ion-title>
+    <ion-title>Post A Requirement</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -15,13 +15,35 @@
 
 <ion-content padding>
 
-    <form [formGroup]="requirementForm" (submit)="submitRequirement()">
+    <form [formGroup]="requirementForm" (submit)="showConfirm(requirementForm)">
 
         <ion-item>
             <ion-label stacked>Product Category</ion-label>
-            <ion-input #category formControlName="category" type="text"
-                       placeholder="Product Category">
-            </ion-input>
+            <ion-select #category formControlName="category">
+                <ion-option value="SS Coils" selected="true">SS Coils</ion-option>
+                <ion-option value="SS Sheets" selected="true">SS Sheets</ion-option>
+                <ion-option value="SS Packets">SS Packets</ion-option>
+                <ion-option value="SS Seamless Pipes">SS Seamless Pipes</ion-option>
+                <ion-option value="SS Welded/ERW Pipes">SS Welded/ERW Pipes</ion-option>
+                <ion-option value="SS Electropolish Pipes">SS Electropolish Pipes</ion-option>
+                <ion-option value="SS Square & Rectangular Pipes">SS Square & Rectangular Pipes</ion-option>
+                <ion-option value="SS Flats">SS Flats</ion-option>
+                <ion-option value="SS Angles">SS Angles</ion-option>
+                <ion-option value="SS Round Bars">SS Round Bars</ion-option>
+                <ion-option value="Duplex & SD Coils">Duplex & SD Coils</ion-option>
+                <ion-option value="Duplex & SD Sheets">Duplex & SD Sheets</ion-option>
+                <ion-option value="D&SD Seamless Pipes">D&SD Seamless Pipes</ion-option>
+                <ion-option value="D&SD Welded/ERW Pipes">D&SD Welded/ERW Pipes</ion-option>
+                <ion-option value="D&SD Sqr. & Rect. Pipes">D&SD Sqr. & Rect. Pipes</ion-option>                
+                <ion-option value="Duplex & SD Round Bars">Duplex & SD Round Bars</ion-option>
+                <ion-option value="High Nickel Coils">High Nickel Coils</ion-option>
+                <ion-option value="High Nickel Sheets">High Nickel Sheets</ion-option>
+                <ion-option value="High Nickel Seamless Pipes">High Nickel Seamless Pipes</ion-option>
+                <ion-option value="High Nickel Welded/ERW Pipes">High Nickel Welded/ERW Pipes</ion-option>
+                <ion-option value="High Nickel Sqr. & Rect. Pipes">High Nickel Sqr. & Rect. Pipes</ion-option>
+                <ion-option value="High Nickel Round Bars">High Nickel Round Bars</ion-option>
+                <ion-option value="Others">Others</ion-option>
+            </ion-select>
         </ion-item>
   
             <ion-item>
@@ -33,9 +55,12 @@
        
                 <ion-item>
                     <ion-label stacked>Unit</ion-label>
-                    <ion-input #unit formControlName="unit" type="text"
-                               placeholder="Select unit">
-                    </ion-input>
+                    <ion-select #unit formControlName="unit">
+                        <ion-option value="Kg" selected="true">Kg</ion-option>
+                        <ion-option value="Ton" selected="true">Ton</ion-option>
+                        <ion-option value="Mtrs">Mtrs</ion-option>
+                        <ion-option value="Nos">Nos</ion-option>
+                    </ion-select>
                 </ion-item>
              
                     <ion-item>

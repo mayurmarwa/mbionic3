@@ -115,7 +115,7 @@ export class SpeedDialPage {
   {
       if (!this.platform.is('cordova')) {
           window.open("tel:" + this.dialNumber);
-          console.log("not cordova");
+          //console.log("not cordova");
 
       }
       else {

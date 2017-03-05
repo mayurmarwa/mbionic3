@@ -18,18 +18,30 @@ export class EnquiriesPage {
 
 	public enquiryList: FirebaseListObservable<any>;	
 	public currentuser: any;
-
+    public segment: any;
   constructor(public navCtrl: NavController, public navParams: NavParams, public af: AngularFire) {
-		this.currentuser = firebase.auth().currentUser;
+      this.currentuser = firebase.auth().currentUser;      
 		this.enquiryList = af.database.list('/users/' + this.currentuser.uid + '/enquiries' );
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad EnquiriesPage');
+    this.segment = "received"
+    this.updateEnquiryList();
   }
   openenquirypage(enquiry){
 
 		this.navCtrl.push(EnquiryDetailsPage, {enquiry: enquiry});  
   }
 
+  updateEnquiryList() {
+      console.log(this.segment);
+      this.enquiryList = this.af.database.list('/users/' + this.currentuser.uid + '/enquiries', {
+          query: {
+              orderByChild: "type",
+              equalTo: this.segment
+          }
+      });
+      
+  }
 }

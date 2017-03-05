@@ -64,9 +64,7 @@ var LoginPage = (function () {
         }
         else {
             this.authService.loginUser(this.loginForm.value.email, this.loginForm.value.password).then(function (data) {
-                _this.zone.run(function () {
-                    _this.app.getRootNav().setRoot(TabsPage);
-                });
+                _this.navCtrl.setRoot(TabsPage);
             }, function (error) {
                 _this.loading.dismiss().then(function () {
                     console.log(error);

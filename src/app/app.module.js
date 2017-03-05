@@ -35,7 +35,9 @@ import { TabChatsPage } from '../pages/tab-chats/tab-chats';
 import { ChatChannelPage } from '../pages/chat-channel/chat-channel';
 import { ChatMessagePage } from '../pages/chat-message/chat-message';
 import { LoginPage } from '../pages/login/login';
+import { CreateAccountPage } from '../pages/create-account/create-account';
 import { AboutPage } from '../pages/about/about';
+import { ShareAppPage } from '../pages/share-app/share-app';
 import { ResetpasswordPage } from '../pages/resetpassword/resetpassword';
 import { SignupPage } from '../pages/signup/signup';
 import { CreateProfilePage } from '../pages/create-profile/create-profile';
@@ -88,8 +90,10 @@ AppModule = __decorate([
             ChatMessagePage,
             LoginPage,
             AboutPage,
+            ShareAppPage,
             ResetpasswordPage,
             SignupPage,
+            CreateAccountPage,
             CreateProfilePage
         ],
         imports: [
@@ -128,8 +132,10 @@ AppModule = __decorate([
             ChatMessagePage,
             LoginPage,
             AboutPage,
+            ShareAppPage,
             ResetpasswordPage,
             SignupPage,
+            CreateAccountPage,
             CreateProfilePage
         ],
         providers: [AuthService, ChatsService, ProfileData, ProductData, { provide: ErrorHandler, useClass: IonicErrorHandler }]

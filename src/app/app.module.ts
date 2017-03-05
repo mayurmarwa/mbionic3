@@ -13,6 +13,7 @@ import { SelectCategoryPage } from '../pages/select-category/select-category';
 import { AddProductPage } from '../pages/add-product/add-product';
 import { EditProductPage } from '../pages/edit-product/edit-product';
 import { ProductPagePage } from '../pages/product-page/product-page';
+import { CategoryProductsPage } from '../pages/category-products/category-products';
 import { SendEnquiryPage } from '../pages/send-enquiry/send-enquiry';
 import { EnquirySentPage } from '../pages/enquiry-sent/enquiry-sent';
 import { EnquiryDetailsPage } from '../pages/enquiry-details/enquiry-details';
@@ -30,7 +31,9 @@ import { TabChatsPage } from '../pages/tab-chats/tab-chats';
 import { ChatChannelPage } from '../pages/chat-channel/chat-channel';
 import { ChatMessagePage } from '../pages/chat-message/chat-message';
 import { LoginPage } from '../pages/login/login';
+import { CreateAccountPage } from '../pages/create-account/create-account';
 import { AboutPage } from '../pages/about/about';
+import { ShareAppPage } from '../pages/share-app/share-app';
 import { ResetpasswordPage } from '../pages/resetpassword/resetpassword';
 import { SignupPage } from '../pages/signup/signup';
 import { CreateProfilePage } from '../pages/create-profile/create-profile';
@@ -64,6 +67,7 @@ export const firebaseConfig = {
     AddProductPage,
     EditProductPage,
 	ProductPagePage,
+    CategoryProductsPage,
 	SendEnquiryPage,
     EnquirySentPage,
 	EnquiryDetailsPage,
@@ -81,8 +85,10 @@ export const firebaseConfig = {
     ChatMessagePage,
     LoginPage,
     AboutPage,
+    ShareAppPage,
     ResetpasswordPage,
     SignupPage,
+    CreateAccountPage,
     CreateProfilePage
 
   ],
@@ -105,6 +111,7 @@ export const firebaseConfig = {
     AddProductPage,
     EditProductPage,
 	ProductPagePage,
+    CategoryProductsPage,
 	SendEnquiryPage,
     EnquirySentPage,
 	EnquiryDetailsPage,
@@ -122,8 +129,10 @@ export const firebaseConfig = {
     ChatMessagePage,
     LoginPage,
     AboutPage,
+    ShareAppPage,
     ResetpasswordPage,
     SignupPage,
+    CreateAccountPage,
     CreateProfilePage
   ],
   providers: [AuthService, ChatsService, ProfileData, ProductData, {provide: ErrorHandler, useClass: IonicErrorHandler}]

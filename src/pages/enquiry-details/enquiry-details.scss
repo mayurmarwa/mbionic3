@@ -1,14 +1,79 @@
 page-enquiry-details {
-    .sent {
-    position: absolute;
-    left: 0px;
-    width: 200px;
-    padding: 10px;
+
+    .details{
+         background-color:#f1f4f5;
+        color:#898989;
+        .item {
+                    background-color: transparent;
+                    border:none;   /*Removes all borders*/
+                    color:#898989;
+        h1{
+                color:#000000;
+            }
+        h2{
+            color:#515151;
+        }
+
+        }
+        .details-content{
+            margin-left: 20px;
+            margin-right: 20px;
+        }
     }
+
+     .chat{
+         background-color:#f1f4f5;
+        
+       }
+
     .received {
-    position: absolute;
-    right: 0px;
-    width: 200px;
-    padding: 10px;
+        background-color: #fff;
+    border-radius: 0 10px 10px;
+    margin-left: 30px;
+    position: relative;
+    display: inline-block;    
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 30px;
+    padding-right: 20px;
+
+
     }
+    .received::after {
+    background-image: url(../assets/img/Chat-auro.png);
+    content: "";
+    height: 6px;
+    left: -6px;
+    position: absolute;
+    top: 0;
+    width: 6px;
+}
+    .spacer-10 {
+    height: 10px;
+}
+    .sent {
+   background-color: #1a1e5e;
+    border-radius: 10px 0 10px 10px;
+    color: #fff;
+    display: inline-block;
+    padding-left: 20px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-right: 10px;
+    min-width: 25%;
+    text-align: left;
+    margin-right: 10px;
+    position: relative;  
+
+    }
+    .sent::after {
+    background-image: url(../assets/img/black-auro.png);
+    content: "";
+    height: 6px;
+    position: absolute;
+    right: -5px;
+    top: 0;
+    width: 6px;
+  
+}
 }

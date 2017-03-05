@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { AuthService } from '../../providers/auth.service';
+import { CallNumber } from 'ionic-native';
+import { Platform } from 'ionic-angular';
 
 /*
   Generated class for the MyProfile page.
@@ -16,7 +18,7 @@ export class MyProfilePage {
 
     public userID: any;
     public userProfile: any;
-    constructor(public navCtrl: NavController, public navParams: NavParams, public authService: AuthService) {
+    constructor(public navCtrl: NavController, public navParams: NavParams, public authService: AuthService, private platform: Platform) {
 
         this.userID = navParams.get("userID");
 
@@ -36,6 +38,19 @@ export class MyProfilePage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad MyProfilePage');
+    }
+
+  callNumber() {
+      if (!this.platform.is('cordova')) {
+          window.open("tel:" + this.userProfile.mobile);
+          console.log(this.userProfile.mobile);
+
+      }
+      else {
+          CallNumber.callNumber(this.userProfile.mobile, true)
+              .then(() => console.log('Launched dialer!'))
+              .catch(() => console.log('Error launching dialer'));
+      }
   }
 
 }

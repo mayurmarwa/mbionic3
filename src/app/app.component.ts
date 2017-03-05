@@ -54,7 +54,7 @@ export class MyApp {
 
     this.pushPages = [
         { title: 'Profile', component: TabProfilePage, icon: 'profile' },
-        { title: 'Post Buy Requirement', component: PostBuyRequirementsPage, icon: 'post' },
+        { title: 'Post A Requirement', component: PostBuyRequirementsPage, icon: 'post' },
         { title: 'Browse Requirements', component: BrowseRequirementsPage, icon: 'search' },
         { title: 'My Products', component: MyProductsPage, icon: 'products' },
         { title: 'Directory', component: DirectoryPage, icon: 'directory' },

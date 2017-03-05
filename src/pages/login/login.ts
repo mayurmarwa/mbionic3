@@ -71,9 +71,7 @@ export class LoginPage {
           this.authService.loginUser(this.loginForm.value.email,
               this.loginForm.value.password).then(data => {
 
-                  this.zone.run(() => {
-                      this.app.getRootNav().setRoot(TabsPage);
-                  });
+                  this.navCtrl.setRoot(TabsPage);
 
               }, error => {
                   this.loading.dismiss().then(() => {

@@ -14,7 +14,7 @@
 
 
 <ion-content padding>
-    <form [formGroup]="quoteForm" (submit)="submitQuote()">
+    <form [formGroup]="quoteForm" (submit)="showConfirm(quoteForm)">
 
         <ion-item>
             <ion-label stacked>Your Price</ion-label>
@@ -30,13 +30,18 @@
             </ion-input>
         </ion-item>
 
-        <ion-item>
-            <ion-label stacked>Payment</ion-label>
-            <ion-input #payment formControlName="payment" type="text"
-                       placeholder="Choose Payment Method">
-            </ion-input>
-        </ion-item>
-
+            Preferred Payment Method:
+            <ion-list radio-group #payment formControlName="payment">
+                <ion-item>
+                    <ion-label>Cash</ion-label>
+                    <ion-radio value="cash" checked></ion-radio>
+                </ion-item>
+                <ion-item>
+                    <ion-label>45 Days Credit</ion-label>
+                    <ion-radio value="credit"></ion-radio>
+                </ion-item>
+            </ion-list>
+        
         <ion-item>
             <ion-label stacked>Details</ion-label>
             <ion-input #details formControlName="details" type="text"

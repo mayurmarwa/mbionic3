@@ -28,9 +28,20 @@ var EnquiriesPage = (function () {
     }
     EnquiriesPage.prototype.ionViewDidLoad = function () {
         console.log('ionViewDidLoad EnquiriesPage');
+        this.segment = "received";
+        this.updateEnquiryList();
     };
     EnquiriesPage.prototype.openenquirypage = function (enquiry) {
         this.navCtrl.push(EnquiryDetailsPage, { enquiry: enquiry });
+    };
+    EnquiriesPage.prototype.updateEnquiryList = function () {
+        console.log(this.segment);
+        this.enquiryList = this.af.database.list('/users/' + this.currentuser.uid + '/enquiries', {
+            query: {
+                orderByChild: "type",
+                equalTo: this.segment
+            }
+        });
     };
     return EnquiriesPage;
 }());

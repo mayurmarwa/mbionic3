@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, AlertController, LoadingController  } from 'ionic-angular';
 import { FormBuilder, Validators } from '@angular/forms';
+import { EnquiriesPage } from '../enquiries/enquiries';
 import { AngularFire } from 'angularfire2';
 import firebase from 'firebase';
 
@@ -21,9 +22,10 @@ export class SendQuotationPage {
 	public postuserID: any;
 	public requirement: any;
 	public userEnquiries: any;
-	public postuserEnquiries:any;
+    public postuserEnquiries: any;
+    public loading: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,public formBuilder: FormBuilder,public af: AngularFire) {
+    constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public af: AngularFire, public alertCtrl: AlertController, public loadingCtrl: LoadingController) {
 	
 		this.requirement = navParams.get("requirement");
 		this.postuserID = this.requirement.uid;		
@@ -44,8 +46,43 @@ export class SendQuotationPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad SendQuotationPage');
   }
+  showConfirm(quoteForm) {
+      if (!quoteForm.valid) {
+          let alert = this.alertCtrl.create({
+              title: 'Invalid Entries!',
+              subTitle: 'Please fill all required entries',
+              buttons: ['OK']
+          });
+          alert.present();
+      }
+      else {
+          let confirm = this.alertCtrl.create({
+              title: 'Submit Quote?',
+              message: 'Do you want to send this quote to the buyer?',
+              buttons: [
+                  {
+                      text: 'No',
 
-  submitQuote(){
+                  },
+                  {
+                      text: 'Agree',
+                      handler: () => {
+                          this.submitQuote();
+                      }
+                  }
+              ]
+          });
+          confirm.present();
+
+      }
+  }
+
+  submitQuote() {
+
+      this.loading = this.loadingCtrl.create({
+          content: 'Sending Quote, Please Wait...'
+      });
+
    this.userEnquiries.push(this.quoteForm.value).then(data => {
    //console.log(this.enquiryForm.value);
   this.af.database.object('users/' + this.currentuser.uid + '/enquiries/' + data.key).update(
@@ -62,7 +99,7 @@ export class SendQuotationPage {
 
           ).then(info => { 
 
-              console.log("successsent");
+              //console.log("successsent");
               //this.navCtrl.pop();
               //this.navCtrl.pop();
 
@@ -79,7 +116,17 @@ export class SendQuotationPage {
               }
           ).then(info => { 
 
-              console.log("successrcv");
+              this.loading.present();
+
+              setTimeout(() => {
+                  this.navCtrl.popToRoot({ animate: false });
+                  this.navCtrl.setRoot(EnquiriesPage, { animate: false });
+
+              }, 1000);
+
+              setTimeout(() => {
+                  this.loading.dismiss();
+              }, 3000);
               //this.navCtrl.pop();
               //this.navCtrl.pop();
 

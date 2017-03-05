@@ -36,6 +36,7 @@ export class AddProductPage {
     public deadForm;
     lastImage: string = null;
     public productImage: string;
+    public productPreview: string;
     public productImageRef: any;
     public productImageURL: string = "/assets/img/noimage.png"
     public mrateTrue: number = null;
@@ -621,6 +622,7 @@ export class AddProductPage {
           saveToPhotoAlbum: true
       }).then(imageData => {
           this.productImage = imageData;
+          this.productPreview = "data:image/jpeg;base64," + imageData;
       }, error => {
           console.log("ERROR -> " + JSON.stringify(error));
       });
@@ -638,6 +640,7 @@ export class AddProductPage {
           saveToPhotoAlbum: true
       }).then(imageData => {
           this.productImage = imageData;
+          this.productPreview = "data:image/jpeg;base64," + imageData;
       }, error => {
           console.log("ERROR -> " + JSON.stringify(error));
       });

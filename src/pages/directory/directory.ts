@@ -19,7 +19,7 @@ export class DirectoryPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public af: AngularFire) {
   
-	this.directoryList = af.database.list('/driectory',{query: {orderByChild: 'name'}});
+	this.directoryList = af.database.list('/directory',{query: {orderByChild: 'name'}});
   }
 
   ionViewDidLoad() {

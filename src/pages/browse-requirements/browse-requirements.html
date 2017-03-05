@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>BrowseRequirements</ion-title>
+    <ion-title>Browse Requirements</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -25,7 +25,7 @@
                     <p>
                         {{requirement.quantity}} {{requirement.unit}}
                         <br>
-                        {{requirement.bid}}
+                        {{requirement.bid | currency:"INR":true}}
                     </p>
                 </ion-card-content>
             </ion-card>

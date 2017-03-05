@@ -14,19 +14,32 @@
 
 
 <ion-content padding>
-    <ion-list>
-        
-        <ion-item *ngFor="let company of directoryList | async">
-            <ion-avatar item-left>
-                <img src="/assets/img/noimage.png">
-            </ion-avatar>
-            <p>
-                {{company.name}}
-                <br>
-                {{company.person}}
-            </p>
-            
-        </ion-item>
 
-    </ion-list>
+        <ion-list  [virtualScroll]="directoryList | async">
+            <ion-item *virtualItem="let member"  approxItemHeight="150px">
+                <ion-avatar>
+                    <img src="assets/img/noimage.png">
+                </ion-avatar>  
+                <h2>{{member?.Name}}</h2>
+                <p>{{member?.Address}}</p>
+                <br>
+                <p>
+                    Email: {{member?.Email}}
+                    Website: {{member?.Website}}
+                </p>
+                <p>
+                    Office 1: {{member?.Office1}}
+                    Office 2: {{member?.Office2}}
+                    Office 3: {{member?.Office3}}
+                </p>
+                <br>
+                <p>
+                    Mobile 1: {{member?.Mobile1}}
+                    Mobile 2: {{member?.Mobile2}}
+                </p>
+                <br>
+                <p> Fax: {{member?.Fax}}
+                </p>
+            </ion-item>
+        </ion-list>
 </ion-content>
