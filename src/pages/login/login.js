@@ -117,6 +117,14 @@ var LoginPage = (function () {
                     }, function (error) { return _this.showMessage(error.message || 'Unknown error'); });
                 }
                 else {
+                    _this.storage.ready().then(function () {
+                        // set a key/value
+                        _this.storage.set('currentuser', JSON.stringify(data));
+                        // Or to get a key/value pair
+                        // this.storage.get('currentuser').then((val) => {
+                        //     console.log('Current User', JSON.parse(val));
+                        //})
+                    });
                     loading.dismiss();
                     _this.navCtrl.setRoot(TabsPage);
                 }
@@ -147,6 +155,14 @@ var LoginPage = (function () {
                     }, function (error) { return _this.showMessage(error.message || 'Unknown error'); });
                 }
                 else {
+                    _this.storage.ready().then(function () {
+                        // set a key/value
+                        _this.storage.set('currentuser', JSON.stringify(data));
+                        // Or to get a key/value pair
+                        // this.storage.get('currentuser').then((val) => {
+                        //     console.log('Current User', JSON.parse(val));
+                        //})
+                    });
                     loading.dismiss();
                     _this.navCtrl.setRoot(TabsPage);
                 }

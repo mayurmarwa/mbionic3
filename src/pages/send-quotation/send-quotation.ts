@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, AlertController, LoadingController  } from 'ionic-angular';
 import { FormBuilder, Validators } from '@angular/forms';
-import { EnquiriesPage } from '../enquiries/enquiries';
 import { AngularFire } from 'angularfire2';
+import { Storage } from '@ionic/storage';
 import firebase from 'firebase';
 
 /*
@@ -25,22 +25,29 @@ export class SendQuotationPage {
     public postuserEnquiries: any;
     public loading: any;
 
-    constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public af: AngularFire, public alertCtrl: AlertController, public loadingCtrl: LoadingController) {
-	
-		this.requirement = navParams.get("requirement");
-		this.postuserID = this.requirement.uid;		
-        this.currentuser = firebase.auth().currentUser;
-		this.userEnquiries = af.database.list('/users/' + this.currentuser.uid + '/enquiries' );
-		this.postuserEnquiries = af.database.list('/users/' + this.postuserID + '/enquiries' ); 
-		
-		this.quoteForm = formBuilder.group({
-			price: ['', Validators.required],
-			delivery: ['', Validators.required],
-			payment: ['', Validators.required],
-            details: ['', Validators.required]    
+    constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public af: AngularFire, public alertCtrl: AlertController, public loadingCtrl: LoadingController, public storage: Storage) {
+        storage.ready().then(() => {
+            storage.get('currentuser').then((val) => {
+
+                this.currentuser = JSON.parse(val);
+                this.requirement = navParams.get("requirement");
+                this.postuserID = this.requirement.uid;
+
+                this.userEnquiries = af.database.list('/users/' + this.currentuser.uid + '/enquiries');
+                this.postuserEnquiries = af.database.list('/users/' + this.postuserID + '/enquiries');
+
+                
+
+            });
 
         });
-  
+        this.quoteForm = formBuilder.group({
+            price: ['', Validators.required],
+            delivery: ['', Validators.required],
+            payment: ['', Validators.required],
+            details: ['', Validators.required]
+
+        });
   }
 
   ionViewDidLoad() {
@@ -91,7 +98,8 @@ export class SendQuotationPage {
                   type: 'sent',
 				  otheruser: this.postuserID,
 				  requirement: this.requirement,
-                  quote: this.quoteForm.value
+                  quote: this.quoteForm.value,
+                  timestamp: firebase.database['ServerValue']['TIMESTAMP']
                   
               }
 
@@ -110,7 +118,8 @@ export class SendQuotationPage {
                   type: 'received',
 				  otheruser: this.currentuser.uid,
 				  requirement: this.requirement,
-				  quote: this.quoteForm.value
+                  quote: this.quoteForm.value,
+                  timestamp: firebase.database['ServerValue']['TIMESTAMP']
                   //detials: this.productForm.value.name,
                   
               }

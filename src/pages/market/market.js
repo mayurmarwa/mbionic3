@@ -13,6 +13,7 @@ import { NotificationsPage } from '../notifications/notifications';
 import { CategoryProductsPage } from '../category-products/category-products';
 import { AngularFire } from 'angularfire2';
 import { ProductPagePage } from '../product-page/product-page';
+import { SelectSubcatPage } from '../select-subcat/select-subcat';
 /*
   Generated class for the Market page.
 
@@ -25,6 +26,7 @@ var MarketPage = (function () {
         this.navParams = navParams;
         this.modalCtrl = modalCtrl;
         this.af = af;
+        this.viewall = false;
         this.productList = af.database.list('/products', { query: { orderByChild: 'timestamp' } });
         this.categories = af.database.list('/productcategories', { query: { orderByChild: 'catid' } });
     }
@@ -44,9 +46,15 @@ var MarketPage = (function () {
     MarketPage.prototype.opennotificationsPage = function (product) {
         this.navCtrl.push(NotificationsPage);
     };
-    MarketPage.prototype.categoryProducts = function (category) {
-        console.log(category);
-        this.navCtrl.push(CategoryProductsPage, { category: category });
+    MarketPage.prototype.selectSub = function (catid) {
+        this.navCtrl.push(SelectSubcatPage, { catid: catid });
+    };
+    MarketPage.prototype.categoryProducts = function (catid) {
+        //console.log(category);
+        this.navCtrl.push(CategoryProductsPage, { catid: catid });
+    };
+    MarketPage.prototype.openNotificationsPage = function () {
+        this.navCtrl.push(NotificationsPage);
     };
     return MarketPage;
 }());

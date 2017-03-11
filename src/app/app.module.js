@@ -20,6 +20,7 @@ import { AddProductPage } from '../pages/add-product/add-product';
 import { EditProductPage } from '../pages/edit-product/edit-product';
 import { ProductPagePage } from '../pages/product-page/product-page';
 import { CategoryProductsPage } from '../pages/category-products/category-products';
+import { SelectSubcatPage } from '../pages/select-subcat/select-subcat';
 import { SendEnquiryPage } from '../pages/send-enquiry/send-enquiry';
 import { EnquirySentPage } from '../pages/enquiry-sent/enquiry-sent';
 import { EnquiryDetailsPage } from '../pages/enquiry-details/enquiry-details';
@@ -31,6 +32,7 @@ import { DirectoryPage } from '../pages/directory/directory';
 import { SpeedDialPage } from '../pages/speed-dial/speed-dial';
 import { SettingsPage } from '../pages/settings/settings';
 import { TabsPage } from '../pages/tabs/tabs';
+import { FilterOptionsPage } from '../pages/filter-options/filter-options';
 import { TabContactsPage } from '../pages/tab-contacts/tab-contacts';
 import { TabProfilePage } from '../pages/tab-profile/tab-profile';
 import { TabChatsPage } from '../pages/tab-chats/tab-chats';
@@ -47,6 +49,7 @@ import { ProfileData } from '../providers/profile-data';
 import { ProductData } from '../providers/product-data';
 import { AuthService } from '../providers/auth.service';
 import { ChatsService } from '../providers/chats.service';
+import { ParallaxHeader } from '../components/parallax-header/parallax-header';
 import { OrderBy } from '../pipes/orderBy';
 import { AngularFireModule } from 'angularfire2';
 export var firebaseConfig = {
@@ -70,9 +73,57 @@ AppModule = __decorate([
             PricesPage,
             NotificationsPage,
             EnquiriesPage,
+            ParallaxHeader,
             MyProfilePage,
             MyProductsPage,
             SelectCategoryPage,
+            AddProductPage,
+            EditProductPage,
+            ProductPagePage,
+            CategoryProductsPage,
+            SelectSubcatPage,
+            SendEnquiryPage,
+            EnquirySentPage,
+            EnquiryDetailsPage,
+            PostBuyRequirementsPage,
+            BrowseRequirementsPage,
+            SendQuotationPage,
+            RequirementDetailsPage,
+            DirectoryPage,
+            SpeedDialPage,
+            SettingsPage,
+            TabContactsPage,
+            TabProfilePage,
+            TabChatsPage,
+            ChatChannelPage,
+            ChatMessagePage,
+            LoginPage,
+            AboutPage,
+            ShareAppPage,
+            ResetpasswordPage,
+            SignupPage,
+            CreateAccountPage,
+            CreateProfilePage,
+            OrderBy,
+            FilterOptionsPage
+        ],
+        imports: [
+            IonicModule.forRoot(MyApp),
+            AngularFireModule.initializeApp(firebaseConfig),
+            CustomIconsModule
+        ],
+        bootstrap: [IonicApp],
+        entryComponents: [
+            MyApp,
+            TabsPage,
+            MarketPage,
+            PricesPage,
+            EnquiriesPage,
+            NotificationsPage,
+            MyProfilePage,
+            MyProductsPage,
+            SelectCategoryPage,
+            SelectSubcatPage,
             AddProductPage,
             EditProductPage,
             ProductPagePage,
@@ -99,50 +150,7 @@ AppModule = __decorate([
             SignupPage,
             CreateAccountPage,
             CreateProfilePage,
-            OrderBy
-        ],
-        imports: [
-            IonicModule.forRoot(MyApp),
-            AngularFireModule.initializeApp(firebaseConfig),
-            CustomIconsModule
-        ],
-        bootstrap: [IonicApp],
-        entryComponents: [
-            MyApp,
-            TabsPage,
-            MarketPage,
-            PricesPage,
-            EnquiriesPage,
-            NotificationsPage,
-            MyProfilePage,
-            MyProductsPage,
-            SelectCategoryPage,
-            AddProductPage,
-            EditProductPage,
-            ProductPagePage,
-            CategoryProductsPage,
-            SendEnquiryPage,
-            EnquirySentPage,
-            EnquiryDetailsPage,
-            PostBuyRequirementsPage,
-            BrowseRequirementsPage,
-            SendQuotationPage,
-            RequirementDetailsPage,
-            DirectoryPage,
-            SpeedDialPage,
-            SettingsPage,
-            TabContactsPage,
-            TabProfilePage,
-            TabChatsPage,
-            ChatChannelPage,
-            ChatMessagePage,
-            LoginPage,
-            AboutPage,
-            ShareAppPage,
-            ResetpasswordPage,
-            SignupPage,
-            CreateAccountPage,
-            CreateProfilePage
+            FilterOptionsPage
         ],
         providers: [AuthService, ChatsService, ProfileData, ProductData, { provide: ErrorHandler, useClass: IonicErrorHandler }, Storage]
     })

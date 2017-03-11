@@ -19,9 +19,14 @@ var PricesPage = (function () {
     function PricesPage(navCtrl, navParams) {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
+        this.segment = "mcx";
+        this.updatePriceList();
     }
     PricesPage.prototype.ionViewDidLoad = function () {
         console.log('ionViewDidLoad PricesPage');
+    };
+    PricesPage.prototype.updatePriceList = function () {
+        console.log(this.segment);
     };
     return PricesPage;
 }());

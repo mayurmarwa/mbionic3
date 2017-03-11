@@ -23,7 +23,7 @@ export class AuthService {
 
   login(mode: AuthMode) {
      
-    if (mode == AuthMode.GooglePlus)
+    if (mode === AuthMode.GooglePlus)
       return this.signInWithGoogle();
     
     /**if (mode == AuthMode.Facebook)

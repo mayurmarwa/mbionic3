@@ -364,11 +364,11 @@
         </form>
     </div>
 
-    <div *ngIf="category.catid === '4a' || category.catid === '4b' || category.catid === '4c' || category.catid === '4e' || category.catid === '8c1' || category.catid === '8c2' || category.catid === '8c3' || category.catid === '9c1' || category.catid === '9c2' || category.catid === '9c3' ">
+    <div *ngIf="category.catid === '4a' || category.catid === '4b' || category.catid === '4c' || category.catid === '4e' || category.catid === '8c1'  || category.catid === '8c5' || category.catid === '8c2' || category.catid === '8c3' || category.catid === '9c1' || category.catid === '9c2' || category.catid === '9c5' || category.catid === '9c3' ">
         <form [formGroup]="seamlessForm" (submit)="showConfirm(seamlessForm)">
 
            
-            <ion-item *ngIf="category.catid === '9c1' || category.catid === '9c2' || category.catid === '9c3' ">
+            <ion-item *ngIf="category.catid === '9c1' || category.catid === '9c2' || category.catid === '9c5' || category.catid === '9c3' ">
                 <ion-label stacked>Product Type</ion-label>
                 <ion-select #ptype formControlName="ptype">
                     <ion-option value="Hastealloy" selected="true">Hastealloy</ion-option>
@@ -437,7 +437,7 @@
                         </ion-col>
                     </ion-row>
                 </ion-grid>
-                <ion-item *ngIf="typeOD === true && (category.catid === '4b' || category.catid === '8c2' || category.catid === '9c2' ) ">
+                <ion-item *ngIf="typeOD === true && (category.catid === '4b' || category.catid === '4e' || category.catid === '8c2' || category.catid === '9c2' || category.catid === '8c5' || category.catid === '9c5' ) ">
                     <ion-label stacked>Finish</ion-label>
                     <ion-select #finish formControlName="finish">
                         <ion-option value="Polished" selected="true">Polished</ion-option>

@@ -10,6 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform, LoadingController } from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
+import firebase from 'firebase';
 import { TabsPage } from '../pages/tabs/tabs';
 import { AboutPage } from '../pages/about/about';
 import { LoginPage } from '../pages/login/login';
@@ -20,13 +21,15 @@ import { BrowseRequirementsPage } from '../pages/browse-requirements/browse-requ
 import { DirectoryPage } from '../pages/directory/directory';
 import { SpeedDialPage } from '../pages/speed-dial/speed-dial';
 import { SettingsPage } from '../pages/settings/settings';
+import { Storage } from '@ionic/storage';
 import { AuthService } from '../providers/auth.service';
 var MyApp = (function () {
-    function MyApp(platform, loadingCtrl, authService) {
+    function MyApp(platform, loadingCtrl, authService, storage) {
         var _this = this;
         this.platform = platform;
         this.loadingCtrl = loadingCtrl;
         this.authService = authService;
+        this.storage = storage;
         this.initializeApp();
         var loading = this.loadingCtrl.create();
         loading.present();
@@ -34,6 +37,20 @@ var MyApp = (function () {
             .map(function (state) { return !!state; })
             .subscribe(function (authenticated) {
             loading.dismiss();
+            if (authenticated) {
+                _this.currentuser = firebase.auth().currentUser;
+                _this.storage.ready().then(function () {
+                    // set a key/value
+                    _this.storage.set('currentuser', JSON.stringify(_this.currentuser));
+                    // Or to get a key/value pair
+                    // this.storage.get('currentuser').then((val) => {
+                    //     console.log('Current User', JSON.parse(val));
+                    //})
+                });
+                // console.log(this.currentuser);
+                _this.rootPage = TabsPage;
+            }
+            // else { this.rootPage = LoginPage; }
             _this.rootPage = (authenticated) ? TabsPage : LoginPage;
         }, function (error) {
             loading.dismiss();
@@ -88,7 +105,8 @@ MyApp = __decorate([
     }),
     __metadata("design:paramtypes", [Platform,
         LoadingController,
-        AuthService])
+        AuthService,
+        Storage])
 ], MyApp);
 export { MyApp };
 //# sourceMappingURL=app.component.js.map

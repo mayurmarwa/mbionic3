@@ -16,7 +16,7 @@
 <ion-content>
 
     <div class="details">
-        <ion-grid>
+        <ion-grid *ngIf="!enquiry?.quote">
             <ion-row ion-item no-lines>
                 <ion-col width-80>
                     <h2>{{enquiry?.productName}}</h2>
@@ -29,10 +29,10 @@
                         Requirement: {{enquiry?.quantity}} {{enquiry?.unit}}
                     </ion-col>
                     <ion-col *ngIf="enquiry?.rate === 'mrate' ">
-                        Market Rate: Rs. {{enquiry?.productMrate}}/{{enquiry?.productUnit}}
+                        Market Rate: {{enquiry?.productMrate | currency:"INR":true}}/{{enquiry?.productUnit}}
                     </ion-col>
                     <ion-col *ngIf="enquiry?.rate === 'krate' ">
-                        Kalamboli Rate: Rs. {{enquiry?.productKrate}}/{{enquiry?.productUnit}}
+                        Kalamboli Rate: {{enquiry?.productKrate | currency:"INR":true}}/{{enquiry?.productUnit}}
                     </ion-col>
                 </ion-row>
                 <ion-row *ngIf="enquiry?.payment === 'cash' ">
@@ -65,6 +65,50 @@
                     <button ion-button item-right clear small (click)="viewProfile()">Profile</button>              
             </ion-row>
         </ion-grid>
+
+        <ion-grid *ngIf="enquiry?.quote">
+            <ion-row ion-item no-lines>
+                <ion-col width-80>
+                    <h2>{{enquiry?.requirement?.category}}</h2>
+                </ion-col>
+                <button ion-button item-right clear small (click)="viewRequirement()">Details</button>
+            </ion-row>
+            <div class="details-content">
+                Quote:
+                <ion-row>
+                    <ion-col>
+                        Price: {{enquiry?.quote?.price | currency:"INR":true}} / {{enquiry?.requirement?.unit}}
+                    </ion-col>
+                    <ion-col>
+                        Delivery in: {{enquiry?.quote?.days}} days
+                    </ion-col>                    
+                </ion-row>
+                <ion-row *ngIf="enquiry?.quote?.payment === 'cash' ">
+                    <ion-col>
+                        Preferred Payment Mode: Cash
+                    </ion-col>
+                </ion-row>
+                <ion-row ion-item *ngIf="enquiry?.quote?.payment === ' credit' ">
+                    <ion-col>
+                        Preferred Payment Mode: 45 Days Credit
+                    </ion-col>
+                </ion-row>
+
+                <ion-row *ngIf="enquiry?.quote?.details">
+                    <ion-col>
+                        Details: {{enquiry?.quote?.details}}
+                    </ion-col>
+                </ion-row>
+            </div>
+            <ion-row style="margin-left:20px;" *ngIf="enquiry?.type === 'sent' ">
+                Buyer : <button ion-button clear small (click)="viewProfile()">View Profile</button>
+                
+            </ion-row>
+            <ion-row style="margin-left:20px;" *ngIf="enquiry?.type === 'received' ">
+                Seller : <button ion-button clear small (click)="viewProfile()">View Profile</button>               
+                
+            </ion-row>
+        </ion-grid>
     </div>
 
     
@@ -93,8 +137,8 @@
                         <ion-input type="text" [(ngModel)]="chatBox" name="chatText" required placeholder="Message..."></ion-input>                                          
                 </ion-col>
                 <ion-col>
-                    <button  ion-button full (click)="send(f.value,f.valid)" [disabled]="f.valid === false" icon-right>
-                        Send
+                    <button  ion-button clear icon-only (click)="send(f.value,f.valid)" [disabled]="f.valid === false" icon-right>
+                        
                         <ion-icon name="send"></ion-icon>
                     </button>
                 </ion-col>

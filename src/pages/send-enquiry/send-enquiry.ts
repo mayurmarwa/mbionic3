@@ -5,7 +5,7 @@ import { AngularFire } from 'angularfire2';
 import { AuthService } from '../../providers/auth.service';
 import { EnquirySentPage } from '../enquiry-sent/enquiry-sent';
 import { Storage } from '@ionic/storage';
-
+import firebase from 'firebase';
 
 /*
   Generated class for the SendEnquiry page.
@@ -42,14 +42,7 @@ export class SendEnquiryPage {
         //this.currentuser = firebase.auth().currentUser;
 		this.userEnquiries = af.database.list('/users/' + this.currentuser.uid + '/enquiries' );
 		this.sellerEnquiries = af.database.list('/users/' + this.sellerID + '/enquiries' );        
-        this.enquiryForm = formBuilder.group({
-            rate: ['', Validators.required],
-            quantity: ['', Validators.required],
-            unit: ['', Validators.required],
-            payment: ['', Validators.required],
-            details: ['',]    
-
-        });
+        
 
         if (!this.product.unit) {
             this.productunit = "Kg";
@@ -90,7 +83,14 @@ export class SendEnquiryPage {
         }).catch((err) =>
             console.log(err));
 
-	
+        this.enquiryForm = formBuilder.group({
+            rate: ['', Validators.required],
+            quantity: ['', Validators.required],
+            unit: ['', Validators.required],
+            payment: ['', Validators.required],
+            details: ['',]
+
+        });
   }
   
   ionViewDidLoad() {
@@ -150,7 +150,8 @@ export class SendEnquiryPage {
                   productName: this.product.name,
                   productUnit: this.productunit,
                   productMrate: this.product.mrate,
-                  productKrate: this.product.krate
+                  productKrate: this.product.krate,
+                  timestamp: firebase.database['ServerValue']['TIMESTAMP']
                   //detials: this.productForm.value.name,
                   
               }
@@ -181,7 +182,8 @@ export class SendEnquiryPage {
                   quantity: this.enquiryForm.value.quantity,
                   unit: this.enquiryForm.value.unit,
                   payment: this.enquiryForm.value.payment,
-				  details: this.enquiryForm.value.details
+                  details: this.enquiryForm.value.details,
+                  timestamp: firebase.database['ServerValue']['TIMESTAMP']
                   //detials: this.productForm.value.name,
                   
               }

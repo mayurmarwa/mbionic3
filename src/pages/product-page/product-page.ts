@@ -27,7 +27,7 @@ export class ProductPagePage {
 
               this.currentuser = JSON.parse(val);
               this.product = navParams.get("product");
-              console.log(this.product);
+              //console.log(this.product);
               //console.log(this.currentuser);
 
           })

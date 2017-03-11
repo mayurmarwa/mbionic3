@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, AlertController, ModalController } from 'ionic-angular';
-import { AngularFire, FirebaseListObservable } from 'angularfire2';
+import { AngularFire } from 'angularfire2';
 import { ProductPagePage } from '../product-page/product-page';
 import { FilterOptionsPage } from '../filter-options/filter-options';
-import { OrderBy } from '../../pipes/orderBy';
 import { Observable } from 'rxjs/Observable';
 
 /*

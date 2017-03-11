@@ -4,6 +4,7 @@ import { AngularFire, FirebaseListObservable } from 'angularfire2';
 import { Storage } from '@ionic/storage';
 import { MyProfilePage } from '../my-profile/my-profile';
 import { ProductPagePage } from '../product-page/product-page';
+import { RequirementDetailsPage } from '../requirement-details/requirement-details';
 
 /*
   Generated class for the EnquiryDetails page.
@@ -67,6 +68,10 @@ export class EnquiryDetailsPage {
 
   viewProduct() {
       this.navCtrl.push(ProductPagePage, { product: this.enquiry.product });
+  }
+
+  viewRequirement() {
+      this.navCtrl.push(RequirementDetailsPage, { requirement: this.enquiry.requirement });
   }
 
 }

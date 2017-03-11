@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, AlertController  } from 'ionic-angular';
 import { SendQuotationPage } from '../send-quotation/send-quotation'
+import { Storage } from '@ionic/storage';
 /*
   Generated class for the RequirementDetails page.
 
@@ -13,10 +14,25 @@ import { SendQuotationPage } from '../send-quotation/send-quotation'
 })
 export class RequirementDetailsPage {
 
-	public requirement: any;
+    public requirement: any;
+    public currentuser: any;
+    public cur: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,public alertCtrl: AlertController) {
-	this.requirement = navParams.get("requirement");
+    constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController, public storage: Storage) {
+        storage.ready().then(() => {
+            storage.get('currentuser').then((val) => {
+
+                this.currentuser = JSON.parse(val);
+                this.requirement = navParams.get("requirement");
+                //console.log(this.product);
+                //console.log(this.currentuser);
+
+            })
+                .catch((err) =>
+                    console.log(err));
+        }).catch((err) =>
+            console.log(err));
+       
   }
 
   ionViewDidLoad() {

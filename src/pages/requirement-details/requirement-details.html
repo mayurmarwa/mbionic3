@@ -49,7 +49,15 @@
             <h2>{{this.requirement?.details}}</h2>
         </ion-item>
     </ion-list>   
-    <button ion-button round icon-left (click)="sendQuote()">
-        Send Quotation
-    </button>
+ 
+    <div *ngIf="this.requirement?.uid != this.currentuser?.uid" text-center style="padding: 20px;">
+        <button ion-button round (click)="sendQuote()">
+            Send Quotation
+        </button>
+    </div>
+    <div *ngIf="this.requirement?.uid === this.currentuser?.uid" text-center style="padding: 20px;">
+        <button ion-button round color="secondary" disabled>
+            This is your post
+        </button>
+    </div>
 </ion-content>

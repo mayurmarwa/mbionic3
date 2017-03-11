@@ -39,6 +39,7 @@ import { AboutPage } from '../pages/about/about';
 import { ShareAppPage } from '../pages/share-app/share-app';
 import { ResetpasswordPage } from '../pages/resetpassword/resetpassword';
 import { SignupPage } from '../pages/signup/signup';
+import { MetalCalculatorPage } from '../pages/metal-calculator/metal-calculator';
 import { CreateProfilePage } from '../pages/create-profile/create-profile';
 
 import { ProfileData } from '../providers/profile-data';
@@ -99,6 +100,7 @@ export const firebaseConfig = {
     CreateAccountPage,
     CreateProfilePage,
     OrderBy,
+    MetalCalculatorPage,
     FilterOptionsPage
 
   ],
@@ -145,6 +147,7 @@ export const firebaseConfig = {
     SignupPage,
     CreateAccountPage,
     CreateProfilePage,
+    MetalCalculatorPage,
     FilterOptionsPage
   ],
   providers: [AuthService, ChatsService, ProfileData, ProductData, {provide: ErrorHandler, useClass: IonicErrorHandler}, Storage]

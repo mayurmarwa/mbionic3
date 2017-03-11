@@ -52,6 +52,7 @@ var AddProductPage = (function () {
         this.coilsForm = formBuilder.group({
             name: ['', Validators.required],
             ptype: ['Hastealloy',],
+            astm: ['', Validators.required],
             grade: ['', Validators.required],
             gradeval: ['base', Validators.required],
             finish: ['HR', Validators.required],
@@ -64,6 +65,7 @@ var AddProductPage = (function () {
             origin: ['', Validators.required],
             brand: ['', Validators.required],
             mtc: ['Available', Validators.required],
+            details: ['',],
             catid: ['', Validators.required],
             uid: ['', Validators.required],
             islive: ['true', Validators.required]
@@ -77,6 +79,7 @@ var AddProductPage = (function () {
         this.sheetsForm = formBuilder.group({
             name: ['', Validators.required],
             ptype: ['Hastealloy',],
+            astm: ['', Validators.required],
             grade: ['', Validators.required],
             gradeval: ['base', Validators.required],
             finish: ['HR', Validators.required],
@@ -91,6 +94,7 @@ var AddProductPage = (function () {
             origin: ['', Validators.required],
             brand: ['', Validators.required],
             mtc: ['Available', Validators.required],
+            details: ['',],
             catid: ['', Validators.required],
             uid: ['', Validators.required],
             islive: ['true', Validators.required]
@@ -98,9 +102,12 @@ var AddProductPage = (function () {
         this.seamlessForm = formBuilder.group({
             name: ['', Validators.required],
             ptype: ['Hastealloy',],
+            astm: ['', Validators.required],
             grade: ['', Validators.required],
             gradeval: ['base', Validators.required],
             composition: ['',],
+            sizes: ['', Validators.required],
+            sizeunit: ['', Validators.required],
             type: ['OD', Validators.required],
             swg: ['',],
             mm: ['',],
@@ -113,6 +120,7 @@ var AddProductPage = (function () {
             origin: ['', Validators.required],
             brand: ['',],
             mtc: ['',],
+            details: ['',],
             catid: ['', Validators.required],
             uid: ['', Validators.required],
             islive: ['true', Validators.required]
@@ -120,16 +128,19 @@ var AddProductPage = (function () {
         this.squareForm = formBuilder.group({
             name: ['', Validators.required],
             ptype: ['Hastealloy',],
+            astm: ['', Validators.required],
             grade: ['', Validators.required],
             gradeval: ['base', Validators.required],
             composition: ['',],
             sizes: ['', Validators.required],
+            sizeunit: ['', Validators.required],
             thickness: ['', Validators.required],
             finish: ['Polished', Validators.required],
             quantity: ['', Validators.required],
             unit: ['Kg', Validators.required],
             mrate: ['',],
             krate: ['',],
+            details: ['',],
             origin: ['', Validators.required],
             brand: ['',],
             catid: ['', Validators.required],
@@ -139,6 +150,7 @@ var AddProductPage = (function () {
         this.flatsForm = formBuilder.group({
             name: ['', Validators.required],
             grade: ['', Validators.required],
+            astm: ['', Validators.required],
             gradeval: ['base', Validators.required],
             width: ['', Validators.required],
             length: ['', Validators.required],
@@ -152,6 +164,7 @@ var AddProductPage = (function () {
             origin: ['',],
             brand: ['',],
             mtc: ['',],
+            details: ['',],
             catid: ['', Validators.required],
             uid: ['', Validators.required],
             islive: ['true', Validators.required]
@@ -159,9 +172,11 @@ var AddProductPage = (function () {
         this.anglesForm = formBuilder.group({
             name: ['', Validators.required],
             grade: ['', Validators.required],
+            astm: ['', Validators.required],
             gradeval: ['base', Validators.required],
             composition: ['', Validators.required],
             sizes: ['', Validators.required],
+            sizeunit: ['', Validators.required],
             thickness: ['', Validators.required],
             quantity: ['', Validators.required],
             unit: ['Mtrs', Validators.required],
@@ -171,6 +186,7 @@ var AddProductPage = (function () {
             origin: ['',],
             brand: ['',],
             mtc: ['',],
+            details: ['',],
             catid: ['', Validators.required],
             uid: ['', Validators.required],
             islive: ['true', Validators.required]
@@ -178,13 +194,16 @@ var AddProductPage = (function () {
         this.roundbarsForm = formBuilder.group({
             name: ['', Validators.required],
             ptype: ['Hastealloy',],
+            subcat: ['Hex Bars', Validators.required],
+            astm: ['', Validators.required],
             grade: ['', Validators.required],
             gradeval: ['base', Validators.required],
             composition: ['',],
             pcategory: ['Black', Validators.required],
             guarantee: ['Yes', Validators.required],
             sizes: ['', Validators.required],
-            thickness: ['', Validators.required],
+            sizeunit: ['', Validators.required],
+            type: ['Forged', Validators.required],
             quantity: ['', Validators.required],
             unit: ['Mtrs', Validators.required],
             length: ['', Validators.required],
@@ -193,6 +212,7 @@ var AddProductPage = (function () {
             origin: ['',],
             brand: ['',],
             mtc: ['',],
+            details: ['',],
             catid: ['', Validators.required],
             uid: ['', Validators.required],
             islive: ['true', Validators.required]
@@ -220,38 +240,39 @@ var AddProductPage = (function () {
             alert_1.present();
         }
         else {
-            if (this.productImage == null) {
-                var alert_2 = this.alertCtrl.create({
+            /**if (this.productImage == null) {
+                let alert = this.alertCtrl.create({
                     title: 'Add Image!',
                     subTitle: 'Please add an image for your product',
                     buttons: ['OK']
                 });
-                alert_2.present();
+                alert.present();
                 this.imageValid = true;
             }
             else {
                 this.imageValid = true;
-            }
-            if (this.category.catid != "9a" && this.category.catid != "9b" && this.category.catid != "9c1" && this.category.catid != "9c2" && this.category.catid != "9c3" && this.category.catid != "9c4" && this.category.catid != "9d") {
+            }**/
+            this.imageValid = true;
+            if (this.category.catid != "9a" && this.category.catid != "9b" && this.category.catid != "9c1" && this.category.catid != "9c2" && this.category.catid != "9c3" && this.category.catid != "9c4" && this.category.catid != "9c5" && this.category.catid != "9d") {
                 productForm.value.ptype = null;
             }
-            if (this.category.catid === "8c1" || this.category.catid === "8c2" || this.category.catid === "8c3" || this.category.catid === "8c4" || this.category.catid === "8d" || this.category.catid === "8a" || this.category.catid === "8b" || this.category.catid === "9c1" || this.category.catid === "9c2" || this.category.catid === "9c3" || this.category.catid === "9c4" || this.category.catid === "9d" || this.category.catid === "9a" || this.category.catid === "9b") {
+            /**if (this.category.catid === "8c1" || this.category.catid === "8c2" || this.category.catid === "8c3" || this.category.catid === "8c4" || this.category.catid === "8d" || this.category.catid === "8a" || this.category.catid === "8b" || this.category.catid === "9c1" || this.category.catid === "9c2" || this.category.catid === "9c3" || this.category.catid === "9c4" || this.category.catid === "9d" || this.category.catid === "9a" || this.category.catid === "9b") {
                 productForm.value.gradeval = productForm.value.grade;
-            }
+            }**/
             if (this.category.catid === '4a' || this.category.catid === '4c' || this.category.catid === '8c1' || this.category.catid === '9c1' || this.category.catid === '8c3' || this.category.catid === '9c3') {
                 productForm.value.finish = null;
             }
-            if (this.category.catid === "4a" || this.category.catid === "4b" || this.category.catid === "4c" || this.category.catid === "8c1" || this.category.catid === "8c2" || this.category.catid === "8c3" || this.category.catid === "9c1" || this.category.catid === "9c2" || this.category.catid === "9c3") {
+            if (this.category.catid === "4a" || this.category.catid === "4b" || this.category.catid === "4e" || this.category.catid === "4c" || this.category.catid === "8c1" || this.category.catid === "8c2" || this.category.catid === "8c5" || this.category.catid === "8c3" || this.category.catid === "9c1" || this.category.catid === "9c2" || this.category.catid === "9c5" || this.category.catid === "9c3") {
                 if (productForm.value.type === "OD") {
                     productForm.value.sch = null;
                     if ((productForm.value.swg == null && productForm.value.mm == null) || ((productForm.value.swg === "" && (productForm.value.mm === "" || productForm.value.mm === null)) || (productForm.value.mm === "" && (productForm.value.swg === "" || productForm.value.swg === null)))) {
                         this.allValid = false;
-                        var alert_3 = this.alertCtrl.create({
+                        var alert_2 = this.alertCtrl.create({
                             title: 'Enter Thickness!',
                             subTitle: 'Enter values for either SWG or MM or both',
                             buttons: ['OK']
                         });
-                        alert_3.present();
+                        alert_2.present();
                     }
                     else {
                         this.allValid = true;
@@ -262,12 +283,12 @@ var AddProductPage = (function () {
                     productForm.value.finish = null;
                     if (productForm.value.sch == null || productForm.value.mm == null || productForm.value.sch === "" || productForm.value.mm === "") {
                         this.allValid = false;
-                        var alert_4 = this.alertCtrl.create({
+                        var alert_3 = this.alertCtrl.create({
                             title: 'Enter Thickness!',
                             subTitle: 'Enter values for SCH and MM',
                             buttons: ['OK']
                         });
-                        alert_4.present();
+                        alert_3.present();
                     }
                     else {
                         this.allValid = true;
@@ -277,12 +298,12 @@ var AddProductPage = (function () {
             else if (this.category.catid === 3) {
                 if (productForm.value.weight == null || productForm.value.weight === "") {
                     this.allValid = false;
-                    var alert_5 = this.alertCtrl.create({
+                    var alert_4 = this.alertCtrl.create({
                         title: 'Enter Weight!',
                         subTitle: 'Enter values for weight',
                         buttons: ['OK']
                     });
-                    alert_5.present();
+                    alert_4.present();
                 }
                 else {
                     this.allValid = true;
@@ -293,12 +314,12 @@ var AddProductPage = (function () {
             }
             if ((productForm.value.mrate == null && productForm.value.krate == null) || ((productForm.value.mrate === "" && (productForm.value.krate === "" || productForm.value.krate === null)) || (productForm.value.krate === "" && (productForm.value.mrate === "" || productForm.value.mrate === null)))) {
                 this.priceValid = false;
-                var alert_6 = this.alertCtrl.create({
+                var alert_5 = this.alertCtrl.create({
                     title: 'Enter Price',
                     subTitle: 'Enter either Market Rate or Kalamboli rate or both ',
                     buttons: ['OK']
                 });
-                alert_6.present();
+                alert_5.present();
             }
             else {
                 this.priceValid = true;

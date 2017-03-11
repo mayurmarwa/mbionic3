@@ -10,7 +10,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 import { Component } from '@angular/core';
 import { NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
 import { FormBuilder, Validators } from '@angular/forms';
-import { EnquiriesPage } from '../enquiries/enquiries';
 import { AngularFire } from 'angularfire2';
 import firebase from 'firebase';
 /*
@@ -74,7 +73,7 @@ var SendQuotationPage = (function () {
     SendQuotationPage.prototype.submitQuote = function () {
         var _this = this;
         this.loading = this.loadingCtrl.create({
-            content: 'Sending Quote, Please Wait...'
+            content: 'Quote sent, check enquiries for details...'
         });
         this.userEnquiries.push(this.quoteForm.value).then(function (data) {
             //console.log(this.enquiryForm.value);
@@ -98,7 +97,7 @@ var SendQuotationPage = (function () {
                 _this.loading.present();
                 setTimeout(function () {
                     _this.navCtrl.popToRoot({ animate: false });
-                    _this.navCtrl.setRoot(EnquiriesPage, { animate: false });
+                    //this.navCtrl.setRoot(EnquiriesPage, { animate: false });
                 }, 1000);
                 setTimeout(function () {
                     _this.loading.dismiss();

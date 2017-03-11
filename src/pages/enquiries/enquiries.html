@@ -22,15 +22,29 @@
 
 
 <ion-content padding>
-    <ion-list>
+    <ion-list no-lines>
         <ion-item *ngFor="let enquiry of enquiryList | async" (click)="openenquirypage(enquiry)" >
-            <ion-icon name="arrow-forward" item-right isActive="false"></ion-icon>
-            <h2>Enquiry {{enquiry.type}}</h2>
-            <!--<p>{{enquiry.details}}</p>-->
             
-            <ion-avatar item-left>
+            <div ion-item *ngIf="!enquiry?.quote">
+                <div item-left>
+                    <div class="gradeCircle2">{{enquiry?.product?.gradeval}}</div>
+                </div>
+                <h2>{{enquiry?.productName}}</h2>
+                <p>{{enquiry?.quantity}} {{enquiry?.unit}}</p>
+            </div>
+
+            <div ion-item *ngIf="enquiry?.quote">
+                <div item-left>
+                    <div class="gradeCircle2">{{enquiry?.requirement?.grade}}</div>
+                </div>
+                <h2>Quotation for Reqiuirement</h2>
+                <p>{{enquiry?.requirement?.category}}</p>
+                <!--<p>{{enquiry?.requirement?.quantity}} {{enquiry?requirement?.unit}}</p>-->
+            </div>
+            
+            <!--<ion-avatar item-left>
                 <img src="/assets/img/noimage.png">              
-            </ion-avatar>                    
+            </ion-avatar>-->                    
          </ion-item>
     </ion-list>
 

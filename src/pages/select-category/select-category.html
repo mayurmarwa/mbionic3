@@ -18,9 +18,9 @@
     <ion-list>
         <ion-item text-wrap *ngFor="let category of categories | async" (click)="detailpage(category)">
             <ion-thumbnail item-left>
-                <img src="{{category.imgURL}}">
+                <img src="{{category?.imgURL}}">
             </ion-thumbnail>
-            {{category.title}}
+            {{category?.title}}
         </ion-item>
     </ion-list>
 

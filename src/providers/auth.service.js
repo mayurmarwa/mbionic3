@@ -28,7 +28,7 @@ var AuthService = (function () {
         return this.af.auth;
     };
     AuthService.prototype.login = function (mode) {
-        if (mode == AuthMode.GooglePlus)
+        if (mode === AuthMode.GooglePlus)
             return this.signInWithGoogle();
         /**if (mode == AuthMode.Facebook)
           return this.signInWithFacebook();
