@@ -10,7 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { AngularFire } from 'angularfire2';
-import firebase from 'firebase';
+import { Storage } from '@ionic/storage';
 import { MyProfilePage } from '../my-profile/my-profile';
 import { ProductPagePage } from '../product-page/product-page';
 /*
@@ -20,14 +20,25 @@ import { ProductPagePage } from '../product-page/product-page';
   Ionic pages and navigation.
 */
 var EnquiryDetailsPage = (function () {
-    function EnquiryDetailsPage(navCtrl, navParams, af) {
+    function EnquiryDetailsPage(navCtrl, navParams, af, storage) {
+        var _this = this;
         this.navCtrl = navCtrl;
         this.navParams = navParams;
         this.af = af;
-        this.enquiry = navParams.get("enquiry");
-        this.currentuser = firebase.auth().currentUser;
-        this.messageList = af.database.list('/users/' + this.currentuser.uid + '/enquiries/' + this.enquiry.$key + '/messgaes/');
-        this.otherUserList = af.database.list('/users/' + this.enquiry.otheruser + '/enquiries/' + this.enquiry.$key + '/messgaes/');
+        this.storage = storage;
+        storage.ready().then(function () {
+            storage.get('currentuser').then(function (val) {
+                _this.currentuser = JSON.parse(val);
+                _this.enquiry = navParams.get("enquiry");
+                _this.messageList = af.database.list('/users/' + _this.currentuser.uid + '/enquiries/' + _this.enquiry.$key + '/messgaes/');
+                _this.otherUserList = af.database.list('/users/' + _this.enquiry.otheruser + '/enquiries/' + _this.enquiry.$key + '/messgaes/');
+            })
+                .catch(function (err) {
+                return console.log(err);
+            });
+        }).catch(function (err) {
+            return console.log(err);
+        });
         //console.log(this.enquiry);
     }
     EnquiryDetailsPage.prototype.ionViewDidLoad = function () {
@@ -58,7 +69,7 @@ EnquiryDetailsPage = __decorate([
         selector: 'page-enquiry-details',
         templateUrl: 'enquiry-details.html'
     }),
-    __metadata("design:paramtypes", [NavController, NavParams, AngularFire])
+    __metadata("design:paramtypes", [NavController, NavParams, AngularFire, Storage])
 ], EnquiryDetailsPage);
 export { EnquiryDetailsPage };
 //# sourceMappingURL=enquiry-details.js.map

@@ -1,6 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform, LoadingController } from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
+import firebase from 'firebase';
 
 import { TabsPage } from '../pages/tabs/tabs';
 import { AboutPage } from '../pages/about/about';
@@ -12,6 +13,7 @@ import { BrowseRequirementsPage } from '../pages/browse-requirements/browse-requ
 import { DirectoryPage } from '../pages/directory/directory';
 import { SpeedDialPage } from '../pages/speed-dial/speed-dial';
 import { SettingsPage } from '../pages/settings/settings';
+import { Storage } from '@ionic/storage';
 
 import { AuthService } from '../providers/auth.service';
 
@@ -23,6 +25,8 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
   rootPage: any;
+  public currentuser: any;
+
 
   openPages: Array<{title: string, component: any, icon: string}>;
   pushPages: Array<{title: string, component: any, icon: string}>;
@@ -30,7 +34,8 @@ export class MyApp {
   constructor(
     public platform: Platform,
     public loadingCtrl: LoadingController,
-    public authService: AuthService
+    public authService: AuthService,
+    public storage: Storage
   ) {
     this.initializeApp();
 
@@ -39,7 +44,22 @@ export class MyApp {
     this.authService.getAuth()
       .map(state => !!state)
       .subscribe(authenticated => {
-        loading.dismiss();
+          loading.dismiss();
+          if (authenticated) {
+
+              this.currentuser = firebase.auth().currentUser;
+              this.storage.ready().then(() => {
+                  // set a key/value
+                  this.storage.set('currentuser', JSON.stringify(this.currentuser));
+                  // Or to get a key/value pair
+                  // this.storage.get('currentuser').then((val) => {
+                  //     console.log('Current User', JSON.parse(val));
+                  //})
+              });
+             // console.log(this.currentuser);
+              this.rootPage = TabsPage;
+          }
+         // else { this.rootPage = LoginPage; }
         this.rootPage = (authenticated) ? TabsPage : LoginPage;
       }, (error) => {
         loading.dismiss();

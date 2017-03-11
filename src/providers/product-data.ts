@@ -18,11 +18,13 @@ export class ProductData {
     productList: any;
     currentUser: any;
     myProductList: any;
+    
 
     constructor(public http: Http, public af: AngularFire ) {
         this.productList = firebase.database().ref('/products');
         this.currentUser = firebase.auth().currentUser;
         this.myProductList = firebase.database().ref('/users/' + this.currentUser.uid + '/products');
+        
   }
     getProduct(key: any): Observable<any> {
         return this.af.database.object('products/' + key);

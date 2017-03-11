@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { AngularFire, FirebaseListObservable } from 'angularfire2';
-import firebase from 'firebase';
+import { Storage } from '@ionic/storage';
 import { MyProfilePage } from '../my-profile/my-profile';
 import { ProductPagePage } from '../product-page/product-page';
 
@@ -22,11 +22,21 @@ export class EnquiryDetailsPage {
 	currentuser: any;
 	messageList: FirebaseListObservable<any>;
 	otherUserList: any;
-  constructor(public navCtrl: NavController, public navParams: NavParams,  public af: AngularFire) {
-		this.enquiry = navParams.get("enquiry");
-		this.currentuser = firebase.auth().currentUser;
-		this.messageList = af.database.list('/users/' + this.currentuser.uid + '/enquiries/' + this.enquiry.$key + '/messgaes/' );
-		this.otherUserList = af.database.list('/users/' + this.enquiry.otheruser + '/enquiries/' + this.enquiry.$key + '/messgaes/' );
+  constructor(public navCtrl: NavController, public navParams: NavParams,  public af: AngularFire, public storage: Storage) {
+      storage.ready().then(() => {
+          storage.get('currentuser').then((val) => {
+
+              this.currentuser = JSON.parse(val);
+              this.enquiry = navParams.get("enquiry");
+              this.messageList = af.database.list('/users/' + this.currentuser.uid + '/enquiries/' + this.enquiry.$key + '/messgaes/');
+              this.otherUserList = af.database.list('/users/' + this.enquiry.otheruser + '/enquiries/' + this.enquiry.$key + '/messgaes/');
+          })
+              .catch((err) =>
+                  console.log(err));
+      }).catch((err) =>
+          console.log(err)); 
+
+      
         //console.log(this.enquiry);
   }
 

@@ -6,13 +6,33 @@
 -->
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>prices</ion-title>
-  </ion-navbar>
+    <ion-navbar>
+        <ion-title>Prices</ion-title>
+    </ion-navbar>
+      <ion-segment [(ngModel)]="segment" (ionChange)="updatePriceList()">
+        <ion-segment-button value="mcx">
+            MCX
+        </ion-segment-button>
+        <ion-segment-button value="lme">
+            LME
+        </ion-segment-button>
+    </ion-segment>
+
 
 </ion-header>
 
 
 <ion-content padding>
+   <!-- <ion-list>
+        <ion-item *ngFor="let price of priceList | async" ">
+            <ion-icon name="arrow-forward" item-right isActive="false"></ion-icon>
+            <h2>Enquiry {{enquiry.type}}</h2>
+            <p>{{enquiry.details}}</p>
+
+            <ion-avatar item-left>
+                <img src="/assets/img/noimage.png">
+            </ion-avatar>
+        </ion-item>
+    </ion-list>-->
 
 </ion-content>

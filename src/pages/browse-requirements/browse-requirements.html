@@ -13,9 +13,29 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content text-center padding>
 
-    <ion-list>
+    <ion-row wrap>
+        <ion-col width-50 *ngFor="let requirement of requirementList | async" (click)="openrequirementpage(requirement)">
+            <ion-card>
+                <ion-card-content>
+                    <div>
+                        <div class="gradeCircle2">{{requirement?.grade}}</div>
+                    </div>
+                    <ion-card-title>
+                        {{requirement?.category}}
+                    </ion-card-title>
+                    <p>                        
+                        <br>
+                        {{requirement?.quantity}} {{requirement?.unit}}
+                        <br>
+                        {{requirement?.bid | currency:"INR":true}}
+                    </p>
+                </ion-card-content>
+            </ion-card>
+        </ion-col>
+    </ion-row>
+    <!--<ion-list>
         <ion-item *ngFor="let requirement of requirementList | async" (click)="openrequirementpage(requirement)">
             <ion-card>
                 <ion-card-content>
@@ -23,6 +43,8 @@
                         {{requirement.category}}
                     </ion-card-title>
                     <p>
+                        {{requirement.grade}}
+                        <br>
                         {{requirement.quantity}} {{requirement.unit}}
                         <br>
                         {{requirement.bid | currency:"INR":true}}
@@ -30,6 +52,6 @@
                 </ion-card-content>
             </ion-card>
         </ion-item>
-    </ion-list>
+    </ion-list>-->
 
 </ion-content>

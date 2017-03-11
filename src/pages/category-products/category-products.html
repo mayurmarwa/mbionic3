@@ -9,19 +9,65 @@
   <ion-navbar>
     <ion-title>{{category?.title}}</ion-title>
   </ion-navbar>
+    <ion-grid text-center style="background-color: #f4f4f4;">
+        <ion-row>
+            <ion-col width-50 style=" border-right: sol; border-right-width: thin; border-right-style: inset;">
+                <button clear ion-button icon-left (click)="sortAlert()">
+                    <ion-icon name="cog"></ion-icon>
+                    Sort
+                </button>
+            </ion-col>
+            <ion-col width-50>
+                <button clear ion-button icon-left (click)="showFilter()">
+                    <ion-icon name="funnel"></ion-icon>
+                    Filter
+                </button>
+            </ion-col>
+            <ion-col>
 
+            </ion-col>
+        </ion-row>
+    </ion-grid>
 </ion-header>
 
 
 <ion-content padding>
-
-    <ion-list [virtualScroll]="productList | async">
+     
+    <ion-row wrap>
+        <ion-col width-50 *ngFor="let product of productList | orderBy : oby" (click)="openproductpage(product)">
+            <ion-card >
+                <ion-card-content >
+                    <div >
+                        <div class="gradeCircle2">{{product.gradeval}}</div>
+                    </div>
+                         <!--<ion-card-title>
+                        {{product.name}}
+                    </ion-card-title>-->                    
+                    <div class="product-price" *ngIf="product?.unit">
+                        <ion-row text-center *ngIf="product?.mrate">
+                           Market Rate: {{product?.mrate | currency:"INR":true}}/{{product?.unit}}
+                        </ion-row>
+                        <ion-row text-center *ngIf="product?.krate">
+                           Kalamboli Rate: {{product?.krate | currency:"INR":true}}/{{product?.unit}}
+                        </ion-row>
+                    </div>   
+                    <div class="product-price" *ngIf="!product?.unit">
+                        <ion-row text-center *ngIf="product?.mrate">
+                           Market Rate: {{product?.mrate | currency:"INR":true}}/Kg
+                        </ion-row>
+                        <ion-row text-center *ngIf="product?.krate">
+                           Kalamboli Rate: {{product?.krate | currency:"INR":true}}/Kg
+                        </ion-row>
+                    </div>                
+                </ion-card-content>
+            </ion-card>
+        </ion-col>
+    </ion-row>
+    <!--<ion-list [virtualScroll]="productList | orderBy : oby ">
         <ion-item *virtualItem="let product" (click)="openproductpage(product)" approxItemHeight="150px">
             <ion-card>
-                <ion-card-content>
-                    <ion-thumbnail item-left>
-                        <img src="{{product.productImage}}">
-                    </ion-thumbnail>
+                <ion-card-content text-center>
+                    <div class="gradeCircle2">{{product.gradeval}}</div>
                     <ion-card-title>
                         {{product.name}}
                     </ion-card-title>
@@ -33,6 +79,6 @@
                 </ion-card-content>
             </ion-card>
         </ion-item>
-    </ion-list>
+    </ion-list>-->
 
 </ion-content>

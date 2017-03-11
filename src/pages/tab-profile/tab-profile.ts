@@ -1,6 +1,6 @@
-import { AlertController } from 'ionic-angular';
+import { AlertController, ActionSheetController, LoadingController } from 'ionic-angular';
 import { Component } from '@angular/core';
-import { LoadingController } from 'ionic-angular';
+import { Camera } from 'ionic-native';
 import { AuthService } from '../../providers/auth.service';
 import { ProfileData } from '../../providers/profile-data';
 import firebase from 'firebase';
@@ -14,12 +14,15 @@ export class TabProfilePage {
   user: {displayName?: string, email?: string, photoURL?: string} = {};
   public userProfile: any;
   public currentuser: any;
+  public productImage: string;
+
 
   constructor(
     public authService: AuthService,
     public loadingCtrl: LoadingController,
     public profileData: ProfileData,
-    public alertCtrl: AlertController
+    public alertCtrl: AlertController,
+    public actionSheetCtrl: ActionSheetController
   ) {
       this.user.photoURL = 'assets/img/noimage.png';
       this.profileData = profileData;
@@ -59,6 +62,8 @@ export class TabProfilePage {
     console.log(this.userProfile);
   }
 
+  
+
   updateName() {
       let alert = this.alertCtrl.create({
           message: "Your name",
@@ -96,6 +101,7 @@ export class TabProfilePage {
               {
                   name: 'mobile',
                   placeholder: 'Mobile No.',
+                  type: 'number',
                   value: this.userProfile.mobile
               },
               /**{
@@ -118,6 +124,37 @@ export class TabProfilePage {
       });
       alert.present();
   }
+  updateLandLine() {
+      let alert = this.alertCtrl.create({
+          message: "Enter Land Line No.",
+          inputs: [
+              {
+                  name: 'landline',
+                  placeholder: 'Enter Land Line No. with STD code',
+                  type: 'number',
+                  value: this.userProfile.landline
+              },
+              /**{
+                  name: 'lastName',
+                  placeholder: 'Your last name',
+                  value: this.userProfile.lastName
+              },**/
+          ],
+          buttons: [
+              {
+                  text: 'Cancel',
+              },
+              {
+                  text: 'Save',
+                  handler: data => {
+                      this.profileData.updateLandLine(data.landline);
+                  }
+              }
+          ]
+      });
+      alert.present();
+  }
+
   updateAddress() {
       let alert = this.alertCtrl.create({
           message: "Company Address",
@@ -209,6 +246,66 @@ export class TabProfilePage {
       alert.present();
   }
 
+  updateVat() {
+      let alert = this.alertCtrl.create({
+          message: "VAT/TIN",
+          inputs: [
+              {
+                  name: 'vat',
+                  placeholder: 'VAT/TIN Details',
+                  value: this.userProfile.vat
+              },
+              /**{
+                  name: 'lastName',
+                  placeholder: 'Your last name',
+                  value: this.userProfile.lastName
+              },**/
+          ],
+          buttons: [
+              {
+                  text: 'Cancel',
+              },
+              {
+                  text: 'Save',
+                  handler: data => {
+                      this.profileData.updateVat(data.vat);
+                  }
+              }
+          ]
+      });
+      alert.present();
+  }
+
+  updateExcise() {
+      let alert = this.alertCtrl.create({
+          message: "Excise Details",
+          inputs: [
+              {
+                  name: 'excise',
+                  placeholder: 'Excise Details',
+                  value: this.userProfile.excise
+              },
+              /**{
+                  name: 'lastName',
+                  placeholder: 'Your last name',
+                  value: this.userProfile.lastName
+              },**/
+          ],
+          buttons: [
+              {
+                  text: 'Cancel',
+              },
+              {
+                  text: 'Save',
+                  handler: data => {
+                      this.profileData.updateExcise(data.excise);
+                  }
+              }
+          ]
+      });
+      alert.present();
+  }
+
 
 
 
@@ -259,4 +356,68 @@ export class TabProfilePage {
       alert.present();
   }
 
+  public presentActionSheet() {
+      let actionSheet = this.actionSheetCtrl.create({
+          title: 'Select Image Source',
+          buttons: [
+              {
+                  text: 'Load from Library',
+                  handler: () => {
+                      //this.takePicture(Camera.PictureSourceType.PHOTOLIBRARY);
+                      this.getPicture();
+                  }
+              },
+              {
+                  text: 'Use Camera',
+                  handler: () => {
+                      //this.takePicture(Camera.PictureSourceType.CAMERA);
+                      this.takePicture();
+                  }
+              },
+              {
+                  text: 'Cancel',
+                  role: 'cancel'
+              }
+          ]
+      });
+      actionSheet.present();
+  }
+
+  takePicture() {
+      Camera.getPicture({
+          quality: 95,
+          destinationType: Camera.DestinationType.DATA_URL,
+          sourceType: Camera.PictureSourceType.CAMERA,
+          allowEdit: false,
+          encodingType: Camera.EncodingType.PNG,
+          targetWidth: 500,
+          targetHeight: 500,
+          saveToPhotoAlbum: true
+      }).then(imageData => {
+          this.productImage = imageData;
+          this.profileData.updateImage(this.productImage);
+          //this.productPreview = "data:image/jpeg;base64," + imageData;
+      }, error => {
+          console.log("ERROR -> " + JSON.stringify(error));
+      });
+  }
+
+  getPicture() {
+      Camera.getPicture({
+          quality: 95,
+          destinationType: Camera.DestinationType.DATA_URL,
+          sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+          allowEdit: false,
+          encodingType: Camera.EncodingType.PNG,
+          targetWidth: 500,
+          targetHeight: 500,
+          saveToPhotoAlbum: true
+      }).then(imageData => {
+          this.productImage = imageData;
+          this.profileData.updateImage(this.productImage);
+          //this.productPreview = "data:image/jpeg;base64," + imageData;
+      }, error => {
+          console.log("ERROR -> " + JSON.stringify(error));
+      });
+  }
 }

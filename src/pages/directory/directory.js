@@ -21,7 +21,7 @@ var DirectoryPage = (function () {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
         this.af = af;
-        this.directoryList = af.database.list('/driectory', { query: { orderByChild: 'name' } });
+        this.directoryList = af.database.list('/directory', { query: { orderByChild: 'name' } });
     }
     DirectoryPage.prototype.ionViewDidLoad = function () {
         console.log('ionViewDidLoad DirectoryPage');

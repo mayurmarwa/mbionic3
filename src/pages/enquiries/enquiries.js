@@ -10,8 +10,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { AngularFire } from 'angularfire2';
-import firebase from 'firebase';
 import { EnquiryDetailsPage } from '../enquiry-details/enquiry-details';
+import { Storage } from '@ionic/storage';
 /*
   Generated class for the Enquiries page.
 
@@ -19,17 +19,28 @@ import { EnquiryDetailsPage } from '../enquiry-details/enquiry-details';
   Ionic pages and navigation.
 */
 var EnquiriesPage = (function () {
-    function EnquiriesPage(navCtrl, navParams, af) {
+    function EnquiriesPage(navCtrl, navParams, af, storage) {
+        var _this = this;
         this.navCtrl = navCtrl;
         this.navParams = navParams;
         this.af = af;
-        this.currentuser = firebase.auth().currentUser;
-        this.enquiryList = af.database.list('/users/' + this.currentuser.uid + '/enquiries');
+        this.storage = storage;
+        storage.ready().then(function () {
+            storage.get('currentuser').then(function (val) {
+                _this.currentuser = JSON.parse(val);
+                _this.segment = "received";
+                _this.updateEnquiryList();
+                //this.enquiryList = af.database.list('/users/' + this.currentuser.uid + '/enquiries');
+            })
+                .catch(function (err) {
+                return console.log(err);
+            });
+        }).catch(function (err) {
+            return console.log(err);
+        });
     }
     EnquiriesPage.prototype.ionViewDidLoad = function () {
         console.log('ionViewDidLoad EnquiriesPage');
-        this.segment = "received";
-        this.updateEnquiryList();
     };
     EnquiriesPage.prototype.openenquirypage = function (enquiry) {
         this.navCtrl.push(EnquiryDetailsPage, { enquiry: enquiry });
@@ -50,7 +61,7 @@ EnquiriesPage = __decorate([
         selector: 'page-enquiries',
         templateUrl: 'enquiries.html'
     }),
-    __metadata("design:paramtypes", [NavController, NavParams, AngularFire])
+    __metadata("design:paramtypes", [NavController, NavParams, AngularFire, Storage])
 ], EnquiriesPage);
 export { EnquiriesPage };
 //# sourceMappingURL=enquiries.js.map

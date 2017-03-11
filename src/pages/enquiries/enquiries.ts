@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { AngularFire, FirebaseListObservable } from 'angularfire2';
-import firebase from 'firebase';
 import { EnquiryDetailsPage } from '../enquiry-details/enquiry-details';
+import { Storage } from '@ionic/storage';
 
 /*
   Generated class for the Enquiries page.
@@ -19,16 +19,29 @@ export class EnquiriesPage {
 	public enquiryList: FirebaseListObservable<any>;	
 	public currentuser: any;
     public segment: any;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public af: AngularFire) {
-      this.currentuser = firebase.auth().currentUser;      
-		this.enquiryList = af.database.list('/users/' + this.currentuser.uid + '/enquiries' );
+  constructor(public navCtrl: NavController, public navParams: NavParams, public af: AngularFire, public storage: Storage) {
+      storage.ready().then(() => {
+          storage.get('currentuser').then((val) => {
+
+              this.currentuser = JSON.parse(val);
+              this.segment = "received";
+              this.updateEnquiryList();
+              //this.enquiryList = af.database.list('/users/' + this.currentuser.uid + '/enquiries');
+
+          })
+              .catch((err) =>
+                  console.log(err));
+      }).catch((err) =>
+          console.log(err));     
+		
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad EnquiriesPage');
-    this.segment = "received"
-    this.updateEnquiryList();
+      console.log('ionViewDidLoad EnquiriesPage');
+      
+    
   }
+
   openenquirypage(enquiry){
 
 		this.navCtrl.push(EnquiryDetailsPage, {enquiry: enquiry});  

@@ -29,6 +29,7 @@
             <ion-row>
                 <ion-col text-center *ngIf="product?.name">
                     <h2>{{product?.name}}</h2>
+                    <h3>{{product?.subcat}}</h3>
                 </ion-col>
             </ion-row>
 
@@ -79,10 +80,18 @@
             </ion-row>
             <ion-row *ngIf="product?.composition">
                 <ion-col width-25>
-                    Composotion
+                    Composition
                 </ion-col>
                 <ion-col text-wrap>
                     : ({{product?.composition}})
+                </ion-col>
+            </ion-row>
+            <ion-row *ngIf="product?.astm">
+                <ion-col width-25>
+                    ASTM Standard
+                </ion-col>
+                <ion-col>
+                    : {{product?.astm}}
                 </ion-col>
             </ion-row>
             <ion-row *ngIf="product?.sizes">
@@ -90,7 +99,7 @@
                     Sizes
                 </ion-col>
                 <ion-col>
-                    : {{product?.sizes}}
+                    : {{product?.sizes}} {{product?.sizeunit}}
                 </ion-col>
             </ion-row>
             <ion-row *ngIf="product?.finish">
@@ -146,15 +155,7 @@
                 <ion-col>
                     : {{product?.guarantee}}
                 </ion-col>
-            </ion-row>
-            <ion-row *ngIf="product?.details">
-                <ion-col width-25>
-                    Details
-                </ion-col>
-                <ion-col>
-                    : {{product?.details}}
-                </ion-col>
-            </ion-row>
+            </ion-row>            
             <ion-row>
                 <ion-col width-25 *ngIf="product?.thickness">
                     Thickness
@@ -228,12 +229,24 @@
                     : {{product?.mtc}}
                 </ion-col>
             </ion-row>
+            <ion-row *ngIf="product?.details">
+                <ion-col width-25>
+                    Other Details
+                </ion-col>
+                <ion-col text-wrap>
+                    : {{product?.details}}
+                </ion-col>
+            </ion-row>
         </ion-grid>
-        <div text-center style="padding: 20px;">
-            <button ion-button round icon-left (click)="sendEnquiry()">
-                <ion-icon name="send"></ion-icon>
+        <div *ngIf="this.product?.uid != this.currentuser?.uid" text-center style="padding: 20px;">
+            <button ion-button round (click)="sendEnquiry()">
                 Send Enquiry
             </button>
+        </div>
+        <div *ngIf="this.product?.uid === this.currentuser?.uid" text-center style="padding: 20px;">
+            <button ion-button round color="secondary" disabled>
+                This is your product
+             </button>
         </div>
      </div>
     

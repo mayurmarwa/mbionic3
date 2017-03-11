@@ -8,6 +8,7 @@ import { NgModule, ErrorHandler } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { CustomIconsModule } from 'ionic2-custom-icons';
+import { Storage } from '@ionic/storage';
 import { MarketPage } from '../pages/market/market';
 import { PricesPage } from '../pages/prices/prices';
 import { EnquiriesPage } from '../pages/enquiries/enquiries';
@@ -18,6 +19,7 @@ import { SelectCategoryPage } from '../pages/select-category/select-category';
 import { AddProductPage } from '../pages/add-product/add-product';
 import { EditProductPage } from '../pages/edit-product/edit-product';
 import { ProductPagePage } from '../pages/product-page/product-page';
+import { CategoryProductsPage } from '../pages/category-products/category-products';
 import { SendEnquiryPage } from '../pages/send-enquiry/send-enquiry';
 import { EnquirySentPage } from '../pages/enquiry-sent/enquiry-sent';
 import { EnquiryDetailsPage } from '../pages/enquiry-details/enquiry-details';
@@ -45,6 +47,7 @@ import { ProfileData } from '../providers/profile-data';
 import { ProductData } from '../providers/product-data';
 import { AuthService } from '../providers/auth.service';
 import { ChatsService } from '../providers/chats.service';
+import { OrderBy } from '../pipes/orderBy';
 import { AngularFireModule } from 'angularfire2';
 export var firebaseConfig = {
     apiKey: "AIzaSyBQHf2p8RLOuw7i_DHdsfc8HHCFfwcIPEQ",
@@ -73,6 +76,7 @@ AppModule = __decorate([
             AddProductPage,
             EditProductPage,
             ProductPagePage,
+            CategoryProductsPage,
             SendEnquiryPage,
             EnquirySentPage,
             EnquiryDetailsPage,
@@ -94,7 +98,8 @@ AppModule = __decorate([
             ResetpasswordPage,
             SignupPage,
             CreateAccountPage,
-            CreateProfilePage
+            CreateProfilePage,
+            OrderBy
         ],
         imports: [
             IonicModule.forRoot(MyApp),
@@ -115,6 +120,7 @@ AppModule = __decorate([
             AddProductPage,
             EditProductPage,
             ProductPagePage,
+            CategoryProductsPage,
             SendEnquiryPage,
             EnquirySentPage,
             EnquiryDetailsPage,
@@ -138,7 +144,7 @@ AppModule = __decorate([
             CreateAccountPage,
             CreateProfilePage
         ],
-        providers: [AuthService, ChatsService, ProfileData, ProductData, { provide: ErrorHandler, useClass: IonicErrorHandler }]
+        providers: [AuthService, ChatsService, ProfileData, ProductData, { provide: ErrorHandler, useClass: IonicErrorHandler }, Storage]
     })
 ], AppModule);
 export { AppModule };

@@ -13,48 +13,66 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content text-center padding class="product-details">
 
     <form [formGroup]="requirementForm" (submit)="showConfirm(requirementForm)">
 
         <ion-item>
             <ion-label stacked>Product Category</ion-label>
-            <ion-select #category formControlName="category">
-                <ion-option value="SS Coils" selected="true">SS Coils</ion-option>
-                <ion-option value="SS Sheets" selected="true">SS Sheets</ion-option>
-                <ion-option value="SS Packets">SS Packets</ion-option>
-                <ion-option value="SS Seamless Pipes">SS Seamless Pipes</ion-option>
-                <ion-option value="SS Welded/ERW Pipes">SS Welded/ERW Pipes</ion-option>
-                <ion-option value="SS Electropolish Pipes">SS Electropolish Pipes</ion-option>
-                <ion-option value="SS Square & Rectangular Pipes">SS Square & Rectangular Pipes</ion-option>
-                <ion-option value="SS Flats">SS Flats</ion-option>
-                <ion-option value="SS Angles">SS Angles</ion-option>
-                <ion-option value="SS Round Bars">SS Round Bars</ion-option>
-                <ion-option value="Duplex & SD Coils">Duplex & SD Coils</ion-option>
-                <ion-option value="Duplex & SD Sheets">Duplex & SD Sheets</ion-option>
-                <ion-option value="D&SD Seamless Pipes">D&SD Seamless Pipes</ion-option>
-                <ion-option value="D&SD Welded/ERW Pipes">D&SD Welded/ERW Pipes</ion-option>
-                <ion-option value="D&SD Sqr. & Rect. Pipes">D&SD Sqr. & Rect. Pipes</ion-option>                
-                <ion-option value="Duplex & SD Round Bars">Duplex & SD Round Bars</ion-option>
+            <custom-icon set="mb" name="products" item-left></custom-icon>
+            <ion-select class="grade-select" text-wrap #category formControlName="category" (ionChange)="onTypeChange()">
+                <ion-option value="Stainless Steel Coils" selected="true">Stainless Steel Coils</ion-option>
+                <ion-option value="Stainless Steel Sheets" selected="true">Stainless Steel Sheets</ion-option>
+                <ion-option value="Stainless Steel Packets">Stainless Steel Packets</ion-option>
+                <ion-option value="Stainless Steel Seamless Pipes">Stainless Steel Seamless Pipes</ion-option>
+                <ion-option value="Stainless Steel Welded/ERW Pipes">Stainless Steel Welded/ERW Pipes</ion-option>
+                <ion-option value="Stainless Steel Electropolish Pipes">Stainless Steel Electropolish Pipes</ion-option>
+                <ion-option value="Stainless Steel Square & Rectangular Pipes">Stainless Steel Square & Rectangular Pipes</ion-option>
+                <ion-option value="Stainless Steel Flats">Stainless Steel Flats</ion-option>
+                <ion-option value="Stainless Steel Angles">Stainless Steel Angles</ion-option>
+                <ion-option value="Stainless Steel Round Bars">Stainless Steel Round Bars</ion-option>
+                <ion-option value="Duplex & Super Duplex Coils">Duplex & Super Duplex Coils</ion-option>
+                <ion-option value="Duplex & Super Duplex Sheets">Duplex & Super Duplex Sheets</ion-option>
+                <ion-option value="Duplex & Super Duplex Seamless Pipes">Duplex & Super Duplex Seamless Pipes</ion-option>
+                <ion-option value="Duplex & Super Duplex Welded/ERW Pipes">Duplex & Super Duplex Welded/ERW Pipes</ion-option>
+                <ion-option value="Duplex & Super Duplex Electropolish Pipes">Duplex & Super Duplex Electropolish Pipes</ion-option>
+                <ion-option value="Duplex & Super Duplex Sqr. & Rect. Pipes">Duplex & Super Duplex Sqr. & Rect. Pipes</ion-option>                
+                <ion-option value="Duplex & Super Duplex Round Bars">Duplex & Super Duplex Round Bars</ion-option>
                 <ion-option value="High Nickel Coils">High Nickel Coils</ion-option>
                 <ion-option value="High Nickel Sheets">High Nickel Sheets</ion-option>
                 <ion-option value="High Nickel Seamless Pipes">High Nickel Seamless Pipes</ion-option>
                 <ion-option value="High Nickel Welded/ERW Pipes">High Nickel Welded/ERW Pipes</ion-option>
+                <ion-option value="High Nickel Electropolish Pipes">High Nickel Electropolish Pipes</ion-option>
                 <ion-option value="High Nickel Sqr. & Rect. Pipes">High Nickel Sqr. & Rect. Pipes</ion-option>
                 <ion-option value="High Nickel Round Bars">High Nickel Round Bars</ion-option>
                 <ion-option value="Others">Others</ion-option>
             </ion-select>
+        </ion-item>           
+        <ion-item *ngIf="this.selecton">
+            <ion-label>Grade</ion-label>
+            <custom-icon set="mb" name="grade" item-left></custom-icon>
+            <ion-select #grade formControlName="grade" >
+                <ion-option *ngFor="let grade of gradeList | async">{{grade.Grade}}</ion-option>
+            </ion-select>
         </ion-item>
-  
-            <ion-item>
-                <ion-label stacked>Quantity</ion-label>
-                <ion-input #quantity formControlName="quantity" type="number"
-                           placeholder="Required Quantity">
-                </ion-input>
-            </ion-item>
+        <ion-item *ngIf="!this.selecton">
+            <ion-label stacked>Grade</ion-label>
+            <custom-icon set="mb" name="grade" item-left></custom-icon>
+            <ion-input #grade formControlName="grade" type="text"
+                       placeholder="Enter Grade">
+            </ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label stacked>Quantity</ion-label>
+            <custom-icon set="mb" name="quantity" item-left></custom-icon>
+            <ion-input #quantity formControlName="quantity" type="number"
+                       placeholder="Required Quantity">
+            </ion-input>
+        </ion-item>
        
                 <ion-item>
                     <ion-label stacked>Unit</ion-label>
+                    <custom-icon set="mb" name="unit" item-left></custom-icon>
                     <ion-select #unit formControlName="unit">
                         <ion-option value="Kg" selected="true">Kg</ion-option>
                         <ion-option value="Ton" selected="true">Ton</ion-option>
@@ -64,7 +82,8 @@
                 </ion-item>
              
                     <ion-item>
-                        <ion-label stacked>Bid price</ion-label>
+                        <ion-label stacked>Bid price (Rs)</ion-label>
+                        <custom-icon set="mb" name="bidprice" item-left></custom-icon>
                         <ion-input #bid formControlName="bid" type="number"
                                    placeholder="Your Bid Price">
                         </ion-input>
@@ -72,14 +91,15 @@
                     
                         <ion-item>
                             <ion-label stacked>Details</ion-label>
+                            <custom-icon set="mb" name="post" item-left></custom-icon>
                             <ion-input #details formControlName="details" type="text"
                                        placeholder="Requirement Details...">
                             </ion-input>
                         </ion-item>
                         
                             <ion-input type="text" hidden [(ngModel)]="currentuser.uid" formControlName="uid"></ion-input>
-                            <button ion-button block type="submit">
-                                Submit
+                            <button ion-button round type="submit" style="margin: 20px">
+                                Post
                             </button>
             </form>
 </ion-content>

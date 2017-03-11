@@ -1,73 +1,52 @@
 page-tab-profile {
-    ion-content {
-        background: #f7f7f7 !important;
-        
-        .profile-top {
-            width: 100%;
-            margin: 0;
-            .profile-photo {
+  .product-details{
+         background-color:#f1f4f5;
+        color:#898989;
+        .item {
+  background-color: transparent;
+  border:none;   /*Removes all borders*/
+  color:#898989;
+   custom-icon{
+      font-size: 2em !important;
+  }
+
+  h1{
+        color:#000000;
+    }
+    h2{
+        color:#515151;
+    }
+     
+  
+}
+
+
+/*Changes the border for the last item
+.custom .item:last-child {
+  border-bottom: 1px solid #666;
+}*/
+ 
+.item-complex .item-content, .dark .item-radio .item-content {
+  background-color: transparent;
+}
+    }
+   
+    .profile-photo {
                 padding-top: 16px;
                 
                 $photoSize: 128px;
                 
                 img {
                     width: $photoSize;
-                    height: $photoSize;
-                    border-radius: 50%;
-                    border: solid 2px rgba(234, 79, 20, .5);
+                    height: $photoSize;                    
+                    border: solid 2px white;
                     margin: 0 auto;
                 }
-            }
         }
-
-        .profile-detail {
-            margin-top: 24px;
-
-            ion-item {
-                ion-icon {
-                    font-size: 1.4rem;
-                };
-                p {
-                    padding-top: 6px;
-                }
-            }
-        }
-    }
-    ion-item ion-label {
-    margin: 0 !important;
-  }
-
-  ion-list {
-    margin: 0;
-    padding: 0;
-  }
-
-  ion-list-header {
-    background-color: #ECECEC;
-    margin: 0;
-    padding: 10px 16px;
-  }
-
-  ion-item {
-    padding: 0;
-  }
-
-  ion-datetime {
-    padding-left: 3px !important;
-  }
-
-  .item-inner {
-    border: none !important;
-    padding: 0;
-  }
 
   .placeholder-profile {
     color: #CCCCCC;
   }
 
-  .dob-label {
-    color: #000000 !important;
-    padding: 10px !important;
-    max-width: 50% !important;
-  }
+ 
 }

@@ -13,59 +13,43 @@
 </ion-header>
 
 
-<ion-content padding>
-    <!--<ion-card class="profile-top">
-        <ion-row>
-            <ion-col>
-                <div class="profile-photo">
-                    <img src="/assets/img/noimage.png">
-                </div>
-            </ion-col>
-        </ion-row>
-    </ion-card>-->
-    <ion-item>
-        <ion-label color="primary" stacked>Category</ion-label>
-        <ion-input type="text" value={{this.requirement.category}} disabled></ion-input>
-    </ion-item>
-    <ion-grid>
-        <ion-row>
-            <ion-col width-50>
-                <ion-item>
-                    <ion-label color="primary" stacked>Quanitity</ion-label>
-                    <ion-input value={{this.requirement.quantity}} disabled></ion-input>
-
-                </ion-item>
-            </ion-col>
-            <ion-col width-50>
-                <ion-item>
-                    <ion-label color="primary" stacked>Unit</ion-label>
-                    <ion-input value={{this.requirement.unit}} disabled></ion-input>
-
-                </ion-item>
-            </ion-col>
-        </ion-row>
-        <ion-row>
-            <ion-col width-50>
-                <ion-item>
-                    <ion-label color="primary" stacked>Bid</ion-label>
-                    <ion-input value={{this.requirement.bid}} disabled></ion-input>
-
-                </ion-item>
-            </ion-col>           
-        </ion-row>
-        <ion-row>
-            <ion-col width-50>
-                <ion-item>
-                    <ion-label color="primary" stacked>Details</ion-label>
-                    <ion-input value={{this.requirement.details}} disabled></ion-input>
-
-                </ion-item>
-            </ion-col>
-        </ion-row>
-    </ion-grid>
-
+<ion-content padding text-center class="product-details">
+    <ion-row>
+        <ion-col>
+            <div class="profile-photo" *ngIf="this.requirement?.photoURL">
+                <img [src]="userProfile?.photoURL">
+            </div>
+            <div class="profile-photo"  *ngIf="this.requirement?.photoURL">
+                <img src="assets/img/noimage.png">
+            </div>
+        </ion-col>
+    </ion-row>
+    <ion-list no-lines>
+        <ion-item text-wrap text-center>
+            <h1>{{this.requirement?.category}}</h1>
+        </ion-item>
+        <ion-item ion-item *ngIf="this.requirement?.grade">
+            <custom-icon set="mb" name="grade" item-left></custom-icon>
+            <p>Grade</p>
+            <h2>{{this.requirement?.grade}} </h2>
+        </ion-item>
+        <ion-item ion-item *ngIf="this.requirement?.quantity">
+            <custom-icon set="mb" name="quantity" item-left></custom-icon>
+            <p>Required Quantity</p>
+            <h2>{{this.requirement?.quantity}} {{this.requirement?.unit}}</h2>
+        </ion-item>
+        <ion-item ion-item *ngIf="this.requirement?.bid">
+            <custom-icon set="mb" name="bidprice" item-left></custom-icon>
+            <p>Bid Price</p>
+            <h2>{{this.requirement?.bid | currency:"INR":true}}</h2>
+        </ion-item>
+        <ion-item text-wrap ion-item *ngIf="this.requirement?.details">
+            <custom-icon set="mb" name="post" item-left></custom-icon>
+            <p>Requirement Details</p>
+            <h2>{{this.requirement?.details}}</h2>
+        </ion-item>
+    </ion-list>   
     <button ion-button round icon-left (click)="sendQuote()">
-        <ion-icon name="send"></ion-icon>
         Send Quotation
     </button>
 </ion-content>

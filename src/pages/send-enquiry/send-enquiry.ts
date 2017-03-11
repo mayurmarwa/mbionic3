@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 import { NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
 import { FormBuilder, Validators } from '@angular/forms';
 import { AngularFire } from 'angularfire2';
-import firebase from 'firebase';
 import { AuthService } from '../../providers/auth.service';
 import { EnquirySentPage } from '../enquiry-sent/enquiry-sent';
+import { Storage } from '@ionic/storage';
 
 
 /*
@@ -31,11 +31,15 @@ export class SendEnquiryPage {
     public loading: any;
     public productunit: any;
     
-    constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public af: AngularFire, public alertCtrl: AlertController, public loadingCtrl: LoadingController, public authService: AuthService) {
-  
-      this.product = navParams.get("product");
-      this.sellerID = this.product.uid;		
-        this.currentuser = firebase.auth().currentUser;
+    constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public af: AngularFire, public alertCtrl: AlertController, public loadingCtrl: LoadingController, public authService: AuthService,public storage: Storage) {
+        storage.ready().then(() => {
+            storage.get('currentuser').then((val) => {
+
+                this.currentuser = JSON.parse(val);
+                this.product = navParams.get("product");
+                this.sellerID = this.product.uid;		
+                //console.log(this.currentuser);
+        //this.currentuser = firebase.auth().currentUser;
 		this.userEnquiries = af.database.list('/users/' + this.currentuser.uid + '/enquiries' );
 		this.sellerEnquiries = af.database.list('/users/' + this.sellerID + '/enquiries' );        
         this.enquiryForm = formBuilder.group({
@@ -79,6 +83,13 @@ export class SendEnquiryPage {
                 //loading.dismiss();
                 console.log('Error: ' + JSON.stringify(error));
             });
+
+            })
+                .catch((err) =>
+                    console.log(err));
+        }).catch((err) =>
+            console.log(err));
+
 	
   }
   

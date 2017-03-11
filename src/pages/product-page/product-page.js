@@ -10,6 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { SendEnquiryPage } from '../send-enquiry/send-enquiry';
+import { Storage } from '@ionic/storage';
 /*
   Generated class for the ProductPage page.
 
@@ -17,14 +18,27 @@ import { SendEnquiryPage } from '../send-enquiry/send-enquiry';
   Ionic pages and navigation.
 */
 var ProductPagePage = (function () {
-    function ProductPagePage(navCtrl, navParams) {
+    function ProductPagePage(navCtrl, navParams, storage) {
+        var _this = this;
         this.navCtrl = navCtrl;
         this.navParams = navParams;
-        this.product = navParams.get("product");
+        this.storage = storage;
+        storage.ready().then(function () {
+            storage.get('currentuser').then(function (val) {
+                _this.currentuser = JSON.parse(val);
+                _this.product = navParams.get("product");
+                console.log(_this.product);
+                //console.log(this.currentuser);
+            })
+                .catch(function (err) {
+                return console.log(err);
+            });
+        }).catch(function (err) {
+            return console.log(err);
+        });
     }
     ProductPagePage.prototype.ionViewDidLoad = function () {
         console.log('ionViewDidLoad ProductPagePage');
-        console.log(this.product);
     };
     ProductPagePage.prototype.sendEnquiry = function () {
         this.navCtrl.push(SendEnquiryPage, { product: this.product });
@@ -36,7 +50,7 @@ ProductPagePage = __decorate([
         selector: 'page-product-page',
         templateUrl: 'product-page.html'
     }),
-    __metadata("design:paramtypes", [NavController, NavParams])
+    __metadata("design:paramtypes", [NavController, NavParams, Storage])
 ], ProductPagePage);
 export { ProductPagePage };
 //# sourceMappingURL=product-page.js.map

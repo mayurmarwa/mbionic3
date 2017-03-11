@@ -8,8 +8,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
 import { FormBuilder, Validators } from '@angular/forms';
+import { EnquiriesPage } from '../enquiries/enquiries';
 import { AngularFire } from 'angularfire2';
 import firebase from 'firebase';
 /*
@@ -19,11 +20,13 @@ import firebase from 'firebase';
   Ionic pages and navigation.
 */
 var SendQuotationPage = (function () {
-    function SendQuotationPage(navCtrl, navParams, formBuilder, af) {
+    function SendQuotationPage(navCtrl, navParams, formBuilder, af, alertCtrl, loadingCtrl) {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
         this.formBuilder = formBuilder;
         this.af = af;
+        this.alertCtrl = alertCtrl;
+        this.loadingCtrl = loadingCtrl;
         this.requirement = navParams.get("requirement");
         this.postuserID = this.requirement.uid;
         this.currentuser = firebase.auth().currentUser;
@@ -39,8 +42,40 @@ var SendQuotationPage = (function () {
     SendQuotationPage.prototype.ionViewDidLoad = function () {
         console.log('ionViewDidLoad SendQuotationPage');
     };
+    SendQuotationPage.prototype.showConfirm = function (quoteForm) {
+        var _this = this;
+        if (!quoteForm.valid) {
+            var alert_1 = this.alertCtrl.create({
+                title: 'Invalid Entries!',
+                subTitle: 'Please fill all required entries',
+                buttons: ['OK']
+            });
+            alert_1.present();
+        }
+        else {
+            var confirm_1 = this.alertCtrl.create({
+                title: 'Submit Quote?',
+                message: 'Do you want to send this quote to the buyer?',
+                buttons: [
+                    {
+                        text: 'No',
+                    },
+                    {
+                        text: 'Agree',
+                        handler: function () {
+                            _this.submitQuote();
+                        }
+                    }
+                ]
+            });
+            confirm_1.present();
+        }
+    };
     SendQuotationPage.prototype.submitQuote = function () {
         var _this = this;
+        this.loading = this.loadingCtrl.create({
+            content: 'Sending Quote, Please Wait...'
+        });
         this.userEnquiries.push(this.quoteForm.value).then(function (data) {
             //console.log(this.enquiryForm.value);
             _this.af.database.object('users/' + _this.currentuser.uid + '/enquiries/' + data.key).update({
@@ -49,7 +84,7 @@ var SendQuotationPage = (function () {
                 requirement: _this.requirement,
                 quote: _this.quoteForm.value
             }).then(function (info) {
-                console.log("successsent");
+                //console.log("successsent");
                 //this.navCtrl.pop();
                 //this.navCtrl.pop();
             });
@@ -60,7 +95,14 @@ var SendQuotationPage = (function () {
                 quote: _this.quoteForm.value
                 //detials: this.productForm.value.name,
             }).then(function (info) {
-                console.log("successrcv");
+                _this.loading.present();
+                setTimeout(function () {
+                    _this.navCtrl.popToRoot({ animate: false });
+                    _this.navCtrl.setRoot(EnquiriesPage, { animate: false });
+                }, 1000);
+                setTimeout(function () {
+                    _this.loading.dismiss();
+                }, 3000);
                 //this.navCtrl.pop();
                 //this.navCtrl.pop();
             });
@@ -73,7 +115,7 @@ SendQuotationPage = __decorate([
         selector: 'page-send-quotation',
         templateUrl: 'send-quotation.html'
     }),
-    __metadata("design:paramtypes", [NavController, NavParams, FormBuilder, AngularFire])
+    __metadata("design:paramtypes", [NavController, NavParams, FormBuilder, AngularFire, AlertController, LoadingController])
 ], SendQuotationPage);
 export { SendQuotationPage };
 //# sourceMappingURL=send-quotation.js.map

@@ -10,6 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 import { Component } from '@angular/core';
 import { NavController, NavParams, ModalController } from 'ionic-angular';
 import { NotificationsPage } from '../notifications/notifications';
+import { CategoryProductsPage } from '../category-products/category-products';
 import { AngularFire } from 'angularfire2';
 import { ProductPagePage } from '../product-page/product-page';
 /*
@@ -25,16 +26,27 @@ var MarketPage = (function () {
         this.modalCtrl = modalCtrl;
         this.af = af;
         this.productList = af.database.list('/products', { query: { orderByChild: 'timestamp' } });
-        this.productListRev = this.productList.map(function (arr) { return arr.reverse(); });
+        this.categories = af.database.list('/productcategories', { query: { orderByChild: 'catid' } });
     }
     MarketPage.prototype.ionViewDidLoad = function () {
         console.log('ionViewDidLoad MarketPage');
+    };
+    MarketPage.prototype.ionViewDidEnter = function () {
+        this.reverseList();
+    };
+    MarketPage.prototype.reverseList = function () {
+        this.productList = this.af.database.list('/products', { query: { orderByChild: 'timestamp' } });
+        this.productListRev = this.productList.map(function (arr) { return arr.reverse(); });
     };
     MarketPage.prototype.openproductpage = function (product) {
         this.navCtrl.push(ProductPagePage, { product: product });
     };
     MarketPage.prototype.opennotificationsPage = function (product) {
         this.navCtrl.push(NotificationsPage);
+    };
+    MarketPage.prototype.categoryProducts = function (category) {
+        console.log(category);
+        this.navCtrl.push(CategoryProductsPage, { category: category });
     };
     return MarketPage;
 }());

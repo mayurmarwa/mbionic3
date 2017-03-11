@@ -2,11 +2,14 @@
   <ion-header>
     <ion-toolbar color="royal">
         <ion-item no-lines color="royal">
-            <ion-avatar item-left>
-                <img src="img/avatar-cher.png">
+            <ion-avatar item-left *ngIf="currentuser?.photoURL">
+                <img [src]="currentuser?.photoURL"> 
             </ion-avatar>
-            <h2>Cher</h2>
-            <p>Ugh. As if.</p>
+            <ion-avatar item-left *ngIf="!currentuser?.photoURL">
+                <img src="/assets/img/noimage.png">
+            </ion-avatar>
+            <h2>{{currentuser?.displayName}}</h2>
+            <!--<p>Ugh. As if.</p>-->
         </ion-item>
     </ion-toolbar>
   </ion-header>

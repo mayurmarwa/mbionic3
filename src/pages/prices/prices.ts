@@ -12,11 +12,17 @@ import { NavController, NavParams } from 'ionic-angular';
   templateUrl: 'prices.html'
 })
 export class PricesPage {
-
-  constructor(public navCtrl: NavController, public navParams: NavParams) {}
+    public segment: any;
+    constructor(public navCtrl: NavController, public navParams: NavParams) {
+        this.segment = "mcx";
+        this.updatePriceList();
+    }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad PricesPage');
+  }
+  updatePriceList() {
+      console.log(this.segment);
   }
 
 }

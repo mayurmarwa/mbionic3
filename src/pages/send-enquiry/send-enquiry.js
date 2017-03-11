@@ -11,9 +11,9 @@ import { Component } from '@angular/core';
 import { NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
 import { FormBuilder, Validators } from '@angular/forms';
 import { AngularFire } from 'angularfire2';
-import firebase from 'firebase';
 import { AuthService } from '../../providers/auth.service';
 import { EnquirySentPage } from '../enquiry-sent/enquiry-sent';
+import { Storage } from '@ionic/storage';
 /*
   Generated class for the SendEnquiry page.
 
@@ -21,7 +21,7 @@ import { EnquirySentPage } from '../enquiry-sent/enquiry-sent';
   Ionic pages and navigation.
 */
 var SendEnquiryPage = (function () {
-    function SendEnquiryPage(navCtrl, navParams, formBuilder, af, alertCtrl, loadingCtrl, authService) {
+    function SendEnquiryPage(navCtrl, navParams, formBuilder, af, alertCtrl, loadingCtrl, authService, storage) {
         var _this = this;
         this.navCtrl = navCtrl;
         this.navParams = navParams;
@@ -30,47 +30,59 @@ var SendEnquiryPage = (function () {
         this.alertCtrl = alertCtrl;
         this.loadingCtrl = loadingCtrl;
         this.authService = authService;
-        this.product = navParams.get("product");
-        this.sellerID = this.product.uid;
-        this.currentuser = firebase.auth().currentUser;
-        this.userEnquiries = af.database.list('/users/' + this.currentuser.uid + '/enquiries');
-        this.sellerEnquiries = af.database.list('/users/' + this.sellerID + '/enquiries');
-        this.enquiryForm = formBuilder.group({
-            rate: ['', Validators.required],
-            quantity: ['', Validators.required],
-            unit: ['', Validators.required],
-            payment: ['', Validators.required],
-            details: ['',]
-        });
-        if (!this.product.unit) {
-            this.productunit = "Kg";
-        }
-        else {
-            this.productunit = this.product.unit;
-        }
-        this.authService.getFullProfile(this.sellerID)
-            .subscribe(function (user) {
-            //loading.dismiss();
-            // this.user.displayName = user.displayName;
-            //this.user.email = user.email || user.providerData[0].email || 'Not set yet.';
-            //this.user.photoURL = user.photoURL || this.user.photoURL;
-            _this.seller = user;
-            //console.log(this.seller);
-        }, function (error) {
-            //loading.dismiss();
-            console.log('Error: ' + JSON.stringify(error));
-        });
-        this.authService.getFullProfile(this.currentuser.uid)
-            .subscribe(function (user) {
-            //loading.dismiss();
-            // this.user.displayName = user.displayName;
-            //this.user.email = user.email || user.providerData[0].email || 'Not set yet.';
-            //this.user.photoURL = user.photoURL || this.user.photoURL;
-            _this.user = user;
-            //console.log(this.user);
-        }, function (error) {
-            //loading.dismiss();
-            console.log('Error: ' + JSON.stringify(error));
+        this.storage = storage;
+        storage.ready().then(function () {
+            storage.get('currentuser').then(function (val) {
+                _this.currentuser = JSON.parse(val);
+                _this.product = navParams.get("product");
+                _this.sellerID = _this.product.uid;
+                //console.log(this.currentuser);
+                //this.currentuser = firebase.auth().currentUser;
+                _this.userEnquiries = af.database.list('/users/' + _this.currentuser.uid + '/enquiries');
+                _this.sellerEnquiries = af.database.list('/users/' + _this.sellerID + '/enquiries');
+                _this.enquiryForm = formBuilder.group({
+                    rate: ['', Validators.required],
+                    quantity: ['', Validators.required],
+                    unit: ['', Validators.required],
+                    payment: ['', Validators.required],
+                    details: ['',]
+                });
+                if (!_this.product.unit) {
+                    _this.productunit = "Kg";
+                }
+                else {
+                    _this.productunit = _this.product.unit;
+                }
+                _this.authService.getFullProfile(_this.sellerID)
+                    .subscribe(function (user) {
+                    //loading.dismiss();
+                    // this.user.displayName = user.displayName;
+                    //this.user.email = user.email || user.providerData[0].email || 'Not set yet.';
+                    //this.user.photoURL = user.photoURL || this.user.photoURL;
+                    _this.seller = user;
+                    //console.log(this.seller);
+                }, function (error) {
+                    //loading.dismiss();
+                    console.log('Error: ' + JSON.stringify(error));
+                });
+                _this.authService.getFullProfile(_this.currentuser.uid)
+                    .subscribe(function (user) {
+                    //loading.dismiss();
+                    // this.user.displayName = user.displayName;
+                    //this.user.email = user.email || user.providerData[0].email || 'Not set yet.';
+                    //this.user.photoURL = user.photoURL || this.user.photoURL;
+                    _this.user = user;
+                    //console.log(this.user);
+                }, function (error) {
+                    //loading.dismiss();
+                    console.log('Error: ' + JSON.stringify(error));
+                });
+            })
+                .catch(function (err) {
+                return console.log(err);
+            });
+        }).catch(function (err) {
+            return console.log(err);
         });
     }
     SendEnquiryPage.prototype.ionViewDidLoad = function () {
@@ -168,7 +180,7 @@ SendEnquiryPage = __decorate([
         selector: 'page-send-enquiry',
         templateUrl: 'send-enquiry.html'
     }),
-    __metadata("design:paramtypes", [NavController, NavParams, FormBuilder, AngularFire, AlertController, LoadingController, AuthService])
+    __metadata("design:paramtypes", [NavController, NavParams, FormBuilder, AngularFire, AlertController, LoadingController, AuthService, Storage])
 ], SendEnquiryPage);
 export { SendEnquiryPage };
 //# sourceMappingURL=send-enquiry.js.map

@@ -10,6 +10,7 @@ import { AuthService, AuthMode } from '../../providers/auth.service';
 import { EmailValidator } from '../../validators/email';
 import { App } from 'ionic-angular';
 import { NgZone } from '@angular/core';
+import { Storage } from '@ionic/storage';
 
 
 @Component({
@@ -21,7 +22,7 @@ export class LoginPage {
     submitAttempt: boolean = false;
     public loading: any;
     public loginForm: any;
-
+    public localstore: any;
   constructor(
     public navCtrl    : NavController,
     public loadingCtrl: LoadingController,
@@ -30,7 +31,8 @@ export class LoginPage {
     public formBuilder: FormBuilder,
     public alertCtrl: AlertController,
     private app: App,
-    private zone: NgZone
+    private zone: NgZone,
+    public storage: Storage
   ) {
       this.loginForm = formBuilder.group({
           email: ['', Validators.compose([Validators.required,
@@ -38,6 +40,8 @@ export class LoginPage {
           password: ['', Validators.compose([Validators.minLength(6),
           Validators.required])]
       });
+     
+     
   }
 
   /**
@@ -64,6 +68,8 @@ export class LoginPage {
   }
   loginUser() {
       this.submitAttempt = true;
+      let loading = this.loadingCtrl.create();
+      loading.present();
 
       if (!this.loginForm.valid) {
           console.log(this.loginForm.value);
@@ -71,7 +77,19 @@ export class LoginPage {
           this.authService.loginUser(this.loginForm.value.email,
               this.loginForm.value.password).then(data => {
 
+                  this.storage.ready().then(() => {
+                      // set a key/value
+                      this.storage.set('currentuser', JSON.stringify(data));
+                      // Or to get a key/value pair
+                     // this.storage.get('currentuser').then((val) => {
+                     //     console.log('Current User', JSON.parse(val));
+                      //})
+                  });
+                     
+                
+                      loading.dismiss();
                   this.navCtrl.setRoot(TabsPage);
+                  
 
               }, error => {
                   this.loading.dismiss().then(() => {
@@ -83,12 +101,7 @@ export class LoginPage {
                       alert.present();
                   });
               });
-
-          this.loading = this.loadingCtrl.create({
-              dismissOnPageChange: true,
-              //duration: 3000
-          });
-          this.loading.present();
+    
       }
   }
   
@@ -120,7 +133,16 @@ export class LoginPage {
                   loading.dismiss();
                   this.navCtrl.setRoot(CreateProfilePage, { userid: data.uid });
                 }, (error)=> this.showMessage(error.message || 'Unknown error'));
-            } else {
+              } else {
+
+                  this.storage.ready().then(() => {
+                      // set a key/value
+                      this.storage.set('currentuser', JSON.stringify(data));
+                      // Or to get a key/value pair
+                      // this.storage.get('currentuser').then((val) => {
+                      //     console.log('Current User', JSON.parse(val));
+                      //})
+                  });
               loading.dismiss();
               this.navCtrl.setRoot(TabsPage);
             }
@@ -151,6 +173,15 @@ export class LoginPage {
                                   this.navCtrl.setRoot(CreateProfilePage, { userid: data.uid });
                               }, (error) => this.showMessage(error.message || 'Unknown error'));
                       } else {
+
+                          this.storage.ready().then(() => {
+                              // set a key/value
+                              this.storage.set('currentuser', JSON.stringify(data));
+                              // Or to get a key/value pair
+                              // this.storage.get('currentuser').then((val) => {
+                              //     console.log('Current User', JSON.parse(val));
+                              //})
+                          });
                           loading.dismiss();
                           this.navCtrl.setRoot(TabsPage);
                       }

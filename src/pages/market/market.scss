@@ -1,5 +1,13 @@
 page-market {
-
+    .header-image {
+    background-image: url(https://ununsplash.imgix.net/photo-1421091242698-34f6ad7fc088?fit=crop&fm=jpg&h=650&q=75&w=950);
+    height: 25vh;
+}
+ 
+.main-content {
+    padding: 20px;
+    background-color: white;
+}
   .product-card{
 
       img{
@@ -18,11 +26,45 @@ ion-scroll.item{
 }
 
 ion-col{
-	padding: 16px;
-	border: solid 1px #DDD;
-	background-color: rgb(221, 41, 91);
-	color: #FFF;
-	border-radius: 3px;
-	margin: 5px;
+	padding: 10px;
+	//border: solid 1px #DDD;
+	//background-color: #ffff;
+	//color: #FFF;
+	//border-radius: 3px;
+	//margin: 5px;
 }
+.gradeCircle{
+        
+    display: inline-block;
+    text-align: center;
+    /* width: 10%; */
+    /* border: 1.2em solid #dddddd; */
+    background-color: #ddd;
+    width: 2.4em;
+    height: 2.4em;
+    line-height: 2.4em;
+    border-radius: 50%;
+    /* max-width: 1.2em; */
+    /* max-height: 1.2em; */
+    /* box-sizing: border-box; */    
+    /* margin: 0 auto; */
+
+
+    }
+
+.gradeCircle2{
+        //background-color: #f4f4f4;
+    border: 1px solid #1a1e5e;
+    //border-radius: 40px;
+    box-shadow: 0 0 2px #888;
+    height: 75px;
+    width: 75px;
+    text-align: center;
+    line-height: 5em;
+    color: #1a1e5e;
+    font-weight:bold;
+    margin-left: auto;
+    margin-right: auto;
+
+    }
 }

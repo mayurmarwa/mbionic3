@@ -7,19 +7,20 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { AlertController } from 'ionic-angular';
+import { AlertController, ActionSheetController, LoadingController } from 'ionic-angular';
 import { Component } from '@angular/core';
-import { LoadingController } from 'ionic-angular';
+import { Camera } from 'ionic-native';
 import { AuthService } from '../../providers/auth.service';
 import { ProfileData } from '../../providers/profile-data';
 import firebase from 'firebase';
 var TabProfilePage = (function () {
-    function TabProfilePage(authService, loadingCtrl, profileData, alertCtrl) {
+    function TabProfilePage(authService, loadingCtrl, profileData, alertCtrl, actionSheetCtrl) {
         var _this = this;
         this.authService = authService;
         this.loadingCtrl = loadingCtrl;
         this.profileData = profileData;
         this.alertCtrl = alertCtrl;
+        this.actionSheetCtrl = actionSheetCtrl;
         this.user = {};
         this.user.photoURL = 'assets/img/noimage.png';
         this.profileData = profileData;
@@ -90,6 +91,7 @@ var TabProfilePage = (function () {
                 {
                     name: 'mobile',
                     placeholder: 'Mobile No.',
+                    type: 'number',
                     value: this.userProfile.mobile
                 },
             ],
@@ -101,6 +103,32 @@ var TabProfilePage = (function () {
                     text: 'Save',
                     handler: function (data) {
                         _this.profileData.updateMobile(data.mobile);
+                    }
+                }
+            ]
+        });
+        alert.present();
+    };
+    TabProfilePage.prototype.updateLandLine = function () {
+        var _this = this;
+        var alert = this.alertCtrl.create({
+            message: "Enter Land Line No.",
+            inputs: [
+                {
+                    name: 'landline',
+                    placeholder: 'Enter Land Line No. with STD code',
+                    type: 'number',
+                    value: this.userProfile.landline
+                },
+            ],
+            buttons: [
+                {
+                    text: 'Cancel',
+                },
+                {
+                    text: 'Save',
+                    handler: function (data) {
+                        _this.profileData.updateLandLine(data.landline);
                     }
                 }
             ]
@@ -182,6 +210,56 @@ var TabProfilePage = (function () {
         });
         alert.present();
     };
+    TabProfilePage.prototype.updateVat = function () {
+        var _this = this;
+        var alert = this.alertCtrl.create({
+            message: "VAT/TIN",
+            inputs: [
+                {
+                    name: 'vat',
+                    placeholder: 'VAT/TIN Details',
+                    value: this.userProfile.vat
+                },
+            ],
+            buttons: [
+                {
+                    text: 'Cancel',
+                },
+                {
+                    text: 'Save',
+                    handler: function (data) {
+                        _this.profileData.updateVat(data.vat);
+                    }
+                }
+            ]
+        });
+        alert.present();
+    };
+    TabProfilePage.prototype.updateExcise = function () {
+        var _this = this;
+        var alert = this.alertCtrl.create({
+            message: "Excise Details",
+            inputs: [
+                {
+                    name: 'excise',
+                    placeholder: 'Excise Details',
+                    value: this.userProfile.excise
+                },
+            ],
+            buttons: [
+                {
+                    text: 'Cancel',
+                },
+                {
+                    text: 'Save',
+                    handler: function (data) {
+                        _this.profileData.updateExcise(data.excise);
+                    }
+                }
+            ]
+        });
+        alert.present();
+    };
     TabProfilePage.prototype.updateEmail = function () {
         var _this = this;
         var alert = this.alertCtrl.create({
@@ -229,6 +307,71 @@ var TabProfilePage = (function () {
         });
         alert.present();
     };
+    TabProfilePage.prototype.presentActionSheet = function () {
+        var _this = this;
+        var actionSheet = this.actionSheetCtrl.create({
+            title: 'Select Image Source',
+            buttons: [
+                {
+                    text: 'Load from Library',
+                    handler: function () {
+                        //this.takePicture(Camera.PictureSourceType.PHOTOLIBRARY);
+                        _this.getPicture();
+                    }
+                },
+                {
+                    text: 'Use Camera',
+                    handler: function () {
+                        //this.takePicture(Camera.PictureSourceType.CAMERA);
+                        _this.takePicture();
+                    }
+                },
+                {
+                    text: 'Cancel',
+                    role: 'cancel'
+                }
+            ]
+        });
+        actionSheet.present();
+    };
+    TabProfilePage.prototype.takePicture = function () {
+        var _this = this;
+        Camera.getPicture({
+            quality: 95,
+            destinationType: Camera.DestinationType.DATA_URL,
+            sourceType: Camera.PictureSourceType.CAMERA,
+            allowEdit: false,
+            encodingType: Camera.EncodingType.PNG,
+            targetWidth: 500,
+            targetHeight: 500,
+            saveToPhotoAlbum: true
+        }).then(function (imageData) {
+            _this.productImage = imageData;
+            _this.profileData.updateImage(_this.productImage);
+            //this.productPreview = "data:image/jpeg;base64," + imageData;
+        }, function (error) {
+            console.log("ERROR -> " + JSON.stringify(error));
+        });
+    };
+    TabProfilePage.prototype.getPicture = function () {
+        var _this = this;
+        Camera.getPicture({
+            quality: 95,
+            destinationType: Camera.DestinationType.DATA_URL,
+            sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+            allowEdit: false,
+            encodingType: Camera.EncodingType.PNG,
+            targetWidth: 500,
+            targetHeight: 500,
+            saveToPhotoAlbum: true
+        }).then(function (imageData) {
+            _this.productImage = imageData;
+            _this.profileData.updateImage(_this.productImage);
+            //this.productPreview = "data:image/jpeg;base64," + imageData;
+        }, function (error) {
+            console.log("ERROR -> " + JSON.stringify(error));
+        });
+    };
     return TabProfilePage;
 }());
 TabProfilePage = __decorate([
@@ -239,7 +382,8 @@ TabProfilePage = __decorate([
     __metadata("design:paramtypes", [AuthService,
         LoadingController,
         ProfileData,
-        AlertController])
+        AlertController,
+        ActionSheetController])
 ], TabProfilePage);
 export { TabProfilePage };
 //# sourceMappingURL=tab-profile.js.map

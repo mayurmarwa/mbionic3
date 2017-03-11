@@ -18,8 +18,9 @@ import { AuthService, AuthMode } from '../../providers/auth.service';
 import { EmailValidator } from '../../validators/email';
 import { App } from 'ionic-angular';
 import { NgZone } from '@angular/core';
+import { Storage } from '@ionic/storage';
 var LoginPage = (function () {
-    function LoginPage(navCtrl, loadingCtrl, toastCtrl, authService, formBuilder, alertCtrl, app, zone) {
+    function LoginPage(navCtrl, loadingCtrl, toastCtrl, authService, formBuilder, alertCtrl, app, zone, storage) {
         this.navCtrl = navCtrl;
         this.loadingCtrl = loadingCtrl;
         this.toastCtrl = toastCtrl;
@@ -28,6 +29,7 @@ var LoginPage = (function () {
         this.alertCtrl = alertCtrl;
         this.app = app;
         this.zone = zone;
+        this.storage = storage;
         this.homePage = TabsPage;
         this.submitAttempt = false;
         this.loginForm = formBuilder.group({
@@ -59,11 +61,22 @@ var LoginPage = (function () {
     LoginPage.prototype.loginUser = function () {
         var _this = this;
         this.submitAttempt = true;
+        var loading = this.loadingCtrl.create();
+        loading.present();
         if (!this.loginForm.valid) {
             console.log(this.loginForm.value);
         }
         else {
             this.authService.loginUser(this.loginForm.value.email, this.loginForm.value.password).then(function (data) {
+                _this.storage.ready().then(function () {
+                    // set a key/value
+                    _this.storage.set('currentuser', JSON.stringify(data));
+                    // Or to get a key/value pair
+                    // this.storage.get('currentuser').then((val) => {
+                    //     console.log('Current User', JSON.parse(val));
+                    //})
+                });
+                loading.dismiss();
                 _this.navCtrl.setRoot(TabsPage);
             }, function (error) {
                 _this.loading.dismiss().then(function () {
@@ -75,10 +88,6 @@ var LoginPage = (function () {
                     alert.present();
                 });
             });
-            this.loading = this.loadingCtrl.create({
-                dismissOnPageChange: true,
-            });
-            this.loading.present();
         }
     };
     LoginPage.prototype.goToResetPassword = function () {
@@ -167,7 +176,8 @@ LoginPage = __decorate([
         FormBuilder,
         AlertController,
         App,
-        NgZone])
+        NgZone,
+        Storage])
 ], LoginPage);
 export { LoginPage };
 //# sourceMappingURL=login.js.map

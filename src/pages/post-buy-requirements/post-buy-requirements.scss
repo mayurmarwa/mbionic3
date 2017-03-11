@@ -1,3 +1,21 @@
 page-post-buy-requirements {
-
+ 
+    .product-details{
+         background-color:#f1f4f5;
+        color:#898989;
+                 
+                          
+    .item custom-icon{
+            font-size: 5rem;
+    }
+    .item {
+  background-color: transparent;
+  border:none;   /*Removes all borders*/
+  color:#898989;
+  
+  }
+    .item-complex .item-content, .dark .item-radio .item-content {
+  background-color: transparent;
+}
+}        
 }

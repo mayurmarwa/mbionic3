@@ -65,6 +65,7 @@ export class AddProductPage {
         this.coilsForm = formBuilder.group({
             name: ['', Validators.required],
             ptype: ['Hastealloy',],
+            astm: ['', Validators.required],
             grade: ['', Validators.required],
             gradeval: ['base', Validators.required],
             finish: ['HR', Validators.required],
@@ -77,6 +78,7 @@ export class AddProductPage {
             origin: ['', Validators.required],
             brand: ['', Validators.required],
             mtc: ['Available', Validators.required],
+            details: ['',],
             catid: ['', Validators.required],
             uid: ['', Validators.required],
             islive: ['true',Validators.required]
@@ -92,6 +94,7 @@ export class AddProductPage {
         this.sheetsForm = formBuilder.group({
             name: ['', Validators.required],
             ptype: ['Hastealloy',],
+            astm: ['', Validators.required],
             grade: ['', Validators.required],
             gradeval: ['base', Validators.required],
             finish: ['HR', Validators.required],
@@ -106,6 +109,7 @@ export class AddProductPage {
             origin: ['', Validators.required],
             brand: ['', Validators.required],
             mtc: ['Available', Validators.required],
+            details: ['',],
             catid: ['', Validators.required],
             uid: ['', Validators.required],
             islive: ['true', Validators.required]           
@@ -115,9 +119,12 @@ export class AddProductPage {
         this.seamlessForm = formBuilder.group({
             name: ['', Validators.required],
             ptype: ['Hastealloy',],
+            astm: ['', Validators.required],
             grade: ['', Validators.required],
             gradeval: ['base', Validators.required],
             composition: ['',],
+            sizes: ['', Validators.required],
+            sizeunit: ['', Validators.required],
             type: ['OD', Validators.required],
             swg: ['',],
             mm: ['',],
@@ -130,6 +137,7 @@ export class AddProductPage {
             origin: ['', Validators.required],
             brand: ['',],
             mtc: ['',],
+            details: ['',],
             catid: ['', Validators.required],
             uid: ['', Validators.required],
             islive: ['true', Validators.required]
@@ -139,16 +147,19 @@ export class AddProductPage {
         this.squareForm = formBuilder.group({
             name: ['', Validators.required],
             ptype: ['Hastealloy',],
+            astm: ['', Validators.required],
             grade: ['', Validators.required],
             gradeval: ['base', Validators.required],
             composition: ['',],
             sizes: ['', Validators.required],
+            sizeunit: ['', Validators.required],
             thickness: ['', Validators.required],            
             finish: ['Polished', Validators.required],
             quantity: ['', Validators.required],
             unit: ['Kg', Validators.required],
             mrate: ['',],
             krate: ['',],
+            details: ['',],
             origin: ['', Validators.required],
             brand: ['',],          
             catid: ['', Validators.required],
@@ -160,6 +171,7 @@ export class AddProductPage {
         this.flatsForm = formBuilder.group({
             name: ['', Validators.required],
             grade: ['', Validators.required],
+            astm: ['', Validators.required],
             gradeval: ['base', Validators.required],
             width: ['', Validators.required],
             length: ['', Validators.required],
@@ -173,6 +185,7 @@ export class AddProductPage {
             origin: ['',],
             brand: ['',],
             mtc: ['',],
+            details: ['',],
             catid: ['', Validators.required],
             uid: ['', Validators.required],
             islive: ['true', Validators.required]
@@ -182,9 +195,11 @@ export class AddProductPage {
         this.anglesForm = formBuilder.group({
             name: ['', Validators.required],
             grade: ['', Validators.required],
+            astm: ['', Validators.required],
             gradeval: ['base', Validators.required],
             composition: ['', Validators.required],
             sizes: ['', Validators.required],
+            sizeunit: ['', Validators.required],
             thickness: ['', Validators.required],
             quantity: ['', Validators.required],
             unit: ['Mtrs', Validators.required],
@@ -194,6 +209,7 @@ export class AddProductPage {
             origin: ['',],
             brand: ['',],
             mtc: ['',],
+            details: ['',],
             catid: ['', Validators.required],
             uid: ['', Validators.required],
             islive: ['true', Validators.required]
@@ -203,13 +219,16 @@ export class AddProductPage {
         this.roundbarsForm = formBuilder.group({
             name: ['', Validators.required],
             ptype: ['Hastealloy',],
+            subcat:['Hex Bars',Validators.required],
+            astm: ['', Validators.required],
             grade: ['', Validators.required],
             gradeval: ['base', Validators.required],
             composition: ['',],
             pcategory: ['Black', Validators.required],
             guarantee: ['Yes', Validators.required],
             sizes: ['', Validators.required],
-            thickness: ['', Validators.required],
+            sizeunit: ['', Validators.required],
+            type: ['Forged', Validators.required],
             quantity: ['', Validators.required],
             unit: ['Mtrs', Validators.required],
             length: ['', Validators.required],
@@ -218,6 +237,7 @@ export class AddProductPage {
             origin: ['',],
             brand: ['',],
             mtc: ['',],
+            details: ['',],
             catid: ['', Validators.required],
             uid: ['', Validators.required],
             islive: ['true', Validators.required]
@@ -249,7 +269,7 @@ export class AddProductPage {
             alert.present();
         }        
         else {
-            if (this.productImage == null) {
+            /**if (this.productImage == null) {
                 let alert = this.alertCtrl.create({
                     title: 'Add Image!',
                     subTitle: 'Please add an image for your product',
@@ -260,19 +280,20 @@ export class AddProductPage {
             }
             else {
                 this.imageValid = true;
-            }
-            if (this.category.catid != "9a" && this.category.catid != "9b" && this.category.catid != "9c1" && this.category.catid != "9c2" && this.category.catid != "9c3" && this.category.catid != "9c4" && this.category.catid != "9d"){
+            }**/
+            this.imageValid = true;
+            if (this.category.catid != "9a" && this.category.catid != "9b" && this.category.catid != "9c1" && this.category.catid != "9c2" && this.category.catid != "9c3" && this.category.catid != "9c4" && this.category.catid != "9c5" && this.category.catid != "9d"){
                 productForm.value.ptype = null;
             }
 
-            if (this.category.catid === "8c1" || this.category.catid === "8c2" || this.category.catid === "8c3" || this.category.catid === "8c4" || this.category.catid === "8d" || this.category.catid === "8a" || this.category.catid === "8b" || this.category.catid === "9c1" || this.category.catid === "9c2" || this.category.catid === "9c3" || this.category.catid === "9c4" || this.category.catid === "9d" || this.category.catid === "9a" || this.category.catid === "9b") {
+            /**if (this.category.catid === "8c1" || this.category.catid === "8c2" || this.category.catid === "8c3" || this.category.catid === "8c4" || this.category.catid === "8d" || this.category.catid === "8a" || this.category.catid === "8b" || this.category.catid === "9c1" || this.category.catid === "9c2" || this.category.catid === "9c3" || this.category.catid === "9c4" || this.category.catid === "9d" || this.category.catid === "9a" || this.category.catid === "9b") {
                 productForm.value.gradeval = productForm.value.grade;
-            }
+            }**/
             if (this.category.catid === '4a' || this.category.catid === '4c' || this.category.catid === '8c1' || this.category.catid === '9c1' || this.category.catid === '8c3' || this.category.catid === '9c3') {
                 productForm.value.finish = null;
             }
 
-            if (this.category.catid === "4a" || this.category.catid === "4b" || this.category.catid === "4c" || this.category.catid === "8c1" || this.category.catid === "8c2" || this.category.catid === "8c3" || this.category.catid === "9c1" || this.category.catid === "9c2" || this.category.catid === "9c3") {
+            if (this.category.catid === "4a" || this.category.catid === "4b" || this.category.catid === "4e" || this.category.catid === "4c" || this.category.catid === "8c1" || this.category.catid === "8c2" || this.category.catid === "8c5" || this.category.catid === "8c3" || this.category.catid === "9c1" || this.category.catid === "9c2" || this.category.catid === "9c5" || this.category.catid === "9c3") {
                 if (productForm.value.type === "OD") {
                     productForm.value.sch = null;
                     if ((productForm.value.swg == null && productForm.value.mm == null) || ((productForm.value.swg === "" && (productForm.value.mm === "" || productForm.value.mm === null)) || (productForm.value.mm === "" && (productForm.value.swg === "" || productForm.value.swg === null)))) {

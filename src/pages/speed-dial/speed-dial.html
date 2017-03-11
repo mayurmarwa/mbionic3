@@ -13,75 +13,72 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content>
     
     <ion-grid>
         <div class="dialpad" text-center>
             <ion-row>
                 <ion-col width-80>
-                    <ion-item style="margin-left: 30px;">
+                    <ion-item style="margin-left: 35px;">
                         <ion-label stacked>Number</ion-label>
                         <ion-input #name type="number" (change)="elementChanged(number)"
-                                   placeholder="Dial 4 digits" [value]="intNumber">
+                                   placeholder="Dial 4 digits" [value]="intNumber" disabled="true">
                         </ion-input>
-                        <ion-icon item-right name="backspace" (click)="clearInput()"></ion-icon>
+                        <ion-icon item-right clear name="arrow-back" (click)="clearInput()" tappable ></ion-icon>
                     </ion-item>
                 </ion-col>
-                <ion-col>
-                    
+            </ion-row>
+            <ion-row>
+                <ion-col (click)="addNumber(1)" tappable>
+                    <h2>1</h2>
+                </ion-col>
+                <ion-col (click)="addNumber(2)" tappable>
+                    <h2>2</h2>
+                </ion-col>
+                <ion-col (click)="addNumber(3)" tappable>
+                    <h2>3</h2>
                 </ion-col>
             </ion-row>
             <ion-row>
-                <ion-col (click)="addNumber(1)">
-                    1
+                <ion-col (click)="addNumber(4)" tappable>
+                    <h2>4</h2>
                 </ion-col>
-                <ion-col (click)="addNumber(2)">
-                    2
+                <ion-col (click)="addNumber(5)" tappable>
+                    <h2>5</h2>
                 </ion-col>
-                <ion-col (click)="addNumber(3)">
-                    3
-                </ion-col>
-            </ion-row>
-            <ion-row>
-                <ion-col (click)="addNumber(4)">
-                    4
-                </ion-col>
-                <ion-col (click)="addNumber(5)">
-                    5
-                </ion-col>
-                <ion-col (click)="addNumber(6)">
-                    6
+                <ion-col (click)="addNumber(6)" tappable>
+                    <h2>6</h2>
                 </ion-col>
             </ion-row>
             <ion-row>
-                <ion-col (click)="addNumber(7)">
-                    7
+                <ion-col (click)="addNumber(7)" tappable>
+                    <h2>7</h2>
                 </ion-col>
-                <ion-col (click)="addNumber(8)">
-                    8
+                <ion-col (click)="addNumber(8)" tappable>
+                    <h2>8</h2>
                 </ion-col>
-                <ion-col (click)="addNumber(9)">
-                    9
+                <ion-col (click)="addNumber(9)" tappable>
+                    <h2>9</h2>
                 </ion-col>
             </ion-row>
             <ion-row>
                 <ion-col width-33>
 
                 </ion-col>
-                <ion-col (click)="addNumber(0)">
-                    0
+                <ion-col (click)="addNumber(0)" tappable>
+                    <h2>0</h2>
                 </ion-col>
                 <ion-col>
 
                 </ion-col>
             </ion-row>
 
-            <ion-row>
+            <ion-row style="padding: 10px !important">
                 <ion-col width-33>
 
                 </ion-col>
                 <ion-col>
-                    <button ion-button round outline [class.call-enabled]="callEnable" [disabled]="!callEnable" (click)="callIT()">
+                    <button ion-button round large outline [class.call-enabled]="callEnable" [disabled]="!callEnable" (click)="callIT()">
                         <ion-icon name="call"></ion-icon>
                     </button>
                 </ion-col>

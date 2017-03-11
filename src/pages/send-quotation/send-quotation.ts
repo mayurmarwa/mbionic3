@@ -80,7 +80,7 @@ export class SendQuotationPage {
   submitQuote() {
 
       this.loading = this.loadingCtrl.create({
-          content: 'Sending Quote, Please Wait...'
+          content: 'Quote sent, check enquiries for details...'
       });
 
    this.userEnquiries.push(this.quoteForm.value).then(data => {
@@ -120,7 +120,7 @@ export class SendQuotationPage {
 
               setTimeout(() => {
                   this.navCtrl.popToRoot({ animate: false });
-                  this.navCtrl.setRoot(EnquiriesPage, { animate: false });
+                  //this.navCtrl.setRoot(EnquiriesPage, { animate: false });
 
               }, 1000);
 

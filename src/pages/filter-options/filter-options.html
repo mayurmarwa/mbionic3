@@ -1,0 +1,61 @@
+<!--
+  Generated template for the FilterOptions page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>filterOptions</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+    <ion-list>
+
+        <ion-item>
+            <ion-label *ngIf="!weightval || !weight">Weight </ion-label>
+            <ion-label *ngIf="weightval  && weight">Weight:  {{weightval.lower}} to {{weightval.upper}} Kg</ion-label>            
+            <ion-checkbox [(ngModel)]="weight" (ionChange) ="consolelog()"></ion-checkbox>
+        </ion-item>
+
+        <ion-item *ngIf="weight">
+            
+            <ion-range min="0" max="100" dualKnobs="true" pin="true"  [(ngModel)]="weightval" color="danger">
+                <ion-label range-left>0 Kg</ion-label>
+                <ion-label range-right>100 Kg</ion-label>
+            </ion-range>
+            
+        </ion-item>
+
+        <ion-item>
+            <ion-label>Length</ion-label>
+            <ion-checkbox [(ngModel)]="length" disabled="true"></ion-checkbox>
+        </ion-item>
+
+        <ion-item>
+            <ion-label>Width</ion-label>
+            <ion-checkbox [(ngModel)]="width" disabled="true"></ion-checkbox>
+        </ion-item>
+
+    </ion-list>
+    <ion-grid text-center>
+        <ion-row>
+            <ion-col>
+                <button ion-button (click)="filterdismiss()">
+                    Cancel
+                </button>
+            </ion-col>
+            <ion-col>
+                <button ion-button (click)="applyFilter()">
+                    Apply
+                </button>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+
+</ion-content>

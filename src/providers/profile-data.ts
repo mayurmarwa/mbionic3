@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
 import firebase from 'firebase';
 
+
 /*
   Generated class for the ProfileData provider.
 
@@ -16,7 +17,8 @@ export class ProfileData {
 
     // We'll use this to create an auth reference to the logged in user.
     currentUser: any;
-
+    public profileImageRef: any;
+    public profileImageURL: string = "/assets/img/noimage.png"
 
     constructor() {
         /**
@@ -24,6 +26,7 @@ export class ProfileData {
         */
         this.currentUser = firebase.auth().currentUser;
         this.userProfile = firebase.database().ref('/users');
+        this.profileImageRef = firebase.storage().ref('/userImages/');
 
     }
 
@@ -54,6 +57,18 @@ export class ProfileData {
             //lastName: lastName,
         });
     }
+    updateVat(Vat: string): any {
+        return this.userProfile.child(this.currentUser.uid).update({
+            vat: Vat,
+            //lastName: lastName,
+        });
+    }
+    updateExcise(Excise: string): any {
+        return this.userProfile.child(this.currentUser.uid).update({
+            excise: Excise,
+            //lastName: lastName,
+        });
+    }
 
     updateAddress(Address: string): any {
         return this.userProfile.child(this.currentUser.uid).update({
@@ -72,6 +87,12 @@ export class ProfileData {
     updateMobile(Mobile: number): any {
         return this.userProfile.child(this.currentUser.uid).update({
             mobile: Mobile,
+            //lastName: lastName,
+        });
+    }
+    updateLandLine(Land: number): any {
+        return this.userProfile.child(this.currentUser.uid).update({
+            landline: Land,
             //lastName: lastName,
         });
     }
@@ -117,4 +138,20 @@ export class ProfileData {
         });
     }
 
+    updateImage(profileImage): any {
+        console.log("reachedhere");
+        console.log(profileImage);
+        this.profileImageRef.child(this.currentUser.uid).child('profImage.png')
+            .putString(profileImage, 'base64', { contentType: 'image/png' })
+            .then((savedPicture) => {
+                /**this.eventList.child(eventId).child('guestList').child(newGuest.key)
+                    .child('profilePicture')
+                    .set(savedPicture.downloadURL);**/
+                this.profileImageURL = savedPicture.downloadURL;
+                return this.userProfile.child(this.currentUser.uid).update({
+                    photoURL: this.profileImageURL
+                    //lastName: lastName,
+                });
+            });
+            }
 }

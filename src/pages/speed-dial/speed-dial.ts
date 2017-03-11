@@ -36,7 +36,8 @@ export class SpeedDialPage {
 			this.speedNumber = this.speedNumber + number;
 			this.intNumber = parseInt(this.speedNumber,10);
 		}
-		if(this.speedNumber.length == 4){
+        if (this.speedNumber.length == 4) {
+            this.intNumber = parseInt(this.speedNumber, 10);
 			this.calNumber(this.intNumber);	
 		}
 		
@@ -102,12 +103,18 @@ export class SpeedDialPage {
     
 		
 		this.callEnable = true;
-		console.log(this.dialNumber)
+		//console.log(this.dialNumber)
   
   }
-  clearInput(){
-	  this.speedNumber = '';
-  	  this.intNumber = '';
+  clearInput() {
+      this.speedNumber = this.speedNumber.substring(0,this.speedNumber.length - 1);
+	 // this.speedNumber = '';
+      if (this.speedNumber.length != 0) {
+          this.intNumber = parseInt(this.speedNumber, 10);
+      }
+      else {
+          this.intNumber = '';
+      }
 	  this.callEnable = false;
   }
 
@@ -115,7 +122,7 @@ export class SpeedDialPage {
   {
       if (!this.platform.is('cordova')) {
           window.open("tel:" + this.dialNumber);
-          //console.log("not cordova");
+          //console.log(this.dialNumber);
 
       }
       else {

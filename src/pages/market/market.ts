@@ -4,6 +4,7 @@ import { NotificationsPage } from '../notifications/notifications';
 import { CategoryProductsPage } from '../category-products/category-products';
 import { AngularFire, FirebaseListObservable } from 'angularfire2';
 import { ProductPagePage } from '../product-page/product-page';
+import { SelectSubcatPage} from '../select-subcat/select-subcat';
 import { Observable } from 'rxjs/Observable';
 
 
@@ -23,6 +24,7 @@ export class MarketPage {
     productList: FirebaseListObservable<any>;
     productListRev: Observable<any>;
     categories: FirebaseListObservable<any>;
+    public viewall : boolean = false;
 
     constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController, public af: AngularFire) {
 	
@@ -33,10 +35,14 @@ export class MarketPage {
 
   ionViewDidLoad() {
       console.log('ionViewDidLoad MarketPage');
-      this.reverseList();
+      
     }
+  ionViewDidEnter() {
+      this.reverseList();
+  }
 
   reverseList() {
+      this.productList = this.af.database.list('/products', { query: { orderByChild: 'timestamp' } });
       this.productListRev = this.productList.map((arr) => { return arr.reverse(); });
   }
 
@@ -50,9 +56,15 @@ export class MarketPage {
       this.navCtrl.push(NotificationsPage);
   }
 
-  categoryProducts(category) {
-      console.log(category);
-      this.navCtrl.push(CategoryProductsPage, { category: category });
+  selectSub(catid) {
+      this.navCtrl.push(SelectSubcatPage, { catid: catid });
   }
 
+  categoryProducts(catid: string) {
+      //console.log(category);
+      this.navCtrl.push(CategoryProductsPage, { catid: catid });
+  }
+  openNotificationsPage() {
+      this.navCtrl.push(NotificationsPage);
+  }
 }

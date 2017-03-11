@@ -2,6 +2,7 @@ import { NgModule, ErrorHandler } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { CustomIconsModule } from 'ionic2-custom-icons';
+import { Storage } from '@ionic/storage';
 
 import { MarketPage } from '../pages/market/market';
 import { PricesPage } from '../pages/prices/prices';
@@ -14,6 +15,7 @@ import { AddProductPage } from '../pages/add-product/add-product';
 import { EditProductPage } from '../pages/edit-product/edit-product';
 import { ProductPagePage } from '../pages/product-page/product-page';
 import { CategoryProductsPage } from '../pages/category-products/category-products';
+import { SelectSubcatPage } from '../pages/select-subcat/select-subcat';
 import { SendEnquiryPage } from '../pages/send-enquiry/send-enquiry';
 import { EnquirySentPage } from '../pages/enquiry-sent/enquiry-sent';
 import { EnquiryDetailsPage } from '../pages/enquiry-details/enquiry-details';
@@ -25,6 +27,7 @@ import { DirectoryPage } from '../pages/directory/directory';
 import { SpeedDialPage } from '../pages/speed-dial/speed-dial';
 import { SettingsPage } from '../pages/settings/settings';
 import { TabsPage } from '../pages/tabs/tabs';
+import { FilterOptionsPage } from '../pages/filter-options/filter-options';
 import { TabContactsPage } from '../pages/tab-contacts/tab-contacts';
 import { TabProfilePage } from '../pages/tab-profile/tab-profile';
 import { TabChatsPage } from '../pages/tab-chats/tab-chats';
@@ -42,6 +45,9 @@ import { ProfileData } from '../providers/profile-data';
 import { ProductData } from '../providers/product-data';
 import { AuthService } from '../providers/auth.service';
 import { ChatsService } from '../providers/chats.service';
+
+import { ParallaxHeader } from '../components/parallax-header/parallax-header';
+import { OrderBy } from '../pipes/orderBy';
 
 import { AngularFireModule } from 'angularfire2';
 
@@ -61,6 +67,7 @@ export const firebaseConfig = {
     PricesPage,
     NotificationsPage,
     EnquiriesPage,
+    ParallaxHeader,
     MyProfilePage,
     MyProductsPage,
     SelectCategoryPage,
@@ -68,6 +75,7 @@ export const firebaseConfig = {
     EditProductPage,
 	ProductPagePage,
     CategoryProductsPage,
+    SelectSubcatPage,
 	SendEnquiryPage,
     EnquirySentPage,
 	EnquiryDetailsPage,
@@ -89,7 +97,9 @@ export const firebaseConfig = {
     ResetpasswordPage,
     SignupPage,
     CreateAccountPage,
-    CreateProfilePage
+    CreateProfilePage,
+    OrderBy,
+    FilterOptionsPage
 
   ],
   imports: [
@@ -108,6 +118,7 @@ export const firebaseConfig = {
     MyProfilePage,
     MyProductsPage,
     SelectCategoryPage,
+    SelectSubcatPage,
     AddProductPage,
     EditProductPage,
 	ProductPagePage,
@@ -133,8 +144,9 @@ export const firebaseConfig = {
     ResetpasswordPage,
     SignupPage,
     CreateAccountPage,
-    CreateProfilePage
+    CreateProfilePage,
+    FilterOptionsPage
   ],
-  providers: [AuthService, ChatsService, ProfileData, ProductData, {provide: ErrorHandler, useClass: IonicErrorHandler}]
+  providers: [AuthService, ChatsService, ProfileData, ProductData, {provide: ErrorHandler, useClass: IonicErrorHandler}, Storage]
 })
 export class AppModule {}

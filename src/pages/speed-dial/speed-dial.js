@@ -35,6 +35,7 @@ var SpeedDialPage = (function () {
             this.intNumber = parseInt(this.speedNumber, 10);
         }
         if (this.speedNumber.length == 4) {
+            this.intNumber = parseInt(this.speedNumber, 10);
             this.calNumber(this.intNumber);
         }
     };
@@ -94,17 +95,23 @@ var SpeedDialPage = (function () {
             this.dialNumber = "0226610" + inum;
         }
         this.callEnable = true;
-        console.log(this.dialNumber);
+        //console.log(this.dialNumber)
     };
     SpeedDialPage.prototype.clearInput = function () {
-        this.speedNumber = '';
-        this.intNumber = '';
+        this.speedNumber = this.speedNumber.substring(0, this.speedNumber.length - 1);
+        // this.speedNumber = '';
+        if (this.speedNumber.length != 0) {
+            this.intNumber = parseInt(this.speedNumber, 10);
+        }
+        else {
+            this.intNumber = '';
+        }
         this.callEnable = false;
     };
     SpeedDialPage.prototype.callIT = function () {
         if (!this.platform.is('cordova')) {
             window.open("tel:" + this.dialNumber);
-            console.log("not cordova");
+            //console.log(this.dialNumber);
         }
         else {
             CallNumber.callNumber(this.dialNumber, true)

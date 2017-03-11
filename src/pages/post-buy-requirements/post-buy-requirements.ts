@@ -20,14 +20,17 @@ export class PostBuyRequirementsPage {
 	currentuser: any;
     requirementForm: any;
     public loading: any;
+    public gradeList: FirebaseListObservable<any>;
+    public selecton: boolean = true;
 
     constructor(public navCtrl: NavController, public navParams: NavParams, public af: AngularFire, public formBuilder: FormBuilder, public alertCtrl: AlertController, public loadingCtrl: LoadingController) {
   
 		this.currentuser = firebase.auth().currentUser;
         this.requirements = af.database.list('/requirements');
-
+        this.gradeList = af.database.list('/grades');
 		this.requirementForm = formBuilder.group({
             category: ['', Validators.required],
+            grade: ['', Validators.required],
             quantity: ['', Validators.required],
             unit: ['', Validators.required],
             bid: ['', Validators.required],
@@ -38,7 +41,23 @@ export class PostBuyRequirementsPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad PostBuyRequirementsPage');
+    }
+
+  onTypeChange() {
+
+      //console.log(this.typeOD);
+      //console.log(this.seamlessForm.value.type);
+
+      if (this.requirementForm.value.category === "Others") {
+          this.selecton = false;
+      }
+      else {
+          this.selecton = true;
+      }
+      
+
   }
+
   showConfirm(requirementForm) {
       if (!requirementForm.valid) {
           let alert = this.alertCtrl.create({

@@ -3,7 +3,7 @@ import { NavController, NavParams } from 'ionic-angular';
 import { AngularFire, FirebaseListObservable } from 'angularfire2';
 import { SelectCategoryPage } from '../select-category/select-category';
 import { EditProductPage } from '../edit-product/edit-product';
-import firebase from 'firebase';
+import { Storage } from '@ionic/storage';
 import { Observable } from 'rxjs/Observable';
 
 /*
@@ -22,15 +22,30 @@ export class MyProductsPage {
     currentuser: any;
     productListRev: Observable<any>;
 
-    constructor(public navCtrl: NavController, public navParams: NavParams, public af: AngularFire) {
+    constructor(public navCtrl: NavController, public navParams: NavParams, public af: AngularFire, public storage: Storage) {
+        storage.ready().then(() => {
+            storage.get('currentuser').then((val) => {
 
-        this.currentuser = firebase.auth().currentUser;
-        this.myproducts = af.database.list('/users/' + this.currentuser.uid + '/products/', { query: { orderByChild: 'timestamp' } });
-        this.productListRev = this.myproducts.map((arr) => { return arr.reverse(); });
+                this.currentuser = JSON.parse(val);
+                
+            })
+                .catch((err) =>
+                    console.log(err));
+        }).catch((err) =>
+            console.log(err)); 
+
+        //this.currentuser = firebase.auth().currentUser;
+        
     }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad MyProductsPage');
+      
+    }
+  ionViewDidEnter() {
+      console.log('ionViewDidEnter MyProductsPage');
+      this.myproducts = this.af.database.list('/users/' + this.currentuser.uid + '/products/', { query: { orderByChild: 'timestamp' } });
+      this.productListRev = this.myproducts.map((arr) => { return arr.reverse(); });
+
   }
   detailpage(myproduct) {
 

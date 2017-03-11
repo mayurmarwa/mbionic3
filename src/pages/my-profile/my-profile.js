@@ -10,6 +10,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { AuthService } from '../../providers/auth.service';
+import { CallNumber } from 'ionic-native';
+import { Platform } from 'ionic-angular';
 /*
   Generated class for the MyProfile page.
 
@@ -17,11 +19,12 @@ import { AuthService } from '../../providers/auth.service';
   Ionic pages and navigation.
 */
 var MyProfilePage = (function () {
-    function MyProfilePage(navCtrl, navParams, authService) {
+    function MyProfilePage(navCtrl, navParams, authService, platform) {
         var _this = this;
         this.navCtrl = navCtrl;
         this.navParams = navParams;
         this.authService = authService;
+        this.platform = platform;
         this.userID = navParams.get("userID");
         this.authService.getFullProfile(this.userID)
             .subscribe(function (user) {
@@ -39,6 +42,17 @@ var MyProfilePage = (function () {
     MyProfilePage.prototype.ionViewDidLoad = function () {
         console.log('ionViewDidLoad MyProfilePage');
     };
+    MyProfilePage.prototype.callNumber = function () {
+        if (!this.platform.is('cordova')) {
+            window.open("tel:" + this.userProfile.mobile);
+            console.log(this.userProfile.mobile);
+        }
+        else {
+            CallNumber.callNumber(this.userProfile.mobile, true)
+                .then(function () { return console.log('Launched dialer!'); })
+                .catch(function () { return console.log('Error launching dialer'); });
+        }
+    };
     return MyProfilePage;
 }());
 MyProfilePage = __decorate([
@@ -46,7 +60,7 @@ MyProfilePage = __decorate([
         selector: 'page-my-profile',
         templateUrl: 'my-profile.html'
     }),
-    __metadata("design:paramtypes", [NavController, NavParams, AuthService])
+    __metadata("design:paramtypes", [NavController, NavParams, AuthService, Platform])
 ], MyProfilePage);
 export { MyProfilePage };
 //# sourceMappingURL=my-profile.js.map

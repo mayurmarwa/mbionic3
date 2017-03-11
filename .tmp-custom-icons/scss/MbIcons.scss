@@ -30,77 +30,101 @@
   @if $filename == about {
   $char: "\E001";
 }
-  @if $filename == All icons-12 {
+  @if $filename == bidprice {
   $char: "\E002";
 }
-  @if $filename == All icons-17 {
+  @if $filename == calculator {
   $char: "\E003";
 }
-  @if $filename == dialer {
+  @if $filename == companyname {
   $char: "\E004";
 }
-  @if $filename == directory {
+  @if $filename == dialer {
   $char: "\E005";
 }
-  @if $filename == facebook {
+  @if $filename == directory {
   $char: "\E006";
 }
-  @if $filename == google {
+  @if $filename == edit {
   $char: "\E007";
 }
-  @if $filename == heart-fill {
+  @if $filename == facebook {
   $char: "\E008";
 }
-  @if $filename == heart {
+  @if $filename == google {
   $char: "\E009";
 }
-  @if $filename == home {
+  @if $filename == grade {
   $char: "\E00A";
 }
-  @if $filename == lock {
+  @if $filename == heart-fill {
   $char: "\E00B";
 }
-  @if $filename == logout {
+  @if $filename == heart {
   $char: "\E00C";
 }
-  @if $filename == menu {
+  @if $filename == home {
   $char: "\E00D";
 }
-  @if $filename == message {
+  @if $filename == lock {
   $char: "\E00E";
 }
-  @if $filename == post {
+  @if $filename == logout {
   $char: "\E00F";
 }
-  @if $filename == prices {
+  @if $filename == mail {
   $char: "\E010";
 }
-  @if $filename == products {
+  @if $filename == menu {
   $char: "\E011";
 }
-  @if $filename == profile {
+  @if $filename == message {
   $char: "\E012";
 }
-  @if $filename == search {
+  @if $filename == mobile {
   $char: "\E013";
 }
-  @if $filename == settings {
+  @if $filename == post {
   $char: "\E014";
 }
-  @if $filename == share {
+  @if $filename == prices {
   $char: "\E015";
 }
-  @if $filename == star {
+  @if $filename == products {
   $char: "\E016";
 }
-  @if $filename == tick {
+  @if $filename == profile {
   $char: "\E017";
 }
-  @if $filename == unit {
+  @if $filename == quantity {
   $char: "\E018";
 }
-  @if $filename == upload {
+  @if $filename == query {
   $char: "\E019";
+}
+  @if $filename == search {
+  $char: "\E01A";
+}
+  @if $filename == settings {
+  $char: "\E01B";
+}
+  @if $filename == share {
+  $char: "\E01C";
+}
+  @if $filename == star {
+  $char: "\E01D";
+}
+  @if $filename == tick {
+  $char: "\E01E";
+}
+  @if $filename == unit {
+  $char: "\E01F";
+}
+  @if $filename == upload {
+  $char: "\E020";
+}
+  @if $filename == vat {
+  $char: "\E021";
 }
 
 @return $char;
@@ -120,11 +144,14 @@
 .mb-about {
   @include mb(about);
 }
-.mb-All icons-12 {
-  @include mb(All icons-12);
+.mb-bidprice {
+  @include mb(bidprice);
 }
-.mb-All icons-17 {
-  @include mb(All icons-17);
+.mb-calculator {
+  @include mb(calculator);
+}
+.mb-companyname {
+  @include mb(companyname);
 }
 .mb-dialer {
   @include mb(dialer);
@@ -132,11 +159,17 @@
 .mb-directory {
   @include mb(directory);
 }
+.mb-edit {
+  @include mb(edit);
+}
 .mb-facebook {
   @include mb(facebook);
 }
 .mb-google {
   @include mb(google);
+}
+.mb-grade {
+  @include mb(grade);
 }
 .mb-heart-fill {
   @include mb(heart-fill);
@@ -153,11 +186,17 @@
 .mb-logout {
   @include mb(logout);
 }
+.mb-mail {
+  @include mb(mail);
+}
 .mb-menu {
   @include mb(menu);
 }
 .mb-message {
   @include mb(message);
+}
+.mb-mobile {
+  @include mb(mobile);
 }
 .mb-post {
   @include mb(post);
@@ -170,6 +209,12 @@
 }
 .mb-profile {
   @include mb(profile);
+}
+.mb-quantity {
+  @include mb(quantity);
+}
+.mb-query {
+  @include mb(query);
 }
 .mb-search {
   @include mb(search);
@@ -191,4 +236,7 @@
 }
 .mb-upload {
   @include mb(upload);
+}
+.mb-vat {
+  @include mb(vat);
 }

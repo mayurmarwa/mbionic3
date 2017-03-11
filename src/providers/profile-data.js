@@ -18,11 +18,13 @@ import firebase from 'firebase';
 */
 var ProfileData = (function () {
     function ProfileData() {
+        this.profileImageURL = "/assets/img/noimage.png";
         /**
         * Here we create the references I told you about 2 seconds ago ??
         */
         this.currentUser = firebase.auth().currentUser;
         this.userProfile = firebase.database().ref('/users');
+        this.profileImageRef = firebase.storage().ref('/userImages/');
     }
     /**
     * This one should be really easy to follow, we are calling a function getUserProfile() that takes no parameters.
@@ -47,6 +49,16 @@ var ProfileData = (function () {
             companyname: Name,
         });
     };
+    ProfileData.prototype.updateVat = function (Vat) {
+        return this.userProfile.child(this.currentUser.uid).update({
+            vat: Vat,
+        });
+    };
+    ProfileData.prototype.updateExcise = function (Excise) {
+        return this.userProfile.child(this.currentUser.uid).update({
+            excise: Excise,
+        });
+    };
     ProfileData.prototype.updateAddress = function (Address) {
         return this.userProfile.child(this.currentUser.uid).update({
             address: Address,
@@ -60,6 +72,11 @@ var ProfileData = (function () {
     ProfileData.prototype.updateMobile = function (Mobile) {
         return this.userProfile.child(this.currentUser.uid).update({
             mobile: Mobile,
+        });
+    };
+    ProfileData.prototype.updateLandLine = function (Land) {
+        return this.userProfile.child(this.currentUser.uid).update({
+            landline: Land,
         });
     };
     /**
@@ -99,6 +116,23 @@ var ProfileData = (function () {
             console.log("Password Changed");
         }, function (error) {
             console.log(error);
+        });
+    };
+    ProfileData.prototype.updateImage = function (profileImage) {
+        var _this = this;
+        console.log("reachedhere");
+        console.log(profileImage);
+        this.profileImageRef.child(this.currentUser.uid).child('profImage.png')
+            .putString(profileImage, 'base64', { contentType: 'image/png' })
+            .then(function (savedPicture) {
+            /**this.eventList.child(eventId).child('guestList').child(newGuest.key)
+                .child('profilePicture')
+                .set(savedPicture.downloadURL);**/
+            _this.profileImageURL = savedPicture.downloadURL;
+            return _this.userProfile.child(_this.currentUser.uid).update({
+                photoURL: _this.profileImageURL
+                //lastName: lastName,
+            });
         });
     };
     return ProfileData;
