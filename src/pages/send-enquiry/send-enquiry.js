@@ -14,6 +14,7 @@ import { AngularFire } from 'angularfire2';
 import { AuthService } from '../../providers/auth.service';
 import { EnquirySentPage } from '../enquiry-sent/enquiry-sent';
 import { Storage } from '@ionic/storage';
+import firebase from 'firebase';
 /*
   Generated class for the SendEnquiry page.
 
@@ -40,13 +41,6 @@ var SendEnquiryPage = (function () {
                 //this.currentuser = firebase.auth().currentUser;
                 _this.userEnquiries = af.database.list('/users/' + _this.currentuser.uid + '/enquiries');
                 _this.sellerEnquiries = af.database.list('/users/' + _this.sellerID + '/enquiries');
-                _this.enquiryForm = formBuilder.group({
-                    rate: ['', Validators.required],
-                    quantity: ['', Validators.required],
-                    unit: ['', Validators.required],
-                    payment: ['', Validators.required],
-                    details: ['',]
-                });
                 if (!_this.product.unit) {
                     _this.productunit = "Kg";
                 }
@@ -83,6 +77,13 @@ var SendEnquiryPage = (function () {
             });
         }).catch(function (err) {
             return console.log(err);
+        });
+        this.enquiryForm = formBuilder.group({
+            rate: ['', Validators.required],
+            quantity: ['', Validators.required],
+            unit: ['', Validators.required],
+            payment: ['', Validators.required],
+            details: ['',]
         });
     }
     SendEnquiryPage.prototype.ionViewDidLoad = function () {
@@ -135,7 +136,8 @@ var SendEnquiryPage = (function () {
                 productName: _this.product.name,
                 productUnit: _this.productunit,
                 productMrate: _this.product.mrate,
-                productKrate: _this.product.krate
+                productKrate: _this.product.krate,
+                timestamp: firebase.database['ServerValue']['TIMESTAMP']
                 //detials: this.productForm.value.name,
             }).then(function (info) {
                 //console.log("successsent");
@@ -156,7 +158,8 @@ var SendEnquiryPage = (function () {
                 quantity: _this.enquiryForm.value.quantity,
                 unit: _this.enquiryForm.value.unit,
                 payment: _this.enquiryForm.value.payment,
-                details: _this.enquiryForm.value.details
+                details: _this.enquiryForm.value.details,
+                timestamp: firebase.database['ServerValue']['TIMESTAMP']
                 //detials: this.productForm.value.name,
             }).then(function (info) {
                 //console.log("successrcv");

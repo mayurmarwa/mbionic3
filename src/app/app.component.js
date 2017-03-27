@@ -22,14 +22,16 @@ import { DirectoryPage } from '../pages/directory/directory';
 import { SpeedDialPage } from '../pages/speed-dial/speed-dial';
 import { SettingsPage } from '../pages/settings/settings';
 import { Storage } from '@ionic/storage';
+import { SocialSharing } from '@ionic-native/social-sharing';
 import { AuthService } from '../providers/auth.service';
 var MyApp = (function () {
-    function MyApp(platform, loadingCtrl, authService, storage) {
+    function MyApp(platform, loadingCtrl, authService, storage, socialSharing) {
         var _this = this;
         this.platform = platform;
         this.loadingCtrl = loadingCtrl;
         this.authService = authService;
         this.storage = storage;
+        this.socialSharing = socialSharing;
         this.initializeApp();
         var loading = this.loadingCtrl.create();
         loading.present();
@@ -69,7 +71,6 @@ var MyApp = (function () {
             { title: 'Directory', component: DirectoryPage, icon: 'directory' },
             { title: 'Speed Dial', component: SpeedDialPage, icon: 'dialer' },
             { title: 'Settings', component: SettingsPage, icon: 'settings' },
-            { title: 'Share App', component: TabProfilePage, icon: 'share' },
             { title: 'About', component: AboutPage, icon: 'about' },
         ];
     }
@@ -93,6 +94,9 @@ var MyApp = (function () {
         this.authService.logout();
         this.nav.setRoot(LoginPage);
     };
+    MyApp.prototype.shareApp = function () {
+        this.socialSharing.share("Testing, sharing this from inside an app I'm building right now", null, null, "https://ionicframework.com/docs/v2/native/social-sharing/");
+    };
     return MyApp;
 }());
 __decorate([
@@ -106,7 +110,8 @@ MyApp = __decorate([
     __metadata("design:paramtypes", [Platform,
         LoadingController,
         AuthService,
-        Storage])
+        Storage,
+        SocialSharing])
 ], MyApp);
 export { MyApp };
 //# sourceMappingURL=app.component.js.map

@@ -11,6 +11,8 @@ import { Component } from '@angular/core';
 import { MarketPage } from '../market/market';
 import { PricesPage } from '../prices/prices';
 import { EnquiriesPage } from '../enquiries/enquiries';
+import { SpeedDialPage } from '../speed-dial/speed-dial';
+import { MetalCalculatorPage } from '../metal-calculator/metal-calculator';
 var TabsPage = (function () {
     function TabsPage() {
         //this.tab1Root = TabChatsPage;
@@ -18,7 +20,9 @@ var TabsPage = (function () {
         //this.tab3Root = TabProfilePage;
         this.tab1Root = MarketPage;
         this.tab2Root = PricesPage;
-        this.tab3Root = EnquiriesPage;
+        this.tab3Root = SpeedDialPage;
+        this.tab4Root = EnquiriesPage;
+        this.tab5Root = MetalCalculatorPage;
     }
     return TabsPage;
 }());

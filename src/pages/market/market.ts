@@ -60,9 +60,9 @@ export class MarketPage {
       this.navCtrl.push(SelectSubcatPage, { catid: catid });
   }
 
-  categoryProducts(catid: string) {
+  categoryProducts(catid: string, title: string) {
       //console.log(category);
-      this.navCtrl.push(CategoryProductsPage, { catid: catid });
+      this.navCtrl.push(CategoryProductsPage, { catid: catid, cattitle: title });
   }
   openNotificationsPage() {
       this.navCtrl.push(NotificationsPage);

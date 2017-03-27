@@ -21,12 +21,14 @@ export class MyProductsPage {
     myproducts: FirebaseListObservable<any>;
     currentuser: any;
     productListRev: Observable<any>;
+    public segment: any;
 
     constructor(public navCtrl: NavController, public navParams: NavParams, public af: AngularFire, public storage: Storage) {
         storage.ready().then(() => {
             storage.get('currentuser').then((val) => {
 
                 this.currentuser = JSON.parse(val);
+                this.segment = "uploaded";
                 
             })
                 .catch((err) =>
@@ -42,7 +44,7 @@ export class MyProductsPage {
       
     }
   ionViewDidEnter() {
-      console.log('ionViewDidEnter MyProductsPage');
+      console.log('ionViewDidEnter MyProductsPage');      
       this.myproducts = this.af.database.list('/users/' + this.currentuser.uid + '/products/', { query: { orderByChild: 'timestamp' } });
       this.productListRev = this.myproducts.map((arr) => { return arr.reverse(); });
 
@@ -54,6 +56,12 @@ export class MyProductsPage {
   selectcat() {
 
       this.navCtrl.push(SelectCategoryPage);
+  }
+  uploadProduct() {
+
+      if (this.segment === 'add') {
+          this.navCtrl.push(SelectCategoryPage);
+      }
   }
 
 }

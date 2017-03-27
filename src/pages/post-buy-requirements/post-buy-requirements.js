@@ -35,8 +35,9 @@ var PostBuyRequirementsPage = (function () {
             grade: ['', Validators.required],
             quantity: ['', Validators.required],
             unit: ['', Validators.required],
-            bid: ['', Validators.required],
-            details: ['', Validators.required],
+            bid: ['',],
+            btype: [''],
+            details: ['',],
             uid: ['', Validators.required],
         });
     }

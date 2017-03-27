@@ -7,6 +7,9 @@
 <ion-header>
 
   <ion-navbar>
+      <button ion-button menuToggle>
+          <ion-icon name="menu"></ion-icon>
+      </button>
     <ion-title>Speed Dial</ion-title>
   </ion-navbar>
 
@@ -15,7 +18,7 @@
 
 <ion-content>
     
-    <ion-grid>
+    <ion-grid style="padding:0px;">
         <div class="dialpad" text-center>
             <ion-row>
                 <ion-col width-80>
@@ -29,44 +32,44 @@
                 </ion-col>
             </ion-row>
             <ion-row>
-                <ion-col (click)="addNumber(1)" tappable>
-                    <h2>1</h2>
+                <ion-col >
+                    <div class="num" (click)="addNumber(1)" tappable><h2>1</h2></div>                    
                 </ion-col>
-                <ion-col (click)="addNumber(2)" tappable>
-                    <h2>2</h2>
+                <ion-col >
+                    <div class="num" (click)="addNumber(2)" tappable><h2>2</h2></div>
                 </ion-col>
-                <ion-col (click)="addNumber(3)" tappable>
-                    <h2>3</h2>
-                </ion-col>
-            </ion-row>
-            <ion-row>
-                <ion-col (click)="addNumber(4)" tappable>
-                    <h2>4</h2>
-                </ion-col>
-                <ion-col (click)="addNumber(5)" tappable>
-                    <h2>5</h2>
-                </ion-col>
-                <ion-col (click)="addNumber(6)" tappable>
-                    <h2>6</h2>
+                <ion-col >
+                    <div class="num" (click)="addNumber(3)" tappable><h2>3</h2></div>
                 </ion-col>
             </ion-row>
             <ion-row>
-                <ion-col (click)="addNumber(7)" tappable>
-                    <h2>7</h2>
+                <ion-col >
+                    <div class="num" (click)="addNumber(4)" tappable><h2>4</h2></div>
                 </ion-col>
-                <ion-col (click)="addNumber(8)" tappable>
-                    <h2>8</h2>
+                <ion-col >
+                    <div class="num" (click)="addNumber(5)" tappable><h2>5</h2></div>
                 </ion-col>
-                <ion-col (click)="addNumber(9)" tappable>
-                    <h2>9</h2>
+                <ion-col >
+                    <div class="num" (click)="addNumber(6)" tappable><h2>6</h2></div>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col >
+                    <div class="num" (click)="addNumber(7)" tappable><h2>7</h2></div>
+                </ion-col>
+                <ion-col >
+                    <div class="num" (click)="addNumber(8)" tappable><h2>8</h2></div>
+                </ion-col>
+                <ion-col >
+                    <div class="num" (click)="addNumber(9)" tappable><h2>9</h2></div>
                 </ion-col>
             </ion-row>
             <ion-row>
                 <ion-col width-33>
 
                 </ion-col>
-                <ion-col (click)="addNumber(0)" tappable>
-                    <h2>0</h2>
+                <ion-col >
+                    <div class="num" (click)="addNumber(0)" tappable><h2>0</h2></div>
                 </ion-col>
                 <ion-col>
 

@@ -26,14 +26,14 @@
   <unknown-hero  *ngSwitchDefault           [hero]="hero"></unknown-hero>
     </div>
    <h2>{{category.catid}}</h2>-->
-    <!--<div text-center>
+    <div text-center *ngIf="category.catid === 10">
         <img [src]="productImage" *ngIf="productImage != null">
 
         <button ion-button icon-left (click)="presentActionSheet()">
             <ion-icon name="image"></ion-icon>
             Upload Product Image
         </button>
-    </div>-->
+    </div>
     <h2>{{category.title}}</h2>
     
 
@@ -49,11 +49,13 @@
                 </ion-input>
             </ion-item>-->
             <ion-item  *ngIf="category.catid === '9a' ">
-                <ion-label stacked>Product Type</ion-label>
-                <ion-select #ptype formControlName="ptype">
-                    <ion-option value="Hastealloy" selected="true">Hastealloy</ion-option>
+                <ion-label stacked>Product Alloy Type</ion-label>
+                <ion-select #ptype formControlName="ptype" [(ngModel)]="selectedAlloy" (ionChange)="alloySelected()">
+                    <ion-option value="Hastelloy" selected="true">Hastelloy</ion-option>
                     <ion-option value="Inconel">Inconel</ion-option>
                     <ion-option value="Monel">Monel</ion-option>
+                    <ion-option value="Nimonic">Nimonic</ion-option>
+                    <ion-option value="Nickel">Nickel</ion-option>
                     <ion-option value="Titanium">Titanium</ion-option>
                     <ion-option value="Others">Others</ion-option>
                 </ion-select>
@@ -71,7 +73,13 @@
                 </ion-select>
             </ion-item>
             <ion-item>
-                <ion-label stacked>ASTM Standard</ion-label>
+                <ion-label stacked>Standard Composition</ion-label>
+                <ion-input #composition formControlName="composition" type="text"
+                           placeholder="Enter Composition" [(ngModel)]="compositiontxt">
+                </ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label stacked>ASTM Standard (optional)</ion-label>
                 <ion-input #astm formControlName="astm" type="text"
                            placeholder="Enter ASTM Standard">
                 </ion-input>
@@ -117,35 +125,34 @@
                 </ion-input>
             </ion-item>
             Rate (Enter one or both)
-            <ion-item>
-                <ion-label stacked>Market Rate</ion-label>
-                <ion-input #mrate formControlName="mrate" type="number"
-                           placeholder="Rs/Kg" [(ngModel)]="mrateTrue" min="0" step="0.01">
-                </ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label stacked>Kalamboli Rate</ion-label>
-                <ion-input #krate formControlName="krate" type="number"
-                           placeholder="Rs/Kg" [(ngModel)]="krateTrue" min="0" step="0.01">
-                </ion-input>
-            </ion-item>
+            <ion-row>
+                <ion-col>
+                    <ion-item>
+                        <ion-label stacked>Market Rate</ion-label>
+                        <ion-input #mrate formControlName="mrate" type="number"
+                                   placeholder="Rs/Kg" [(ngModel)]="mrateTrue" min="0" step="0.01">
+                        </ion-input>
+                    </ion-item>
+                </ion-col>
+                <ion-col>
+                    <ion-item>
+                        <ion-label stacked>Kalamboli Rate</ion-label>
+                        <ion-input #krate formControlName="krate" type="number"
+                                   placeholder="Rs/Kg" [(ngModel)]="krateTrue" min="0" step="0.01">
+                        </ion-input>
+                    </ion-item>
+                </ion-col>
+            </ion-row>          
 
             <ion-item>
-                <ion-label stacked>Standard Composition</ion-label>
-                <ion-input #composition formControlName="composition" type="text"
-                           placeholder="Enter Composition" [(ngModel)]="compositiontxt">
-                </ion-input>
-            </ion-item>
-
-            <ion-item>
-                <ion-label stacked>Origin</ion-label>
+                <ion-label stacked>Origin (optional)</ion-label>
                 <ion-input #origin formControlName="origin" type="text"
                            placeholder="Enter Origin">
                 </ion-input>
             </ion-item>
 
             <ion-item>
-                <ion-label stacked>Brand</ion-label>
+                <ion-label stacked>Brand (optional)</ion-label>
                 <ion-input #brand formControlName="brand" type="text"
                            placeholder="Enter Brand">
                 </ion-input>
@@ -160,7 +167,7 @@
             </ion-item>
 
             <ion-item>
-                <ion-label stacked>Other Details</ion-label>
+                <ion-label stacked>Other Details (optional)</ion-label>
                 <ion-input #details formControlName="details" type="text" maxlength="50"
                            placeholder="Enter details...">
                 </ion-input>
@@ -217,15 +224,23 @@
     <div *ngIf="category.catid === 2 || category.catid === 3 || category.catid === '8b' || category.catid === '9b' ">
         <form [formGroup]="sheetsForm" (submit)="showConfirm(sheetsForm)">
 
-            
             <ion-item *ngIf="category.catid === '9b' ">
                 <ion-label stacked>Product Type</ion-label>
-                <ion-select #ptype formControlName="ptype">
-                    <ion-option value="Hastealloy" selected="true">Hastealloy</ion-option>
+                <ion-select #ptype formControlName="ptype" [(ngModel)]="selectedAlloy" (ionChange)="alloySelected()">
+                    <ion-option value="Hastelloy" selected="true">Hastelloy</ion-option>
                     <ion-option value="Inconel">Inconel</ion-option>
                     <ion-option value="Monel">Monel</ion-option>
                     <ion-option value="Titanium">Titanium</ion-option>
                     <ion-option value="Others">Others</ion-option>
+                </ion-select>
+            </ion-item>
+
+            <ion-item *ngIf="category.catid === 2 ">
+                <ion-label stacked>Design Type</ion-label>
+                <ion-select #ptype2 formControlName="ptype2">
+                    <ion-option value="Standard" selected="true">Standard</ion-option>
+                    <ion-option value="Chequered">Chequered</ion-option>
+                    <ion-option value="Designer">Designer</ion-option>
                 </ion-select>
             </ion-item>
             <!--<ion-item *ngIf="category.catid === '8b' || category.catid === '9b' ">
@@ -241,7 +256,13 @@
                 </ion-select>
             </ion-item>
             <ion-item>
-                <ion-label stacked>ASTM Standard</ion-label>
+                <ion-label stacked>Standard Composition</ion-label>
+                <ion-input #composition formControlName="composition" type="text"
+                           placeholder="Enter Composition" [(ngModel)]="compositiontxt">
+                </ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label stacked>ASTM Standard (optional)</ion-label>
                 <ion-input #astm formControlName="astm" type="text"
                            placeholder="Enter ASTM Standard">
                 </ion-input>
@@ -304,35 +325,33 @@
                            placeholder="Enter Quantity" min="0">
                 </ion-input>
             </ion-item>
+            <ion-row>
+                <ion-col>
+                    <ion-item>
+                        <ion-label stacked>Market Rate</ion-label>
+                        <ion-input #mrate formControlName="mrate" type="number"
+                                   placeholder="Rs/Kg" [(ngModel)]="mrateTrue" min="0" step="0.01">
+                        </ion-input>
+                    </ion-item>
+                </ion-col>
+                <ion-col>
+                    <ion-item>
+                        <ion-label stacked>Kalamboli Rate</ion-label>
+                        <ion-input #krate formControlName="krate" type="number"
+                                   placeholder="Rs/Kg" [(ngModel)]="krateTrue" min="0" step="0.01">
+                        </ion-input>
+                    </ion-item>
+                </ion-col>
+            </ion-row>          
             <ion-item>
-                <ion-label stacked>Market Rate</ion-label>
-                <ion-input #mrate formControlName="mrate" type="number"
-                           placeholder="Rs/Kg" [(ngModel)]="mrateTrue" min="0" step="0.01">
-                </ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label stacked>Kalamboli Rate</ion-label>
-                <ion-input #krate formControlName="krate" type="number"
-                           placeholder="Rs/Kg" [(ngModel)]="krateTrue" min="0" step="0.01">
-                </ion-input>
-            </ion-item>
-
-            <ion-item >
-                <ion-label stacked>Standard Composition</ion-label>
-                <ion-input #composition formControlName="composition" type="text"
-                           placeholder="Enter Composition" [(ngModel)]="compositiontxt">
-                </ion-input>
-            </ion-item>
-
-            <ion-item>
-                <ion-label stacked>Origin</ion-label>
+                <ion-label stacked>Origin (optional)</ion-label>
                 <ion-input #origin formControlName="origin" type="text"
                            placeholder="Enter Origin">
                 </ion-input>
             </ion-item>
 
             <ion-item>
-                <ion-label stacked>Brand</ion-label>
+                <ion-label stacked>Brand (optional)</ion-label>
                 <ion-input #brand formControlName="brand" type="text"
                            placeholder="Enter Brand">
                 </ion-input>
@@ -346,7 +365,7 @@
                 </ion-select>
             </ion-item>
             <ion-item>
-                <ion-label stacked>Other Details</ion-label>
+                <ion-label stacked>Other Details (optional)</ion-label>
                 <ion-input #details formControlName="details" type="text" maxlength="50"
                            placeholder="Enter details...">
                 </ion-input>
@@ -370,8 +389,8 @@
            
             <ion-item *ngIf="category.catid === '9c1' || category.catid === '9c2' || category.catid === '9c5' || category.catid === '9c3' ">
                 <ion-label stacked>Product Type</ion-label>
-                <ion-select #ptype formControlName="ptype">
-                    <ion-option value="Hastealloy" selected="true">Hastealloy</ion-option>
+                <ion-select #ptype formControlName="ptype" [(ngModel)]="selectedAlloy" (ionChange)="alloySelected()">
+                    <ion-option value="Hastelloy" selected="true">Hastelloy</ion-option>
                     <ion-option value="Inconel">Inconel</ion-option>
                     <ion-option value="Monel">Monel</ion-option>
                     <ion-option value="Titanium">Titanium</ion-option>
@@ -398,7 +417,7 @@
                 </ion-input>
             </ion-item>
             <ion-item>
-                <ion-label stacked>ASTM Standard</ion-label>
+                <ion-label stacked>ASTM Standard (optional)</ion-label>
                 <ion-input #astm formControlName="astm" type="text"
                            placeholder="Enter ASTM Standard">
                 </ion-input>
@@ -411,7 +430,29 @@
                         <ion-option value="NB">NB</ion-option>
                     </ion-select>
                 </ion-item>
+            <ion-grid>
+                <ion-row>
+                    <ion-col>
+                        <ion-item>
+                            <ion-label stacked>Sizes (Eg. 11 x 22 x 33)</ion-label>
+                            <ion-input #sizes formControlName="sizes" type="text"
+                                       placeholder="Enter Sizes">
+                            </ion-input>
+                        </ion-item>
+                    </ion-col>
+                    <ion-col>
+                        <ion-item>
+                            <ion-label stacked>Unit</ion-label>
+                            <ion-select #sizeunit formControlName="sizeunit">
+                                <ion-option value="inch" selected="true">inch</ion-option>
+                                <ion-option value="mm">mm</ion-option>
+                            </ion-select>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
                 <ion-grid>
+                    Thickness
                     <ion-row>
                         <ion-col>
                             <ion-item *ngIf="typeOD === true">
@@ -422,9 +463,20 @@
                             </ion-item>
                             <ion-item *ngIf="typeOD === false">
                                 <ion-label stacked>SCH</ion-label>
-                                <ion-input #sch formControlName="sch" type="number"
-                                           placeholder="Wall Thickness (SCH)" min="0" step="0.01">
-                                </ion-input>
+                                <ion-select #sch formControlName="sch">
+                                    <ion-option value="sch 10" selected="true">sch 10</ion-option>
+                                    <ion-option value="sch 20" selected="true">sch 20</ion-option>
+                                    <ion-option value="sch 40" selected="true">sch 40</ion-option>
+                                    <ion-option value="sch 60" selected="true">sch 60</ion-option>
+                                    <ion-option value="sch 80" selected="true">sch 80</ion-option>
+                                    <ion-option value="sch 100" selected="true">sch 100</ion-option>
+                                    <ion-option value="sch 120" selected="true">sch 120</ion-option>
+                                    <ion-option value="sch 160" selected="true">sch 160</ion-option>
+                                    <ion-option value="sch std" selected="true">sch std</ion-option>
+                                    <ion-option value="sch xx" selected="true">sch xx</ion-option>
+                                    <ion-option value="sch xxx" selected="true">sch xxx</ion-option>
+                                    <ion-option value="sch xxxx" selected="true">sch xxxx</ion-option>                                    
+                                </ion-select>                               
                             </ion-item>
                         </ion-col>
                         <ion-col>
@@ -443,28 +495,7 @@
                         <ion-option value="Polished" selected="true">Polished</ion-option>
                         <ion-option value="Without Polish">Without Polish</ion-option>
                     </ion-select>
-                </ion-item>
-                <ion-grid>
-                    <ion-row>
-                        <ion-col>
-                            <ion-item>
-                                <ion-label stacked>Sizes (Eg. 11 x 22 x 33)</ion-label>
-                                <ion-input #sizes formControlName="sizes" type="text"
-                                           placeholder="Enter Sizes">
-                                </ion-input>
-                            </ion-item>
-                        </ion-col>
-                        <ion-col>
-                            <ion-item>
-                                <ion-label stacked>Unit</ion-label>
-                                <ion-select #sizeunit formControlName="sizeunit">
-                                    <ion-option value="inches" selected="true">inches</ion-option>
-                                    <ion-option value="mm">mm</ion-option>
-                                </ion-select>
-                            </ion-item>
-                        </ion-col>
-                    </ion-row>
-                </ion-grid>
+                </ion-item>                
                 <ion-grid>
                     <ion-row>
                         <ion-col>
@@ -487,21 +518,26 @@
                         </ion-col>
                     </ion-row>
                 </ion-grid>
+            <ion-row>
+                <ion-col>
+                    <ion-item>
+                        <ion-label stacked>Market Rate</ion-label>
+                        <ion-input #mrate formControlName="mrate" type="number"
+                                   placeholder="Rs/Kg" [(ngModel)]="mrateTrue" min="0" step="0.01">
+                        </ion-input>
+                    </ion-item>
+                </ion-col>
+                <ion-col>
+                    <ion-item>
+                        <ion-label stacked>Kalamboli Rate</ion-label>
+                        <ion-input #krate formControlName="krate" type="number"
+                                   placeholder="Rs/Kg" [(ngModel)]="krateTrue" min="0" step="0.01">
+                        </ion-input>
+                    </ion-item>
+                </ion-col>
+            </ion-row>          
                 <ion-item>
-                    <ion-label stacked>Market Rate</ion-label>
-                    <ion-input #mrate formControlName="mrate" type="number"
-                               placeholder="Rs/Unit" [(ngModel)]="mrateTrue" min="0" step="0.01">
-                    </ion-input>
-                </ion-item>
-                <ion-item>
-                    <ion-label stacked>Kalamboli Rate</ion-label>
-                    <ion-input #krate formControlName="krate" type="number"
-                               placeholder="Rs/Unit" [(ngModel)]="krateTrue" min="0" step="0.01">
-                    </ion-input>
-                </ion-item>
-
-                <ion-item>
-                    <ion-label stacked>Origin</ion-label>
+                    <ion-label stacked>Origin (optional)</ion-label>
                     <ion-input #origin formControlName="origin" type="text"
                                placeholder="Enter Origin">
                     </ion-input>
@@ -522,7 +558,7 @@
                     </ion-select>
                 </ion-item>
                 <ion-item>
-                    <ion-label stacked>Other Details</ion-label>
+                    <ion-label stacked>Other Details (optional)</ion-label>
                     <ion-input #details formControlName="details" type="text" maxlength="50"
                                placeholder="Enter details...">
                     </ion-input>
@@ -546,8 +582,8 @@
             
             <ion-item *ngIf="category.catid === '9c4' ">
                 <ion-label stacked>Product Type</ion-label>
-                <ion-select #ptype formControlName="ptype">
-                    <ion-option value="Hastealloy" selected="true">Hastealloy</ion-option>
+                <ion-select #ptype formControlName="ptype" [(ngModel)]="selectedAlloy" (ionChange)="alloySelected()">
+                    <ion-option value="Hastelloy" selected="true">Hastelloy</ion-option>
                     <ion-option value="Inconel">Inconel</ion-option>
                     <ion-option value="Monel">Monel</ion-option>
                     <ion-option value="Titanium">Titanium</ion-option>
@@ -574,24 +610,11 @@
                 </ion-input>
             </ion-item>
             <ion-item>
-                <ion-label stacked>ASTM Standard</ion-label>
+                <ion-label stacked>ASTM Standard (optional)</ion-label>
                 <ion-input #astm formControlName="astm" type="text"
                            placeholder="Enter ASTM Standard">
                 </ion-input>
-            </ion-item>            
-            <ion-item>
-                <ion-label stacked>Thickness</ion-label>
-                <ion-input #thickness formControlName="thickness" type="number"
-                           placeholder="Thickness (mm)" min="0" step="0.01">
-                </ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label stacked>Finish</ion-label>
-                <ion-select #finish formControlName="finish">
-                    <ion-option value="Polished" selected="true">Polished</ion-option>
-                    <ion-option value="Without Polish">Without Polish</ion-option>
-                </ion-select>
-            </ion-item>
+            </ion-item>     
             <ion-grid>
                 <ion-row>
                     <ion-col>
@@ -606,13 +629,27 @@
                         <ion-item>
                             <ion-label stacked>Unit</ion-label>
                             <ion-select #sizeunit formControlName="sizeunit">
-                                <ion-option value="inches" selected="true">inches</ion-option>
+                                <ion-option value="inch" selected="true">inch</ion-option>
                                 <ion-option value="mm">mm</ion-option>
                             </ion-select>
                         </ion-item>
                     </ion-col>
                 </ion-row>
-            </ion-grid>         
+            </ion-grid>
+       
+            <ion-item>
+                <ion-label stacked>Thickness</ion-label>
+                <ion-input #thickness formControlName="thickness" type="number"
+                           placeholder="Thickness (mm)" min="0" step="0.01">
+                </ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label stacked>Finish</ion-label>
+                <ion-select #finish formControlName="finish">
+                    <ion-option value="Polished" selected="true">Polished</ion-option>
+                    <ion-option value="Without Polish">Without Polish</ion-option>
+                </ion-select>
+            </ion-item>
             <ion-grid>
                 <ion-row>
                     <ion-col>
@@ -635,21 +672,27 @@
                     </ion-col>
                 </ion-row>
             </ion-grid>
-            <ion-item>
-                <ion-label stacked>Market Rate</ion-label>
-                <ion-input #mrate formControlName="mrate" type="number"
-                           placeholder="Rs/Unit" [(ngModel)]="mrateTrue" min="0" step="0.01">
-                </ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label stacked>Kalamboli Rate</ion-label>
-                <ion-input #krate formControlName="krate" type="number"
-                           placeholder="Rs/Unit" [(ngModel)]="krateTrue" min="0" step="0.01">
-                </ion-input>
-            </ion-item>
+            <ion-row>
+                <ion-col>
+                    <ion-item>
+                        <ion-label stacked>Market Rate</ion-label>
+                        <ion-input #mrate formControlName="mrate" type="number"
+                                   placeholder="Rs/Kg" [(ngModel)]="mrateTrue" min="0" step="0.01">
+                        </ion-input>
+                    </ion-item>
+                </ion-col>
+                <ion-col>
+                    <ion-item>
+                        <ion-label stacked>Kalamboli Rate</ion-label>
+                        <ion-input #krate formControlName="krate" type="number"
+                                   placeholder="Rs/Kg" [(ngModel)]="krateTrue" min="0" step="0.01">
+                        </ion-input>
+                    </ion-item>
+                </ion-col>
+            </ion-row>          
 
             <ion-item>
-                <ion-label stacked>Origin</ion-label>
+                <ion-label stacked>Origin(optional)</ion-label>
                 <ion-input #origin formControlName="origin" type="text"
                            placeholder="Enter Origin">
                 </ion-input>
@@ -662,7 +705,7 @@
                 </ion-input>
             </ion-item>
             <ion-item>
-                <ion-label stacked>Other Details</ion-label>
+                <ion-label stacked>Other Details (optional)</ion-label>
                 <ion-input #details formControlName="details" type="text" maxlength="50"
                            placeholder="Enter details...">
                 </ion-input>
@@ -697,7 +740,7 @@
                 </ion-input>
             </ion-item>
             <ion-item>
-                <ion-label stacked>ASTM Standard</ion-label>
+                <ion-label stacked>ASTM Standard (optional)</ion-label>
                 <ion-input #astm formControlName="astm" type="text"
                            placeholder="Enter ASTM Standard">
                 </ion-input>
@@ -751,19 +794,24 @@
                     </ion-col>
                 </ion-row>
             </ion-grid>
-            <ion-item>
-                <ion-label stacked>Market Rate</ion-label>
-                <ion-input #mrate formControlName="mrate" type="number"
-                           placeholder="Rs/Unit" [(ngModel)]="mrateTrue" min="0" step="0.01">
-                </ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label stacked>Kalamboli Rate</ion-label>
-                <ion-input #krate formControlName="krate" type="number"
-                           placeholder="Rs/Unit" [(ngModel)]="krateTrue" min="0" step="0.01">
-                </ion-input>
-            </ion-item>
-
+            <ion-row>
+                <ion-col>
+                    <ion-item>
+                        <ion-label stacked>Market Rate</ion-label>
+                        <ion-input #mrate formControlName="mrate" type="number"
+                                   placeholder="Rs/Kg" [(ngModel)]="mrateTrue" min="0" step="0.01">
+                        </ion-input>
+                    </ion-item>
+                </ion-col>
+                <ion-col>
+                    <ion-item>
+                        <ion-label stacked>Kalamboli Rate</ion-label>
+                        <ion-input #krate formControlName="krate" type="number"
+                                   placeholder="Rs/Kg" [(ngModel)]="krateTrue" min="0" step="0.01">
+                        </ion-input>
+                    </ion-item>
+                </ion-col>
+            </ion-row>          
             <ion-item>
                 <ion-label stacked>Origin (optional)</ion-label>
                 <ion-input #origin formControlName="origin" type="text"
@@ -821,7 +869,7 @@
                 </ion-input>
             </ion-item>
             <ion-item>
-                <ion-label stacked>ASTM Standard</ion-label>
+                <ion-label stacked>ASTM Standard (optional)</ion-label>
                 <ion-input #astm formControlName="astm" type="text"
                            placeholder="Enter ASTM Standard">
                 </ion-input>
@@ -840,7 +888,7 @@
                         <ion-item>
                             <ion-label stacked>Unit</ion-label>
                             <ion-select #sizeunit formControlName="sizeunit">
-                                <ion-option value="inches" selected="true">inches</ion-option>
+                                <ion-option value="inch" selected="true">inch</ion-option>
                                 <ion-option value="mm">mm</ion-option>
                             </ion-select>
                         </ion-item>
@@ -881,18 +929,24 @@
                     </ion-col>
                 </ion-row>
             </ion-grid>
-            <ion-item>
-                <ion-label stacked>Market Rate</ion-label>
-                <ion-input #mrate formControlName="mrate" type="number"
-                           placeholder="Rs/Unit" [(ngModel)]="mrateTrue" min="0" step="0.01">
-                </ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label stacked>Kalamboli Rate</ion-label>
-                <ion-input #krate formControlName="krate" type="number"
-                           placeholder="Rs/Unit" [(ngModel)]="krateTrue" min="0" step="0.01">
-                </ion-input>
-            </ion-item>
+            <ion-row>
+                <ion-col>
+                    <ion-item>
+                        <ion-label stacked>Market Rate</ion-label>
+                        <ion-input #mrate formControlName="mrate" type="number"
+                                   placeholder="Rs/Kg" [(ngModel)]="mrateTrue" min="0" step="0.01">
+                        </ion-input>
+                    </ion-item>
+                </ion-col>
+                <ion-col>
+                    <ion-item>
+                        <ion-label stacked>Kalamboli Rate</ion-label>
+                        <ion-input #krate formControlName="krate" type="number"
+                                   placeholder="Rs/Kg" [(ngModel)]="krateTrue" min="0" step="0.01">
+                        </ion-input>
+                    </ion-item>
+                </ion-col>
+            </ion-row>          
 
             <ion-item>
                 <ion-label stacked>Origin (optional)</ion-label>
@@ -940,8 +994,8 @@
         
         <ion-item *ngIf="category.catid === '9d' ">
             <ion-label stacked>Product Type</ion-label>
-            <ion-select #ptype formControlName="ptype">
-                <ion-option value="Hastealloy" selected="true">Hastealloy</ion-option>
+            <ion-select #ptype formControlName="ptype" [(ngModel)]="selectedAlloy" (ionChange)="alloySelected()">
+                <ion-option value="Hastelloy" selected="true">Hastelloy</ion-option>
                 <ion-option value="Inconel">Inconel</ion-option>
                 <ion-option value="Monel">Monel</ion-option>
                 <ion-option value="Titanium">Titanium</ion-option>
@@ -975,7 +1029,7 @@
             </ion-input>
         </ion-item>
         <ion-item>
-            <ion-label stacked>ASTM Standard</ion-label>
+            <ion-label stacked>ASTM Standard (optional)</ion-label>
             <ion-input #astm formControlName="astm" type="text"
                        placeholder="Enter ASTM Standard">
             </ion-input>
@@ -1009,7 +1063,7 @@
                     <ion-item>
                         <ion-label stacked>Unit</ion-label>
                         <ion-select #sizeunit formControlName="sizeunit">
-                            <ion-option value="inches" selected="true">inches</ion-option>
+                            <ion-option value="inch" selected="true">inch</ion-option>
                             <ion-option value="mm">mm</ion-option>
                         </ion-select>
                     </ion-item>
@@ -1051,18 +1105,24 @@
                 <ion-option value="No">No</ion-option>
             </ion-select>
         </ion-item>
-        <ion-item>
-            <ion-label stacked>Market Rate</ion-label>
-            <ion-input #mrate formControlName="mrate" type="number"
-                       placeholder="Rs/Unit" [(ngModel)]="mrateTrue" min="0" step="0.01">
-            </ion-input>
-        </ion-item>
-        <ion-item>
-            <ion-label stacked>Kalamboli Rate</ion-label>
-            <ion-input #krate formControlName="krate" type="number"
-                       placeholder="Rs/Unit" [(ngModel)]="krateTrue" min="0" step="0.01">
-            </ion-input>
-        </ion-item>
+        <ion-row>
+            <ion-col>
+                <ion-item>
+                    <ion-label stacked>Market Rate</ion-label>
+                    <ion-input #mrate formControlName="mrate" type="number"
+                               placeholder="Rs/Kg" [(ngModel)]="mrateTrue" min="0" step="0.01">
+                    </ion-input>
+                </ion-item>
+            </ion-col>
+            <ion-col>
+                <ion-item>
+                    <ion-label stacked>Kalamboli Rate</ion-label>
+                    <ion-input #krate formControlName="krate" type="number"
+                               placeholder="Rs/Kg" [(ngModel)]="krateTrue" min="0" step="0.01">
+                    </ion-input>
+                </ion-item>
+            </ion-col>
+        </ion-row>          
 
         <ion-item>
             <ion-label stacked>Origin (optional)</ion-label>
@@ -1077,7 +1137,6 @@
                        placeholder="Enter Brand">
             </ion-input>
         </ion-item>
-
         <ion-item>
             <ion-label>MTC (optional)</ion-label>
             <ion-select #mtc formControlName="mtc">
@@ -1118,7 +1177,13 @@
                 <ion-input #details formControlName="details" type="text"
                            placeholder="Enter Details">
                 </ion-input>
-            </ion-item>            
+            </ion-item>    
+            <ion-item>
+                <ion-label stacked>Origin</ion-label>
+                <ion-input #origin formControlName="origin" type="text"
+                           placeholder="Enter Origin" >
+                </ion-input>
+            </ion-item>         
             <ion-grid>
                 <ion-row>
                     <ion-col>
@@ -1145,13 +1210,13 @@
             <ion-item>
                 <ion-label stacked>Market Rate</ion-label>
                 <ion-input #mrate formControlName="mrate" type="number"
-                           placeholder="Rs/Unit" [(ngModel)]="mrateTrue" min="0" step="0.01">
+                           placeholder="Rs/Kg" [(ngModel)]="mrateTrue" min="0" step="0.01">
                 </ion-input>
             </ion-item>
             <ion-item>
                 <ion-label stacked>Kalamboli Rate</ion-label>
                 <ion-input #krate formControlName="krate" type="number"
-                           placeholder="Rs/Unit" [(ngModel)]="krateTrue" min="0" step="0.01">
+                           placeholder="Rs/Kg" [(ngModel)]="krateTrue" min="0" step="0.01">
                 </ion-input>
             </ion-item>
             <ion-input type="text" hidden [(ngModel)]="category.catid" formControlName="catid"></ion-input>

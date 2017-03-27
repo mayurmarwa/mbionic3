@@ -45,14 +45,14 @@ var AddProductPage = (function () {
         this.products = af.database.list('/products');
         this.userProducts = af.database.list('/users/' + this.currentuser.uid + '/products');
         this.productImageRef = firebase.storage().ref('/productImages/');
-        this.gradeList = af.database.list('/grades');
+        this.getGrades();
         this.compositiontxt = null;
         this.gradeval = "test";
         //this.catDetails = this.af.database.object('productcategories/' + this.catid);
         this.coilsForm = formBuilder.group({
             name: ['', Validators.required],
-            ptype: ['Hastealloy',],
-            astm: ['', Validators.required],
+            ptype: ['Hastelloy',],
+            astm: ['',],
             grade: ['', Validators.required],
             gradeval: ['base', Validators.required],
             finish: ['HR', Validators.required],
@@ -62,8 +62,8 @@ var AddProductPage = (function () {
             mrate: ['',],
             krate: ['',],
             composition: ['',],
-            origin: ['', Validators.required],
-            brand: ['', Validators.required],
+            origin: ['',],
+            brand: ['',],
             mtc: ['Available', Validators.required],
             details: ['',],
             catid: ['', Validators.required],
@@ -78,8 +78,9 @@ var AddProductPage = (function () {
         });
         this.sheetsForm = formBuilder.group({
             name: ['', Validators.required],
-            ptype: ['Hastealloy',],
-            astm: ['', Validators.required],
+            ptype: ['Hastelloy',],
+            ptype2: ['Standard',],
+            astm: ['',],
             grade: ['', Validators.required],
             gradeval: ['base', Validators.required],
             finish: ['HR', Validators.required],
@@ -91,8 +92,8 @@ var AddProductPage = (function () {
             mrate: ['',],
             krate: ['',],
             composition: ['',],
-            origin: ['', Validators.required],
-            brand: ['', Validators.required],
+            origin: ['',],
+            brand: ['',],
             mtc: ['Available', Validators.required],
             details: ['',],
             catid: ['', Validators.required],
@@ -101,8 +102,8 @@ var AddProductPage = (function () {
         });
         this.seamlessForm = formBuilder.group({
             name: ['', Validators.required],
-            ptype: ['Hastealloy',],
-            astm: ['', Validators.required],
+            ptype: ['Hastelloy',],
+            astm: ['',],
             grade: ['', Validators.required],
             gradeval: ['base', Validators.required],
             composition: ['',],
@@ -117,7 +118,7 @@ var AddProductPage = (function () {
             unit: ['Kg', Validators.required],
             mrate: ['',],
             krate: ['',],
-            origin: ['', Validators.required],
+            origin: ['',],
             brand: ['',],
             mtc: ['',],
             details: ['',],
@@ -127,8 +128,8 @@ var AddProductPage = (function () {
         });
         this.squareForm = formBuilder.group({
             name: ['', Validators.required],
-            ptype: ['Hastealloy',],
-            astm: ['', Validators.required],
+            ptype: ['Hastelloy',],
+            astm: ['',],
             grade: ['', Validators.required],
             gradeval: ['base', Validators.required],
             composition: ['',],
@@ -141,7 +142,7 @@ var AddProductPage = (function () {
             mrate: ['',],
             krate: ['',],
             details: ['',],
-            origin: ['', Validators.required],
+            origin: ['',],
             brand: ['',],
             catid: ['', Validators.required],
             uid: ['', Validators.required],
@@ -150,7 +151,7 @@ var AddProductPage = (function () {
         this.flatsForm = formBuilder.group({
             name: ['', Validators.required],
             grade: ['', Validators.required],
-            astm: ['', Validators.required],
+            astm: ['',],
             gradeval: ['base', Validators.required],
             width: ['', Validators.required],
             length: ['', Validators.required],
@@ -172,7 +173,7 @@ var AddProductPage = (function () {
         this.anglesForm = formBuilder.group({
             name: ['', Validators.required],
             grade: ['', Validators.required],
-            astm: ['', Validators.required],
+            astm: ['',],
             gradeval: ['base', Validators.required],
             composition: ['', Validators.required],
             sizes: ['', Validators.required],
@@ -193,9 +194,9 @@ var AddProductPage = (function () {
         });
         this.roundbarsForm = formBuilder.group({
             name: ['', Validators.required],
-            ptype: ['Hastealloy',],
+            ptype: ['Hastelloy',],
             subcat: ['Hex Bars', Validators.required],
-            astm: ['', Validators.required],
+            astm: ['',],
             grade: ['', Validators.required],
             gradeval: ['base', Validators.required],
             composition: ['',],
@@ -220,6 +221,7 @@ var AddProductPage = (function () {
         this.deadForm = formBuilder.group({
             name: ['', Validators.required],
             details: ['', Validators.required],
+            origin: ['',],
             quantity: ['',],
             unit: ['Kg',],
             mrate: ['',],
@@ -229,6 +231,43 @@ var AddProductPage = (function () {
             islive: ['true', Validators.required]
         });
     }
+    AddProductPage.prototype.getGrades = function () {
+        if (this.category.catid == 1 || this.category.catid == 2 || this.category.catid == 3 || this.category.catid === '4a' || this.category.catid === '4b' || this.category.catid === '4c' || this.category.catid === '4d' || this.category.catid === '4e' || this.category.catid == 5 || this.category.catid == 6 || this.category.catid == 7) {
+            this.gradecat = 1;
+        }
+        else if (this.category.catid === '8a' || this.category.catid === '8b' || this.category.catid === '8c1' || this.category.catid === '8c2' || this.category.catid === '8c3' || this.category.catid === '8c4' || this.category.catid === '8c5' || this.category.catid === '8d') {
+            this.gradecat = 2;
+        }
+        else if (this.category.catid === '9a' || this.category.catid === '9b' || this.category.catid === '9c1' || this.category.catid === '9c2' || this.category.catid === '9c3' || this.category.catid === '9c4' || this.category.catid === '9c5' || this.category.catid === '9d') {
+            this.selectedAlloy = 'Hastelloy';
+            this.gradecat = 3;
+        }
+        else {
+            this.gradecat = 1;
+        }
+        this.gradeList = this.af.database.list('/grades/' + this.gradecat);
+    };
+    AddProductPage.prototype.alloySelected = function () {
+        if (this.selectedAlloy === 'Hastelloy') {
+            this.gradecat = 3;
+        }
+        else if (this.selectedAlloy === 'Inconel') {
+            this.gradecat = 4;
+        }
+        else if (this.selectedAlloy === 'Monel') {
+            this.gradecat = 5;
+        }
+        else if (this.selectedAlloy === 'Nimonic') {
+            this.gradecat = 6;
+        }
+        else if (this.selectedAlloy === 'Nickel') {
+            this.gradecat = 7;
+        }
+        else if (this.selectedAlloy === 'Titanium') {
+            this.gradecat = 8;
+        }
+        this.gradeList = this.af.database.list('/grades/' + this.gradecat);
+    };
     AddProductPage.prototype.showConfirm = function (productForm) {
         var _this = this;
         if (!productForm.valid) {
@@ -240,21 +279,24 @@ var AddProductPage = (function () {
             alert_1.present();
         }
         else {
-            /**if (this.productImage == null) {
-                let alert = this.alertCtrl.create({
+            if (this.category.catid == 10 && this.productImage == null) {
+                var alert_2 = this.alertCtrl.create({
                     title: 'Add Image!',
                     subTitle: 'Please add an image for your product',
                     buttons: ['OK']
                 });
-                alert.present();
-                this.imageValid = true;
+                alert_2.present();
+                this.imageValid = false;
             }
             else {
                 this.imageValid = true;
-            }**/
-            this.imageValid = true;
+            }
+            //this.imageValid = true;
             if (this.category.catid != "9a" && this.category.catid != "9b" && this.category.catid != "9c1" && this.category.catid != "9c2" && this.category.catid != "9c3" && this.category.catid != "9c4" && this.category.catid != "9c5" && this.category.catid != "9d") {
                 productForm.value.ptype = null;
+            }
+            if (this.category.catid != 2) {
+                productForm.value.ptype2 = null;
             }
             /**if (this.category.catid === "8c1" || this.category.catid === "8c2" || this.category.catid === "8c3" || this.category.catid === "8c4" || this.category.catid === "8d" || this.category.catid === "8a" || this.category.catid === "8b" || this.category.catid === "9c1" || this.category.catid === "9c2" || this.category.catid === "9c3" || this.category.catid === "9c4" || this.category.catid === "9d" || this.category.catid === "9a" || this.category.catid === "9b") {
                 productForm.value.gradeval = productForm.value.grade;
@@ -267,12 +309,12 @@ var AddProductPage = (function () {
                     productForm.value.sch = null;
                     if ((productForm.value.swg == null && productForm.value.mm == null) || ((productForm.value.swg === "" && (productForm.value.mm === "" || productForm.value.mm === null)) || (productForm.value.mm === "" && (productForm.value.swg === "" || productForm.value.swg === null)))) {
                         this.allValid = false;
-                        var alert_2 = this.alertCtrl.create({
+                        var alert_3 = this.alertCtrl.create({
                             title: 'Enter Thickness!',
                             subTitle: 'Enter values for either SWG or MM or both',
                             buttons: ['OK']
                         });
-                        alert_2.present();
+                        alert_3.present();
                     }
                     else {
                         this.allValid = true;
@@ -283,12 +325,12 @@ var AddProductPage = (function () {
                     productForm.value.finish = null;
                     if (productForm.value.sch == null || productForm.value.mm == null || productForm.value.sch === "" || productForm.value.mm === "") {
                         this.allValid = false;
-                        var alert_3 = this.alertCtrl.create({
+                        var alert_4 = this.alertCtrl.create({
                             title: 'Enter Thickness!',
                             subTitle: 'Enter values for SCH and MM',
                             buttons: ['OK']
                         });
-                        alert_3.present();
+                        alert_4.present();
                     }
                     else {
                         this.allValid = true;
@@ -298,12 +340,12 @@ var AddProductPage = (function () {
             else if (this.category.catid === 3) {
                 if (productForm.value.weight == null || productForm.value.weight === "") {
                     this.allValid = false;
-                    var alert_4 = this.alertCtrl.create({
+                    var alert_5 = this.alertCtrl.create({
                         title: 'Enter Weight!',
                         subTitle: 'Enter values for weight',
                         buttons: ['OK']
                     });
-                    alert_4.present();
+                    alert_5.present();
                 }
                 else {
                     this.allValid = true;
@@ -314,12 +356,12 @@ var AddProductPage = (function () {
             }
             if ((productForm.value.mrate == null && productForm.value.krate == null) || ((productForm.value.mrate === "" && (productForm.value.krate === "" || productForm.value.krate === null)) || (productForm.value.krate === "" && (productForm.value.mrate === "" || productForm.value.mrate === null)))) {
                 this.priceValid = false;
-                var alert_5 = this.alertCtrl.create({
+                var alert_6 = this.alertCtrl.create({
                     title: 'Enter Price',
                     subTitle: 'Enter either Market Rate or Kalamboli rate or both ',
                     buttons: ['OK']
                 });
-                alert_5.present();
+                alert_6.present();
             }
             else {
                 this.priceValid = true;
@@ -356,7 +398,7 @@ var AddProductPage = (function () {
     };
     AddProductPage.prototype.gradeSelected = function () {
         var _this = this;
-        this.af.database.object('/grades/' + this.selectedGrade)
+        this.af.database.object('/grades/' + this.gradecat + '/' + this.selectedGrade)
             .subscribe(function (result) {
             _this.selectedGradeItem = result;
         });
@@ -477,7 +519,7 @@ var AddProductPage = (function () {
                             islive: true,
                             timestamp: firebase.database['ServerValue']['TIMESTAMP'],
                             name: productForm.value.name,
-                            grade: productForm.value.grade,
+                            grade: productForm.value.gradeval,
                             mrate: productForm.value.mrate,
                             krate: productForm.value.krate,
                             productImage: _this.productImageURL

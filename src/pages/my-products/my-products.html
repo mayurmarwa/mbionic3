@@ -8,7 +8,21 @@
 
   <ion-navbar>
     <ion-title>My Products</ion-title>
+      <ion-buttons end>
+          <button ion-button color="primary"  outline (click)="selectcat()">
+              
+              Add New
+          </button>
+      </ion-buttons>
   </ion-navbar>
+    <!--<ion-segment [(ngModel)]="segment">
+        <ion-segment-button value="uploaded">
+            Uploaded
+        </ion-segment-button>
+        <ion-segment-button value="add" (click)="selectcat()">
+            Add New
+        </ion-segment-button>
+    </ion-segment>-->
 
 </ion-header>
 
@@ -20,15 +34,46 @@
         
     </ion-fab>
 
-    <ion-list>
+    <!--<ion-list>
         <ion-item *ngFor="let myproduct of productListRev | async" (click)="detailpage(myproduct)">
-            <!--<ion-thumbnail item-left>
+            <ion-thumbnail item-left>
                 <img src="{{category.imgURL}}">
-            </ion-thumbnail>-->
+            </ion-thumbnail>
           
             {{myproduct.name}}
             {{myproduct.gradeval}}
   
         </ion-item>
-    </ion-list>
+    </ion-list>-->
+
+    <ion-row wrap>
+        <ion-col width-50 *ngFor="let product of productListRev | async" (click)="detailpage(product)">
+            <ion-card>
+                <ion-card-content>
+                    <div>
+                        <div class="gradeCircle2">{{product?.grade}}</div>
+                    </div>
+                    <ion-card-title>
+                        {{product?.name}}
+                    </ion-card-title>
+                    <!--<div class="product-price" *ngIf="product?.unit">
+                        <ion-row text-center *ngIf="product?.mrate">
+                           Market Rate: {{product?.mrate | currency:"INR":true}}/{{product?.unit}}
+                        </ion-row>
+                        <ion-row text-center *ngIf="product?.krate">
+                           Kalamboli Rate: {{product?.krate | currency:"INR":true}}/{{product?.unit}}
+                        </ion-row>
+                    </div> -->
+                    <div class="product-price">
+                        <ion-row text-center *ngIf="product?.mrate">
+                            Market Rate: {{product?.mrate | currency:"INR":true}}/Kg
+                        </ion-row>
+                        <ion-row text-center *ngIf="product?.krate">
+                            Kalamboli Rate: {{product?.krate | currency:"INR":true}}/Kg
+                        </ion-row>
+                    </div>
+                </ion-card-content>
+            </ion-card>
+        </ion-col>
+    </ion-row>
 </ion-content>

@@ -49,14 +49,16 @@ var ProfileData = (function () {
             companyname: Name,
         });
     };
-    ProfileData.prototype.updateVat = function (Vat) {
+    ProfileData.prototype.updateExcise = function (data) {
+        console.log(data);
         return this.userProfile.child(this.currentUser.uid).update({
-            vat: Vat,
-        });
-    };
-    ProfileData.prototype.updateExcise = function (Excise) {
-        return this.userProfile.child(this.currentUser.uid).update({
-            excise: Excise,
+            excise: data.excise,
+            comsn: data.comsn,
+            range: data.range,
+            division: data.division,
+            vat: data.vat,
+            pan: data.pan
+            //lastName: lastName,
         });
     };
     ProfileData.prototype.updateAddress = function (Address) {

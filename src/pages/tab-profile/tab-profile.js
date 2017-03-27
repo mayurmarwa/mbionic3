@@ -210,31 +210,6 @@ var TabProfilePage = (function () {
         });
         alert.present();
     };
-    TabProfilePage.prototype.updateVat = function () {
-        var _this = this;
-        var alert = this.alertCtrl.create({
-            message: "VAT/TIN",
-            inputs: [
-                {
-                    name: 'vat',
-                    placeholder: 'VAT/TIN Details',
-                    value: this.userProfile.vat
-                },
-            ],
-            buttons: [
-                {
-                    text: 'Cancel',
-                },
-                {
-                    text: 'Save',
-                    handler: function (data) {
-                        _this.profileData.updateVat(data.vat);
-                    }
-                }
-            ]
-        });
-        alert.present();
-    };
     TabProfilePage.prototype.updateExcise = function () {
         var _this = this;
         var alert = this.alertCtrl.create({
@@ -242,9 +217,39 @@ var TabProfilePage = (function () {
             inputs: [
                 {
                     name: 'excise',
-                    placeholder: 'Excise Details',
+                    placeholder: 'ECC/Exc. Reg.Nos',
                     value: this.userProfile.excise
                 },
+                {
+                    name: 'comsn',
+                    placeholder: 'Commissionerate',
+                    value: this.userProfile.comsn
+                },
+                {
+                    name: 'range',
+                    placeholder: 'Range',
+                    value: this.userProfile.range
+                },
+                {
+                    name: 'division',
+                    placeholder: 'Division',
+                    value: this.userProfile.division
+                },
+                {
+                    name: 'vat',
+                    placeholder: 'VAT TIN',
+                    value: this.userProfile.vat
+                },
+                {
+                    name: 'pan',
+                    placeholder: 'PAN No. (optional)',
+                    value: this.userProfile.pan
+                }
+                /**{
+                    name: 'lastName',
+                    placeholder: 'Your last name',
+                    value: this.userProfile.lastName
+                },**/
             ],
             buttons: [
                 {
@@ -253,12 +258,26 @@ var TabProfilePage = (function () {
                 {
                     text: 'Save',
                     handler: function (data) {
-                        _this.profileData.updateExcise(data.excise);
+                        //console.log(data);
+                        _this.checkExcise(data);
                     }
                 }
             ]
         });
         alert.present();
+    };
+    TabProfilePage.prototype.checkExcise = function (data) {
+        if (data.excise === '' || data.excise === null || data.comsn === '' || data.comsn == null || data.range === '' || data.range == null || data.division === '' || data.division === null || data.vat === '' || data.vat === null) {
+            var alert_1 = this.alertCtrl.create({
+                title: 'Invalid Entries!',
+                subTitle: 'Please fill all required entries',
+                buttons: ['OK']
+            });
+            alert_1.present();
+        }
+        else {
+            this.profileData.updateExcise(data);
+        }
     };
     TabProfilePage.prototype.updateEmail = function () {
         var _this = this;

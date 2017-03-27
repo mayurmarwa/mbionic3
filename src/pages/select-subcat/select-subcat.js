@@ -23,9 +23,9 @@ var SelectSubcatPage = (function () {
         this.navParams = navParams;
         this.af = af;
         this.catid = navParams.get("catid");
-        this.loadCategory(this.catid);
+        this.loadCategory(this.catid, null);
     }
-    SelectSubcatPage.prototype.loadCategory = function (catid) {
+    SelectSubcatPage.prototype.loadCategory = function (catid, cattitle) {
         if (catid === 4) {
             this.categories = this.af.database.list('/productcategories/SSPipes/subcategories/', { query: { orderByChild: 'oid' } });
             this.parentcat = 'SSPipes';
@@ -42,7 +42,7 @@ var SelectSubcatPage = (function () {
             this.categories = this.af.database.list('/productcategories/' + this.parentcat + '/subcategories/pipes/types/', { query: { orderByChild: 'oid' } });
         }
         else {
-            this.navCtrl.push(CategoryProductsPage, { catid: catid });
+            this.navCtrl.push(CategoryProductsPage, { catid: catid, cattitle: cattitle });
         }
     };
     SelectSubcatPage.prototype.ionViewDidLoad = function () {

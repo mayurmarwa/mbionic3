@@ -10,6 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 import { Component } from '@angular/core';
 import { NavController, NavParams, AlertController } from 'ionic-angular';
 import { SendQuotationPage } from '../send-quotation/send-quotation';
+import { Storage } from '@ionic/storage';
 /*
   Generated class for the RequirementDetails page.
 
@@ -17,11 +18,25 @@ import { SendQuotationPage } from '../send-quotation/send-quotation';
   Ionic pages and navigation.
 */
 var RequirementDetailsPage = (function () {
-    function RequirementDetailsPage(navCtrl, navParams, alertCtrl) {
+    function RequirementDetailsPage(navCtrl, navParams, alertCtrl, storage) {
+        var _this = this;
         this.navCtrl = navCtrl;
         this.navParams = navParams;
         this.alertCtrl = alertCtrl;
-        this.requirement = navParams.get("requirement");
+        this.storage = storage;
+        storage.ready().then(function () {
+            storage.get('currentuser').then(function (val) {
+                _this.currentuser = JSON.parse(val);
+                _this.requirement = navParams.get("requirement");
+                //console.log(this.product);
+                //console.log(this.currentuser);
+            })
+                .catch(function (err) {
+                return console.log(err);
+            });
+        }).catch(function (err) {
+            return console.log(err);
+        });
     }
     RequirementDetailsPage.prototype.ionViewDidLoad = function () {
         console.log('ionViewDidLoad RequirementDetailsPage');
@@ -38,7 +53,7 @@ RequirementDetailsPage = __decorate([
         selector: 'page-requirement-details',
         templateUrl: 'requirement-details.html'
     }),
-    __metadata("design:paramtypes", [NavController, NavParams, AlertController])
+    __metadata("design:paramtypes", [NavController, NavParams, AlertController, Storage])
 ], RequirementDetailsPage);
 export { RequirementDetailsPage };
 //# sourceMappingURL=requirement-details.js.map

@@ -24,6 +24,10 @@
             <custom-icon set="mb" [name]="p.icon" item-left></custom-icon>
             {{p.title}}
         </ion-item>
+        <ion-item menuClose ion-item (click)="shareApp()">
+            <custom-icon set="mb" name="share" item-left></custom-icon>
+            Share App
+        </ion-item>
         <ion-item menuClose ion-item (click)="logout()">
             <custom-icon set="mb" name="logout" item-left></custom-icon>
             Logout

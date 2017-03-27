@@ -14,6 +14,7 @@ import { DirectoryPage } from '../pages/directory/directory';
 import { SpeedDialPage } from '../pages/speed-dial/speed-dial';
 import { SettingsPage } from '../pages/settings/settings';
 import { Storage } from '@ionic/storage';
+import { SocialSharing } from '@ionic-native/social-sharing';
 
 import { AuthService } from '../providers/auth.service';
 
@@ -35,7 +36,8 @@ export class MyApp {
     public platform: Platform,
     public loadingCtrl: LoadingController,
     public authService: AuthService,
-    public storage: Storage
+    public storage: Storage,
+    private socialSharing: SocialSharing
   ) {
     this.initializeApp();
 
@@ -79,8 +81,7 @@ export class MyApp {
         { title: 'My Products', component: MyProductsPage, icon: 'products' },
         { title: 'Directory', component: DirectoryPage, icon: 'directory' },
         { title: 'Speed Dial', component: SpeedDialPage, icon: 'dialer' },
-        { title: 'Settings', component: SettingsPage, icon: 'settings' },
-        { title: 'Share App', component: TabProfilePage, icon: 'share' },
+        { title: 'Settings', component: SettingsPage, icon: 'settings' },        
         { title: 'About', component: AboutPage, icon: 'about' },
     ];
 
@@ -109,4 +110,9 @@ export class MyApp {
     this.authService.logout();
     this.nav.setRoot(LoginPage);
   }
+
+  shareApp() {
+      this.socialSharing.share("Testing, sharing this from inside an app I'm building right now", null, null, "https://ionicframework.com/docs/v2/native/social-sharing/");
+  }
+
 }

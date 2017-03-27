@@ -13,7 +13,7 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content padding  text-center>
     <form [formGroup]="quoteForm" (submit)="showConfirm(quoteForm)">
 
         <ion-item>
@@ -30,7 +30,7 @@
             </ion-input>
         </ion-item>
 
-            Preferred Payment Method:
+        <h4> Preferred Payment Method:</h4>
             <ion-list radio-group #payment formControlName="payment">
                 <ion-item>
                     <ion-label>Cash</ion-label>
@@ -49,7 +49,7 @@
             </ion-input>
         </ion-item>
 
-        <button ion-button block type="submit">
+        <button ion-button round type="submit" style="margin-top:40px;">
             Submit
         </button>
 

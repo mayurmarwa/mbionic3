@@ -22,7 +22,7 @@
             <custom-icon set="mb" name="products" item-left></custom-icon>
             <ion-select class="grade-select" text-wrap #category formControlName="category" (ionChange)="onTypeChange()">
                 <ion-option value="Stainless Steel Coils" selected="true">Stainless Steel Coils</ion-option>
-                <ion-option value="Stainless Steel Sheets" selected="true">Stainless Steel Sheets</ion-option>
+                <ion-option value="Stainless Steel Sheets" selected="true">Stainless Steel Sheets / Plates</ion-option>
                 <ion-option value="Stainless Steel Packets">Stainless Steel Packets</ion-option>
                 <ion-option value="Stainless Steel Seamless Pipes">Stainless Steel Seamless Pipes</ion-option>
                 <ion-option value="Stainless Steel Welded/ERW Pipes">Stainless Steel Welded/ERW Pipes</ion-option>
@@ -82,15 +82,36 @@
                 </ion-item>
              
                     <ion-item>
-                        <ion-label stacked>Bid price (Rs)</ion-label>
+                        <ion-label stacked>Bid Price (optional)</ion-label>
                         <custom-icon set="mb" name="bidprice" item-left></custom-icon>
                         <ion-input #bid formControlName="bid" type="number"
-                                   placeholder="Your Bid Price">
+                                   placeholder="Rs/Kg">
                         </ion-input>
                     </ion-item>
+        
+        <ion-item>
+            <custom-icon set="mb" name="vat" item-left></custom-icon>
+                   
+            <ion-list item-content radio-group #btype formControlName="btype">
+                <h4 style="padding-top:10px">Select Bid Type(optional)</h4>                    
+                <ion-item>
+                    <ion-label>Excise + Vat</ion-label>
+                    <ion-radio value="exv" checked></ion-radio>
+                </ion-item>
+                <ion-item no-lines>
+                    <ion-label>Vat</ion-label>
+                    <ion-radio value="vat"></ion-radio>
+                </ion-item>
+            </ion-list>
+        </ion-item>  
+
+
+
+
+        
                     
                         <ion-item>
-                            <ion-label stacked>Details</ion-label>
+                            <ion-label stacked>Details (optional)</ion-label>
                             <custom-icon set="mb" name="post" item-left></custom-icon>
                             <ion-input #details formControlName="details" type="text"
                                        placeholder="Requirement Details...">

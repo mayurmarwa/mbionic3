@@ -9,6 +9,7 @@ import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { CustomIconsModule } from 'ionic2-custom-icons';
 import { Storage } from '@ionic/storage';
+import { SocialSharing } from '@ionic-native/social-sharing';
 import { MarketPage } from '../pages/market/market';
 import { PricesPage } from '../pages/prices/prices';
 import { EnquiriesPage } from '../pages/enquiries/enquiries';
@@ -29,6 +30,7 @@ import { BrowseRequirementsPage } from '../pages/browse-requirements/browse-requ
 import { SendQuotationPage } from '../pages/send-quotation/send-quotation';
 import { RequirementDetailsPage } from '../pages/requirement-details/requirement-details';
 import { DirectoryPage } from '../pages/directory/directory';
+import { MemberDetailsPage } from '../pages/member-details/member-details';
 import { SpeedDialPage } from '../pages/speed-dial/speed-dial';
 import { SettingsPage } from '../pages/settings/settings';
 import { TabsPage } from '../pages/tabs/tabs';
@@ -44,6 +46,7 @@ import { AboutPage } from '../pages/about/about';
 import { ShareAppPage } from '../pages/share-app/share-app';
 import { ResetpasswordPage } from '../pages/resetpassword/resetpassword';
 import { SignupPage } from '../pages/signup/signup';
+import { MetalCalculatorPage } from '../pages/metal-calculator/metal-calculator';
 import { CreateProfilePage } from '../pages/create-profile/create-profile';
 import { ProfileData } from '../providers/profile-data';
 import { ProductData } from '../providers/product-data';
@@ -90,6 +93,7 @@ AppModule = __decorate([
             SendQuotationPage,
             RequirementDetailsPage,
             DirectoryPage,
+            MemberDetailsPage,
             SpeedDialPage,
             SettingsPage,
             TabContactsPage,
@@ -105,6 +109,7 @@ AppModule = __decorate([
             CreateAccountPage,
             CreateProfilePage,
             OrderBy,
+            MetalCalculatorPage,
             FilterOptionsPage
         ],
         imports: [
@@ -136,6 +141,7 @@ AppModule = __decorate([
             SendQuotationPage,
             RequirementDetailsPage,
             DirectoryPage,
+            MemberDetailsPage,
             SpeedDialPage,
             SettingsPage,
             TabContactsPage,
@@ -150,9 +156,10 @@ AppModule = __decorate([
             SignupPage,
             CreateAccountPage,
             CreateProfilePage,
+            MetalCalculatorPage,
             FilterOptionsPage
         ],
-        providers: [AuthService, ChatsService, ProfileData, ProductData, { provide: ErrorHandler, useClass: IonicErrorHandler }, Storage]
+        providers: [AuthService, ChatsService, ProfileData, ProductData, { provide: ErrorHandler, useClass: IonicErrorHandler }, Storage, SocialSharing]
     })
 ], AppModule);
 export { AppModule };

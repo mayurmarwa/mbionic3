@@ -46,9 +46,12 @@ export class AddProductPage {
     public priceValid: boolean = false;
     public imageValid: boolean = false;
     public gradeList: FirebaseListObservable<any>;
+    public gradeList2: FirebaseListObservable<any>;
     public selectedGrade: any;
     public selectedGradeItem: any;
+    public selectedAlloy: any;
     public gradeval: any;
+    public gradecat: any;
     public compositiontxt:string;
     
     constructor(public navCtrl: NavController, public navParams: NavParams, public af: AngularFire, public formBuilder: FormBuilder, public authService: AuthService, public actionSheetCtrl: ActionSheetController, public alertCtrl: AlertController, public loadingCtrl: LoadingController) {
@@ -58,14 +61,15 @@ export class AddProductPage {
         this.products = af.database.list('/products');
         this.userProducts = af.database.list('/users/' + this.currentuser.uid + '/products'); 
         this.productImageRef = firebase.storage().ref('/productImages/');
-        this.gradeList = af.database.list('/grades');
+        
+        this.getGrades();
         this.compositiontxt = null;
         this.gradeval = "test";
         //this.catDetails = this.af.database.object('productcategories/' + this.catid);
         this.coilsForm = formBuilder.group({
             name: ['', Validators.required],
-            ptype: ['Hastealloy',],
-            astm: ['', Validators.required],
+            ptype: ['Hastelloy',],
+            astm: ['',],
             grade: ['', Validators.required],
             gradeval: ['base', Validators.required],
             finish: ['HR', Validators.required],
@@ -75,8 +79,8 @@ export class AddProductPage {
             mrate: ['',],
             krate: ['',],
             composition: ['',],
-            origin: ['', Validators.required],
-            brand: ['', Validators.required],
+            origin: ['',],
+            brand: ['',],
             mtc: ['Available', Validators.required],
             details: ['',],
             catid: ['', Validators.required],
@@ -93,8 +97,9 @@ export class AddProductPage {
 
         this.sheetsForm = formBuilder.group({
             name: ['', Validators.required],
-            ptype: ['Hastealloy',],
-            astm: ['', Validators.required],
+            ptype: ['Hastelloy',],
+            ptype2: ['Standard',],
+            astm: ['',],
             grade: ['', Validators.required],
             gradeval: ['base', Validators.required],
             finish: ['HR', Validators.required],
@@ -106,8 +111,8 @@ export class AddProductPage {
             mrate: ['',],
             krate: ['',],
             composition: ['',],
-            origin: ['', Validators.required],
-            brand: ['', Validators.required],
+            origin: ['',],
+            brand: ['',],
             mtc: ['Available', Validators.required],
             details: ['',],
             catid: ['', Validators.required],
@@ -118,8 +123,8 @@ export class AddProductPage {
 
         this.seamlessForm = formBuilder.group({
             name: ['', Validators.required],
-            ptype: ['Hastealloy',],
-            astm: ['', Validators.required],
+            ptype: ['Hastelloy',],
+            astm: ['',],
             grade: ['', Validators.required],
             gradeval: ['base', Validators.required],
             composition: ['',],
@@ -134,7 +139,7 @@ export class AddProductPage {
             unit: ['Kg', Validators.required],             
             mrate: ['',],
             krate: ['',],            
-            origin: ['', Validators.required],
+            origin: ['',],
             brand: ['',],
             mtc: ['',],
             details: ['',],
@@ -146,8 +151,8 @@ export class AddProductPage {
 
         this.squareForm = formBuilder.group({
             name: ['', Validators.required],
-            ptype: ['Hastealloy',],
-            astm: ['', Validators.required],
+            ptype: ['Hastelloy',],
+            astm: ['',],
             grade: ['', Validators.required],
             gradeval: ['base', Validators.required],
             composition: ['',],
@@ -160,7 +165,7 @@ export class AddProductPage {
             mrate: ['',],
             krate: ['',],
             details: ['',],
-            origin: ['', Validators.required],
+            origin: ['',],
             brand: ['',],          
             catid: ['', Validators.required],
             uid: ['', Validators.required],
@@ -171,7 +176,7 @@ export class AddProductPage {
         this.flatsForm = formBuilder.group({
             name: ['', Validators.required],
             grade: ['', Validators.required],
-            astm: ['', Validators.required],
+            astm: ['',],
             gradeval: ['base', Validators.required],
             width: ['', Validators.required],
             length: ['', Validators.required],
@@ -195,7 +200,7 @@ export class AddProductPage {
         this.anglesForm = formBuilder.group({
             name: ['', Validators.required],
             grade: ['', Validators.required],
-            astm: ['', Validators.required],
+            astm: ['',],
             gradeval: ['base', Validators.required],
             composition: ['', Validators.required],
             sizes: ['', Validators.required],
@@ -218,9 +223,9 @@ export class AddProductPage {
 
         this.roundbarsForm = formBuilder.group({
             name: ['', Validators.required],
-            ptype: ['Hastealloy',],
+            ptype: ['Hastelloy',],
             subcat:['Hex Bars',Validators.required],
-            astm: ['', Validators.required],
+            astm: ['',],
             grade: ['', Validators.required],
             gradeval: ['base', Validators.required],
             composition: ['',],
@@ -247,6 +252,7 @@ export class AddProductPage {
         this.deadForm = formBuilder.group({
             name: ['', Validators.required],
             details: ['', Validators.required],
+            origin: ['',],
             quantity: ['',],
             unit: ['Kg',],
             mrate: ['',],
@@ -259,6 +265,46 @@ export class AddProductPage {
            
     }
 
+    getGrades() {
+        if (this.category.catid == 1 || this.category.catid == 2 || this.category.catid == 3 || this.category.catid === '4a' || this.category.catid === '4b' || this.category.catid === '4c' || this.category.catid === '4d' || this.category.catid === '4e' || this.category.catid == 5 || this.category.catid == 6 || this.category.catid == 7) {
+            this.gradecat = 1;
+        }
+        else if (this.category.catid === '8a' || this.category.catid === '8b' || this.category.catid === '8c1' || this.category.catid === '8c2' || this.category.catid === '8c3' || this.category.catid === '8c4' || this.category.catid === '8c5' || this.category.catid === '8d') {
+            this.gradecat = 2;
+        }    
+        else if (this.category.catid === '9a' || this.category.catid === '9b' || this.category.catid === '9c1' || this.category.catid === '9c2' || this.category.catid === '9c3' || this.category.catid === '9c4' || this.category.catid === '9c5' || this.category.catid === '9d') {
+            this.selectedAlloy = 'Hastelloy';
+            this.gradecat = 3;
+        }        
+        else {
+            this.gradecat = 1;
+        }
+        this.gradeList = this.af.database.list('/grades/' + this.gradecat);
+    }
+
+    alloySelected() {
+
+        if (this.selectedAlloy === 'Hastelloy') {
+            this.gradecat = 3;
+        }
+        else if (this.selectedAlloy === 'Inconel') {
+            this.gradecat = 4;
+        }
+        else if (this.selectedAlloy === 'Monel') {
+            this.gradecat = 5;
+        }
+        else if (this.selectedAlloy === 'Nimonic') {
+            this.gradecat = 6;
+        }
+        else if (this.selectedAlloy === 'Nickel') {
+            this.gradecat = 7;
+        }
+        else if (this.selectedAlloy === 'Titanium') {
+            this.gradecat = 8;
+        }
+        this.gradeList = this.af.database.list('/grades/' + this.gradecat);
+    }
+
     showConfirm(productForm) {
         if (!productForm.valid) {
             let alert = this.alertCtrl.create({
@@ -269,21 +315,25 @@ export class AddProductPage {
             alert.present();
         }        
         else {
-            /**if (this.productImage == null) {
+            if (this.category.catid == 10 && this.productImage == null) {
                 let alert = this.alertCtrl.create({
                     title: 'Add Image!',
                     subTitle: 'Please add an image for your product',
                     buttons: ['OK']
                 });
                 alert.present();
-                this.imageValid = true;
+                this.imageValid = false;
             }
             else {
                 this.imageValid = true;
-            }**/
-            this.imageValid = true;
+            }
+            //this.imageValid = true;
             if (this.category.catid != "9a" && this.category.catid != "9b" && this.category.catid != "9c1" && this.category.catid != "9c2" && this.category.catid != "9c3" && this.category.catid != "9c4" && this.category.catid != "9c5" && this.category.catid != "9d"){
                 productForm.value.ptype = null;
+                
+            }
+            if (this.category.catid != 2 ) {
+                productForm.value.ptype2 = null;
             }
 
             /**if (this.category.catid === "8c1" || this.category.catid === "8c2" || this.category.catid === "8c3" || this.category.catid === "8c4" || this.category.catid === "8d" || this.category.catid === "8a" || this.category.catid === "8b" || this.category.catid === "9c1" || this.category.catid === "9c2" || this.category.catid === "9c3" || this.category.catid === "9c4" || this.category.catid === "9d" || this.category.catid === "9a" || this.category.catid === "9b") {
@@ -396,7 +446,7 @@ export class AddProductPage {
     gradeSelected() {
        
             
-        this.af.database.object('/grades/' + this.selectedGrade)
+        this.af.database.object('/grades/' + this.gradecat + '/' + this.selectedGrade)
             .subscribe(
             (result) => {
                 
@@ -573,7 +623,7 @@ export class AddProductPage {
                                   islive: true,
                                   timestamp: firebase.database['ServerValue']['TIMESTAMP'],
                                   name: productForm.value.name,
-                                  grade: productForm.value.grade,
+                                  grade: productForm.value.gradeval,
                                   mrate: productForm.value.mrate,
                                   krate: productForm.value.krate,
                                   productImage: this.productImageURL

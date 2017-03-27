@@ -41,15 +41,15 @@
                     Kalamboli Rate
                 </ion-col>
             </ion-row>
-            <ion-row class="product-price" *ngIf="product?.unit">
+            <!--<ion-row class="product-price" *ngIf="product?.unit">
                 <ion-col text-center *ngIf="product?.mrate">
                     {{product?.mrate | currency:"INR":true}}/{{product?.unit}}
                 </ion-col>
                 <ion-col text-center *ngIf="product?.krate">
                     {{product?.krate | currency:"INR":true}}/{{product?.unit}}
                 </ion-col>
-            </ion-row>
-            <ion-row class="product-price" *ngIf="!product?.unit">
+            </ion-row>-->
+            <ion-row class="product-price" >
                 <ion-col text-center *ngIf="product?.mrate">
                     {{product?.mrate | currency:"INR":true}}/Kg
                 </ion-col>
@@ -68,6 +68,14 @@
                 </ion-col>
                 <ion-col>
                     : {{product?.ptype}}
+                </ion-col>
+            </ion-row>
+            <ion-row *ngIf="product?.ptype2">
+                <ion-col width-25>
+                    Design Type
+                </ion-col>
+                <ion-col>
+                    : {{product?.ptype2}}
                 </ion-col>
             </ion-row>
             <ion-row *ngIf="product?.gradeval">

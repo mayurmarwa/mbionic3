@@ -3,7 +3,7 @@
   <name>MetBazaarBeta</name>
   <description>Platform for metal traders</description>
   <author email="sdey0081@gmail.com" href="http://ionicframework.com/">Croogster</author>
-  <content src="index.html"/>
+  <content src="http://10.0.1.4:8100" original-src="index.html"/>
   <access origin="*"/>
   <allow-navigation href="http://ionic.local/*"/>
   <allow-navigation href="http://10.0.1.4:8100"/>

@@ -19,40 +19,22 @@
 </ion-header>
 
 
-<ion-content padding>
-    <ion-card class="profile-top">
+<ion-content text-center style="background-color:#f0f4f5;">
+    <!--<ion-card class="profile-top">
         <ion-row>
             <ion-col>
                 <div class="profile-photo">
-                    <!--<img [src]="user.photoURL">-->
+                        <img [src]="user.photoURL">
                 </div>
                 <button ion-button block clear color="royal">Change profile picture</button>
             </ion-col>
         </ion-row>
-    </ion-card>
-
-    <ion-list>
-        <ion-list-header>
-            Product Details
-        </ion-list-header>
-
-        <ion-item (click)="updateName()">
-            <ion-grid>
-                <ion-row>
-                    <ion-col width-33>
-                        Name
-                    </ion-col>
-                    <ion-col *ngIf="product?.name">
-                        {{product?.name}}
-                    </ion-col>
-                    <ion-col class="placeholder-profile" *ngIf="!product?.name">
-                        <span>
-                            Tap here to edit.
-                        </span>
-                    </ion-col>
-                </ion-row>
-            </ion-grid>
-        </ion-item>
+    </ion-card>-->
+    <h2>{{product?.name}}</h2>
+    <ion-list text-wrap>
+        <ion-list-header no-lines>
+            Product Details (Tap a value to edit)
+        </ion-list-header>        
 
         <ion-item (click)="updateMrate()">
             <ion-grid>
@@ -61,11 +43,11 @@
                         Market Rate
                     </ion-col>
                     <ion-col *ngIf="product?.mrate">
-                        {{product?.mrate}}
+                        : {{product?.mrate}}
                     </ion-col>
                     <ion-col class="placeholder-profile" *ngIf="!product?.mrate">
                         <span>
-                            Tap here to edit.
+                            : Tap here to edit.
                         </span>
                     </ion-col>
                 </ion-row>
@@ -79,11 +61,11 @@
                         Kalamboli Rate
                     </ion-col>
                     <ion-col *ngIf="product?.krate">
-                        {{product?.krate}}
+                        : {{product?.krate}}
                     </ion-col>
                     <ion-col class="placeholder-profile" *ngIf="!product?.krate">
                         <span>
-                            Tap here to edit.
+                            : Tap here to edit.
                         </span>
                     </ion-col>
                 </ion-row>
@@ -97,11 +79,11 @@
                         Grade
                     </ion-col>
                     <ion-col *ngIf="product?.gradeval">
-                        {{product?.gradeval}}
+                        : {{product?.gradeval}}
                     </ion-col>
                     <ion-col class="placeholder-profile" *ngIf="!product?.gradeval">
                         <span>
-                            Tap here to edit.
+                            : Tap here to edit.
                         </span>
                     </ion-col>
                 </ion-row>
@@ -115,7 +97,7 @@
                         Product Type
                     </ion-col>
                     <ion-col *ngIf="product?.ptype">
-                        {{product?.ptype}}
+                        : {{product?.ptype}}
                     </ion-col>
                 </ion-row>
             </ion-grid>
@@ -128,7 +110,7 @@
                         Category
                     </ion-col>
                     <ion-col *ngIf="product?.pcategory">
-                        {{product?.pcategory}}
+                        : {{product?.pcategory}}
                     </ion-col>                   
                 </ion-row>
             </ion-grid>
@@ -141,7 +123,7 @@
                         Sizes
                     </ion-col>
                     <ion-col *ngIf="product?.sizes">
-                        {{product?.sizes}}
+                        : {{product?.sizes}}
                     </ion-col>
                 </ion-row>
             </ion-grid>
@@ -154,7 +136,7 @@
                         Finish
                     </ion-col>
                     <ion-col *ngIf="product?.finish">
-                        {{product?.finish}}
+                        : {{product?.finish}}
                     </ion-col>
                 </ion-row>
             </ion-grid>
@@ -167,7 +149,7 @@
                         Type
                     </ion-col>
                     <ion-col *ngIf="product?.type">
-                        {{product?.type}}
+                        : {{product?.type}}
                     </ion-col>
                 </ion-row>
             </ion-grid>
@@ -180,7 +162,7 @@
                         SWG
                     </ion-col>
                     <ion-col *ngIf="product?.swg">
-                        {{product?.swg}}
+                        : {{product?.swg}}
                     </ion-col>
                 </ion-row>
             </ion-grid>
@@ -193,7 +175,7 @@
                         SCH
                     </ion-col>
                     <ion-col *ngIf="product?.sch">
-                        {{product?.sch}}
+                        : {{product?.sch}}
                     </ion-col>
                 </ion-row>
             </ion-grid>
@@ -205,7 +187,7 @@
                         MM
                     </ion-col>
                     <ion-col *ngIf="product?.mm">
-                        {{product?.mm}}
+                        : {{product?.mm}}
                     </ion-col>
                 </ion-row>
             </ion-grid>
@@ -217,7 +199,7 @@
                         Quantity
                     </ion-col>
                     <ion-col *ngIf="product?.quantity">
-                        {{product?.quantity}}
+                        : {{product?.quantity}}
                     </ion-col>
                 </ion-row>
             </ion-grid>
@@ -229,7 +211,7 @@
                         Unit
                     </ion-col>
                     <ion-col *ngIf="product?.unit">
-                        {{product?.unit}}
+                        : {{product?.unit}}
                     </ion-col>
                 </ion-row>
             </ion-grid>
@@ -241,7 +223,7 @@
                         Ultra Guarantee
                     </ion-col>
                     <ion-col *ngIf="product?.unit">
-                        {{product?.guarantee}}
+                        : {{product?.guarantee}}
                     </ion-col>
                 </ion-row>
             </ion-grid>
@@ -253,11 +235,11 @@
                         Thickness
                     </ion-col>
                     <ion-col *ngIf="product?.thickness">
-                        {{product?.thickness}}
+                        : {{product?.thickness}}
                     </ion-col>
                     <ion-col class="placeholder-profile" *ngIf="!product?.thickness">
                         <span>
-                            Tap here to edit.
+                            : Tap here to edit.
                         </span>
                     </ion-col>
                 </ion-row>
@@ -271,11 +253,11 @@
                         Width
                     </ion-col>
                     <ion-col *ngIf="product?.width">
-                        {{product?.width}}
+                        : {{product?.width}}
                     </ion-col>
                     <ion-col class="placeholder-profile" *ngIf="!product?.width">
                         <span>
-                            Tap here to edit.
+                            : Tap here to edit.
                         </span>
                     </ion-col>
                 </ion-row>
@@ -289,11 +271,11 @@
                         Length
                     </ion-col>
                     <ion-col *ngIf="product?.length">
-                        {{product?.length}}
+                        : {{product?.length}}
                     </ion-col>
                     <ion-col class="placeholder-profile" *ngIf="!product?.length">
                         <span>
-                            Tap here to edit.
+                            : Tap here to edit.
                         </span>
                     </ion-col>
                 </ion-row>
@@ -307,11 +289,11 @@
                         Weight
                     </ion-col>
                     <ion-col *ngIf="product?.weight">
-                        {{product?.weight}}
+                        : {{product?.weight}}
                     </ion-col>
                     <ion-col class="placeholder-profile" *ngIf="!product?.weight">
                         <span>
-                            Tap here to edit.
+                            : Tap here to edit.
                         </span>
                     </ion-col>
                 </ion-row>
@@ -325,7 +307,7 @@
                         Nos.
                     </ion-col>
                     <ion-col *ngIf="product?.nos">
-                        {{product?.nos}}
+                        : {{product?.nos}}
                     </ion-col>                    
                 </ion-row>
             </ion-grid>
@@ -338,7 +320,7 @@
                         Quality
                     </ion-col>
                     <ion-col *ngIf="product?.quality">
-                        {{product?.quality}}
+                        : {{product?.quality}}
                     </ion-col>
                 </ion-row>
             </ion-grid>
@@ -352,11 +334,11 @@
                         Composition
                     </ion-col>
                     <ion-col *ngIf="product?.composition">
-                        {{product?.composition}}
+                        : {{product?.composition}}
                     </ion-col>
                     <ion-col class="placeholder-profile" *ngIf="!product?.composition">
                         <span>
-                            Tap here to edit.
+                            : Tap here to edit.
                         </span>
                     </ion-col>
                 </ion-row>
@@ -370,11 +352,11 @@
                         Origin
                     </ion-col>
                     <ion-col *ngIf="product?.origin">
-                        {{product?.origin}}
+                        : {{product?.origin}}
                     </ion-col>
                     <ion-col class="placeholder-profile" *ngIf="!product?.origin">
                         <span>
-                            Tap here to edit.
+                            : Tap here to edit.
                         </span>
                     </ion-col>
                 </ion-row>
@@ -388,11 +370,11 @@
                         Brand
                     </ion-col>
                     <ion-col *ngIf="product?.brand">
-                        {{product?.brand}}
+                        : {{product?.brand}}
                     </ion-col>
                     <ion-col class="placeholder-profile" *ngIf="!product?.brand">
                         <span>
-                            Tap here to edit.
+                            : Tap here to edit.
                         </span>
                     </ion-col>
                 </ion-row>
@@ -406,11 +388,11 @@
                         MTC
                     </ion-col>
                     <ion-col *ngIf="product?.mtc">
-                        {{product?.mtc}}
+                        : {{product?.mtc}}
                     </ion-col>
                     <ion-col class="placeholder-profile" *ngIf="!product?.mtc">
                         <span>
-                            Tap here to edit.
+                            : Tap here to edit.
                         </span>
                     </ion-col>
                 </ion-row>

@@ -1,0 +1,46 @@
+page-member-details {
+    
+    .product-details{
+         background-color:#f0f4f5;
+        color:#898989;
+        .item {
+  background-color: transparent;
+  border:none;   /*Removes all borders*/
+  color:#898989;
+  custom-icon{
+      font-size: 3rem !important;
+  }
+  h1{
+        color:#000000;
+    }
+    h2{
+        color:#515151;
+    }
+  
+}
+ 
+/*Changes the border for the last item
+.custom .item:last-child {
+  border-bottom: 1px solid #666;
+}*/
+ 
+.item-complex .item-content, .dark .item-radio .item-content {
+  background-color: transparent;
+}
+    }
+   
+    .profile-photo {
+                padding-top: 16px;
+                
+                $photoSize: 128px;
+                
+                img {
+                    width: $photoSize;
+                    height: $photoSize;                    
+                    border: solid 2px white;
+                    margin: 0 auto;
+                }
+        }
+}
+
+

@@ -26,11 +26,13 @@ export class CategoryProductsPage {
     public keys: any;
     public oby: any;
     public sortType: any;
+    public title: any;
 
     constructor(public navCtrl: NavController, public navParams: NavParams, public af: AngularFire, public alertCtrl: AlertController, public modalCtrl: ModalController) {
 
         //this.category = navParams.get("category");
         this.catid = navParams.get("catid");
+        this.title = navParams.get("cattitle");
         this.getProducts().then(data => {this.buildArray(data) });
         
         //this.buildArray(this.productList);

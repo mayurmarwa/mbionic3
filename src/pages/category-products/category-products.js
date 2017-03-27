@@ -28,6 +28,7 @@ var CategoryProductsPage = (function () {
         this.modalCtrl = modalCtrl;
         //this.category = navParams.get("category");
         this.catid = navParams.get("catid");
+        this.title = navParams.get("cattitle");
         this.getProducts().then(function (data) { _this.buildArray(data); });
         //this.buildArray(this.productList);
         //console.log(this.productList);

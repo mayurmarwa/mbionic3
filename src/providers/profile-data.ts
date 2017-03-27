@@ -57,15 +57,16 @@ export class ProfileData {
             //lastName: lastName,
         });
     }
-    updateVat(Vat: string): any {
+    
+    updateExcise(data): any {
+        console.log(data);
         return this.userProfile.child(this.currentUser.uid).update({
-            vat: Vat,
-            //lastName: lastName,
-        });
-    }
-    updateExcise(Excise: string): any {
-        return this.userProfile.child(this.currentUser.uid).update({
-            excise: Excise,
+            excise: data.excise,
+            comsn: data.comsn,
+            range: data.range,
+            division: data.division,
+            vat: data.vat,
+            pan: data.pan
             //lastName: lastName,
         });
     }

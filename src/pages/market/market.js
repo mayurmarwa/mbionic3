@@ -49,9 +49,9 @@ var MarketPage = (function () {
     MarketPage.prototype.selectSub = function (catid) {
         this.navCtrl.push(SelectSubcatPage, { catid: catid });
     };
-    MarketPage.prototype.categoryProducts = function (catid) {
+    MarketPage.prototype.categoryProducts = function (catid, title) {
         //console.log(category);
-        this.navCtrl.push(CategoryProductsPage, { catid: catid });
+        this.navCtrl.push(CategoryProductsPage, { catid: catid, cattitle: title });
     };
     MarketPage.prototype.openNotificationsPage = function () {
         this.navCtrl.push(NotificationsPage);

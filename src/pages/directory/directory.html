@@ -16,13 +16,15 @@
 <ion-content padding>
 
         <ion-list  [virtualScroll]="directoryList | async">
-            <ion-item *virtualItem="let member"  approxItemHeight="150px">
-                <ion-avatar>
+            <ion-item *virtualItem="let member"  approxItemHeight="150px" (click)="viewDetails(member)">
+                <ion-avatar item-left>
                     <img src="assets/img/noimage.png">
                 </ion-avatar>  
                 <h2>{{member?.Name}}</h2>
-                <p>{{member?.Address}}</p>
+                <!--<p>{{member["Mobile 1"]}} | {{member["Mobile 2"]}}</p>
+                
                 <br>
+                    <p>Address: {{member?.Address}}</p>
                 <p>
                     Email: {{member?.Email}}
                     Website: {{member?.Website}}
@@ -39,7 +41,7 @@
                 </p>
                 <br>
                 <p> Fax: {{member?.Fax}}
-                </p>
+                </p>-->
             </ion-item>
         </ion-list>
 </ion-content>

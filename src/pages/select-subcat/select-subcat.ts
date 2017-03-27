@@ -20,10 +20,10 @@ export class SelectSubcatPage {
 
     constructor(public navCtrl: NavController, public navParams: NavParams, public af: AngularFire) {
         this.catid = navParams.get("catid");
-        this.loadCategory(this.catid);
+        this.loadCategory(this.catid,null);
     }
 
-    loadCategory(catid) {
+    loadCategory(catid,cattitle) {
 
         if (catid === 4 ) {
 
@@ -45,7 +45,7 @@ export class SelectSubcatPage {
             this.categories = this.af.database.list('/productcategories/' + this.parentcat + '/subcategories/pipes/types/', { query: { orderByChild: 'oid' } });
         }
         else {
-            this.navCtrl.push(CategoryProductsPage, { catid: catid });
+            this.navCtrl.push(CategoryProductsPage, { catid: catid, cattitle: cattitle });
         }
     }
   ionViewDidLoad() {

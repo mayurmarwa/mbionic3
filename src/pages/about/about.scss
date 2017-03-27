@@ -1,3 +1,29 @@
 page-about {
+   
+    .profile-photo {
+                padding-top: 16px;
+                
+                $photoSize: 128px;
+                
+                img {
+                    width: $photoSize;
+                    height: $photoSize;                    
+                    border: solid 2px white;
+                    margin: 0 auto;
+                }
+        }
+    .item {
+        background-color: transparent;
+        .item-complex .item-content, .dark .item-radio .item-content {
+  background-color: transparent;
+}
+    }
 
+    custom-icon{
+                    font-size: 5em;
+       
+        }
+    custom-icon how3 {
+    font-size: 7em;
+}
 }

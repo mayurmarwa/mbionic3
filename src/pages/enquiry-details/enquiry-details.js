@@ -13,6 +13,7 @@ import { AngularFire } from 'angularfire2';
 import { Storage } from '@ionic/storage';
 import { MyProfilePage } from '../my-profile/my-profile';
 import { ProductPagePage } from '../product-page/product-page';
+import { RequirementDetailsPage } from '../requirement-details/requirement-details';
 /*
   Generated class for the EnquiryDetails page.
 
@@ -61,6 +62,9 @@ var EnquiryDetailsPage = (function () {
     };
     EnquiryDetailsPage.prototype.viewProduct = function () {
         this.navCtrl.push(ProductPagePage, { product: this.enquiry.product });
+    };
+    EnquiryDetailsPage.prototype.viewRequirement = function () {
+        this.navCtrl.push(RequirementDetailsPage, { requirement: this.enquiry.requirement });
     };
     return EnquiryDetailsPage;
 }());

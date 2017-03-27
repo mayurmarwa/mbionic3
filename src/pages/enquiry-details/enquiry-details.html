@@ -13,7 +13,8 @@
 </ion-header>
 
 
-<ion-content>
+    
+<ion-content style="background-color:#f0f4f5;">
 
     <div class="details">
         <ion-grid *ngIf="!enquiry?.quote">
@@ -52,19 +53,7 @@
                     </ion-col>
                 </ion-row>
             </div>
-            <ion-row ion-item *ngIf="enquiry?.type === 'sent' ">
-                <ion-col width-80>
-                    <h2>Seller: {{enquiry?.otheruserName}} | {{enquiry?.otheruserNo}}</h2>
-                </ion-col>
-                <button ion-button item-right clear small (click)="viewProfile()">Profile</button>
-            </ion-row>
-            <ion-row *ngIf="enquiry?.type === 'received' ">
-                <ion-col width-80>
-                    <h2>Buyer: {{enquiry?.otheruserName}} | {{enquiry?.otheruserNo}}</h2>
-                </ion-col>
-                    <button ion-button item-right clear small (click)="viewProfile()">Profile</button>              
-            </ion-row>
-        </ion-grid>
+        </ion-grid>        
 
         <ion-grid *ngIf="enquiry?.quote">
             <ion-row ion-item no-lines>
@@ -100,17 +89,38 @@
                     </ion-col>
                 </ion-row>
             </div>
-            <ion-row style="margin-left:20px;" *ngIf="enquiry?.type === 'sent' ">
-                Buyer : <button ion-button clear small (click)="viewProfile()">View Profile</button>
-                
-            </ion-row>
-            <ion-row style="margin-left:20px;" *ngIf="enquiry?.type === 'received' ">
-                Seller : <button ion-button clear small (click)="viewProfile()">View Profile</button>               
-                
-            </ion-row>
+            
         </ion-grid>
     </div>
+    <div class="details" style="margin-top: 10px;">
+        <ion-item no-lines>
+            <ion-grid *ngIf="!enquiry?.quote">
+                <ion-row ion-item *ngIf="enquiry?.type === 'sent' ">
+                    <ion-col width-80>
+                        <h2>Seller </h2>
+                        <h3>{{enquiry?.otheruserName}} | {{enquiry?.otheruserNo}}</h3>
+                    </ion-col>
+                    <button ion-button item-right clear small (click)="viewProfile()">Profile</button>
+                </ion-row>
+                <ion-row *ngIf="enquiry?.type === 'received' ">
+                    <ion-col width-80>
+                        <h2>Buyer: {{enquiry?.otheruserName}} | {{enquiry?.otheruserNo}}</h2>
+                    </ion-col>
+                    <button ion-button item-right clear small (click)="viewProfile()">Profile</button>
+                </ion-row>
+            </ion-grid>
+            <ion-grid *ngIf="enquiry?.quote">
+                <ion-row style="margin-left:20px;" *ngIf="enquiry?.type === 'sent' ">
+                    Buyer : <button ion-button clear small (click)="viewProfile()">View Profile</button>
 
+                </ion-row>
+                <ion-row style="margin-left:20px;" *ngIf="enquiry?.type === 'received' ">
+                    Seller : <button ion-button clear small (click)="viewProfile()">View Profile</button>
+
+                </ion-row>
+            </ion-grid>
+        </ion-item>
+    </div>
     
     <ion-list class="chat" no-lines>
         <div *ngFor="let message of messageList | async">

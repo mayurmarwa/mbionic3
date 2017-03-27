@@ -1,0 +1,70 @@
+<!--
+  Generated template for the MemberDetails page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Member Details</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding class="product-details">
+
+    <ion-row>
+        <ion-col>
+            <div class="profile-photo" *ngIf="member?.photoURL">
+                <img [src]="member?.photoURL">
+            </div>
+            <!--<div class="profile-photo" *ngIf="!member?.photoURL">
+                <img src="/assets/img/noimage.png">
+            </div>-->
+        </ion-col>
+    </ion-row>
+
+    <ion-list no-lines>
+        <ion-item text-center text-wrap style="padding-top:10px">
+            <h1>{{member?.Name}}</h1>    
+            <p>{{member?.Address}}</p>       
+        </ion-item>
+        <ion-item text-wrap ion-item *ngIf="member?.Email">
+            <custom-icon set="mb" name="mail" item-left></custom-icon>
+            <p>E-mail ID</p>
+            {{member?.Email}}
+        </ion-item>
+        <ion-item ion-item text-wrap *ngIf="member['Mobile 1']">
+            <custom-icon set="mb" name="mobile" item-left></custom-icon>            
+            <p>Mobile 1</p>
+            <h2>{{member["Mobile 1"]}}</h2>
+        </ion-item>
+        <ion-item ion-item text-wrap *ngIf="member['Mobile 2']">
+            <custom-icon set="mb" name="mobile" item-left></custom-icon>            
+            <p>Mobile 2</p>
+            <h2>{{member["Mobile 2"]}}</h2>
+        </ion-item>
+        <ion-item ion-item text-wrap *ngIf="member['Mobile 3']">
+            <custom-icon set="mb" name="mobile" item-left></custom-icon>            
+            <p>Mobile 3</p>
+            <h2>{{member["Mobile 3"]}}</h2>
+        </ion-item>
+        <ion-item ion-item text-wrap *ngIf="member['Office 1']">
+            <custom-icon set="mb" name="dialer" item-left></custom-icon>            
+            <p>Office 1</p>
+            <h2>{{member["Office 1"]}}</h2>
+        </ion-item> 
+        <ion-item ion-item text-wrap *ngIf="member['Office 2']">
+            <custom-icon set="mb" name="dialer" item-left></custom-icon>            
+            <p>Office 2</p>
+            <h2>{{member["Office 2"]}}</h2>
+        </ion-item> 
+        <ion-item ion-item text-wrap *ngIf="member['Office 3']">
+            <custom-icon set="mb" name="dialer" item-left></custom-icon>            
+            <p>Office 3</p>
+            <h2>{{member["Office 3"]}}</h2>
+        </ion-item>        
+    </ion-list>
+</ion-content>

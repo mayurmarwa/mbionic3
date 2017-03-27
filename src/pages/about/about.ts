@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+import { AngularFire, FirebaseListObservable } from 'angularfire2';
 
 /*
   Generated class for the About page.
@@ -12,11 +13,16 @@ import { NavController, NavParams } from 'ionic-angular';
   templateUrl: 'about.html'
 })
 export class AboutPage {
+    public about: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {}
+    constructor(public navCtrl: NavController, public navParams: NavParams, public af: AngularFire) {
+        this.about = af.database.object('/about');
+        
+    }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad AboutPage');
   }
 
+ 
 }

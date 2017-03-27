@@ -9,6 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+import { AngularFire } from 'angularfire2';
 /*
   Generated class for the About page.
 
@@ -16,9 +17,11 @@ import { NavController, NavParams } from 'ionic-angular';
   Ionic pages and navigation.
 */
 var AboutPage = (function () {
-    function AboutPage(navCtrl, navParams) {
+    function AboutPage(navCtrl, navParams, af) {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
+        this.af = af;
+        this.about = af.database.object('/about');
     }
     AboutPage.prototype.ionViewDidLoad = function () {
         console.log('ionViewDidLoad AboutPage');
@@ -30,7 +33,7 @@ AboutPage = __decorate([
         selector: 'page-about',
         templateUrl: 'about.html'
     }),
-    __metadata("design:paramtypes", [NavController, NavParams])
+    __metadata("design:paramtypes", [NavController, NavParams, AngularFire])
 ], AboutPage);
 export { AboutPage };
 //# sourceMappingURL=about.js.map

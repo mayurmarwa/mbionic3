@@ -27,7 +27,7 @@ var ProductPagePage = (function () {
             storage.get('currentuser').then(function (val) {
                 _this.currentuser = JSON.parse(val);
                 _this.product = navParams.get("product");
-                console.log(_this.product);
+                //console.log(this.product);
                 //console.log(this.currentuser);
             })
                 .catch(function (err) {

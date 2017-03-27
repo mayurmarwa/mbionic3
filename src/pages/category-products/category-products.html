@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>{{category?.title}}</ion-title>
+    <ion-title>{{title}}</ion-title>
   </ion-navbar>
     <ion-grid text-center style="background-color: #f4f4f4;">
         <ion-row>
@@ -31,54 +31,79 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content padding >
      
     <ion-row wrap>
         <ion-col width-50 *ngFor="let product of productList | orderBy : oby" (click)="openproductpage(product)">
             <ion-card >
-                <ion-card-content >
+                <ion-card-content>
                     <div >
                         <div class="gradeCircle2">{{product.gradeval}}</div>
-                    </div>
-                         <!--<ion-card-title>
-                        {{product.name}}
-                    </ion-card-title>-->                    
-                    <div class="product-price" *ngIf="product?.unit">
-                        <ion-row text-center *ngIf="product?.mrate">
-                           Market Rate: {{product?.mrate | currency:"INR":true}}/{{product?.unit}}
+                    </div>              
+                    <ion-grid class="product-highlighters">
+                        <ion-row>
+                            <ion-col text-center *ngIf="product?.finish">
+                                Finish
+                            </ion-col>
+                            <ion-col text-center *ngIf="product?.length">
+                                Length
+                            </ion-col>
+                            <ion-col text-center *ngIf="product?.weight && !product?.length">
+                                Weight
+                            </ion-col>
                         </ion-row>
-                        <ion-row text-center *ngIf="product?.krate">
-                           Kalamboli Rate: {{product?.krate | currency:"INR":true}}/{{product?.unit}}
+                        <ion-row>
+                            <ion-col class="product-data" text-center *ngIf="product?.finish">
+                                {{product?.finish}}
+                            </ion-col>
+                            <ion-col class="product-data" text-center *ngIf="product?.length">
+                                {{product?.length}} mm
+                            </ion-col>
+                            <ion-col class="product-data" text-center *ngIf="product?.weight  && !product?.length">
+                                {{product?.weight}} Kg
+                            </ion-col>                           
                         </ion-row>
-                    </div>   
-                    <div class="product-price" *ngIf="!product?.unit">
-                        <ion-row text-center *ngIf="product?.mrate">
-                           Market Rate: {{product?.mrate | currency:"INR":true}}/Kg
+                        <ion-row>
+                            <ion-col text-center *ngIf="product?.sizes">
+                                Size
+                            </ion-col>
+                            <ion-col text-center *ngIf="product?.width">
+                                Width
+                            </ion-col>
+                            <ion-col text-center *ngIf="product?.thickness">
+                                Thickness
+                            </ion-col>
                         </ion-row>
-                        <ion-row text-center *ngIf="product?.krate">
-                           Kalamboli Rate: {{product?.krate | currency:"INR":true}}/Kg
+                        <ion-row>
+                            <ion-col class="product-data" text-center *ngIf="product?.sizes">
+                                {{product?.sizes}} {{product?.sizeunit}}
+                            </ion-col>                            
+                            <ion-col class="product-data" text-center *ngIf="product?.width">
+                                {{product?.width }} mm
+                            </ion-col>
+                            <ion-col class="product-data" text-center *ngIf="product?.thickness">
+                                {{product?.thickness }} mm
+                            </ion-col>
+                        </ion-row>                                              
+                        <ion-row>
+                            <ion-col text-center *ngIf="product?.mrate">
+                                Market
+                            </ion-col>
+                            <ion-col text-center *ngIf="product?.krate">
+                                Kalamboli
+                            </ion-col>
                         </ion-row>
-                    </div>                
+                        <ion-row>
+                            <ion-col class="product-data" text-center *ngIf="product?.mrate">
+                                {{product?.mrate | currency:"INR":true}}/Kg
+                            </ion-col>
+                            <ion-col class="product-data" text-center *ngIf="product?.krate">
+                                {{product?.krate | currency:"INR":true}}/Kg
+                            </ion-col>
+                        </ion-row>                                                           
+                    </ion-grid>                
                 </ion-card-content>
             </ion-card>
         </ion-col>
     </ion-row>
-    <!--<ion-list [virtualScroll]="productList | orderBy : oby ">
-        <ion-item *virtualItem="let product" (click)="openproductpage(product)" approxItemHeight="150px">
-            <ion-card>
-                <ion-card-content text-center>
-                    <div class="gradeCircle2">{{product.gradeval}}</div>
-                    <ion-card-title>
-                        {{product.name}}
-                    </ion-card-title>
-                    <p>
-                        Market Rate: Rs.{{product.mrate}}/{{product.unit}}
-                        <br>
-                        Kalamboli Rate: Rs.{{product.krate}}/{{product.unit}}
-                    </p>
-                </ion-card-content>
-            </ion-card>
-        </ion-item>
-    </ion-list>-->
-
 </ion-content>

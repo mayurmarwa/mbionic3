@@ -75,20 +75,62 @@
             <h2 *ngIf="userProfile?.companyprofile">{{userProfile?.companyprofile}}</h2>
             <h2 *ngIf="!userProfile?.companyprofile" class="placeholder-profile">Enter Company Profile</h2>
         </ion-item>
-        <ion-item text-wrap>
-            <button ion-button clear item-right icon-only (click)="updateVat()"><custom-icon set="mb" name="edit"></custom-icon></button>
-            <custom-icon set="mb" name="vat" item-left></custom-icon>            
-            <p>VAT/TIN</p>
-            <h2 *ngIf="userProfile?.vat">{{userProfile?.vat}}</h2>
-            <h2 *ngIf="!userProfile?.vat" class="placeholder-profile">Enter VAT/TIN Details</h2>
-        </ion-item>
-        <ion-item text-wrap>
+       
+        <ion-item>
             <button ion-button clear item-right icon-only (click)="updateExcise()"><custom-icon set="mb" name="edit"></custom-icon></button>
-            <custom-icon set="mb" name="post" item-left></custom-icon>            
-            <p>Excise Details</p>
-            <h2 *ngIf="userProfile?.excise">{{userProfile?.excise}}</h2>
-            <h2 *ngIf="!userProfile?.excise" class="placeholder-profile">Enter Excise Details</h2>
-        </ion-item>
+            <custom-icon set="mb" name="post" item-left></custom-icon>
+            Excise Details:
+        </ion-item>        
+            <ion-grid text-center style="margin-left:10%">
+                <ion-row>
+                    <ion-col>
+                        <ion-item text-wrap>
+                            <p>ECC/Exc.Reg.Nos.</p>
+                            <h2 *ngIf="userProfile?.excise">{{userProfile?.excise}}</h2>
+                            <h2 *ngIf="!userProfile?.excise" class="placeholder-profile">Enter Details</h2>
+                        </ion-item>
+                    </ion-col>
+                    <ion-col>
+                        <ion-item text-wrap>
+                            <p>Commissionerate</p>
+                            <h2 *ngIf="userProfile?.comsn">{{userProfile?.comsn}}</h2>
+                            <h2 *ngIf="!userProfile?.comsn" class="placeholder-profile">Enter Details</h2>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col>
+                        <ion-item text-wrap>
+                            <p>Range</p>
+                            <h2 *ngIf="userProfile?.range">{{userProfile?.range}}</h2>
+                            <h2 *ngIf="!userProfile?.range" class="placeholder-profile">Enter Details</h2>
+                        </ion-item>
+                    </ion-col>
+                    <ion-col>
+                        <ion-item text-wrap>
+                            <p>Division</p>
+                            <h2 *ngIf="userProfile?.division">{{userProfile?.division}}</h2>
+                            <h2 *ngIf="!userProfile?.division" class="placeholder-profile">Enter Details</h2>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col>
+                        <ion-item text-wrap>
+                            <p>VAT TIN</p>
+                            <h2 *ngIf="userProfile?.vat">{{userProfile?.vat}}</h2>
+                            <h2 *ngIf="!userProfile?.vat" class="placeholder-profile">Enter Details</h2>
+                        </ion-item>
+                    </ion-col>
+                    <ion-col>
+                        <ion-item text-wrap>
+                            <p>PAN No.</p>
+                            <h2 *ngIf="userProfile?.pan">{{userProfile?.pan}}</h2>
+                            <h2 *ngIf="!userProfile?.pan" class="placeholder-profile">Enter Details</h2>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>       
     </ion-list>
 
 

@@ -29,6 +29,7 @@ var MyProductsPage = (function () {
         storage.ready().then(function () {
             storage.get('currentuser').then(function (val) {
                 _this.currentuser = JSON.parse(val);
+                _this.segment = "uploaded";
             })
                 .catch(function (err) {
                 return console.log(err);
@@ -50,6 +51,11 @@ var MyProductsPage = (function () {
     };
     MyProductsPage.prototype.selectcat = function () {
         this.navCtrl.push(SelectCategoryPage);
+    };
+    MyProductsPage.prototype.uploadProduct = function () {
+        if (this.segment === 'add') {
+            this.navCtrl.push(SelectCategoryPage);
+        }
     };
     return MyProductsPage;
 }());
