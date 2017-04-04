@@ -41,6 +41,7 @@ import { AboutPage } from '../pages/about/about';
 import { ShareAppPage } from '../pages/share-app/share-app';
 import { ResetpasswordPage } from '../pages/resetpassword/resetpassword';
 import { SignupPage } from '../pages/signup/signup';
+import { VerifyMobilePage } from '../pages/verify-mobile/verify-mobile';
 import { MetalCalculatorPage } from '../pages/metal-calculator/metal-calculator';
 import { CreateProfilePage } from '../pages/create-profile/create-profile';
 
@@ -100,6 +101,7 @@ export const firebaseConfig = {
     ShareAppPage,
     ResetpasswordPage,
     SignupPage,
+    VerifyMobilePage,
     CreateAccountPage,
     CreateProfilePage,
     OrderBy,
@@ -149,6 +151,7 @@ export const firebaseConfig = {
     ShareAppPage,
     ResetpasswordPage,
     SignupPage,
+    VerifyMobilePage,
     CreateAccountPage,
     CreateProfilePage,
     MetalCalculatorPage,

@@ -1,3 +1,19 @@
 page-prices {
+    .up{
+        h3{
+            color: green;
+        }
+        ion-icon{
+            color: green;
+        }
 
+    }
+    .down{
+        h3{
+            color: red;
+        }
+        ion-icon{
+            color: red;
+        }
+    }
 }

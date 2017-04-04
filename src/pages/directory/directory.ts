@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
-import { AngularFire, FirebaseListObservable } from 'angularfire2';
+import { NavController, NavParams, LoadingController } from 'ionic-angular';
 import { ModalController } from 'ionic-angular';
 import { MemberDetailsPage } from '../member-details/member-details';
 import { PopoverController } from 'ionic-angular';
-
+import firebase from 'firebase';
 
 /*
   Generated class for the Directory page.
@@ -18,15 +17,62 @@ import { PopoverController } from 'ionic-angular';
 })
 export class DirectoryPage {
 	
-	directoryList: FirebaseListObservable<any>;
+    loadedlist: any;
+    directory: any;
+    directoryRef: any;
 
-    constructor(public navCtrl: NavController, public navParams: NavParams, public af: AngularFire, public modalCtrl: ModalController, public popoverCtrl: PopoverController) {
+
+    constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController, public popoverCtrl: PopoverController,public loadingCtrl: LoadingController) {
   
-	this.directoryList = af.database.list('/directory',{query: {orderByChild: 'name'}});
-  }
+        let loadingPopup = this.loadingCtrl.create({
+            content: 'Loading...'
+        });
+        loadingPopup.present();
+        this.directoryRef = firebase.database().ref('/directory');
 
+    this.directoryRef.on('value', memberList => {
+        let members = [];
+        memberList.forEach(country => {
+            members.push(country.val());
+        });
+
+        this.directory = members;
+        this.loadedlist = members;
+        loadingPopup.dismiss();
+    });
+    
+    }
+
+    initializeItems(): void {
+        this.directory = this.loadedlist;
+    }
   ionViewDidLoad() {
     console.log('ionViewDidLoad DirectoryPage');
+    }
+  getItems(searchbar) {
+      // Reset items back to all of the items
+      this.initializeItems();
+
+      // set q to the value of the searchbar
+      var q = searchbar.srcElement.value;
+
+
+      // if the value is an empty string don't filter the items
+      if (!q) {
+          return;
+      }
+
+      this.directory = this.directory.filter((v) => {
+          if (v.Name && q) {
+              if (v.Name.toLowerCase().indexOf(q.toLowerCase()) > -1) {
+                  return true;
+              }
+              return false;
+          }
+      });
+
+      console.log(q, this.directory.length);
+
   }
 
   viewDetails(member) {

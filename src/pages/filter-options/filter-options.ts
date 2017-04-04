@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, ViewController } from 'ionic-angular';
+import { AngularFire, FirebaseListObservable } from 'angularfire2';
+
 
 /*
   Generated class for the FilterOptions page.
@@ -17,8 +19,21 @@ export class FilterOptionsPage {
     public weightval: any;
     public length: any;
     public width: any;
+    public form: any;
+    public gradeList: FirebaseListObservable<any>;
+    public gradecat: any;
+    public category: any;
+    public selectedAlloy: any;
+    public typeOD: boolean = true;
 
-    constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController) {}
+    constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, public af: AngularFire) {
+
+        this.category = {};
+        this.category.catid = navParams.get("catid");
+        this.form = {};
+        this.getGrades();
+
+    }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad FilterOptionsPage');
@@ -30,12 +45,68 @@ export class FilterOptionsPage {
   }
   applyFilter() {
 
-      this.viewCtrl.dismiss(true,this.weight); //Send back the form object when closeModal is called
+      this.viewCtrl.dismiss(this.form); //Send back the form object when closeModal is called
   }
 
   consolelog() {
 
-      console.log(this.weight);
-      console.log(this.weightval);
+      //console.log(this.weight);
+      //console.log(this.weightval);
   }
+
+  getGrades() {
+      if (this.category.catid == 1 || this.category.catid == 2 || this.category.catid == 3 || this.category.catid === '4a' || this.category.catid === '4b' || this.category.catid === '4c' || this.category.catid === '4d' || this.category.catid === '4e' || this.category.catid == 5 || this.category.catid == 6 || this.category.catid == 7) {
+          this.gradecat = 1;
+      }
+      else if (this.category.catid === '8a' || this.category.catid === '8b' || this.category.catid === '8c1' || this.category.catid === '8c2' || this.category.catid === '8c3' || this.category.catid === '8c4' || this.category.catid === '8c5' || this.category.catid === '8d') {
+          this.gradecat = 2;
+      }
+      else if (this.category.catid === '9a' || this.category.catid === '9b' || this.category.catid === '9c1' || this.category.catid === '9c2' || this.category.catid === '9c3' || this.category.catid === '9c4' || this.category.catid === '9c5' || this.category.catid === '9d') {
+          this.form.selectedAlloy = 'Hastelloy';
+          this.gradecat = 3;
+      }
+      else {
+          this.gradecat = 1;
+      }
+      this.gradeList = this.af.database.list('/grades/' + this.gradecat);
+  }
+
+  typeSelected() {
+
+      //console.log(this.typeOD);
+      //console.log(this.seamlessForm.value.type);
+
+      if (this.form.type === "OD") {
+          this.typeOD = true;
+      }
+      else {
+          this.typeOD = false;
+      }
+      //console.log(this.typeOD);
+
+  }
+
+  alloySelected() {
+
+      if (this.form.selectedAlloy === 'Hastelloy') {
+          this.gradecat = 3;
+      }
+      else if (this.form.selectedAlloy === 'Inconel') {
+          this.gradecat = 4;
+      }
+      else if (this.form.selectedAlloy === 'Monel') {
+          this.gradecat = 5;
+      }
+      else if (this.form.selectedAlloy === 'Nimonic') {
+          this.gradecat = 6;
+      }
+      else if (this.form.selectedAlloy === 'Nickel') {
+          this.gradecat = 7;
+      }
+      else if (this.form.selectedAlloy === 'Titanium') {
+          this.gradecat = 8;
+      }
+      this.gradeList = this.af.database.list('/grades/' + this.gradecat);
+  }
+
 }

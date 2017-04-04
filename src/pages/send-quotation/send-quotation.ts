@@ -3,6 +3,7 @@ import { NavController, NavParams, AlertController, LoadingController  } from 'i
 import { FormBuilder, Validators } from '@angular/forms';
 import { AngularFire } from 'angularfire2';
 import { Storage } from '@ionic/storage';
+import { AuthService } from '../../providers/auth.service';
 import firebase from 'firebase';
 
 /*
@@ -24,8 +25,10 @@ export class SendQuotationPage {
 	public userEnquiries: any;
     public postuserEnquiries: any;
     public loading: any;
+    public poster: any;
+    public user: any;
 
-    constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public af: AngularFire, public alertCtrl: AlertController, public loadingCtrl: LoadingController, public storage: Storage) {
+    constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public af: AngularFire, public authService: AuthService, public alertCtrl: AlertController, public loadingCtrl: LoadingController, public storage: Storage) {
         storage.ready().then(() => {
             storage.get('currentuser').then((val) => {
 
@@ -36,7 +39,32 @@ export class SendQuotationPage {
                 this.userEnquiries = af.database.list('/users/' + this.currentuser.uid + '/enquiries');
                 this.postuserEnquiries = af.database.list('/users/' + this.postuserID + '/enquiries');
 
-                
+                this.authService.getFullProfile(this.postuserID).first()
+                    .subscribe(user => {
+                        //loading.dismiss();
+                        // this.user.displayName = user.displayName;
+                        //this.user.email = user.email || user.providerData[0].email || 'Not set yet.';
+                        //this.user.photoURL = user.photoURL || this.user.photoURL;
+                        this.poster = user;
+                        //console.log(this.seller);
+                    }, (error) => {
+                        //loading.dismiss();
+                        console.log('Error: ' + JSON.stringify(error));
+                    });
+
+                this.authService.getFullProfile(this.currentuser.uid).first()
+                    .subscribe(user => {
+                        //loading.dismiss();
+                        // this.user.displayName = user.displayName;
+                        //this.user.email = user.email || user.providerData[0].email || 'Not set yet.';
+                        //this.user.photoURL = user.photoURL || this.user.photoURL;
+                        this.user = user;
+                        //console.log(this.user);
+                    }, (error) => {
+                        //loading.dismiss();
+                        console.log('Error: ' + JSON.stringify(error));
+                    });
+
 
             });
 
@@ -96,7 +124,9 @@ export class SendQuotationPage {
               {
 
                   type: 'sent',
-				  otheruser: this.postuserID,
+                  otheruser: this.postuserID,
+                  otheruserName: this.poster.name,
+                  otheruserNo: this.poster.mobile,
 				  requirement: this.requirement,
                   quote: this.quoteForm.value,
                   timestamp: firebase.database['ServerValue']['TIMESTAMP']
@@ -116,7 +146,9 @@ export class SendQuotationPage {
               {
 
                   type: 'received',
-				  otheruser: this.currentuser.uid,
+                  otheruser: this.currentuser.uid,
+                  otheruserName: this.user.name,
+                  otheruserNo: this.user.mobile,
 				  requirement: this.requirement,
                   quote: this.quoteForm.value,
                   timestamp: firebase.database['ServerValue']['TIMESTAMP']

@@ -56,8 +56,11 @@
                             <ion-col class="product-data" text-center *ngIf="product?.finish">
                                 {{product?.finish}}
                             </ion-col>
-                            <ion-col class="product-data" text-center *ngIf="product?.length">
+                            <ion-col class="product-data" text-center *ngIf="product?.length && (product?.catid === 2 || product?.catid === 3 || product?.catid === '8b' || product?.catid === '9b')">
                                 {{product?.length}} mm
+                            </ion-col>
+                            <ion-col class="product-data" text-center *ngIf="product?.length && !(product?.catid === 2 || product?.catid === 3 || product?.catid === '8b' || product?.catid === '9b')">
+                                {{product?.length}} Mtrs
                             </ion-col>
                             <ion-col class="product-data" text-center *ngIf="product?.weight  && !product?.length">
                                 {{product?.weight}} Kg
@@ -67,22 +70,47 @@
                             <ion-col text-center *ngIf="product?.sizes">
                                 Size
                             </ion-col>
+                            </ion-row>
+                        <ion-row>
+                            <ion-col class="product-data" text-center *ngIf="product?.sizes">
+                                {{product?.sizes}} {{product?.sizeunit}}
+                            </ion-col>
+                        </ion-row>
+
+                        <ion-row>
                             <ion-col text-center *ngIf="product?.width">
                                 Width
                             </ion-col>
                             <ion-col text-center *ngIf="product?.thickness">
                                 Thickness
                             </ion-col>
+                            <ion-col text-center *ngIf="product?.swg">
+                                SWG
+                            </ion-col>
+                            <ion-col text-center *ngIf="product?.sch">
+                                SCH
+                            </ion-col>
+                            <ion-col text-center *ngIf="product?.mm">
+                                MM
+                            </ion-col>
+
                         </ion-row>
-                        <ion-row>
-                            <ion-col class="product-data" text-center *ngIf="product?.sizes">
-                                {{product?.sizes}} {{product?.sizeunit}}
-                            </ion-col>                            
+                        <ion-row>                             
                             <ion-col class="product-data" text-center *ngIf="product?.width">
                                 {{product?.width }} mm
                             </ion-col>
                             <ion-col class="product-data" text-center *ngIf="product?.thickness">
                                 {{product?.thickness }} mm
+                            </ion-col>
+
+                            <ion-col class="product-data" text-center *ngIf="product?.swg">
+                                {{product?.swg }}
+                            </ion-col>
+                            <ion-col class="product-data" text-center *ngIf="product?.sch">
+                                {{product?.sch }} 
+                            </ion-col>
+                            <ion-col class="product-data" text-center *ngIf="product?.sch">
+                                {{product?.mm }}
                             </ion-col>
                         </ion-row>                                              
                         <ion-row>
@@ -95,10 +123,10 @@
                         </ion-row>
                         <ion-row>
                             <ion-col class="product-data" text-center *ngIf="product?.mrate">
-                                {{product?.mrate | currency:"INR":true}}/Kg
+                                {{product?.mrate | currency:"INR":true}}
                             </ion-col>
                             <ion-col class="product-data" text-center *ngIf="product?.krate">
-                                {{product?.krate | currency:"INR":true}}/Kg
+                                {{product?.krate | currency:"INR":true}}
                             </ion-col>
                         </ion-row>                                                           
                     </ion-grid>                

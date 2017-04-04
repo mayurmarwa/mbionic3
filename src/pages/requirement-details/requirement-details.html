@@ -28,6 +28,11 @@
         <ion-item text-wrap text-center>
             <h1>{{this.requirement?.category}}</h1>
         </ion-item>
+        <ion-item ion-item *ngIf="this.requirement?.ptype">
+            <custom-icon set="mb" name="star" item-left></custom-icon>
+            <p>Alloy Type</p>
+            <h2>{{this.requirement?.ptype}} </h2>
+        </ion-item>
         <ion-item ion-item *ngIf="this.requirement?.grade">
             <custom-icon set="mb" name="grade" item-left></custom-icon>
             <p>Grade</p>
@@ -41,8 +46,8 @@
         <ion-item ion-item *ngIf="this.requirement?.bid">
             <custom-icon set="mb" name="bidprice" item-left></custom-icon>
             <p>Bid Price</p>
-            <h2 *ngIf="this.requirement?.btype === 'exv'">{{this.requirement?.bid | currency:"INR":true}}/Kg (Excise + VAT)</h2>
-            <h2 *ngIf="this.requirement?.btype === 'vat'">{{this.requirement?.bid | currency:"INR":true}}/Kg (VAT)</h2>
+            <h2 *ngIf="this.requirement?.btype === 'exv'">{{this.requirement?.bid | currency:"INR":true}}/Kg (+ excise + vat)</h2>
+            <h2 *ngIf="this.requirement?.btype === 'vat'">{{this.requirement?.bid | currency:"INR":true}}/Kg (+ vat)</h2>
             <h2 *ngIf="!this.requirement?.btype">{{this.requirement?.bid | currency:"INR":true}}/Kg</h2>
         </ion-item>
         <ion-item text-wrap ion-item *ngIf="this.requirement?.details">

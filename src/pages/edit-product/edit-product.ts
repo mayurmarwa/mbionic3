@@ -22,7 +22,7 @@ export class EditProductPage {
         this.myproduct = navParams.get("myproduct");
         this.productData = productData;
 
-        this.productData.getProduct(this.myproduct.$key)
+        this.productData.getProduct(this.myproduct.$key).first()
             .subscribe(product => {
                 //loading.dismiss();
                 // this.user.displayName = user.displayName;

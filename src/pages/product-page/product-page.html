@@ -13,249 +13,258 @@
 </ion-header>
 
 
-<ion-content>
-    <ion-card class="profile-top">
-        <ion-row>
-            <ion-col>
-                <div >
-                    <img style="height:200px" [src]="product.productImage" *ngIf="product?.productImage != null">
-                    <img style="height:200px" src="/assets/img/noimage.png" *ngIf="product?.productImage == null">
-                </div>                
+<ion-content class="product-details">
+    <ion-grid>
+
+        <ion-row text-center>
+            <ion-col text-center>
+                <div class="profile-photo" *ngIf="product?.productImage">
+                    <img [src]="product?.productImage">
+                </div>
+                <div class="profile-photo" *ngIf="!product?.productImage">
+                    <img src="/assets/img/noimage.png">
+                </div>
             </ion-col>
         </ion-row>
-    </ion-card>
-    <div class="product-details">
-        <ion-grid>
-            <ion-row>
-                <ion-col text-center *ngIf="product?.name">
-                    <h2>{{product?.name}}</h2>
-                    <h3>{{product?.subcat}}</h3>
-                </ion-col>
-            </ion-row>
+             <ion-row >
+               <ion-grid>
+                    <ion-row>
+                        <ion-col text-center *ngIf="product?.name">
+                            <h2>{{product?.name}}</h2>
+                            <h3>{{product?.subcat}}</h3>
+                        </ion-col>
+                    </ion-row>
 
-            <ion-row>
-                <ion-col text-center *ngIf="product?.mrate">
-                    Market Rate
-                </ion-col>
-                <ion-col text-center *ngIf="product?.krate">
-                    Kalamboli Rate
-                </ion-col>
-            </ion-row>
-            <!--<ion-row class="product-price" *ngIf="product?.unit">
-                <ion-col text-center *ngIf="product?.mrate">
-                    {{product?.mrate | currency:"INR":true}}/{{product?.unit}}
-                </ion-col>
-                <ion-col text-center *ngIf="product?.krate">
-                    {{product?.krate | currency:"INR":true}}/{{product?.unit}}
-                </ion-col>
-            </ion-row>-->
-            <ion-row class="product-price" >
-                <ion-col text-center *ngIf="product?.mrate">
-                    {{product?.mrate | currency:"INR":true}}/Kg
-                </ion-col>
-                <ion-col text-center *ngIf="product?.krate">
-                    {{product?.krate | currency:"INR":true}}/Kg
-                </ion-col>
-            </ion-row>
+                    <ion-row>
+                        <ion-col text-center *ngIf="product?.mrate">
+                            Market Rate
+                        </ion-col>
+                        <ion-col text-center *ngIf="product?.krate">
+                            Kalamboli Rate
+                        </ion-col>
+                    </ion-row>
+                    <!--<ion-row class="product-price" *ngIf="product?.unit">
+                        <ion-col text-center *ngIf="product?.mrate">
+                            {{product?.mrate | currency:"INR":true}}/{{product?.unit}}
+                        </ion-col>
+                        <ion-col text-center *ngIf="product?.krate">
+                            {{product?.krate | currency:"INR":true}}/{{product?.unit}}
+                        </ion-col>
+                    </ion-row>-->
+                    <ion-row class="product-price">
+                        <ion-col text-center *ngIf="product?.mrate">
 
-        </ion-grid>
-        <hr />
-        <ion-grid style="padding-left: 20px">
-            <h4>Specifications</h4>
-            <ion-row *ngIf="product?.ptype">
-                <ion-col width-25>
-                    Product Type
-                </ion-col>
-                <ion-col>
-                    : {{product?.ptype}}
-                </ion-col>
-            </ion-row>
-            <ion-row *ngIf="product?.ptype2">
-                <ion-col width-25>
-                    Design Type
-                </ion-col>
-                <ion-col>
-                    : {{product?.ptype2}}
-                </ion-col>
-            </ion-row>
-            <ion-row *ngIf="product?.gradeval">
-                <ion-col width-25>
-                    Grade
-                </ion-col>
-                <ion-col>
-                    : {{product?.gradeval}}
-                </ion-col>
-            </ion-row>
-            <ion-row *ngIf="product?.composition">
-                <ion-col width-25>
-                    Composition
-                </ion-col>
-                <ion-col text-wrap>
-                    : ({{product?.composition}})
-                </ion-col>
-            </ion-row>
-            <ion-row *ngIf="product?.astm">
-                <ion-col width-25>
-                    ASTM Standard
-                </ion-col>
-                <ion-col>
-                    : {{product?.astm}}
-                </ion-col>
-            </ion-row>
-            <ion-row *ngIf="product?.sizes">
-                <ion-col width-25>
-                    Sizes
-                </ion-col>
-                <ion-col>
-                    : {{product?.sizes}} {{product?.sizeunit}}
-                </ion-col>
-            </ion-row>
-            <ion-row *ngIf="product?.finish">
-                <ion-col width-25>
-                    Finish
-                </ion-col>
-                <ion-col>
-                    : {{product?.finish}}
-                </ion-col>
-            </ion-row>
-            <ion-row *ngIf="product?.type">
-                <ion-col width-25>
-                    Type
-                </ion-col>
-                <ion-col>
-                    : {{product?.type}}
-                </ion-col>
-            </ion-row>
-            <ion-row>
-                <ion-col width-25 *ngIf="product?.mm">
-                    Wall Thickness
-                </ion-col>
-                <ion-col *ngIf="product?.swg">
-                    SWG: {{product?.swg}}
-                </ion-col>
-                <ion-col *ngIf="product?.sch">
-                    SCH: {{product?.sch}}
-                </ion-col>
-                <ion-col *ngIf="product?.mm">
-                    MM: {{product?.mm}}
-                </ion-col>
-            </ion-row>
-            <ion-row *ngIf="product?.pcategory">
-                <ion-col width-25>
-                    Category
-                </ion-col>
-                <ion-col>
-                    : {{product?.pcategory}}
-                </ion-col>
-            </ion-row>
-            <ion-row *ngIf="product?.quantity">
-                <ion-col width-25>
-                    Quantity
-                </ion-col>
-                <ion-col>
-                    : {{product?.quantity}} {{product?.unit}}
-                </ion-col>
-            </ion-row>
-            <ion-row *ngIf="product?.guarantee">
-                <ion-col width-25>
-                    Ultra Guarantee
-                </ion-col>
-                <ion-col>
-                    : {{product?.guarantee}}
-                </ion-col>
-            </ion-row>            
-            <ion-row>
-                <ion-col width-25 *ngIf="product?.thickness">
-                    Thickness
-                </ion-col>
-                <ion-col width-25 *ngIf="product?.thickness">
-                    : {{product?.thickness}} mm
-                </ion-col>
-                <ion-col width-25 *ngIf="product?.width">
-                    Width
-                </ion-col>
-                <ion-col width-25 *ngIf="product?.width">
-                    : {{product?.width}} mm
-                </ion-col>
-            </ion-row>
-            <ion-row>
-                <ion-col width-25 *ngIf="product?.weight">
-                    Weight
-                </ion-col>
-                <ion-col width-25 *ngIf="product?.weight">
-                    : {{product?.weight}} Kg
-                </ion-col>
-                <ion-col width-25 *ngIf="product?.length && (product.catid === 5 || product.catid === 6)">
-                    Length
-                </ion-col>
-                <ion-col width-25 *ngIf="product?.length && (product.catid === 5 || product.catid === 6)">
-                    : {{product?.length}} Mtrs
-                </ion-col>
+                        {{product?.mrate | currency:"INR":true}}/Kg
+                        </ion-col>
+                        <ion-col text-center *ngIf="product?.krate">
+                            {{product?.krate | currency:"INR":true}}/Kg
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col *ngIf="this.product?.ratetype === 'exv'" text-center>(+ excise + vat)</ion-col>
+                        <ion-col *ngIf="this.product?.ratetype === 'vat'" text-center>(+ vat)</ion-col>
+                    </ion-row>
 
-                <ion-col width-25 *ngIf="product?.length && product.catid != 5 && product.catid != 6">
-                    Length
-                </ion-col>
-                <ion-col width-25 *ngIf="product?.length && product.catid != 5 && product.catid != 6">
-                    : {{product?.length}} mm
-                </ion-col>
-            </ion-row>
-            <ion-row *ngIf="product?.nos">
-                <ion-col>
-                    Nos
-                </ion-col>
-                <ion-col>
-                    : {{product?.nos}}
-                </ion-col>
-            </ion-row>
-            <ion-row *ngIf="product?.quality">
-                <ion-col width-25>
-                    Quality
-                </ion-col>
-                <ion-col>
-                    : {{product?.quality}}
-                </ion-col>
-            </ion-row>
-            <ion-row>
-                <ion-col width-25 *ngIf="product?.origin">
-                    Origin
-                </ion-col>
-                <ion-col width-25 *ngIf="product?.origin">
-                    : {{product?.origin}}
-                </ion-col>
-                <ion-col width-25 *ngIf="product?.brand">
-                    Brand
-                </ion-col>
-                <ion-col width-25 *ngIf="product?.brand">
-                    : {{product?.brand}}
-                </ion-col>
-            </ion-row>
-            <ion-row *ngIf="product?.mtc">
-                <ion-col width-25>
-                    MTC
-                </ion-col>
-                <ion-col>
-                    : {{product?.mtc}}
-                </ion-col>
-            </ion-row>
-            <ion-row *ngIf="product?.details">
-                <ion-col width-25>
-                    Other Details
-                </ion-col>
-                <ion-col text-wrap>
-                    : {{product?.details}}
-                </ion-col>
-            </ion-row>
-        </ion-grid>
-        <div *ngIf="this.product?.uid != this.currentuser?.uid" text-center style="padding: 20px;">
-            <button ion-button round (click)="sendEnquiry()">
-                Send Enquiry
-            </button>
-        </div>
-        <div *ngIf="this.product?.uid === this.currentuser?.uid" text-center style="padding: 20px;">
-            <button ion-button round color="secondary" disabled>
-                This is your product
-             </button>
-        </div>
-     </div>
-    
+                </ion-grid>
+        </ion-row>
+    </ion-grid>
+    <hr />
+    <ion-grid style="padding-left: 20px">
+        <h4>Specifications</h4>
+        <ion-row *ngIf="product?.ptype">
+            <ion-col width-25>
+                Product Type
+            </ion-col>
+            <ion-col>
+                : {{product?.ptype}}
+            </ion-col>
+        </ion-row>
+        <ion-row *ngIf="product?.ptype2">
+            <ion-col width-25>
+                Design Type
+            </ion-col>
+            <ion-col>
+                : {{product?.ptype2}}
+            </ion-col>
+        </ion-row>
+        <ion-row *ngIf="product?.gradeval">
+            <ion-col width-25>
+                Grade
+            </ion-col>
+            <ion-col>
+                : {{product?.gradeval}}
+            </ion-col>
+        </ion-row>
+        <ion-row *ngIf="product?.composition">
+            <ion-col width-25>
+                Composition
+            </ion-col>
+            <ion-col text-wrap>
+                : ({{product?.composition}})
+            </ion-col>
+        </ion-row>
+        <ion-row *ngIf="product?.astm">
+            <ion-col width-25>
+                ASTM Standard
+            </ion-col>
+            <ion-col>
+                : {{product?.astm}}
+            </ion-col>
+        </ion-row>
+        <ion-row *ngIf="product?.sizes">
+            <ion-col width-25>
+                Sizes
+            </ion-col>
+            <ion-col>
+                : {{product?.sizes}} {{product?.sizeunit}}
+            </ion-col>
+        </ion-row>
+        <ion-row *ngIf="product?.finish">
+            <ion-col width-25>
+                Finish
+            </ion-col>
+            <ion-col>
+                : {{product?.finish}}
+            </ion-col>
+        </ion-row>
+        <ion-row *ngIf="product?.type">
+            <ion-col width-25>
+                Type
+            </ion-col>
+            <ion-col>
+                : {{product?.type}}
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col width-25 *ngIf="product?.mm || product?.swg">
+                Wall Thickness
+            </ion-col>
+            <ion-col *ngIf="product?.swg">
+                SWG: {{product?.swg}}
+            </ion-col>
+            <ion-col *ngIf="product?.sch">
+                SCH: {{product?.sch}}
+            </ion-col>
+            <ion-col *ngIf="product?.mm">
+                MM: {{product?.mm}}
+            </ion-col>
+        </ion-row>
+        <ion-row *ngIf="product?.pcategory">
+            <ion-col width-25>
+                Category
+            </ion-col>
+            <ion-col>
+                : {{product?.pcategory}}
+            </ion-col>
+        </ion-row>
+        <ion-row *ngIf="product?.quantity">
+            <ion-col width-25>
+                Quantity
+            </ion-col>
+            <ion-col>
+                : {{product?.quantity}} {{product?.unit}}
+            </ion-col>
+        </ion-row>
+        <ion-row *ngIf="product?.guarantee">
+            <ion-col width-25>
+                Ultra Guarantee
+            </ion-col>
+            <ion-col>
+                : {{product?.guarantee}}
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col width-25 *ngIf="product?.thickness">
+                Thickness
+            </ion-col>
+            <ion-col width-25 *ngIf="product?.thickness">
+                : {{product?.thickness}} mm
+            </ion-col>
+            <ion-col width-25 *ngIf="product?.width">
+                Width
+            </ion-col>
+            <ion-col width-25 *ngIf="product?.width">
+                : {{product?.width}} mm
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col width-25 *ngIf="product?.weight">
+                Weight
+            </ion-col>
+            <ion-col width-25 *ngIf="product?.weight">
+                : {{product?.weight}} Kg
+            </ion-col>
+            <ion-col width-25 *ngIf="product?.length && (product.catid === 5 || product.catid === 6)">
+                Length
+            </ion-col>
+            <ion-col width-25 *ngIf="product?.length && (product.catid === 5 || product.catid === 6)">
+                : {{product?.length}} Mtrs
+            </ion-col>
+
+            <ion-col width-25 *ngIf="product?.length && product.catid != 5 && product.catid != 6">
+                Length
+            </ion-col>
+            <ion-col width-25 *ngIf="product?.length && product.catid != 5 && product.catid != 6">
+                : {{product?.length}} mm
+            </ion-col>
+        </ion-row>
+        <ion-row *ngIf="product?.nos">
+            <ion-col>
+                Nos
+            </ion-col>
+            <ion-col>
+                : {{product?.nos}}
+            </ion-col>
+        </ion-row>
+        <ion-row *ngIf="product?.quality">
+            <ion-col width-25>
+                Quality
+            </ion-col>
+            <ion-col>
+                : {{product?.quality}}
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col width-25 *ngIf="product?.origin">
+                Origin
+            </ion-col>
+            <ion-col width-25 *ngIf="product?.origin">
+                : {{product?.origin}}
+            </ion-col>
+            <ion-col width-25 *ngIf="product?.brand">
+                Brand
+            </ion-col>
+            <ion-col width-25 *ngIf="product?.brand">
+                : {{product?.brand}}
+            </ion-col>
+        </ion-row>
+        <ion-row *ngIf="product?.mtc">
+            <ion-col width-25>
+                MTC
+            </ion-col>
+            <ion-col>
+                : {{product?.mtc}}
+            </ion-col>
+        </ion-row>
+        <ion-row *ngIf="product?.details">
+            <ion-col width-25>
+                Other Details
+            </ion-col>
+            <ion-col text-wrap>
+                : {{product?.details}}
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+    <div *ngIf="this.product?.uid != this.currentuser?.uid" text-center style="padding: 20px;">
+        <button ion-button round (click)="sendEnquiry()">
+            Send Enquiry
+        </button>
+    </div>
+    <div *ngIf="this.product?.uid === this.currentuser?.uid" text-center style="padding: 20px;">
+        <button ion-button round color="secondary" disabled>
+            This is your product
+        </button>
+    </div>
+   
+
 </ion-content>

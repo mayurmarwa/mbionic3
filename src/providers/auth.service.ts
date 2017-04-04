@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Platform } from 'ionic-angular';
 import { Facebook, GooglePlus } from 'ionic-native';
+import { Storage } from '@ionic/storage';
 
 import 'rxjs/add/operator/first';
 import { Observable } from 'rxjs/Observable'; 
@@ -15,7 +16,7 @@ export enum AuthMode {
 
 @Injectable()
 export class AuthService {
-    constructor(public af: AngularFire, private platform: Platform) {}
+    constructor(public af: AngularFire, private platform: Platform, public storage: Storage) {}
 
   getAuth(): Observable<FirebaseAuthState> {
     return this.af.auth;
@@ -115,7 +116,19 @@ export class AuthService {
   }
 
   logout() {
-    this.af.auth.logout();
+      this.storage.ready().then(() => {
+          this.storage.remove('currentuser').then((val) => {             
+
+              this.af.auth.logout();
+                 //this.enquiryList = af.database.list('/users/' + this.currentuser.uid + '/enquiries');
+
+          })
+              .catch((err) =>
+                  console.log(err));
+      }).catch((err) =>
+          console.log(err));  
+
+    
   }
 
   resetPassword(email: string): any {

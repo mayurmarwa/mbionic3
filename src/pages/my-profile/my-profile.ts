@@ -18,11 +18,13 @@ export class MyProfilePage {
 
     public userID: any;
     public userProfile: any;
+    public subscription: any
+
     constructor(public navCtrl: NavController, public navParams: NavParams, public authService: AuthService, private platform: Platform) {
 
         this.userID = navParams.get("userID");
 
-        this.authService.getFullProfile(this.userID)
+        this.subscription = this.authService.getFullProfile(this.userID).first()
             .subscribe(user => {
                 //loading.dismiss();
                 // this.user.displayName = user.displayName;
@@ -39,6 +41,8 @@ export class MyProfilePage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad MyProfilePage');
     }
+
+
 
   callNumber() {
       if (!this.platform.is('cordova')) {

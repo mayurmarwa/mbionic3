@@ -20,9 +20,9 @@
         <ion-item>
             <ion-label stacked>Product Category</ion-label>
             <custom-icon set="mb" name="products" item-left></custom-icon>
-            <ion-select class="grade-select" text-wrap #category formControlName="category" (ionChange)="onTypeChange()">
+            <ion-select class="grade-select" text-wrap #category formControlName="category" [(ngModel)]="selectedCat" (ionChange)="getGrades()">
                 <ion-option value="Stainless Steel Coils" selected="true">Stainless Steel Coils</ion-option>
-                <ion-option value="Stainless Steel Sheets" selected="true">Stainless Steel Sheets / Plates</ion-option>
+                <ion-option value="Stainless Steel Sheets" >Stainless Steel Sheets / Plates</ion-option>
                 <ion-option value="Stainless Steel Packets">Stainless Steel Packets</ion-option>
                 <ion-option value="Stainless Steel Seamless Pipes">Stainless Steel Seamless Pipes</ion-option>
                 <ion-option value="Stainless Steel Welded/ERW Pipes">Stainless Steel Welded/ERW Pipes</ion-option>
@@ -38,17 +38,29 @@
                 <ion-option value="Duplex & Super Duplex Electropolish Pipes">Duplex & Super Duplex Electropolish Pipes</ion-option>
                 <ion-option value="Duplex & Super Duplex Sqr. & Rect. Pipes">Duplex & Super Duplex Sqr. & Rect. Pipes</ion-option>                
                 <ion-option value="Duplex & Super Duplex Round Bars">Duplex & Super Duplex Round Bars</ion-option>
-                <ion-option value="High Nickel Coils">High Nickel Coils</ion-option>
-                <ion-option value="High Nickel Sheets">High Nickel Sheets</ion-option>
-                <ion-option value="High Nickel Seamless Pipes">High Nickel Seamless Pipes</ion-option>
-                <ion-option value="High Nickel Welded/ERW Pipes">High Nickel Welded/ERW Pipes</ion-option>
-                <ion-option value="High Nickel Electropolish Pipes">High Nickel Electropolish Pipes</ion-option>
-                <ion-option value="High Nickel Sqr. & Rect. Pipes">High Nickel Sqr. & Rect. Pipes</ion-option>
-                <ion-option value="High Nickel Round Bars">High Nickel Round Bars</ion-option>
+                <ion-option value="Exotic Alloys Coils">Exotic Alloys Coils</ion-option>
+                <ion-option value="Exotic Alloys Sheets">Exotic Alloys Sheets</ion-option>
+                <ion-option value="Exotic Alloys Seamless Pipes">Exotic Alloys Seamless Pipes</ion-option>
+                <ion-option value="Exotic Alloys Welded/ERW Pipes">Exotic Alloys Welded/ERW Pipes</ion-option>
+                <ion-option value="Exotic Alloys Electropolish Pipes">Exotic Alloys Electropolish Pipes</ion-option>
+                <ion-option value="Exotic Alloys Sqr. & Rect. Pipes">Exotic Alloys Sqr. & Rect. Pipes</ion-option>
+                <ion-option value="Exotic Alloys Round Bars">Exotic Alloys Round Bars</ion-option>
                 <ion-option value="Others">Others</ion-option>
             </ion-select>
         </ion-item>           
-        <ion-item *ngIf="this.selecton">
+        <ion-item *ngIf="!selectalloyoff">
+            <custom-icon set="mb" name="star" item-left></custom-icon>
+            <ion-label stacked>Product Alloy Type</ion-label>
+            <ion-select #ptype formControlName="ptype" [(ngModel)]="selectedAlloy" (ionChange)="alloySelected()">
+                <ion-option value="Hastelloy" selected="true">Hastelloy</ion-option>
+                <ion-option value="Inconel">Inconel</ion-option>
+                <ion-option value="Monel">Monel</ion-option>
+                <ion-option value="Nimonic">Nimonic</ion-option>
+                <ion-option value="Nickel">Nickel</ion-option>
+                <ion-option value="Titanium">Titanium</ion-option>                
+            </ion-select>
+        </ion-item>
+        <ion-item *ngIf="selecton">
             <ion-label>Grade</ion-label>
             <custom-icon set="mb" name="grade" item-left></custom-icon>
             <ion-select #grade formControlName="grade" >
@@ -75,7 +87,7 @@
                     <custom-icon set="mb" name="unit" item-left></custom-icon>
                     <ion-select #unit formControlName="unit">
                         <ion-option value="Kg" selected="true">Kg</ion-option>
-                        <ion-option value="Ton" selected="true">Ton</ion-option>
+                        <ion-option value="Ton">Ton</ion-option>
                         <ion-option value="Mtrs">Mtrs</ion-option>
                         <ion-option value="Nos">Nos</ion-option>
                     </ion-select>
@@ -94,13 +106,13 @@
                    
             <ion-list item-content radio-group #btype formControlName="btype">
                 <h4 style="padding-top:10px">Select Bid Type(optional)</h4>                    
-                <ion-item>
-                    <ion-label>Excise + Vat</ion-label>
-                    <ion-radio value="exv" checked></ion-radio>
+                <ion-item >
+                    <ion-label>+ vat</ion-label>
+                    <ion-radio value="vat"></ion-radio>
                 </ion-item>
                 <ion-item no-lines>
-                    <ion-label>Vat</ion-label>
-                    <ion-radio value="vat"></ion-radio>
+                    <ion-label>+ excise + vat</ion-label>
+                    <ion-radio value="exv" checked></ion-radio>
                 </ion-item>
             </ion-list>
         </ion-item>  

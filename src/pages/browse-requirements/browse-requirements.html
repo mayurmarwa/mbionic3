@@ -9,6 +9,7 @@
   <ion-navbar>
     <ion-title>Browse Requirements</ion-title>
   </ion-navbar>
+    <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
 
 </ion-header>
 
@@ -16,19 +17,20 @@
 <ion-content text-center padding>
 
     <ion-row wrap>
-        <ion-col width-50 *ngFor="let requirement of requirementList | async" (click)="openrequirementpage(requirement)">
+        <ion-col width-50 *ngFor="let requirement of requirementList " (click)="openrequirementpage(requirement)">
             <ion-card>
                 <ion-card-content>
                     <div>
                         <div class="gradeCircle2">{{requirement?.grade}}</div>
                     </div>
-                    <ion-card-title>
+                    <h2>
                         {{requirement?.category}}
-                    </ion-card-title>
-                    <p>                        
-                        <br>
+                    </h2>
+                    <p>                      
+                        
                         {{requirement?.quantity}} {{requirement?.unit}}
-                        <br>
+                     </p>
+                    <p *ngIf="requirement?.bid">   
                         {{requirement?.bid | currency:"INR":true}}
                     </p>
                 </ion-card-content>

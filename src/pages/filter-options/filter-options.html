@@ -15,34 +15,264 @@
 
 <ion-content padding>
 
-    <ion-list>
-
-        <ion-item>
-            <ion-label *ngIf="!weightval || !weight">Weight </ion-label>
-            <ion-label *ngIf="weightval  && weight">Weight:  {{weightval.lower}} to {{weightval.upper}} Kg</ion-label>            
-            <ion-checkbox [(ngModel)]="weight" (ionChange) ="consolelog()"></ion-checkbox>
+    <form>
+         
+        <ion-item  *ngIf="category.catid === '9a' || this.category.catid === '9b' || this.category.catid === '9c1' || this.category.catid === '9c2' || this.category.catid === '9c3' || this.category.catid === '9c4' || this.category.catid === '9c5' || this.category.catid === '9d'">
+            <ion-label>Alloy Type </ion-label>
+            <ion-checkbox [(ngModel)]="form.alloy" name="alloy" (ionChange)="consolelog()"></ion-checkbox>
+        </ion-item>
+        <ion-item *ngIf="form.alloy" >
+            <ion-label stacked>Select Alloy Type</ion-label>
+            <ion-select name="ptype" [(ngModel)]="form.selectedAlloy" (ionChange)="alloySelected()">
+                <ion-option value="Hastelloy" selected="true">Hastelloy</ion-option>
+                <ion-option value="Inconel">Inconel</ion-option>
+                <ion-option value="Monel">Monel</ion-option>
+                <ion-option value="Nimonic">Nimonic</ion-option>
+                <ion-option value="Nickel">Nickel</ion-option>
+                <ion-option value="Titanium">Titanium</ion-option>
+            </ion-select>
         </ion-item>
 
-        <ion-item *ngIf="weight">
+        <ion-item>
+            <ion-label>Grade </ion-label>
+            <ion-checkbox [(ngModel)]="form.grade" name="grade" (ionChange)="consolelog()"></ion-checkbox>
+        </ion-item>
+        <ion-item *ngIf="form.grade">
+            <ion-label>Select Grade</ion-label>
+            <ion-select ion-input name="grade" [(ngModel)]="form.gradeval" (ionChange)="consolelog()">
+                <ion-option *ngFor="let grade of gradeList | async" [value]="grade.Grade">{{grade.Grade}}</ion-option>
+            </ion-select>
+        </ion-item>
+
+        <ion-item *ngIf="category.catid === 7 || category.catid === '8d' || category.catid === '9d' ">
+            <ion-label>Category </ion-label>
+            <ion-checkbox [(ngModel)]="form.subcat" name="subcat" (ionChange)="consolelog()"></ion-checkbox>
+        </ion-item>
+        <ion-item *ngIf="form.subcat">
+            <ion-label stacked>Select Category</ion-label>
+            <ion-select name="subcatval" [(ngModel)]="form.subcatval" >
+                <ion-option value="Round Bars" selected="true">Round Bars</ion-option>
+                <ion-option value="Hex Bars">Hex bars</ion-option>
+                <ion-option value="Square & Rectangular Bars">Square & Rectangular Bars</ion-option>                
+            </ion-select>
+        </ion-item>
+        
+
+        <ion-item *ngIf="category.catid === 7 || category.catid === '8d' || category.catid === '9d' ">
+            <ion-label>Type </ion-label>
+            <ion-checkbox [(ngModel)]="form.type" name="type" (ionChange)="consolelog()"></ion-checkbox>
+        </ion-item>
+        <ion-item *ngIf="form.type && (category.catid === 7 || category.catid === '8d' || category.catid === '9d' )">
+            <ion-label stacked>Select Type</ion-label>
+            <ion-select name="typeval" [(ngModel)]="form.selectedType" >
+                <ion-option value="Forged" selected="true">Forged</ion-option>
+                <ion-option value="Original">Original</ion-option>
+            </ion-select>
+        </ion-item>
+
+
+        <ion-item *ngIf="category.catid === '4a' || category.catid === '4b' || category.catid === '4c' || category.catid === '4e' || category.catid === '8c1'  || category.catid === '8c5' || category.catid === '8c2' || category.catid === '8c3' || category.catid === '9c1' || category.catid === '9c2' || category.catid === '9c5' || category.catid === '9c3'">
+            <ion-label>Type </ion-label>
+            <ion-checkbox [(ngModel)]="form.type" name="type" (ionChange)="consolelog()"></ion-checkbox>
+        </ion-item>
+        <ion-item *ngIf="form.type &&  (category.catid === '4a' || category.catid === '4b' || category.catid === '4c' || category.catid === '4e' || category.catid === '8c1'  || category.catid === '8c5' || category.catid === '8c2' || category.catid === '8c3' || category.catid === '9c1' || category.catid === '9c2' || category.catid === '9c5' || category.catid === '9c3')">
+            <ion-label stacked>Select Type</ion-label>
+            <ion-select name="typeval" [(ngModel)]="form.selectedType" (ionChange)="typeSelected()">
+                <ion-option value="OD" selected="true">OD</ion-option>
+                <ion-option value="NB">NB</ion-option>
+            </ion-select>
+        </ion-item>
+
+        <ion-item *ngIf="category.catid === '4a' || category.catid === '4b' || category.catid === '4c' || category.catid === '4e' || category.catid === '8c1'  || category.catid === '8c5' || category.catid === '8c2' || category.catid === '8c3' || category.catid === '9c1' || category.catid === '9c2' || category.catid === '9c5' || category.catid === '9c3'">
+            <ion-label>SCH (Wall Thickness) </ion-label>
+            <ion-checkbox [(ngModel)]="form.sch" name="sch" (ionChange)="consolelog()"></ion-checkbox>
+        </ion-item>
+        <ion-item *ngIf="form.sch">
+            <ion-label stacked>Select Value</ion-label>
+            <ion-select name="schval" [(ngModel)]="form.schval">
+                <ion-option value="sch 10" selected="true">sch 10</ion-option>
+                <ion-option value="sch 20" selected="true">sch 20</ion-option>
+                <ion-option value="sch 40" selected="true">sch 40</ion-option>
+                <ion-option value="sch 60" selected="true">sch 60</ion-option>
+                <ion-option value="sch 80" selected="true">sch 80</ion-option>
+                <ion-option value="sch 100" selected="true">sch 100</ion-option>
+                <ion-option value="sch 120" selected="true">sch 120</ion-option>
+                <ion-option value="sch 160" selected="true">sch 160</ion-option>
+                <ion-option value="sch std" selected="true">sch std</ion-option>
+                <ion-option value="sch xx" selected="true">sch xx</ion-option>
+                <ion-option value="sch xxx" selected="true">sch xxx</ion-option>
+                <ion-option value="sch xxxx" selected="true">sch xxxx</ion-option>             
+            </ion-select>
+        </ion-item>
+
+        <ion-item *ngIf="category.catid === '4a' || category.catid === '4b' || category.catid === '4c' || category.catid === '4e' || category.catid === '8c1'  || category.catid === '8c5' || category.catid === '8c2' || category.catid === '8c3' || category.catid === '9c1' || category.catid === '9c2' || category.catid === '9c5' || category.catid === '9c3'">
+            <ion-label *ngIf="!form.swgval || !form.swg">SWG (Wall Thickness) </ion-label>
+            <ion-label *ngIf="form.swgval  && form.swg">SWG:  {{form.swgval.lower}} to {{form.swgval.upper}} </ion-label>
+            <ion-checkbox [(ngModel)]="form.swg" name="swg" (ionChange)="consolelog()"></ion-checkbox>
+        </ion-item>
+
+        <ion-item *ngIf="form.swg">
+
+            <ion-range ion-input min="0" max="500" dualKnobs="true" pin="true" [(ngModel)]="form.swgval" name="swgval" color="danger">
+                <ion-label range-left>0 </ion-label>
+                <ion-label range-right>500 </ion-label>
+            </ion-range>
+
+        </ion-item>
+
+        <ion-item *ngIf="category.catid === '4a' || category.catid === '4b' || category.catid === '4c' || category.catid === '4e' || category.catid === '8c1'  || category.catid === '8c5' || category.catid === '8c2' || category.catid === '8c3' || category.catid === '9c1' || category.catid === '9c2' || category.catid === '9c5' || category.catid === '9c3'">
+            <ion-label *ngIf="!form.mmval || !form.mm">MM (Wall Thicness) </ion-label>
+            <ion-label *ngIf="form.mmval  && form.mm">SWG:  {{form.mmval.lower}} to {{form.mmval.upper}} </ion-label>
+            <ion-checkbox [(ngModel)]="form.mm" name="mm" (ionChange)="consolelog()"></ion-checkbox>
+        </ion-item>
+
+        <ion-item *ngIf="form.mm">
+
+            <ion-range ion-input min="0" max="500" dualKnobs="true" pin="true" [(ngModel)]="form.mmval" name="mmval" color="danger">
+                <ion-label range-left>0 </ion-label>
+                <ion-label range-right>500 </ion-label>
+            </ion-range>
+
+        </ion-item>
+       
+
+        <ion-item *ngIf="category.catid === '4d' || category.catid === '8c4' || category.catid === '9c4' ">
+            <ion-label>Finish </ion-label>
+            <ion-checkbox [(ngModel)]="form.finish" name="finish" (ionChange)="consolelog()"></ion-checkbox>
+        </ion-item>
+        <ion-item *ngIf="form.finish && (category.catid === '4d' || category.catid === '8c4' || category.catid === '9c4')">
+            <ion-label stacked>Finish</ion-label>
+
+            <ion-select name="finishval" [(ngModel)]="form.finishval">
+                <ion-option value="Polished" selected="true">Polished</ion-option>
+                <ion-option value="Without Polish">Without Polish</ion-option>
+            </ion-select>
+        </ion-item>
+
+
+        <ion-item *ngIf="category.catid === 1 || category.catid === '8a' || category.catid === '9a' || category.catid === 2 || category.catid === 3 || category.catid === '8b' || category.catid === '9b' ">
+            <ion-label>Finish </ion-label>
+            <ion-checkbox [(ngModel)]="form.finish" name="finish" (ionChange)="consolelog()"></ion-checkbox>
+        </ion-item>
+        <ion-item *ngIf="form.finish && (category.catid === 1 || category.catid === '8a' || category.catid === '9a' || category.catid === 2 || category.catid === 3 || category.catid === '8b' || category.catid === '9b' )">
+            <ion-label stacked>Finish</ion-label>
+
+            <ion-select name="finishval" [(ngModel)]="form.finishval">
+                <ion-option value="HR" selected="true">HR</ion-option>
+                <ion-option value="CR">CR</ion-option>
+                <ion-option value="2B">2B</ion-option>
+                <ion-option value="2E">2E</ion-option>
+                <ion-option value="BA">BA</ion-option>
+                <ion-option value="No.1">No.1</ion-option>
+                <ion-option value="No.3">No.3</ion-option>
+                <ion-option value="No.4">No.4</ion-option>
+                <ion-option value="No.8/Mirror">No.8/Mirror</ion-option>
+                <ion-option value="Scotch Brite">Scotch Brite</ion-option>
+                <ion-option value="Embossing">Embossing</ion-option>
+                <ion-option value="Anti-fingerprint">Anti-fingerprint</ion-option>
+                <ion-option value="Etching">Etching</ion-option>
+                <ion-option value="Matt PVC">MAtt PVC</ion-option>
+                <ion-option value="Other">Other</ion-option>
+            </ion-select>
+        </ion-item>
+
+
+
+        <ion-item *ngIf="category.catid === 1 || category.catid === '8a' || category.catid === '9a' || category.catid === 2 || category.catid === 3 || category.catid === '8b' || category.catid === '9b' ">
+            <ion-label *ngIf="!form.weightval || !form.weight">Weight </ion-label>
+            <ion-label *ngIf="form.weightval  && form.weight">Weight:  {{form.weightval.lower}} to {{form.weightval.upper}} Kg</ion-label>            
+            <ion-checkbox [(ngModel)]="form.weight" name="weight" (ionChange) ="consolelog()"></ion-checkbox>
+        </ion-item>
+
+        <ion-item *ngIf="form.weight">
             
-            <ion-range min="0" max="100" dualKnobs="true" pin="true"  [(ngModel)]="weightval" color="danger">
+            <ion-range ion-input min="0" max="500" dualKnobs="true" pin="true"  [(ngModel)]="form.weightval" name="weightval" color="danger">
                 <ion-label range-left>0 Kg</ion-label>
-                <ion-label range-right>100 Kg</ion-label>
+                <ion-label range-right>500 Kg</ion-label>
             </ion-range>
             
         </ion-item>
 
-        <ion-item>
-            <ion-label>Length</ion-label>
-            <ion-checkbox [(ngModel)]="length" disabled="true"></ion-checkbox>
+        <ion-item *ngIf="category.catid === 5 || category.catid === 6 || category.catid === 7 || category.catid === '8d' || category.catid === '9d' ">
+            <ion-label *ngIf="!form.lgthval || !form.lgth">Length </ion-label>
+            <ion-label *ngIf="form.lgthval  && form.lgth">Length:  {{form.lgthval.lower}} to {{form.lgthval.upper}} Mtrs</ion-label>
+            <ion-checkbox [(ngModel)]="form.lgth" name="lgth" (ionChange)="consolelog()"></ion-checkbox>
         </ion-item>
 
-        <ion-item>
-            <ion-label>Width</ion-label>
-            <ion-checkbox [(ngModel)]="width" disabled="true"></ion-checkbox>
+        <ion-item *ngIf="form.lgth">
+
+            <ion-range ion-input min="0" max="500" dualKnobs="true" pin="true" [(ngModel)]="form.lgthval" name="lgthval" color="danger">
+                <ion-label range-left>0 Mtrs</ion-label>
+                <ion-label range-right>500 Mtrs</ion-label>
+            </ion-range>
+
         </ion-item>
 
-    </ion-list>
+        <ion-item *ngIf="category.catid === 2 || category.catid === 3 || category.catid === '8b' || category.catid === '9b' ">
+            <ion-label *ngIf="!form.lgthval || !form.lgth">Length </ion-label>
+            <ion-label *ngIf="form.lgthval  && form.lgth">Length:  {{form.lgthval.lower}} to {{form.lgthval.upper}} mm</ion-label>
+            <ion-checkbox [(ngModel)]="form.lgth" name="lgth" (ionChange)="consolelog()"></ion-checkbox>
+        </ion-item>
+
+        <ion-item *ngIf="form.lgth">
+
+            <ion-range ion-input min="0" max="500" dualKnobs="true" pin="true" [(ngModel)]="form.lgthval" name="lgthval" color="danger">
+                <ion-label range-left>0 mm</ion-label>
+                <ion-label range-right>500 mm</ion-label>
+            </ion-range>
+
+        </ion-item>
+
+        <ion-item *ngIf="category.catid === 1 || category.catid === '8a' || category.catid === '9a' || category.catid === 2 || category.catid === 3 || category.catid === '8b' || category.catid === '9b' || category.catid === 5 ">
+            <ion-label *ngIf="!form.wdthval || !form.wdth">Width </ion-label>
+            <ion-label *ngIf="form.wdthval  && form.wdth">Width:  {{form.wdthval.lower}} to {{form.wdthval.upper}} mm</ion-label>
+            <ion-checkbox [(ngModel)]="form.wdth" name="wdth" (ionChange)="consolelog()"></ion-checkbox>
+        </ion-item>
+
+        <ion-item *ngIf="form.wdth">
+
+            <ion-range ion-input min="0" max="500" dualKnobs="true" pin="true" [(ngModel)]="form.wdthval" name="wdthval" color="danger">
+                <ion-label range-left>0 mm</ion-label>
+                <ion-label range-right>500 mm</ion-label>
+            </ion-range>
+
+        </ion-item>
+        
+        <ion-item *ngIf="category.catid === 1 || category.catid === '8a' || category.catid === '9a' || category.catid === 2 || category.catid === 3 || category.catid === '8b' || category.catid === '9b' || category.catid === '4d' || category.catid === '8c4' || category.catid === '9c4' || category.catid === 5 || category.catid === 6">
+            <ion-label *ngIf="!form.thicknessval || !form.thickness">Thickness </ion-label>
+            <ion-label *ngIf="form.thicknessval  && form.thickness">Thickness:  {{form.thicknessval.lower}} to {{form.thicknessval.upper}} mm</ion-label>
+            <ion-checkbox [(ngModel)]="form.thickness" name="thickness" (ionChange)="consolelog()"></ion-checkbox>
+        </ion-item>
+
+        <ion-item *ngIf="form.thickness">
+
+            <ion-range ion-input min="0" max="500" dualKnobs="true" pin="true" [(ngModel)]="form.thicknessval" name="thicknessval" color="danger">
+                <ion-label range-left>0 mm</ion-label>
+                <ion-label range-right>500 mm</ion-label>
+            </ion-range>
+
+        </ion-item>
+
+        <!--<ion-item *ngIf="category.catid === '9a' ">
+            <ion-label stacked>Product Alloy Type</ion-label>
+            <ion-select #ptype formControlName="ptype" [(ngModel)]="selectedAlloy" (ionChange)="alloySelected()">
+                <ion-option value="Hastelloy" selected="true">Hastelloy</ion-option>
+                <ion-option value="Inconel">Inconel</ion-option>
+                <ion-option value="Monel">Monel</ion-option>
+                <ion-option value="Nimonic">Nimonic</ion-option>
+                <ion-option value="Nickel">Nickel</ion-option>
+                <ion-option value="Titanium">Titanium</ion-option>
+            </ion-select>
+        </ion-item>
+        <ion-item *ngIf="category.catid != 1">
+        <ion-label stacked>Grade</ion-label>
+        <ion-input #grade formControlName="grade" type="text"
+                   placeholder="Enter Grade">
+        </ion-input>
+    </ion-item>-->
+        
+
+    </form>
     <ion-grid text-center>
         <ion-row>
             <ion-col>

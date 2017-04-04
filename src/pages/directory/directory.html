@@ -8,14 +8,17 @@
 
   <ion-navbar>
     <ion-title>Directory</ion-title>
+
   </ion-navbar>
+    <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
+    
 
 </ion-header>
 
 
 <ion-content padding>
 
-        <ion-list  [virtualScroll]="directoryList | async">
+        <ion-list  [virtualScroll]="directory">
             <ion-item *virtualItem="let member"  approxItemHeight="150px" (click)="viewDetails(member)">
                 <ion-avatar item-left>
                     <img src="assets/img/noimage.png">

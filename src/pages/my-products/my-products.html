@@ -27,7 +27,7 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content text-center padding>
 
     <ion-fab right bottom>
         <button ion-fab color="primary"  (click)="selectcat()"><ion-icon name="add"></ion-icon></button>
@@ -53,9 +53,9 @@
                     <div>
                         <div class="gradeCircle2">{{product?.grade}}</div>
                     </div>
-                    <ion-card-title>
+                    <h2>
                         {{product?.name}}
-                    </ion-card-title>
+                    </h2>
                     <!--<div class="product-price" *ngIf="product?.unit">
                         <ion-row text-center *ngIf="product?.mrate">
                            Market Rate: {{product?.mrate | currency:"INR":true}}/{{product?.unit}}

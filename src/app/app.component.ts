@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform, LoadingController } from 'ionic-angular';
-import { StatusBar, Splashscreen } from 'ionic-native';
+import { Nav, Platform, LoadingController, AlertController } from 'ionic-angular';
+import { StatusBar, Splashscreen, Push} from 'ionic-native';
 import firebase from 'firebase';
 
 import { TabsPage } from '../pages/tabs/tabs';
@@ -37,6 +37,7 @@ export class MyApp {
     public loadingCtrl: LoadingController,
     public authService: AuthService,
     public storage: Storage,
+    public alertCtrl: AlertController,
     private socialSharing: SocialSharing
   ) {
     this.initializeApp();
@@ -57,6 +58,7 @@ export class MyApp {
                   // this.storage.get('currentuser').then((val) => {
                   //     console.log('Current User', JSON.parse(val));
                   //})
+                  this.initPushNotification();
               });
              // console.log(this.currentuser);
               this.rootPage = TabsPage;
@@ -93,8 +95,78 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       StatusBar.styleDefault();
       Splashscreen.hide();
+
+      
     });
   }
+
+  initPushNotification() {
+      if (!this.platform.is('cordova')) {
+          console.warn("Push notifications not initialized. Cordova is not available - Run in physical device");
+          return;
+      }
+      let push = Push.init({
+          android: {
+              senderID: "79899062384"
+          },
+          ios: {
+              alert: "true",
+              badge: false,
+              sound: "true"
+          },
+          windows: {}
+      });
+
+      push.on('registration', (data) => {
+          console.log("device token ->", data.registrationId);
+          //TODO - send device token to server
+          var newPostKey = firebase.database().ref().child('fcmtokens').push().key;
+          var postData = {
+              fcmtoken: data.registrationId
+          };
+          // Write the new post's data simultaneously in the posts list and the user's post list.
+          var updates = {};
+          updates['/fcmtokens/' + this.currentuser.uid + '/' + newPostKey] = postData;
+          updates['/users/' + this.currentuser.uid + '/fcmtokens/' + newPostKey] = postData;
+
+          return firebase.database().ref().update(updates);
+      });
+      push.on('notification', (data) => {
+          console.log('message', data.message);
+          //let self = this;
+          //if user using app and push notification comes
+          if (data.additionalData.foreground) {
+              // if application open, show popup
+              let confirmAlert = this.alertCtrl.create({
+                  title: 'New Notification',
+                  message: data.message,
+                  buttons: [{
+                      text: 'Ignore',
+                      role: 'cancel'
+                  }, {
+                      text: 'View',
+                      handler: () => {
+                          //TODO: Your logic here
+                          //self.nav.push(DetailsPage, { message: data.message });
+                          console.log(data.message);
+                      }
+                  }]
+              });
+              confirmAlert.present();
+          } else {
+              //if user NOT using app and push notification comes
+              //TODO: Your logic on click of push notification directly
+              //self.nav.push(DetailsPage, { message: data.message });
+              console.log("Push notification clicked");
+              console.log(data.message);
+
+          }
+      });
+      push.on('error', (e) => {
+          console.log(e.message);
+      });
+  }
+
 
   openPage(page) {
     // Reset the content nav to have just this page
@@ -108,7 +180,7 @@ export class MyApp {
 
   logout() {
     this.authService.logout();
-    this.nav.setRoot(LoginPage);
+    //this.nav.setRoot(LoginPage);
   }
 
   shareApp() {

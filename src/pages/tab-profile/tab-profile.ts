@@ -28,7 +28,7 @@ export class TabProfilePage {
       this.profileData = profileData;
       this.currentuser = firebase.auth().currentUser;
 
-      this.authService.getFullProfile(this.currentuser.uid)
+      this.authService.getFullProfile(this.currentuser.uid).first()
           .subscribe(user => {
               //loading.dismiss();
              // this.user.displayName = user.displayName;

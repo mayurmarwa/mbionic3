@@ -78,6 +78,7 @@ export class AddProductPage {
             weight: ['', Validators.required],
             mrate: ['',],
             krate: ['',],
+            ratetype: ['',],
             composition: ['',],
             origin: ['',],
             brand: ['',],
@@ -110,6 +111,7 @@ export class AddProductPage {
             nos: ['', Validators.required],
             mrate: ['',],
             krate: ['',],
+            ratetype: ['',],
             composition: ['',],
             origin: ['',],
             brand: ['',],
@@ -138,7 +140,8 @@ export class AddProductPage {
             quantity: ['', Validators.required],
             unit: ['Kg', Validators.required],             
             mrate: ['',],
-            krate: ['',],            
+            krate: ['',],   
+            ratetype: ['',],         
             origin: ['',],
             brand: ['',],
             mtc: ['',],
@@ -164,6 +167,7 @@ export class AddProductPage {
             unit: ['Kg', Validators.required],
             mrate: ['',],
             krate: ['',],
+            ratetype: ['',],
             details: ['',],
             origin: ['',],
             brand: ['',],          
@@ -412,7 +416,15 @@ export class AddProductPage {
             else {
                 this.priceValid = true;
             }
-
+            if ((this.category.catid === 1 || this.category.catid === 2 || this.category.catid === '4a' || this.category.catid === '4b' || this.category.catid === '4c' || this.category.catid === '4d' || this.category.catid === '4e') && (productForm.value.ratetype == null || productForm.value.ratetype === "" )){
+                this.priceValid = false;
+                let alert = this.alertCtrl.create({
+                    title: 'Select Rate Type',
+                    subTitle: 'Select a rate type',
+                    buttons: ['OK']
+                });
+                alert.present();
+            }
 
         if (this.allValid && this.priceValid && this.imageValid){
             let confirm = this.alertCtrl.create({
@@ -446,11 +458,14 @@ export class AddProductPage {
     gradeSelected() {
        
             
-        this.af.database.object('/grades/' + this.gradecat + '/' + this.selectedGrade)
+        this.af.database.object('/grades/' + this.gradecat + '/' + this.selectedGrade).first()
             .subscribe(
             (result) => {
                 
                 this.selectedGradeItem = result;
+            }, (error) => {
+                //loading.dismiss();
+                console.log('Error: ' + JSON.stringify(error));
             });
         
         this.compositiontxt = JSON.stringify(this.selectedGradeItem, this.replacer);

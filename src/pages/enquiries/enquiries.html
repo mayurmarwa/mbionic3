@@ -26,7 +26,7 @@
 
 <ion-content>
     <ion-list no-lines>
-        <ion-item *ngFor="let enquiry of enquiryList | async" (click)="openenquirypage(enquiry)" >
+        <ion-item *ngFor="let enquiry of enqListRev | async" (click)="openenquirypage(enquiry)" >
             
             <div ion-item *ngIf="!enquiry?.quote">
                 <div item-left>
@@ -34,14 +34,11 @@
                 </div>
                 
                     <h2 style="white-space: normal;">{{enquiry?.productName}}</h2>
+                <ion-row class="enq-details"><ion-col *ngIf="enquiry?.product?.sizes">Sizes:{{enquiry?.product?.sizes}} {{enquiry?.product?.sizeunit}}</ion-col> </ion-row>
                 <ion-row class="enq-details">
-                    <ion-col *ngIf="enquiry?.product?.sizes">Sizes:{{enquiry?.product?.sizes}} {{enquiry?.product?.sizeunit}} </ion-col>
                     <ion-col *ngIf="enquiry?.product?.thickness">Thkns.:{{enquiry?.product?.thickness}} mm</ion-col>
+                    <ion-col *ngIf="enquiry?.product?.width">W:{{enquiry?.product?.width}} mm</ion-col>
                     <ion-col *ngIf="enquiry?.product?.length">L:{{enquiry?.product?.length}} mm</ion-col>
-                </ion-row>
-                <ion-row class="enq-details">
-                        <ion-col *ngIf="enquiry?.product?.width">W:{{enquiry?.product?.width}} mm</ion-col>
-                        <ion-col>Qty.: {{enquiry?.quantity}} {{enquiry?.unit}}</ion-col>
                 </ion-row>
                 
             </div>

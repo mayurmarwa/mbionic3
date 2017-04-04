@@ -30,6 +30,8 @@ export class SendEnquiryPage {
     public enquiry: any;
     public loading: any;
     public productunit: any;
+    public productmrate: any;
+    public productkrate: any;
     
     constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public af: AngularFire, public alertCtrl: AlertController, public loadingCtrl: LoadingController, public authService: AuthService,public storage: Storage) {
         storage.ready().then(() => {
@@ -43,15 +45,23 @@ export class SendEnquiryPage {
 		this.userEnquiries = af.database.list('/users/' + this.currentuser.uid + '/enquiries' );
 		this.sellerEnquiries = af.database.list('/users/' + this.sellerID + '/enquiries' );        
         
-
-        if (!this.product.unit) {
-            this.productunit = "Kg";
+        if (this.product.mrate) {
+            this.productmrate = this.product.mrate
         }
         else {
-            this.productunit = this.product.unit;
-        }     
+            this.productmrate = null;
+        }
+        if (this.product.krate) {
+            this.productkrate = this.product.krate
+        }
+        else {
+            this.productkrate = null;
+        } 
+        
+            this.productunit = "Kg";
+        
 
-        this.authService.getFullProfile(this.sellerID)
+        this.authService.getFullProfile(this.sellerID).first()
             .subscribe(user => {
                 //loading.dismiss();
                 // this.user.displayName = user.displayName;
@@ -64,7 +74,7 @@ export class SendEnquiryPage {
                 console.log('Error: ' + JSON.stringify(error));
             });
 
-        this.authService.getFullProfile(this.currentuser.uid)
+        this.authService.getFullProfile(this.currentuser.uid).first()
             .subscribe(user => {
                 //loading.dismiss();
                 // this.user.displayName = user.displayName;
@@ -149,8 +159,8 @@ export class SendEnquiryPage {
                   product: this.product,
                   productName: this.product.name,
                   productUnit: this.productunit,
-                  productMrate: this.product.mrate,
-                  productKrate: this.product.krate,
+                  productMrate: this.productmrate,
+                  productKrate: this.productkrate,
                   timestamp: firebase.database['ServerValue']['TIMESTAMP']
                   //detials: this.productForm.value.name,
                   
@@ -176,8 +186,8 @@ export class SendEnquiryPage {
                   product: this.product,
                   productName: this.product.name,
                   productUnit: this.productunit,
-                  productMrate: this.product.mrate,
-                  productKrate: this.product.krate,
+                  productMrate: this.productmrate,
+                  productKrate: this.productkrate,
                   rate: this.enquiryForm.value.rate,
                   quantity: this.enquiryForm.value.quantity,
                   unit: this.enquiryForm.value.unit,

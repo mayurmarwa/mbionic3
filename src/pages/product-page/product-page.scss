@@ -18,21 +18,16 @@ page-product-page {
     }
         
 
-    .profile-top {
-            width: 100%;
-            margin: 0;
-            .profile-photo {
+    .profile-photo {
                 padding-top: 16px;
                 
                 $photoSize: 128px;
                 
                 img {
                     width: $photoSize;
-                    height: $photoSize;
-                    border-radius: 50%;
-                    border: solid 2px rgba(234, 79, 20, .5);
+                    height: $photoSize;                    
+                    border: solid 2px white;
                     margin: 0 auto;
                 }
-            }
         }
 }

@@ -1,12 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { LoadingController, AlertController } from 'ionic-angular';
 import { FormBuilder, Validators } from '@angular/forms';
-import { AuthService } from '../../providers/auth.service';
-import { TabsPage } from '../tabs/tabs';
+import { VerifyMobilePage } from '../verify-mobile/verify-mobile';
 import { EmailValidator } from '../../validators/email';
-import { App } from 'ionic-angular';
-import { NgZone } from '@angular/core';
 
 
 /*
@@ -26,9 +22,8 @@ export class SignupPage {
     submitAttempt: boolean = false;
 	loading;
 
-    constructor(public nav: NavController, public authService: AuthService,
-        public formBuilder: FormBuilder, public loadingCtrl: LoadingController,
-        public alertCtrl: AlertController, private app: App, private zone: NgZone) {
+    constructor(public nav: NavController,
+        public formBuilder: FormBuilder) {
 
         this.signupForm = formBuilder.group({
             name: ['', Validators.required],
@@ -53,7 +48,7 @@ export class SignupPage {
     /**
     * If the form is valid it will call the AuthData service to sign the user up password displaying a loading
     * component while the user waits.
-    *
+    * this.navCtrl.push(AddProductPage, { category: category });
     * If the form is invalid it will just log the form value, feel free to handle that as you like.
     */
     signupUser() {
@@ -62,34 +57,7 @@ export class SignupPage {
         if (!this.signupForm.valid) {
             console.log(this.signupForm.value);
         } else {
-            this.authService.signupUser(this.signupForm.value.email,
-                this.signupForm.value.password).then(authData => {
-                    console.log(authData);
-                    console.log(this.signupForm.value);
-                    this.authService.createAccount2(authData,this.signupForm);
-                    this.zone.run(() => {
-                        this.app.getRootNav().setRoot(TabsPage);
-                    });
-                }, (error) => {
-                    this.loading.dismiss().then(() => {
-                        console.log(error);
-                        var errorMessage: string = error.message;
-                        let alert = this.alertCtrl.create({
-                            message: errorMessage,
-                            buttons: [{ text: "Ok", role: 'cancel' }]
-                        });
-
-                        alert.present();
-                    });
-                });
-
-            this.loading = this.loadingCtrl.create({
-                //dismissOnPageChange: true,
-                duration: 3000
-            });
-
-            this.loading.present();
-
+            this.nav.push(VerifyMobilePage, { form: this.signupForm });
         }
     }
     ionViewDidLoad() {

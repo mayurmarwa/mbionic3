@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
-import { AngularFire, FirebaseListObservable } from 'angularfire2';
+import { NavController, NavParams, LoadingController } from 'ionic-angular';
 import { RequirementDetailsPage } from '../requirement-details/requirement-details';
+import firebase from 'firebase';
 
 /*
   Generated class for the BrowseRequirements page.
@@ -15,11 +15,32 @@ import { RequirementDetailsPage } from '../requirement-details/requirement-detai
 })
 export class BrowseRequirementsPage {
 
-	 requirementList: FirebaseListObservable<any>;
+    public requirementList: any;
+    public loadedlist: any;
+    public requirementRef: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public af: AngularFire) {
+    constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController) {
   
-	this.requirementList = af.database.list('/requirements');
+      let loadingPopup = this.loadingCtrl.create({
+          content: 'Loading...'
+      });
+      loadingPopup.present();
+      this.requirementRef = firebase.database().ref('/requirements');
+
+      this.requirementRef.on('value', memberList => {
+          let members = [];
+          memberList.forEach(country => {
+              members.push(country.val());
+          });
+
+          this.requirementList = members;
+          this.loadedlist = members;
+          loadingPopup.dismiss();
+      });
+  }
+
+  initializeItems(): void {
+      this.requirementList = this.loadedlist;
   }
 
   ionViewDidLoad() {
@@ -30,4 +51,33 @@ export class BrowseRequirementsPage {
 
       this.navCtrl.push(RequirementDetailsPage, {requirement: requirement});
   }
+
+  getItems(searchbar) {
+      // Reset items back to all of the items
+      this.initializeItems();
+
+      // set q to the value of the searchbar
+      var q = searchbar.srcElement.value;
+
+
+      // if the value is an empty string don't filter the items
+      if (!q) {
+          return;
+      }
+
+      this.requirementList = this.requirementList.filter((v) => {
+          if (v.category && q) {
+              if (v.category.toLowerCase().indexOf(q.toLowerCase()) > -1) {
+                  return true;
+              }
+              return false;
+          }
+      });
+
+      //console.log(q, this.directory.length);
+
+  }
+
+
+
 }

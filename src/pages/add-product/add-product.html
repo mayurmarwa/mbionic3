@@ -56,8 +56,7 @@
                     <ion-option value="Monel">Monel</ion-option>
                     <ion-option value="Nimonic">Nimonic</ion-option>
                     <ion-option value="Nickel">Nickel</ion-option>
-                    <ion-option value="Titanium">Titanium</ion-option>
-                    <ion-option value="Others">Others</ion-option>
+                    <ion-option value="Titanium">Titanium</ion-option>                    
                 </ion-select>
             </ion-item>
             <!--<ion-item *ngIf="category.catid != 1">
@@ -142,7 +141,18 @@
                         </ion-input>
                     </ion-item>
                 </ion-col>
-            </ion-row>          
+            </ion-row>  
+            <ion-list *ngIf="category.catid === 1" item-content radio-group #ratetype formControlName="ratetype">
+                <h4 style="padding-top:10px">Select Rate Type</h4>
+                <ion-item>
+                    <ion-label>+ vat</ion-label>
+                    <ion-radio value="vat"></ion-radio>
+                </ion-item>
+                <ion-item no-lines>
+                    <ion-label>+ excise + vat</ion-label>
+                    <ion-radio value="exv" checked></ion-radio>
+                </ion-item>
+            </ion-list>        
 
             <ion-item>
                 <ion-label stacked>Origin (optional)</ion-label>
@@ -342,7 +352,18 @@
                         </ion-input>
                     </ion-item>
                 </ion-col>
-            </ion-row>          
+            </ion-row> 
+            <ion-list *ngIf="category.catid === 2 " item-content radio-group #ratetype formControlName="ratetype">
+                <h4 style="padding-top:10px">Select Rate Type</h4>
+                <ion-item>
+                    <ion-label>+ vat</ion-label>
+                    <ion-radio value="vat"></ion-radio>
+                </ion-item>
+                <ion-item no-lines>
+                    <ion-label>+ excise + vat</ion-label>
+                    <ion-radio value="exv" checked></ion-radio>
+                </ion-item>
+            </ion-list>          
             <ion-item>
                 <ion-label stacked>Origin (optional)</ion-label>
                 <ion-input #origin formControlName="origin" type="text"
@@ -536,6 +557,17 @@
                     </ion-item>
                 </ion-col>
             </ion-row>          
+            <ion-list *ngIf="category.catid === '4a' || category.catid === '4b' || category.catid === '4c' || category.catid === '4e' " item-content radio-group #ratetype formControlName="ratetype">
+                <h4 style="padding-top:10px">Select Rate Type</h4>
+                <ion-item>
+                    <ion-label>+ vat</ion-label>
+                    <ion-radio value="vat"></ion-radio>
+                </ion-item>
+                <ion-item no-lines>
+                    <ion-label>+ excise + vat</ion-label>
+                    <ion-radio value="exv" checked></ion-radio>
+                </ion-item>
+            </ion-list> 
                 <ion-item>
                     <ion-label stacked>Origin (optional)</ion-label>
                     <ion-input #origin formControlName="origin" type="text"
@@ -690,7 +722,17 @@
                     </ion-item>
                 </ion-col>
             </ion-row>          
-
+            <ion-list *ngIf="category.catid === '4d' " item-content radio-group #ratetype formControlName="ratetype">
+                <h4 style="padding-top:10px">Select Rate Type</h4>
+                <ion-item>
+                    <ion-label>+ vat</ion-label>
+                    <ion-radio value="vat"></ion-radio>
+                </ion-item>
+                <ion-item no-lines>
+                    <ion-label>+ excise + vat</ion-label>
+                    <ion-radio value="exv" checked></ion-radio>
+                </ion-item>
+            </ion-list> 
             <ion-item>
                 <ion-label stacked>Origin(optional)</ion-label>
                 <ion-input #origin formControlName="origin" type="text"

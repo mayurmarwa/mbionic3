@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, LoadingController } from 'ionic-angular';
 import { AngularFire, FirebaseListObservable } from 'angularfire2';
 import { SelectCategoryPage } from '../select-category/select-category';
 import { EditProductPage } from '../edit-product/edit-product';
@@ -22,8 +22,13 @@ export class MyProductsPage {
     currentuser: any;
     productListRev: Observable<any>;
     public segment: any;
+    public loadingPopup: any;
 
-    constructor(public navCtrl: NavController, public navParams: NavParams, public af: AngularFire, public storage: Storage) {
+
+    constructor(public navCtrl: NavController, public navParams: NavParams, public af: AngularFire, public storage: Storage, public loadingCtrl: LoadingController) {
+        
+
+
         storage.ready().then(() => {
             storage.get('currentuser').then((val) => {
 
@@ -45,10 +50,18 @@ export class MyProductsPage {
     }
   ionViewDidEnter() {
       console.log('ionViewDidEnter MyProductsPage');      
+      this.loadingPopup = this.loadingCtrl.create({
+          content: 'Loading...'
+      });
+      this.loadingPopup.present();
+      this.updateList();
+  }
+  updateList() {
       this.myproducts = this.af.database.list('/users/' + this.currentuser.uid + '/products/', { query: { orderByChild: 'timestamp' } });
       this.productListRev = this.myproducts.map((arr) => { return arr.reverse(); });
+      this.loadingPopup.dismiss();
+}
 
-  }
   detailpage(myproduct) {
 
       this.navCtrl.push(EditProductPage, { myproduct: myproduct });

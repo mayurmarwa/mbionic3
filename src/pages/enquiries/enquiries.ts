@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, LoadingController } from 'ionic-angular';
 import { AngularFire, FirebaseListObservable } from 'angularfire2';
 import { EnquiryDetailsPage } from '../enquiry-details/enquiry-details';
 import { Storage } from '@ionic/storage';
@@ -16,16 +16,27 @@ import { Storage } from '@ionic/storage';
 })
 export class EnquiriesPage {
 
-	public enquiryList: FirebaseListObservable<any>;	
+	public enquiryList: any;	
 	public currentuser: any;
     public segment: any;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public af: AngularFire, public storage: Storage) {
-      storage.ready().then(() => {
+    public enqListRev: any;
+    public loadingPopup: any;
+
+
+    constructor(public navCtrl: NavController, public navParams: NavParams, public af: AngularFire, public storage: Storage, public loadingCtrl: LoadingController) {
+      
+        this.loadingPopup = this.loadingCtrl.create({
+            content: 'Loading...'
+        });
+        this.loadingPopup.present();
+       
+        storage.ready().then(() => {
           storage.get('currentuser').then((val) => {
 
               this.currentuser = JSON.parse(val);
               this.segment = "received";
               this.updateEnquiryList();
+              
               //this.enquiryList = af.database.list('/users/' + this.currentuser.uid + '/enquiries');
 
           })
@@ -35,6 +46,7 @@ export class EnquiriesPage {
           console.log(err));     
 		
   }
+  
 
   ionViewDidLoad() {
       console.log('ionViewDidLoad EnquiriesPage');
@@ -55,6 +67,8 @@ export class EnquiriesPage {
               equalTo: this.segment
           }
       });
-      
+      this.enqListRev = this.enquiryList.map((arr) => { return arr.reverse(); }); 
+      this.loadingPopup.dismiss();
   }
+  
 }

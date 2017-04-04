@@ -22,6 +22,8 @@ export class EnquirySentPage {
     public enquiryID: any;
     public loading: any;
     public uid: any;
+    public subscription: any;
+    public subscription2: any;
 
     constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController, public authService: AuthService) {
 
@@ -29,8 +31,8 @@ export class EnquirySentPage {
         this.enquiryID = navParams.get("enquiryID");
         this.uid = navParams.get("uid");
 
-        this.authService.getFullProfile(this.sellerID)
-            .subscribe(user => {
+        this.subscription = this.authService.getFullProfile(this.sellerID)
+            .first().subscribe(user => {
                 //loading.dismiss();
                 // this.user.displayName = user.displayName;
                 //this.user.email = user.email || user.providerData[0].email || 'Not set yet.';
@@ -42,8 +44,8 @@ export class EnquirySentPage {
                 console.log('Error: ' + JSON.stringify(error));
             });
 
-        this.authService.getEnquiry(this.uid,this.enquiryID)
-            .subscribe(enquiry => {
+        this.subscription2 =  this.authService.getEnquiry(this.uid,this.enquiryID)
+            .first().subscribe(enquiry => {
                 //loading.dismiss();
                 // this.user.displayName = user.displayName;
                 //this.user.email = user.email || user.providerData[0].email || 'Not set yet.';
@@ -61,7 +63,9 @@ export class EnquirySentPage {
   ionViewDidLoad() {
       console.log('ionViewDidLoad EnquirySentPage');
       
-  }
+    }
+
+
 
   sendMessage() {
       this.loading = this.loadingCtrl.create({
