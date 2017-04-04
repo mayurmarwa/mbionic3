@@ -3,7 +3,6 @@ import { NavController, NavParams, AlertController, ModalController, LoadingCont
 import { AngularFire } from 'angularfire2';
 import { ProductPagePage } from '../product-page/product-page';
 import { FilterOptionsPage } from '../filter-options/filter-options';
-import { Observable } from 'rxjs/Observable';
 
 /*
   Generated class for the CategoryProducts page.

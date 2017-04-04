@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { LoadingController, AlertController, NavParams } from 'ionic-angular';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { AuthService } from '../../providers/auth.service';
 import { TabsPage } from '../tabs/tabs';
-import { EmailValidator } from '../../validators/email';
 import { App } from 'ionic-angular';
 import { NgZone } from '@angular/core';
 

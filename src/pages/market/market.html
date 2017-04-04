@@ -185,9 +185,9 @@
                     </ion-col>
                 </ion-row>
             </div>
-            <div ion-item text-center class="viewmore">
-                <button *ngIf="!viewall" ion-button outline (click)="viewall = !viewall">View All</button>
-                <button *ngIf="viewall" ion-button outline (click)="viewall = !viewall">Hide</button>
+            <div text-center class="viewmore">
+                <button text-center *ngIf="!viewall" ion-button outline (click)="viewall = !viewall">View All</button>
+                <button text-center *ngIf="viewall" ion-button outline (click)="viewall = !viewall">Hide</button>
             </div>
 
         </ion-grid>

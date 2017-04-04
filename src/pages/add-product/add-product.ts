@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, ActionSheetController, AlertController, LoadingController} from 'ionic-angular';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Camera } from 'ionic-native';
+import { Camera } from '@ionic-native/camera';
 import { AngularFire, FirebaseListObservable} from 'angularfire2';
 import { AuthService } from '../../providers/auth.service';
 import firebase from 'firebase';
@@ -54,7 +54,7 @@ export class AddProductPage {
     public gradecat: any;
     public compositiontxt:string;
     
-    constructor(public navCtrl: NavController, public navParams: NavParams, public af: AngularFire, public formBuilder: FormBuilder, public authService: AuthService, public actionSheetCtrl: ActionSheetController, public alertCtrl: AlertController, public loadingCtrl: LoadingController) {
+    constructor(public navCtrl: NavController, public navParams: NavParams, public af: AngularFire, public formBuilder: FormBuilder, public authService: AuthService, public actionSheetCtrl: ActionSheetController, public alertCtrl: AlertController, public loadingCtrl: LoadingController, private camera: Camera) {
         this.category = navParams.get("category");
         this.currentuser = firebase.auth().currentUser;
         //this.cattitle = this.category.title + " ";
@@ -697,12 +697,12 @@ export class AddProductPage {
   }
 
   takePicture() {
-      Camera.getPicture({
+      this.camera.getPicture({
           quality: 95,
-          destinationType: Camera.DestinationType.DATA_URL,
-          sourceType: Camera.PictureSourceType.CAMERA,
+          destinationType: this.camera.DestinationType.DATA_URL,
+          sourceType: this.camera.PictureSourceType.CAMERA,
           allowEdit: false,
-          encodingType: Camera.EncodingType.PNG,
+          encodingType: this.camera.EncodingType.PNG,
           targetWidth: 500,
           targetHeight: 500,
           saveToPhotoAlbum: true
@@ -715,12 +715,12 @@ export class AddProductPage {
   }
 
   getPicture() {
-      Camera.getPicture({
+      this.camera.getPicture({
           quality: 95,
-          destinationType: Camera.DestinationType.DATA_URL,
-          sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+          destinationType: this.camera.DestinationType.DATA_URL,
+          sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
           allowEdit: false,
-          encodingType: Camera.EncodingType.PNG,
+          encodingType: this.camera.EncodingType.PNG,
           targetWidth: 500,
           targetHeight: 500,
           saveToPhotoAlbum: true

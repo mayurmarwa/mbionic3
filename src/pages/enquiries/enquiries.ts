@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, LoadingController } from 'ionic-angular';
-import { AngularFire, FirebaseListObservable } from 'angularfire2';
+import { AngularFire } from 'angularfire2';
 import { EnquiryDetailsPage } from '../enquiry-details/enquiry-details';
 import { Storage } from '@ionic/storage';
 

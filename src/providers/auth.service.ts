@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Platform } from 'ionic-angular';
-import { Facebook, GooglePlus } from 'ionic-native';
+import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
+import { GooglePlus } from '@ionic-native/google-plus';
 import { Storage } from '@ionic/storage';
 
 import 'rxjs/add/operator/first';
@@ -16,7 +17,7 @@ export enum AuthMode {
 
 @Injectable()
 export class AuthService {
-    constructor(public af: AngularFire, private platform: Platform, public storage: Storage) {}
+    constructor(public af: AngularFire, private platform: Platform, public storage: Storage, private googlePlus: GooglePlus, private fb: Facebook) {}
 
   getAuth(): Observable<FirebaseAuthState> {
     return this.af.auth;
@@ -54,7 +55,7 @@ export class AuthService {
     if (!this.platform.is('cordova'))
       return this.signInWithProvider(AuthProviders.Google);
     
-    return GooglePlus.login({
+    return this.googlePlus.login({
         'scopes': 'email profile',
         'webClientId': '79899062384-7monv7m7lgkhmsm5n6ng45qljb2o1dhq.apps.googleusercontent.com'
       }).then( res => {
@@ -69,8 +70,8 @@ export class AuthService {
     if (!this.platform.is('cordova'))
       return this.signInWithProvider(AuthProviders.Facebook);
     
-    Facebook.login(['email', 'public_profile'])
-      .then(res => {
+    this.fb.login(['email', 'public_profile'])
+        .then((res: FacebookLoginResponse) => {
         return this.signInWithCredential(firebase.auth.FacebookAuthProvider.credential(res.authResponse.accessToken));
       }, (error) => Promise.reject(error));
   }

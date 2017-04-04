@@ -1,6 +1,6 @@
 import { AlertController, ActionSheetController, LoadingController } from 'ionic-angular';
 import { Component } from '@angular/core';
-import { Camera } from 'ionic-native';
+import { Camera } from '@ionic-native/camera';
 import { AuthService } from '../../providers/auth.service';
 import { ProfileData } from '../../providers/profile-data';
 import firebase from 'firebase';
@@ -22,7 +22,8 @@ export class TabProfilePage {
     public loadingCtrl: LoadingController,
     public profileData: ProfileData,
     public alertCtrl: AlertController,
-    public actionSheetCtrl: ActionSheetController
+    public actionSheetCtrl: ActionSheetController,
+    private camera: Camera
   ) {
       this.user.photoURL = 'assets/img/noimage.png';
       this.profileData = profileData;
@@ -396,12 +397,12 @@ export class TabProfilePage {
   }
 
   takePicture() {
-      Camera.getPicture({
+      this.camera.getPicture({
           quality: 95,
-          destinationType: Camera.DestinationType.DATA_URL,
-          sourceType: Camera.PictureSourceType.CAMERA,
+          destinationType: this.camera.DestinationType.DATA_URL,
+          sourceType: this.camera.PictureSourceType.CAMERA,
           allowEdit: false,
-          encodingType: Camera.EncodingType.PNG,
+          encodingType: this.camera.EncodingType.PNG,
           targetWidth: 500,
           targetHeight: 500,
           saveToPhotoAlbum: true
@@ -415,12 +416,12 @@ export class TabProfilePage {
   }
 
   getPicture() {
-      Camera.getPicture({
+      this.camera.getPicture({
           quality: 95,
-          destinationType: Camera.DestinationType.DATA_URL,
-          sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+          destinationType: this.camera.DestinationType.DATA_URL,
+          sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
           allowEdit: false,
-          encodingType: Camera.EncodingType.PNG,
+          encodingType: this.camera.EncodingType.PNG,
           targetWidth: 500,
           targetHeight: 500,
           saveToPhotoAlbum: true

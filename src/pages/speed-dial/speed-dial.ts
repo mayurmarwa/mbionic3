@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import { CallNumber } from 'ionic-native';
+import { CallNumber } from '@ionic-native/call-number';
 import { Platform } from 'ionic-angular';
 
 /*
@@ -20,7 +20,7 @@ export class SpeedDialPage {
 	dialNumber: any;
 	callEnable: boolean = false;
 
-    constructor(public navCtrl: NavController, public navParams: NavParams, private platform: Platform) {
+    constructor(public navCtrl: NavController, public navParams: NavParams, private platform: Platform, private callNumber: CallNumber) {
 	this.speedNumber = '';
 	this.dialNumber = '';
   }
@@ -126,7 +126,7 @@ export class SpeedDialPage {
 
       }
       else {
-          CallNumber.callNumber(this.dialNumber, true)
+          this.callNumber.callNumber(this.dialNumber, true)
               .then(() => console.log('Launched dialer!'))
               .catch(() => console.log('Error launching dialer'));
       }

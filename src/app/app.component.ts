@@ -1,6 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform, LoadingController, AlertController } from 'ionic-angular';
-import { StatusBar, Splashscreen, Push} from 'ionic-native';
+import { Push, RegistrationEventResponse, NotificationEventResponse } from '@ionic-native/push';
+import { StatusBar } from '@ionic-native/status-bar';
+import { SplashScreen } from '@ionic-native/splash-screen';
 import firebase from 'firebase';
 
 import { TabsPage } from '../pages/tabs/tabs';
@@ -38,7 +40,10 @@ export class MyApp {
     public authService: AuthService,
     public storage: Storage,
     public alertCtrl: AlertController,
-    private socialSharing: SocialSharing
+    private socialSharing: SocialSharing,
+    private pushplugin: Push,
+    private splashScreen: SplashScreen,
+    private statusBar: StatusBar
   ) {
     this.initializeApp();
 
@@ -93,8 +98,8 @@ export class MyApp {
     this.platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
-      StatusBar.styleDefault();
-      Splashscreen.hide();
+       this.statusBar.styleDefault();
+       this.splashScreen.hide();
 
       
     });
@@ -105,7 +110,7 @@ export class MyApp {
           console.warn("Push notifications not initialized. Cordova is not available - Run in physical device");
           return;
       }
-      let push = Push.init({
+      let push = this.pushplugin.init({
           android: {
               senderID: "79899062384"
           },
@@ -117,7 +122,7 @@ export class MyApp {
           windows: {}
       });
 
-      push.on('registration', (data) => {
+      push.on('registration').subscribe((data: RegistrationEventResponse) => {
           console.log("device token ->", data.registrationId);
           //TODO - send device token to server
           var newPostKey = firebase.database().ref().child('fcmtokens').push().key;
@@ -131,7 +136,7 @@ export class MyApp {
 
           return firebase.database().ref().update(updates);
       });
-      push.on('notification', (data) => {
+      push.on('notification').subscribe( (data: NotificationEventResponse) => {
           console.log('message', data.message);
           //let self = this;
           //if user using app and push notification comes
@@ -162,7 +167,7 @@ export class MyApp {
 
           }
       });
-      push.on('error', (e) => {
+      push.on('error').subscribe( (e: Error) => {
           console.log(e.message);
       });
   }

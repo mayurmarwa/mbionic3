@@ -2,8 +2,17 @@ import { NgModule, ErrorHandler } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { CustomIconsModule } from 'ionic2-custom-icons';
-import { Storage } from '@ionic/storage';
+import { IonicStorageModule } from '@ionic/storage';
+
+import { StatusBar } from '@ionic-native/status-bar';
+import { SplashScreen } from '@ionic-native/splash-screen';
 import { SocialSharing } from '@ionic-native/social-sharing';
+import { Camera } from '@ionic-native/camera';
+import { CallNumber } from '@ionic-native/call-number';
+import { Push } from '@ionic-native/push';
+import { GooglePlus } from '@ionic-native/google-plus';
+import { Facebook } from '@ionic-native/facebook';
+
 
 import { MarketPage } from '../pages/market/market';
 import { PricesPage } from '../pages/prices/prices';
@@ -112,7 +121,8 @@ export const firebaseConfig = {
   imports: [
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(firebaseConfig),
-    CustomIconsModule
+    CustomIconsModule,
+    IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -157,6 +167,6 @@ export const firebaseConfig = {
     MetalCalculatorPage,
     FilterOptionsPage
   ],
-  providers: [AuthService, ChatsService, ProfileData, ProductData, {provide: ErrorHandler, useClass: IonicErrorHandler}, Storage, SocialSharing]
+  providers: [AuthService, ChatsService, ProfileData, ProductData,StatusBar,SplashScreen, Camera,CallNumber, Push, SocialSharing, GooglePlus, Facebook, {provide: ErrorHandler, useClass: IonicErrorHandler}]
 })
 export class AppModule {}
