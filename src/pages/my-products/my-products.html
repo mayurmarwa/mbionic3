@@ -45,35 +45,105 @@
   
         </ion-item>
     </ion-list>-->
+                <ion-row>
+                <ion-col col-6 col-sm-4 *ngFor="let product of productListRev | async" (click)="detailpage(product)">
+                    <ion-card>
+                        <ion-card-content>
+                            <div>
+                                <div class="gradeCircle2">{{product.gradeval}}</div>
+                            </div>
+                            <ion-grid class="product-highlighters">
+                                <ion-row nowrap>
+                                    <ion-col text-center *ngIf="product?.finish">
+                                        Finish
+                                    </ion-col>
+                                    <ion-col text-center *ngIf="product?.length">
+                                        Length
+                                    </ion-col>
+                                    <ion-col text-center *ngIf="product?.weight && !product?.length">
+                                        Weight
+                                    </ion-col>
+                                </ion-row>
+                                <ion-row nowrap>
+                                    <ion-col class="product-data" text-center *ngIf="product?.finish">
+                                        {{product?.finish}}
+                                    </ion-col>
+                                    <ion-col class="product-data" text-center *ngIf="product?.length && (product?.catid === 2 || product?.catid === 3 || product?.catid === '8b' || product?.catid === '9b')">
+                                        {{product?.length}} mm
+                                    </ion-col>
+                                    <ion-col class="product-data" text-center *ngIf="product?.length && !(product?.catid === 2 || product?.catid === 3 || product?.catid === '8b' || product?.catid === '9b')">
+                                        {{product?.length}} Mtrs
+                                    </ion-col>
+                                    <ion-col class="product-data" text-center *ngIf="product?.weight  && !product?.length">
+                                        {{product?.weight}} Kg
+                                    </ion-col>
+                                </ion-row>
+                                <ion-row>
+                                    <ion-col text-center *ngIf="product?.sizes">
+                                        Size
+                                    </ion-col>
+                                </ion-row>
+                                <ion-row>
+                                    <ion-col class="product-data" text-center *ngIf="product?.sizes">
+                                        {{product?.sizes}} {{product?.sizeunit}}
+                                    </ion-col>
+                                </ion-row>
 
-    <ion-row wrap>
-        <ion-col width-50 *ngFor="let product of productListRev | async" (click)="detailpage(product)">
-            <ion-card>
-                <ion-card-content>
-                    <div>
-                        <div class="gradeCircle2">{{product?.grade}}</div>
-                    </div>
-                    <h2>
-                        {{product?.name}}
-                    </h2>
-                    <!--<div class="product-price" *ngIf="product?.unit">
-                        <ion-row text-center *ngIf="product?.mrate">
-                           Market Rate: {{product?.mrate | currency:"INR":true}}/{{product?.unit}}
-                        </ion-row>
-                        <ion-row text-center *ngIf="product?.krate">
-                           Kalamboli Rate: {{product?.krate | currency:"INR":true}}/{{product?.unit}}
-                        </ion-row>
-                    </div> -->
-                    <div class="product-price">
-                        <ion-row text-center *ngIf="product?.mrate">
-                            Market Rate: {{product?.mrate | currency:"INR":true}}/Kg
-                        </ion-row>
-                        <ion-row text-center *ngIf="product?.krate">
-                            Kalamboli Rate: {{product?.krate | currency:"INR":true}}/Kg
-                        </ion-row>
-                    </div>
-                </ion-card-content>
-            </ion-card>
-        </ion-col>
-    </ion-row>
+                                <ion-row nowrap>
+                                    <ion-col text-center *ngIf="product?.width">
+                                        Width
+                                    </ion-col>
+                                    <ion-col text-center *ngIf="product?.thickness">
+                                        Thickness
+                                    </ion-col>
+                                    <ion-col text-center *ngIf="product?.swg">
+                                        SWG
+                                    </ion-col>
+                                    <ion-col text-center *ngIf="product?.sch">
+                                        SCH
+                                    </ion-col>
+                                    <ion-col text-center *ngIf="product?.mm">
+                                        MM
+                                    </ion-col>
+
+                                </ion-row>
+                                <ion-row nowrap>
+                                    <ion-col class="product-data" text-center *ngIf="product?.width">
+                                        {{product?.width }} mm
+                                    </ion-col>
+                                    <ion-col class="product-data" text-center *ngIf="product?.thickness">
+                                        {{product?.thickness }} mm
+                                    </ion-col>
+
+                                    <ion-col class="product-data" text-center *ngIf="product?.swg">
+                                        {{product?.swg }}
+                                    </ion-col>
+                                    <ion-col class="product-data" text-center *ngIf="product?.sch">
+                                        {{product?.sch }}
+                                    </ion-col>
+                                    <ion-col class="product-data" text-center *ngIf="product?.sch">
+                                        {{product?.mm }}
+                                    </ion-col>
+                                </ion-row>
+                                <ion-row nowrap>
+                                    <ion-col text-center *ngIf="product?.mrate">
+                                        Market
+                                    </ion-col>
+                                    <ion-col text-center *ngIf="product?.krate">
+                                        Kalamboli
+                                    </ion-col>
+                                </ion-row>
+                                <ion-row nowrap>
+                                    <ion-col class="product-data" text-center *ngIf="product?.mrate">
+                                        {{product?.mrate | currency:"INR":true}}
+                                    </ion-col>
+                                    <ion-col class="product-data" text-center *ngIf="product?.krate">
+                                        {{product?.krate | currency:"INR":true}}
+                                    </ion-col>
+                                </ion-row>
+                            </ion-grid>
+                        </ion-card-content>
+                    </ion-card>
+                </ion-col>
+            </ion-row>
 </ion-content>

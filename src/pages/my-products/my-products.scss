@@ -1,5 +1,17 @@
 page-my-products {
-    
+    .product-highlighters{
+       font-size: 1rem;
+       padding:0px;
+
+       ion-col{
+           padding: 2px;
+           color: #898989;
+       }
+
+       ion-col.product-data{
+          color: #1a1e5e;
+       }
+   }
 
     .gradeCircle2{
         background-color: #f4f4f4;

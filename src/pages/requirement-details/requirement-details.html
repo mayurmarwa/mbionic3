@@ -38,6 +38,11 @@
             <p>Grade</p>
             <h2>{{this.requirement?.grade}} </h2>
         </ion-item>
+        <ion-item ion-item *ngIf="this.requirement?.sizedetails">
+            <custom-icon set="mb" name="settings" item-left></custom-icon>
+            <p>Size Details</p>
+            <h2>{{this.requirement?.sizedetails}} </h2>
+        </ion-item>
         <ion-item ion-item *ngIf="this.requirement?.quantity">
             <custom-icon set="mb" name="quantity" item-left></custom-icon>
             <p>Required Quantity</p>

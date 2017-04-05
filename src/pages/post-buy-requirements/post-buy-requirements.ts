@@ -17,11 +17,14 @@ import firebase from 'firebase';
 export class PostBuyRequirementsPage {
 
 	requirements: FirebaseListObservable<any>;
-	currentuser: any;
+    currentuser: any;
+    public currentuserid: any;
     requirementForm: any;
     public loading: any;
     public gradeList: FirebaseListObservable<any>;
     public selecton: boolean = true;
+    public nameon: boolean = true;
+    public emptyname: any;
     public selectalloyoff: boolean = true;
     public selectedGrade: any;
     public selectedGradeItem: any;
@@ -30,8 +33,10 @@ export class PostBuyRequirementsPage {
     public gradecat: any;
 
     constructor(public navCtrl: NavController, public navParams: NavParams, public af: AngularFire, public formBuilder: FormBuilder, public alertCtrl: AlertController, public loadingCtrl: LoadingController) {
-  
-		this.currentuser = firebase.auth().currentUser;
+
+        this.emptyname = '';
+        this.currentuser = firebase.auth().currentUser;
+        this.currentuserid = this.currentuser.uid;
         this.requirements = af.database.list('/requirements');
         //this.gradeList = af.database.list('/grades');
         this.selectedCat = "Stainless Steel Coils";
@@ -44,6 +49,7 @@ export class PostBuyRequirementsPage {
             unit: ['', Validators.required],
             bid: ['',],
             btype: [''],
+            sizedetails: ['', Validators.required],
             details: ['', ] ,
             uid: ['', Validators.required],
         });
@@ -52,22 +58,27 @@ export class PostBuyRequirementsPage {
     getGrades() {
         if (this.selectedCat == "Stainless Steel Coils" || this.selectedCat == "Stainless Steel Sheets" || this.selectedCat == "Stainless Steel Packets" || this.selectedCat === "Stainless Steel Seamless Pipes" || this.selectedCat === "Stainless Steel Welded/ERW Pipes" || this.selectedCat === "Stainless Steel Electropolish Pipes" || this.selectedCat === "Stainless Steel Square & Rectangular Pipes" || this.selectedCat === "Stainless Steel Flats" || this.selectedCat == "Stainless Steel Angles" || this.selectedCat == "Stainless Steel Round Bars" ) {
             this.selecton = true;
+            this.nameon = true;
             this.selectalloyoff = true;
             this.gradecat = 1;
         }
         else if (this.selectedCat === "Duplex & Super Duplex Coils" || this.selectedCat === "Duplex & Super Duplex Sheets" || this.selectedCat === "Duplex & Super Duplex Seamless Pipes" || this.selectedCat === "Duplex & Super Duplex Welded/ERW Pipes" || this.selectedCat === "Duplex & Super Duplex Electropolish Pipes" || this.selectedCat === "Duplex & Super Duplex Sqr. & Rect. Pipes" || this.selectedCat === "Duplex & Super Duplex Round Bars" ) {
             this.selecton = true;
+            this.nameon = true;
             this.selectalloyoff = true;
             this.gradecat = 2;
         }
-        else if (this.selectedCat === "Exotic Alloys Coils" || this.selectedCat === "Exotic Alloys Sheets" || this.selectedCat === "Exotic Alloys Seamless Pipes" || this.selectedCat === "Exotic Alloys Welded/ERW Pipes" || this.selectedCat === "Exotic Alloys Electropolish Pipes" || this.selectedCat === "Exotic Alloys Sqr. & Rect. Pipes" || this.selectedCat === "Exotic Alloys Round Bars") {
+        else if (this.selectedCat === "Nickel Alloys Coils" || this.selectedCat === "Nickel Alloys Sheets" || this.selectedCat === "Nickel Alloys Seamless Pipes" || this.selectedCat === "Nickel Alloys Welded/ERW Pipes" || this.selectedCat === "Nickel Alloys Electropolish Pipes" || this.selectedCat === "Nickel Alloys Sqr. & Rect. Pipes" || this.selectedCat === "Nickel Alloys Round Bars") {
             this.selecton = true;
+            this.nameon = true;
             this.selectalloyoff = false;
             this.selectedAlloy = 'Hastelloy';
             this.gradecat = 3;
         }
         else if (this.selectedCat === "Others") {
             this.selecton = false;
+            this.nameon = false;
+            
             this.gradecat = 3;
         }
         else {

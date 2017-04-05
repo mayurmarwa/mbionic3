@@ -17,7 +17,7 @@
 
     <form [formGroup]="requirementForm" (submit)="showConfirm(requirementForm)">
 
-        <ion-item>
+        <ion-item *ngIf="this.nameon">
             <ion-label stacked>Product Category</ion-label>
             <custom-icon set="mb" name="products" item-left></custom-icon>
             <ion-select class="grade-select" text-wrap #category formControlName="category" [(ngModel)]="selectedCat" (ionChange)="getGrades()">
@@ -38,16 +38,23 @@
                 <ion-option value="Duplex & Super Duplex Electropolish Pipes">Duplex & Super Duplex Electropolish Pipes</ion-option>
                 <ion-option value="Duplex & Super Duplex Sqr. & Rect. Pipes">Duplex & Super Duplex Sqr. & Rect. Pipes</ion-option>                
                 <ion-option value="Duplex & Super Duplex Round Bars">Duplex & Super Duplex Round Bars</ion-option>
-                <ion-option value="Exotic Alloys Coils">Exotic Alloys Coils</ion-option>
-                <ion-option value="Exotic Alloys Sheets">Exotic Alloys Sheets</ion-option>
-                <ion-option value="Exotic Alloys Seamless Pipes">Exotic Alloys Seamless Pipes</ion-option>
-                <ion-option value="Exotic Alloys Welded/ERW Pipes">Exotic Alloys Welded/ERW Pipes</ion-option>
-                <ion-option value="Exotic Alloys Electropolish Pipes">Exotic Alloys Electropolish Pipes</ion-option>
-                <ion-option value="Exotic Alloys Sqr. & Rect. Pipes">Exotic Alloys Sqr. & Rect. Pipes</ion-option>
-                <ion-option value="Exotic Alloys Round Bars">Exotic Alloys Round Bars</ion-option>
+                <ion-option value="Nickel Alloys Coils">Nickel Alloys Coils</ion-option>
+                <ion-option value="Nickel Alloys Sheets">Nickel Alloys Sheets</ion-option>
+                <ion-option value="Nickel Alloys Seamless Pipes">Nickel Alloys Seamless Pipes</ion-option>
+                <ion-option value="Nickel Alloys Welded/ERW Pipes">Nickel Alloys Welded/ERW Pipes</ion-option>
+                <ion-option value="Nickel Alloys Electropolish Pipes">Nickel Alloys Electropolish Pipes</ion-option>
+                <ion-option value="Nickel Alloys Sqr. & Rect. Pipes">Nickel Alloys Sqr. & Rect. Pipes</ion-option>
+                <ion-option value="Nickel Alloys Round Bars">Nickel Alloys Round Bars</ion-option>
                 <ion-option value="Others">Others</ion-option>
             </ion-select>
-        </ion-item>           
+        </ion-item>    
+        <ion-item *ngIf="!this.nameon">
+            <ion-label stacked>Product Name</ion-label>
+            <custom-icon set="mb" name="products" item-left></custom-icon>
+            <ion-input  [(ngModel)]="emptyname" #category formControlName="category" type="text" maxlength="50"
+                       placeholder="Enter Required Product Name">
+            </ion-input>
+        </ion-item>
         <ion-item *ngIf="!selectalloyoff">
             <custom-icon set="mb" name="star" item-left></custom-icon>
             <ion-label stacked>Product Alloy Type</ion-label>
@@ -60,6 +67,7 @@
                 <ion-option value="Titanium">Titanium</ion-option>                
             </ion-select>
         </ion-item>
+        
         <ion-item *ngIf="selecton">
             <ion-label>Grade</ion-label>
             <custom-icon set="mb" name="grade" item-left></custom-icon>
@@ -70,8 +78,15 @@
         <ion-item *ngIf="!this.selecton">
             <ion-label stacked>Grade</ion-label>
             <custom-icon set="mb" name="grade" item-left></custom-icon>
-            <ion-input #grade formControlName="grade" type="text"
+            <ion-input #grade formControlName="grade" type="text" maxlength="9"
                        placeholder="Enter Grade">
+            </ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label stacked>Size Details</ion-label>
+            <custom-icon set="mb" name="settings" item-left></custom-icon>
+            <ion-input #sizedetails formControlName="sizedetails" type="text"
+                       placeholder="Mention Required Sizes">
             </ion-input>
         </ion-item>
         <ion-item>
@@ -130,7 +145,7 @@
                             </ion-input>
                         </ion-item>
                         
-                            <ion-input type="text" hidden [(ngModel)]="currentuser.uid" formControlName="uid"></ion-input>
+                            <ion-input type="text" hidden [(ngModel)]="currentuserid" formControlName="uid"></ion-input>
                             <button ion-button round type="submit" style="margin: 20px">
                                 Post
                             </button>

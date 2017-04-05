@@ -22,6 +22,7 @@ export class AddProductPage {
     public category: any;
     public catDetails: any;
     public currentuser: any;
+    public currentuserid: any;
     //public cattitle: string;
     public loading: any;
     products: FirebaseListObservable<any>;
@@ -52,11 +53,13 @@ export class AddProductPage {
     public selectedAlloy: any;
     public gradeval: any;
     public gradecat: any;
-    public compositiontxt:string;
+    public compositiontxt: string;
+    public selptype2: any;
     
     constructor(public navCtrl: NavController, public navParams: NavParams, public af: AngularFire, public formBuilder: FormBuilder, public authService: AuthService, public actionSheetCtrl: ActionSheetController, public alertCtrl: AlertController, public loadingCtrl: LoadingController, private camera: Camera) {
         this.category = navParams.get("category");
         this.currentuser = firebase.auth().currentUser;
+        this.currentuserid = this.currentuser.uid;
         //this.cattitle = this.category.title + " ";
         this.products = af.database.list('/products');
         this.userProducts = af.database.list('/users/' + this.currentuser.uid + '/products'); 
@@ -108,7 +111,7 @@ export class AddProductPage {
             width: ['', Validators.required],
             length: ['', Validators.required],
             weight: ['',],
-            nos: ['', Validators.required],
+            nos: ['',],
             mrate: ['',],
             krate: ['',],
             ratetype: ['',],
@@ -185,12 +188,13 @@ export class AddProductPage {
             width: ['', Validators.required],
             length: ['', Validators.required],
             quality: ['Original', Validators.required],
-            composition: ['', Validators.required],            
+            composition: ['',],            
             thickness: ['', Validators.required],            
             quantity: ['', Validators.required],
             unit: ['Mtrs', Validators.required],
             mrate: ['',],
             krate: ['',],
+            ratetype: ['',],
             origin: ['',],
             brand: ['',],
             mtc: ['',],
@@ -206,7 +210,7 @@ export class AddProductPage {
             grade: ['', Validators.required],
             astm: ['',],
             gradeval: ['base', Validators.required],
-            composition: ['', Validators.required],
+            composition: ['',],
             sizes: ['', Validators.required],
             sizeunit: ['', Validators.required],
             thickness: ['', Validators.required],
@@ -215,6 +219,7 @@ export class AddProductPage {
             length: ['', Validators.required],                     
             mrate: ['',],
             krate: ['',],
+            ratetype: ['',],
             origin: ['',],
             brand: ['',],
             mtc: ['',],
@@ -243,6 +248,7 @@ export class AddProductPage {
             length: ['', Validators.required],
             mrate: ['',],
             krate: ['',],
+            ratetype: ['',],
             origin: ['',],
             brand: ['',],
             mtc: ['',],
@@ -261,6 +267,7 @@ export class AddProductPage {
             unit: ['Kg',],
             mrate: ['',],
             krate: ['',],
+            ratetype: ['',],
             catid: ['', Validators.required],
             uid: ['', Validators.required],
             islive: ['true', Validators.required]
@@ -319,7 +326,7 @@ export class AddProductPage {
             alert.present();
         }        
         else {
-            if (this.category.catid == 10 && this.productImage == null) {
+            if ((this.category.catid == 10 || (this.category.catid == 2 && productForm.value.ptype2 === "Designer" )) && this.productImage == null) {
                 let alert = this.alertCtrl.create({
                     title: 'Add Image!',
                     subTitle: 'Please add an image for your product',
@@ -399,6 +406,20 @@ export class AddProductPage {
                 else {
                     this.allValid = true;
                 }
+                if (productForm.value.nos == null || productForm.value.nos === "") {
+
+                    this.allValid = false;
+                    let alert = this.alertCtrl.create({
+                        title: 'Enter Quantity (Nos.)!',
+                        subTitle: 'Enter values for quantity (Nos.)',
+                        buttons: ['OK']
+                    });
+                    alert.present();
+                }
+                else {
+                    this.allValid = true;
+                }
+
             }
             else {
                 this.allValid = true;

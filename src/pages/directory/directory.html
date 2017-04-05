@@ -9,7 +9,14 @@
   <ion-navbar>
     <ion-title>Directory</ion-title>
 
+      <ion-buttons end>
+          <button ion-button (click)="openAlert()" clear>
+              <ion-icon name="alert"></ion-icon>
+          </button>
+      </ion-buttons>
+
   </ion-navbar>
+
     <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
     
 
@@ -18,10 +25,13 @@
 
 <ion-content padding>
 
-        <ion-list  [virtualScroll]="directory">
-            <ion-item *virtualItem="let member"  approxItemHeight="150px" (click)="viewDetails(member)">
+        <!--<ion-list  [virtualScroll]="directory">
+            <ion-item *virtualItem="let member"  approxItemHeight="150px" (click)="viewDetails(member)">-->
+   
+    <ion-list>
+        <ion-item  *ngFor="let member of directory " (click)="viewDetails(member)">
                 <ion-avatar item-left>
-                    <img src="assets/img/noimage.png">
+                    <ion-img src="assets/img/noimage.png"></ion-img>
                 </ion-avatar>  
                 <h2>{{member?.Name}}</h2>
                 <!--<p>{{member["Mobile 1"]}} | {{member["Mobile 2"]}}</p>

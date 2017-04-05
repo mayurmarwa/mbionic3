@@ -18,13 +18,14 @@ export class BrowseRequirementsPage {
     public requirementList: any;
     public loadedlist: any;
     public requirementRef: any;
+    public loadingPopup: any;
 
     constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController) {
   
-      let loadingPopup = this.loadingCtrl.create({
+      this.loadingPopup = this.loadingCtrl.create({
           content: 'Loading...'
       });
-      loadingPopup.present();
+      this.loadingPopup.present();
       this.requirementRef = firebase.database().ref('/requirements');
 
       this.requirementRef.on('value', memberList => {
@@ -33,11 +34,35 @@ export class BrowseRequirementsPage {
               members.push(country.val());
           });
 
-          this.requirementList = members;
-          this.loadedlist = members;
-          loadingPopup.dismiss();
+          this.buildArray(members);
+          //this.requirementList = members;
+          //this.loadedlist = members;
+          //this.loadingPopup.dismiss();
       });
-  }
+    }
+
+    private buildArray(array) {
+        return new Promise(resolve => {
+            let m = array.length, t, i;
+
+            // While there remain elements to shuffle…
+            while (m) {
+
+                // Pick a remaining element…
+                i = Math.floor(Math.random() * m--);
+
+                // And swap it with the current element.
+                t = array[m];
+                array[m] = array[i];
+                array[i] = t;
+            }
+            this.requirementList = array;
+            this.loadedlist = array;
+            this.loadingPopup.dismiss();
+            resolve(true);
+        });
+    }
+
 
   initializeItems(): void {
       this.requirementList = this.loadedlist;

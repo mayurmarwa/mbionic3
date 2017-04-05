@@ -73,7 +73,7 @@ export class SendQuotationPage {
             price: ['', Validators.required],
             delivery: ['', Validators.required],
             payment: ['', Validators.required],
-            details: ['', Validators.required]
+            details: ['',]
 
         });
   }

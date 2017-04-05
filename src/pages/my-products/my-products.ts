@@ -57,7 +57,10 @@ export class MyProductsPage {
       this.updateList();
   }
   updateList() {
-      this.myproducts = this.af.database.list('/users/' + this.currentuser.uid + '/products/', { query: { orderByChild: 'timestamp' } });
+      this.myproducts = this.af.database.list('/products', {
+          query: {
+              orderByChild: "uid",
+              equalTo: this.currentuser.uid } });
       this.productListRev = this.myproducts.map((arr) => { return arr.reverse(); });
       this.loadingPopup.dismiss();
 }

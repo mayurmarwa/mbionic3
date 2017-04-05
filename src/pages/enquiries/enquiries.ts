@@ -25,17 +25,14 @@ export class EnquiriesPage {
 
     constructor(public navCtrl: NavController, public navParams: NavParams, public af: AngularFire, public storage: Storage, public loadingCtrl: LoadingController) {
       
-        this.loadingPopup = this.loadingCtrl.create({
-            content: 'Loading...'
-        });
-        this.loadingPopup.present();
+        
        
         storage.ready().then(() => {
           storage.get('currentuser').then((val) => {
 
               this.currentuser = JSON.parse(val);
               this.segment = "received";
-              this.updateEnquiryList();
+              
               
               //this.enquiryList = af.database.list('/users/' + this.currentuser.uid + '/enquiries');
 
@@ -52,6 +49,14 @@ export class EnquiriesPage {
       console.log('ionViewDidLoad EnquiriesPage');
       
     
+    }
+  ionViewDidEnter() {
+      console.log('ionViewDidEnter EnquiriesPage');
+      this.loadingPopup = this.loadingCtrl.create({
+          content: 'Loading...'
+      });
+      this.loadingPopup.present();
+      this.updateEnquiryList();
   }
 
   openenquirypage(enquiry){

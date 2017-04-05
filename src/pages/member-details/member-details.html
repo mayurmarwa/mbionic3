@@ -37,34 +37,88 @@
             {{member?.Email}}
         </ion-item>
         <ion-item ion-item text-wrap *ngIf="member['Mobile 1']">
-            <custom-icon set="mb" name="mobile" item-left></custom-icon>            
+            <custom-icon set="mb" name="mobile" item-left></custom-icon>    
+            <button ion-button item-right icon-only color="call" (click)="callNo(1)"><ion-icon name="call"></ion-icon></button>         
             <p>Mobile 1</p>
             <h2>{{member["Mobile 1"]}}</h2>
         </ion-item>
         <ion-item ion-item text-wrap *ngIf="member['Mobile 2']">
-            <custom-icon set="mb" name="mobile" item-left></custom-icon>            
+            <custom-icon set="mb" name="mobile" item-left></custom-icon>   
+            <button ion-button item-right icon-only color="call" (click)="callNo(2)"><ion-icon name="call"></ion-icon></button>          
             <p>Mobile 2</p>
             <h2>{{member["Mobile 2"]}}</h2>
         </ion-item>
         <ion-item ion-item text-wrap *ngIf="member['Mobile 3']">
-            <custom-icon set="mb" name="mobile" item-left></custom-icon>            
+            <custom-icon set="mb" name="mobile" item-left></custom-icon>  
+            <button ion-button item-right icon-only color="call" (click)="callNo(3)"><ion-icon name="call"></ion-icon></button>           
             <p>Mobile 3</p>
             <h2>{{member["Mobile 3"]}}</h2>
         </ion-item>
         <ion-item ion-item text-wrap *ngIf="member['Office 1']">
-            <custom-icon set="mb" name="dialer" item-left></custom-icon>            
+            <custom-icon set="mb" name="dialer" item-left></custom-icon>   
+            <button ion-button item-right icon-only color="call" (click)="callLand(1)"><ion-icon name="call"></ion-icon></button>
             <p>Office 1</p>
             <h2>{{member["Office 1"]}}</h2>
         </ion-item> 
         <ion-item ion-item text-wrap *ngIf="member['Office 2']">
             <custom-icon set="mb" name="dialer" item-left></custom-icon>            
+            <button ion-button item-right icon-only color="call" (click)="callLand(2)"><ion-icon name="call"></ion-icon></button>
             <p>Office 2</p>
             <h2>{{member["Office 2"]}}</h2>
         </ion-item> 
         <ion-item ion-item text-wrap *ngIf="member['Office 3']">
             <custom-icon set="mb" name="dialer" item-left></custom-icon>            
+            <button ion-button item-right icon-only color="call" (click)="callLand(3)"><ion-icon name="call"></ion-icon></button>
             <p>Office 3</p>
             <h2>{{member["Office 3"]}}</h2>
         </ion-item>        
+        <ion-item>
+            <custom-icon set="mb" name="vat" item-left></custom-icon>
+            Excise Details:
+        </ion-item>
+        <ion-grid text-center style="margin-left:5%">
+            <ion-row>
+                <ion-col>
+                    <ion-item text-wrap *ngIf="member?.excise">
+                        <p>ECC/Exc.Reg.No:</p>
+                        <h2>{{userProfile?.excise}}</h2>
+                    </ion-item>
+                </ion-col>
+                <ion-col>
+                    <ion-item text-wrap *ngIf="member?.comsn">
+                        <p>Commissionerate:</p>
+                        <h2>{{userProfile?.comsn}}</h2>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col>
+                    <ion-item text-wrap *ngIf="member?.range">
+                        <p>Range:</p>
+                        <h2>{{userProfile?.range}}</h2>
+                    </ion-item>
+                </ion-col>
+                <ion-col>
+                    <ion-item text-wrap *ngIf="member?.division">
+                        <p>Division:</p>
+                        <h2>{{userProfile?.division}}</h2>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col>
+                    <ion-item text-wrap *ngIf="member?.vat">
+                        <p>VAT TIN:</p>
+                        <h2>{{userProfile?.vat}}</h2>
+                    </ion-item>
+                </ion-col>
+                <ion-col>
+                    <ion-item text-wrap *ngIf="member?.pan">
+                        <p>PAN No.:</p>
+                        <h2>{{userProfile?.pan}}</h2>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+        </ion-grid> 
     </ion-list>
 </ion-content>
