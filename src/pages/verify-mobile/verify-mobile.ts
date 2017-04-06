@@ -6,7 +6,10 @@ import { AuthService } from '../../providers/auth.service';
 import { TabsPage } from '../tabs/tabs';
 import { App } from 'ionic-angular';
 import { NgZone } from '@angular/core';
+import { Http } from '@angular/http';
+import 'rxjs/add/operator/map';
 
+declare var SMS: any;
 /*
   Generated class for the VerifyMobile page.
 
@@ -19,19 +22,60 @@ import { NgZone } from '@angular/core';
 })
 export class VerifyMobilePage {
 
+    
     public loading: any;
     public signupForm: any;
     public otpValid: any;
+    public sessionid: any;
+    public otpinput: any;
 
     constructor(public nav: NavController, public authService: AuthService,
         public formBuilder: FormBuilder, public loadingCtrl: LoadingController,
-        public alertCtrl: AlertController, private app: App, private zone: NgZone, public navParams: NavParams) {
+        private http:Http,
+        public alertCtrl: AlertController, private app: App, private zone: NgZone, public navParams: NavParams,) {
 
         this.signupForm = navParams.get("form");
-        this.otpValid = true;
-        this.verifyotp();
+        this.otpValid = false;
+        //this.http.get('http://2factor.in/API/V1/068c2321-12f2-11e7-9462-00163ef91450/BAL/SMS').map(res => res.json()).subscribe(data => {
+        //    console.log(data);
+        //});
+        //this.http.get('/API/V1/068c2321-12f2-11e7-9462-00163ef91450/BAL/SMS').map(res => res.json()).subscribe(data => {
+        //    console.log(data);
+        //});
+        //this.http.get('http://2factor.in/API/V1/068c2321-12f2-11e7-9462-00163ef91450/SMS/' + this.signupForm.value.mobile + '/AUTOGEN/Registration').map(res => res.json()).subscribe(data => {
+        //    console.log(data);
+        //});
+        this.http.get('/API/V1/068c2321-12f2-11e7-9462-00163ef91450/SMS/' + this.signupForm.value.mobile + '/AUTOGEN/Registration').map(res => res.json()).subscribe(data => {
+            //console.log(data);
+            this.sessionid = data.Details;
+            if (SMS != undefined) {
+                SMS.startWatch(function () {
+                    //update('watching', 'watching started');
+                }, function () {
+                    //updateStatus('failed to start watching');
+                });
+            }
+        });
+        
+        document.addEventListener('onSMSArrive', function (e) {
+            var sms = (e as any).data;
+            this.otpinput = sms.substring(0, 5);
+
+            //smsList.push(sms); // optional, if you want to push that arrived SMS to a list
+            //updateStatus('SMS arrived, count: ' + smsList.length);
+
+            // sms.address
+            // sms.body
+
+            //var divdata = $('div#data');
+            //divdata.html(divdata.html() + JSON.stringify(sms));
+
+        });
+        //this.verifyotp();
 
     }
+
+    
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad VerifyMobilePage');
@@ -39,10 +83,9 @@ export class VerifyMobilePage {
 
 
   verifyotp() {
-      if (this.otpValid) {
-          this.signupUser();
-      }
-      else {
+
+
+      if (this.otpinput == '' || this.otpinput == null) {
           let alert = this.alertCtrl.create({
               message: "Invalid OTP, please try again.",
               buttons: [{ text: "Ok", role: 'cancel' }]
@@ -50,6 +93,32 @@ export class VerifyMobilePage {
 
           alert.present();
       }
+      else {
+          // this.http.get('http://2factor.in/API/V1/068c2321-12f2-11e7-9462-00163ef91450/SMS/VERIFY/{session_id}/{otp_input}' + this.signupForm.value.mobile + '/AUTOGEN/Registration').map(res => res.json()).subscribe(data => {
+          //     console.log(data);
+          //   }); 
+          //this.http.get('http://2factor.in/API/V1/068c2321-12f2-11e7-9462-00163ef91450/SMS/VERIFY/' + this.sessionid + '/' + this.otpinput).map(res => res.json()).subscribe(data => {
+          this.http.get('/API/V1/068c2321-12f2-11e7-9462-00163ef91450/SMS/VERIFY/' + this.sessionid + '/' + this.otpinput).map(res => res.json()).subscribe(data => {
+              //console.log(data);
+              if (data.Status == "Success") {
+                  this.signupUser();
+              }
+              else {
+                  let alert = this.alertCtrl.create({
+                      message: "Invalid OTP, please try again.",
+                      buttons: [{ text: "Ok", role: 'cancel' }]
+                  });
+
+                  alert.present();
+              }
+          });
+
+          
+      }
+     
+
+
+      
   }
 
   signupUser() {

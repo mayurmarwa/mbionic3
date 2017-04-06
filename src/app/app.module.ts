@@ -4,6 +4,7 @@ import { MyApp } from './app.component';
 import { CustomIconsModule } from 'ionic2-custom-icons';
 import { IonicStorageModule } from '@ionic/storage';
 
+
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { SocialSharing } from '@ionic-native/social-sharing';

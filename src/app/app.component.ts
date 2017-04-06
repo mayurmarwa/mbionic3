@@ -125,16 +125,24 @@ export class MyApp {
       push.on('registration').subscribe((data: RegistrationEventResponse) => {
           console.log("device token ->", data.registrationId);
           //TODO - send device token to server
-          var newPostKey = firebase.database().ref().child('fcmtokens').push().key;
-          var postData = {
+          //var newPostKey = firebase.database().ref().child('fcmtokens').push().key;
+          //var postData = {
+          //    fcmtoken: data.registrationId
+          //};
+          firebase.database().ref('/users/' + this.currentuser.uid + '/fcmtokens/').set({
               fcmtoken: data.registrationId
-          };
+          });
+          firebase.database().ref('/fcmtokens/' + this.currentuser.uid + '/').set({
+              fcmtoken: data.registrationId
+          });
+          return 
+      
           // Write the new post's data simultaneously in the posts list and the user's post list.
-          var updates = {};
-          updates['/fcmtokens/' + this.currentuser.uid + '/' + newPostKey] = postData;
-          updates['/users/' + this.currentuser.uid + '/fcmtokens/' + newPostKey] = postData;
+          //var updates = {};
+         // updates['/fcmtokens/' + this.currentuser.uid + '/' + newPostKey] = postData;
+         // updates['/users/' + this.currentuser.uid + '/fcmtokens/' + newPostKey] = postData;
 
-          return firebase.database().ref().update(updates);
+          //return firebase.database().ref().update(updates);
       });
       push.on('notification').subscribe( (data: NotificationEventResponse) => {
           console.log('message', data.message);
