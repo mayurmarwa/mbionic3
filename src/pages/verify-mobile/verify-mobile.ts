@@ -48,7 +48,7 @@ export class VerifyMobilePage {
         this.http.get('/API/V1/068c2321-12f2-11e7-9462-00163ef91450/SMS/' + this.signupForm.value.mobile + '/AUTOGEN/Registration').map(res => res.json()).subscribe(data => {
             //console.log(data);
             this.sessionid = data.Details;
-            if (SMS != undefined) {
+            if (SMS) {
                 SMS.startWatch(function () {
                     //update('watching', 'watching started');
                 }, function () {
