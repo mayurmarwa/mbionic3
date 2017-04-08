@@ -60,7 +60,8 @@ export class VerifyMobilePage {
         
         document.addEventListener('onSMSArrive', function (e) {
             var sms = (e as any).data;
-            this.otpinput = sms.substring(0, 5);
+            console.log(sms);
+            //this.otpinput = sms.substring(0, 5);
 
             //smsList.push(sms); // optional, if you want to push that arrived SMS to a list
             //updateStatus('SMS arrived, count: ' + smsList.length);

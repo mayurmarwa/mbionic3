@@ -32,8 +32,7 @@ export class TabProfilePage {
       this.profileData = profileData;
       this.currentuser = firebase.auth().currentUser;
 
-      let loading = this.loadingCtrl.create();
-      loading.present();
+     
 
       if (this.currentuser){
          this.sub1 = this.authService.getFullProfile(this.currentuser.uid)
@@ -50,12 +49,12 @@ export class TabProfilePage {
 
           this.sub2 = this.authService.currentUser
               .subscribe(user => {
-                  loading.dismiss();
+                  //loading.dismiss();
                   this.user.displayName = user.displayName;
                   this.user.email = user.email || user.providerData[0].email || 'Not set yet.';
                   this.user.photoURL = user.photoURL || this.user.photoURL;
               }, (error) => {
-                  loading.dismiss();
+                  //loading.dismiss();
                   console.log('Error: ' + JSON.stringify(error));
               });
       }
@@ -66,6 +65,19 @@ export class TabProfilePage {
           alert(this.userProfile);
           //this.birthDate = this.userProfile.birthDate;
       });**/
+  }
+
+  ionViewDidLoad() {
+      let loading = this.loadingCtrl.create({
+          content: 'Updating...'
+      });
+
+      loading.present();
+
+      setTimeout(() => {
+          loading.dismiss();
+      }, 1500);
+
   }
 
     ionViewDidLeave() {

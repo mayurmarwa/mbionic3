@@ -33,7 +33,7 @@ export class DirectoryPage {
         });
         this.loadingPopup.present();
         this.directoryRef = firebase.database().ref('/directory');
-        this.directoryRef.once('value').then(countryList => {
+        this.directoryRef.on('value').then(countryList => {
             let countries = [];
 
             countryList.forEach(country => {
@@ -43,7 +43,7 @@ export class DirectoryPage {
 
             this.directory = countries;
             this.loadedlist = countries;
-            console.log("here", this.directory);
+            //console.log("here", this.directory);
             this.loadingPopup.dismiss();
 
 

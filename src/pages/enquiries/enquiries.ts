@@ -129,7 +129,7 @@ export class EnquiriesPage {
 
       setTimeout(() => {
           loading.dismiss();
-      }, 3000);
+      }, 1800);
     
     }
   ionViewDidEnter() {

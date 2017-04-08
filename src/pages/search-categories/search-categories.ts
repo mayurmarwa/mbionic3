@@ -33,7 +33,7 @@ export class SearchCategoriesPage {
 
         //this.category = navParams.get("category");
         
-        this.getProducts().then(data => { this.buildArray(data) });
+        this.getProducts().then(data => { this.buildArray(data); this.loadingPopup.dismiss(); });
 
         //this.buildArray(this.productList);
         //console.log(this.productList);
@@ -88,7 +88,7 @@ export class SearchCategoriesPage {
 
             this.productList = array;
             this.backupList = array;
-            this.loadingPopup.dismiss();
+            
             resolve(true);
         });
     }
