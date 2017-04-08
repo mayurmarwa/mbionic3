@@ -25,14 +25,14 @@
 
 <ion-content padding>
 
-        <ion-list  [virtualScroll]="directory">
-            <ion-item *virtualItem="let member"  approxItemHeight="150px" (click)="viewDetails(member)">
+        <!--<ion-list  [virtualScroll]="directory">
+            <ion-item *virtualItem="let member"  approxItemHeight="150px" (click)="viewDetails(member)">-->
    
-    <!--<ion-list>
-        <ion-item  *ngFor="let member of directory " (click)="viewDetails(member)">-->
-                <ion-avatar item-left>
+    <ion-list>
+        <ion-item  *ngFor="let member of directory " (click)="viewDetails(member)">
+                <!--<ion-avatar item-left>
                     <ion-img src="assets/img/noimage.png"></ion-img>
-                </ion-avatar>  
+                </ion-avatar> --> 
                 <h2>{{member?.Name}}</h2>
                 <!--<p>{{member["Mobile 1"]}} | {{member["Mobile 2"]}}</p>
                 

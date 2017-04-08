@@ -2,11 +2,6 @@
   "name": "MetBazaarBeta",
   "app_id": "ebeeee34",
   "v2": true,
-  "typescript": true,
-  "proxies": [
-    {
-      "path": "/API",
-      "proxyUrl": "http://2factor.in/API"
-    }
-  ]
+  "typescript": true
+  
 }

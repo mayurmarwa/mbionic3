@@ -26,6 +26,7 @@ export class DirectoryPage {
 
     constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController, public modalCtrl: ModalController, public popoverCtrl: PopoverController, public loadingCtrl: LoadingController) {
 
+        this.directory = [];
 
         this.loadingPopup = this.loadingCtrl.create({
             content: 'Updating...'
