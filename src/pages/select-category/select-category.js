@@ -28,7 +28,7 @@ var SelectCategoryPage = (function () {
         console.log('ionViewDidLoad SelectCategoryPage');
     };
     SelectCategoryPage.prototype.detailpage = function (category) {
-        if (category.catid === 4 || category.catid === 8 || category.catid === 9) {
+        if (category.catid == 4 || category.catid == 8 || category.catid == 9) {
             this.categories = this.af.database.list('/productcategories/' + category.$key + '/subcategories/', { query: { orderByChild: 'oid' } });
             this.parentcat = category.$key;
         }

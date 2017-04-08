@@ -9,7 +9,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { Injectable } from '@angular/core';
 import { Platform } from 'ionic-angular';
-import { Facebook, GooglePlus } from 'ionic-native';
+import { Facebook } from '@ionic-native/facebook';
+import { GooglePlus } from '@ionic-native/google-plus';
+import { Storage } from '@ionic/storage';
 import 'rxjs/add/operator/first';
 import { AngularFire, AuthProviders, AuthMethods } from 'angularfire2';
 import firebase from 'firebase';
@@ -20,9 +22,12 @@ export var AuthMode;
 })(AuthMode || (AuthMode = {}));
 ;
 var AuthService = (function () {
-    function AuthService(af, platform) {
+    function AuthService(af, platform, storage, googlePlus, fb) {
         this.af = af;
         this.platform = platform;
+        this.storage = storage;
+        this.googlePlus = googlePlus;
+        this.fb = fb;
     }
     AuthService.prototype.getAuth = function () {
         return this.af.auth;
@@ -51,7 +56,7 @@ var AuthService = (function () {
         var _this = this;
         if (!this.platform.is('cordova'))
             return this.signInWithProvider(AuthProviders.Google);
-        return GooglePlus.login({
+        return this.googlePlus.login({
             'scopes': 'email profile',
             'webClientId': '79899062384-7monv7m7lgkhmsm5n6ng45qljb2o1dhq.apps.googleusercontent.com'
         }).then(function (res) {
@@ -65,7 +70,7 @@ var AuthService = (function () {
         var _this = this;
         if (!this.platform.is('cordova'))
             return this.signInWithProvider(AuthProviders.Facebook);
-        Facebook.login(['email', 'public_profile'])
+        this.fb.login(['email', 'public_profile'])
             .then(function (res) {
             return _this.signInWithCredential(firebase.auth.FacebookAuthProvider.credential(res.authResponse.accessToken));
         }, function (error) { return Promise.reject(error); });
@@ -103,7 +108,18 @@ var AuthService = (function () {
         });
     };
     AuthService.prototype.logout = function () {
-        this.af.auth.logout();
+        var _this = this;
+        this.storage.ready().then(function () {
+            _this.storage.remove('currentuser').then(function (val) {
+                _this.af.auth.logout();
+                //this.enquiryList = af.database.list('/users/' + this.currentuser.uid + '/enquiries');
+            })
+                .catch(function (err) {
+                return console.log(err);
+            });
+        }).catch(function (err) {
+            return console.log(err);
+        });
     };
     AuthService.prototype.resetPassword = function (email) {
         return firebase.auth().sendPasswordResetEmail(email);
@@ -129,7 +145,7 @@ var AuthService = (function () {
 }());
 AuthService = __decorate([
     Injectable(),
-    __metadata("design:paramtypes", [AngularFire, Platform])
+    __metadata("design:paramtypes", [AngularFire, Platform, Storage, GooglePlus, Facebook])
 ], AuthService);
 export { AuthService };
 //# sourceMappingURL=auth.service.js.map

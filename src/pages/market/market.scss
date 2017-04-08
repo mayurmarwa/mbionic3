@@ -1,4 +1,38 @@
 page-market {
+
+    .card-background-page {
+
+  ion-card {
+    position: relative;
+    text-align: center;
+
+    @media only screen and (min-width: 600px){
+        height: 20%;
+    }
+  }
+
+  .card-title {
+    position: absolute;
+    top: 16%;
+    font-size: 1.2em;
+    width: 100%;
+    font-weight: bold;
+    color: #fff;
+  }
+
+  .card-subtitle {
+    font-size: 1.0em;
+    position: absolute;
+    top: 52%;
+    width: 100%;
+    color: #fff;
+  }
+
+}
+
+
+
+
     .header-image {
         max-width:100%;
     background-image: url(https://ununsplash.imgix.net/photo-1421091242698-34f6ad7fc088?fit=crop&fm=jpg&h=650&q=75&w=950);
@@ -56,9 +90,9 @@ ion-col{
 
 .gradeCircle2{
         //background-color: #f4f4f4;
-    border: 1px solid #1a1e5e;
+    //border: 1px solid #1a1e5e;
     //border-radius: 40px;
-    box-shadow: 0 0 2px #888;
+    //box-shadow: 0 0 2px #888;
     height: 75px;
     width: 75px;
     text-align: center;

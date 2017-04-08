@@ -8,7 +8,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Component } from '@angular/core';
-import { NavController, NavParams, AlertController, ModalController } from 'ionic-angular';
+import { NavController, NavParams, AlertController, ModalController, LoadingController } from 'ionic-angular';
 import { AngularFire } from 'angularfire2';
 import { ProductPagePage } from '../product-page/product-page';
 import { FilterOptionsPage } from '../filter-options/filter-options';
@@ -19,13 +19,18 @@ import { FilterOptionsPage } from '../filter-options/filter-options';
   Ionic pages and navigation.
 */
 var CategoryProductsPage = (function () {
-    function CategoryProductsPage(navCtrl, navParams, af, alertCtrl, modalCtrl) {
+    function CategoryProductsPage(navCtrl, navParams, af, alertCtrl, modalCtrl, loadingCtrl) {
         var _this = this;
         this.navCtrl = navCtrl;
         this.navParams = navParams;
         this.af = af;
         this.alertCtrl = alertCtrl;
         this.modalCtrl = modalCtrl;
+        this.loadingCtrl = loadingCtrl;
+        this.loadingPopup = this.loadingCtrl.create({
+            content: 'Loading...'
+        });
+        this.loadingPopup.present();
         //this.category = navParams.get("category");
         this.catid = navParams.get("catid");
         this.title = navParams.get("cattitle");
@@ -41,13 +46,16 @@ var CategoryProductsPage = (function () {
                     orderByChild: "catid",
                     equalTo: _this.catid
                 }, preserveSnapshot: true
-            }).subscribe(function (snapshots) {
+            }).first().subscribe(function (snapshots) {
                 _this.productList = [];
                 _this.keys = [];
                 snapshots.forEach(function (snapshot) {
                     _this.arrkey = _this.productList.push(snapshot.val());
                     _this.keys.push(snapshot.key);
                     //console.log(snapshot.key);
+                }, function (error) {
+                    //loading.dismiss();
+                    console.log('Error: ' + JSON.stringify(error));
                 });
                 for (var i in _this.productList) {
                     _this.productList[i].key = _this.keys[i];
@@ -162,15 +170,97 @@ var CategoryProductsPage = (function () {
                 array[i] = t;
             }
             _this.productList = array;
+            _this.backupList = array;
+            _this.loadingPopup.dismiss();
             resolve(true);
         });
     };
+    CategoryProductsPage.prototype.initializeItems = function () {
+        this.productList = this.backupList;
+    };
     CategoryProductsPage.prototype.showFilter = function () {
-        var showFilter = this.modalCtrl.create(FilterOptionsPage);
+        var _this = this;
+        var showFilter = this.modalCtrl.create(FilterOptionsPage, { catid: this.catid });
         showFilter.present();
         showFilter.onDidDismiss(function (data) {
-            console.log("Data =>", data); //This will log the form entered by user in add modal.
+            //This will log the form entered by user in add modal.
+            _this.filterList(data);
         });
+    };
+    CategoryProductsPage.prototype.filterList = function (data) {
+        //console.log("Data =>", JSON.stringify(data))
+        this.initializeItems();
+        if (data.grade && data.gradeval) {
+            this.productList = this.productList.filter(function (item) {
+                //console.log(item);
+                return (item['gradeval'] === data.gradeval);
+            });
+        }
+        if (data.finish && data.finishval) {
+            this.productList = this.productList.filter(function (item) {
+                //console.log(item);
+                return (item['finish'] === data.finishval);
+            });
+        }
+        if (data.alloy && data.selectedAlloy) {
+            this.productList = this.productList.filter(function (item) {
+                //console.log(item);
+                return (item['ptype'] === data.selectedAlloy);
+            });
+        }
+        if (data.type && data.selectedType) {
+            this.productList = this.productList.filter(function (item) {
+                //console.log(item);
+                return (item['type'] === data.selectedType);
+            });
+        }
+        if (data.subcat && data.subcatval) {
+            this.productList = this.productList.filter(function (item) {
+                //console.log(item);
+                return (item['subcat'] === data.subcatval);
+            });
+        }
+        if (data.sch && data.schval) {
+            this.productList = this.productList.filter(function (item) {
+                //console.log(item);
+                return (item['sch'] === data.schval);
+            });
+        }
+        if (data.swg && data.swgval) {
+            this.productList = this.productList.filter(function (item) {
+                //console.log(item);
+                return (item['swg'] >= data.swgval.lower && item['swg'] <= data.swgval.upper);
+            });
+        }
+        if (data.mm && data.mmval) {
+            this.productList = this.productList.filter(function (item) {
+                //console.log(item);
+                return (item['mm'] >= data.mmval.lower && item['mm'] <= data.mmval.upper);
+            });
+        }
+        if (data.weight && data.weightval) {
+            this.productList = this.productList.filter(function (item) {
+                //console.log(item);
+                return (item['weight'] >= data.weightval.lower && item['weight'] <= data.weightval.upper);
+            });
+        }
+        if (data.lgth && data.lgthval) {
+            this.productList = this.productList.filter(function (item) {
+                return (item["length"] >= data.lgthval.lower && item["length"] <= data.lgthval.upper);
+            });
+        }
+        if (data.wdth && data.wdthval) {
+            this.productList = this.productList.filter(function (item) {
+                //console.log(item);
+                return (item['width'] >= data.wdthval.lower && item['width'] <= data.wdthval.upper);
+            });
+        }
+        if (data.thickness && data.thicknessval) {
+            this.productList = this.productList.filter(function (item) {
+                //console.log(item);
+                return (item['thickness'] >= data.thicknessval.lower && item['thickness'] <= data.thicknessval.upper);
+            });
+        }
     };
     return CategoryProductsPage;
 }());
@@ -179,7 +269,7 @@ CategoryProductsPage = __decorate([
         selector: 'page-category-products',
         templateUrl: 'category-products.html'
     }),
-    __metadata("design:paramtypes", [NavController, NavParams, AngularFire, AlertController, ModalController])
+    __metadata("design:paramtypes", [NavController, NavParams, AngularFire, AlertController, ModalController, LoadingController])
 ], CategoryProductsPage);
 export { CategoryProductsPage };
 //# sourceMappingURL=category-products.js.map

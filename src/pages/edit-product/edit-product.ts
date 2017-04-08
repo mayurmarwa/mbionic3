@@ -16,13 +16,14 @@ export class EditProductPage {
 
     public myproduct: any;
     public product: any;
+    public sub1: any;
 
     constructor(public navCtrl: NavController, public navParams: NavParams, public productData: ProductData, public alertCtrl: AlertController) {
 
         this.myproduct = navParams.get("myproduct");
         this.productData = productData;
 
-        this.productData.getProduct(this.myproduct.$key).first()
+        this.sub1 = this.productData.getProduct(this.myproduct.key)
             .subscribe(product => {
                 //loading.dismiss();
                 // this.user.displayName = user.displayName;
@@ -38,8 +39,10 @@ export class EditProductPage {
 
   ionViewDidLoad() {
       console.log('ionViewDidLoad EditProductPage');
-      console.log(this.myproduct.$key);
-      this.product;
+     
+    }
+  ionViewDidLeave() {
+      this.sub1.unsubscribe();
   }
 
   updateName() {
@@ -64,7 +67,7 @@ export class EditProductPage {
               {
                   text: 'Save',
                   handler: data => {
-                      this.productData.updateName(this.product.$key,data.name);
+                      this.productData.updateName(this.product.key,data.name);
                   }
               }
           ]
@@ -93,7 +96,7 @@ export class EditProductPage {
               {
                   text: 'Save',
                   handler: data => {
-                      this.productData.updateGrade(this.product.$key, data.grade);
+                      this.productData.updateGrade(this.product.key, data.grade);
                   }
               }
           ]
@@ -123,7 +126,7 @@ export class EditProductPage {
               {
                   text: 'Save',
                   handler: data => {
-                      this.productData.updateFinish(this.product.$key, data.finish);
+                      this.productData.updateFinish(this.product.key, data.finish);
                   }
               }
           ]
@@ -154,7 +157,7 @@ export class EditProductPage {
               {
                   text: 'Save',
                   handler: data => {
-                      this.productData.updateThickness(this.product.$key, data.thickness);
+                      this.productData.updateThickness(this.product.key, data.thickness);
                   }
               }
           ]
@@ -185,7 +188,7 @@ export class EditProductPage {
               {
                   text: 'Save',
                   handler: data => {
-                      this.productData.updateWidth(this.product.$key, data.width);
+                      this.productData.updateWidth(this.product.key, data.width);
                   }
               }
           ]
@@ -216,7 +219,7 @@ export class EditProductPage {
               {
                   text: 'Save',
                   handler: data => {
-                      this.productData.updateLength(this.product.$key, data.length);
+                      this.productData.updateLength(this.product.key, data.length);
                   }
               }
           ]
@@ -247,7 +250,7 @@ export class EditProductPage {
               {
                   text: 'Save',
                   handler: data => {
-                      this.productData.updateWeight(this.product.$key, data.weight);
+                      this.productData.updateWeight(this.product.key, data.weight);
                   }
               }
           ]
@@ -278,7 +281,7 @@ export class EditProductPage {
               {
                   text: 'Save',
                   handler: data => {
-                      this.productData.updateNos(this.product.$key, data.nos);
+                      this.productData.updateNos(this.product.key, data.nos);
                   }
               }
           ]
@@ -309,7 +312,7 @@ export class EditProductPage {
               {
                   text: 'Save',
                   handler: data => {
-                      this.productData.updateMrate(this.product.$key, data.mrate);
+                      this.productData.updateMrate(this.product.key, data.mrate);
                   }
               }
           ]
@@ -340,7 +343,7 @@ export class EditProductPage {
               {
                   text: 'Save',
                   handler: data => {
-                      this.productData.updateKrate(this.product.$key, data.krate);
+                      this.productData.updateKrate(this.product.key, data.krate);
                   }
               }
           ]
@@ -370,7 +373,7 @@ export class EditProductPage {
               {
                   text: 'Save',
                   handler: data => {
-                      this.productData.updateComposition(this.product.$key, data.composition);
+                      this.productData.updateComposition(this.product.key, data.composition);
                   }
               }
           ]
@@ -400,7 +403,7 @@ export class EditProductPage {
               {
                   text: 'Save',
                   handler: data => {
-                      this.productData.updateOrigin(this.product.$key, data.origin);
+                      this.productData.updateOrigin(this.product.key, data.origin);
                   }
               }
           ]
@@ -431,7 +434,7 @@ export class EditProductPage {
               {
                   text: 'Save',
                   handler: data => {
-                      this.productData.updateBrand(this.product.$key, data.brand);
+                      this.productData.updateBrand(this.product.key, data.brand);
                   }
               }
           ]
@@ -462,7 +465,7 @@ export class EditProductPage {
               {
                   text: 'Save',
                   handler: data => {
-                      this.productData.updateCategory(this.product.$key, data.category);
+                      this.productData.updateCategory(this.product.key, data.category);
                   }
               }
           ]
@@ -488,7 +491,7 @@ export class EditProductPage {
               {
                   text: 'Save',
                   handler: data => {
-                      this.productData.updateSizes(this.product.$key, data.sizes);
+                      this.productData.updateSizes(this.product.key, data.sizes);
                   }
               }
           ]
@@ -514,7 +517,7 @@ export class EditProductPage {
               {
                   text: 'Save',
                   handler: data => {
-                      this.productData.updateType(this.product.$key, data.type);
+                      this.productData.updateType(this.product.key, data.type);
                   }
               }
           ]
@@ -540,7 +543,7 @@ export class EditProductPage {
               {
                   text: 'Save',
                   handler: data => {
-                      this.productData.updateSwg(this.product.$key, data.swg);
+                      this.productData.updateSwg(this.product.key, data.swg);
                   }
               }
           ]
@@ -566,7 +569,7 @@ export class EditProductPage {
               {
                   text: 'Save',
                   handler: data => {
-                      this.productData.updateSch(this.product.$key, data.sch);
+                      this.productData.updateSch(this.product.key, data.sch);
                   }
               }
           ]
@@ -592,7 +595,7 @@ export class EditProductPage {
               {
                   text: 'Save',
                   handler: data => {
-                      this.productData.updateMm(this.product.$key, data.mm);
+                      this.productData.updateMm(this.product.key, data.mm);
                   }
               }
           ]
@@ -618,7 +621,7 @@ export class EditProductPage {
               {
                   text: 'Save',
                   handler: data => {
-                      this.productData.updateQuantity(this.product.$key, data.quantity);
+                      this.productData.updateQuantity(this.product.key, data.quantity);
                   }
               }
           ]
@@ -644,7 +647,7 @@ export class EditProductPage {
               {
                   text: 'Save',
                   handler: data => {
-                      this.productData.updateUnit(this.product.$key, data.unit);
+                      this.productData.updateUnit(this.product.key, data.unit);
                   }
               }
           ]
@@ -670,7 +673,7 @@ export class EditProductPage {
               {
                   text: 'Save',
                   handler: data => {
-                      this.productData.updateGuarantee(this.product.$key, data.guarantee);
+                      this.productData.updateGuarantee(this.product.key, data.guarantee);
                   }
               }
           ]
@@ -696,7 +699,7 @@ export class EditProductPage {
               {
                   text: 'Save',
                   handler: data => {
-                      this.productData.updateQuality(this.product.$key, data.quality);
+                      this.productData.updateQuality(this.product.key, data.quality);
                   }
               }
           ]
@@ -722,7 +725,7 @@ export class EditProductPage {
               {
                   text: 'Save',
                   handler: data => {
-                      this.productData.updateMtc(this.product.$key, data.mtc);
+                      this.productData.updateMtc(this.product.key, data.mtc);
                   }
               }
           ]
@@ -748,7 +751,7 @@ export class EditProductPage {
               {
                   text: 'Save',
                   handler: data => {
-                      this.productData.updatePtype(this.product.$key, data.ptype);
+                      this.productData.updatePtype(this.product.key, data.ptype);
                   }
               }
           ]
@@ -768,7 +771,7 @@ export class EditProductPage {
               {
                   text: 'Confirm',
                   handler: data => {
-                      this.productData.deleteProduct(this.product.$key);
+                      this.productData.deleteProduct(this.product.key);
                       this.navCtrl.pop();
                   }
               }

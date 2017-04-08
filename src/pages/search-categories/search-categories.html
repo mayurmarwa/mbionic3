@@ -1,0 +1,122 @@
+<!--
+  Generated template for the SearchCategories page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Search</ion-title>
+  </ion-navbar>
+    <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
+</ion-header>
+
+
+<ion-content text-center padding>
+    <ion-row>
+        <ion-col col-6 col-sm-4 *ngFor="let product of productList | orderBy : oby" (click)="openproductpage(product)">
+            <ion-card>
+                <ion-card-content style="padding: 10px 4px 10px 4px;">
+                    <div>
+                        <div class="gradeCircle2">{{product.gradeval}}</div>
+                    </div>
+                    <h2>
+                        {{product?.name}}
+                    </h2>
+                    <ion-grid class="product-highlighters">
+                        <ion-row nowrap>
+                            <ion-col text-center *ngIf="product?.finish">
+                                Finish
+                            </ion-col>
+                            <ion-col text-center *ngIf="product?.length">
+                                Length
+                            </ion-col>
+                            <ion-col text-center *ngIf="product?.weight && !product?.length">
+                                Weight
+                            </ion-col>
+                        </ion-row>
+                        <ion-row nowrap>
+                            <ion-col class="product-data" text-center *ngIf="product?.finish">
+                                {{product?.finish}}
+                            </ion-col>
+                            <ion-col class="product-data" text-center *ngIf="product?.length && (product?.catid === 2 || product?.catid === 3 || product?.catid === '8b' || product?.catid === '9b')">
+                                {{product?.length}} mm
+                            </ion-col>
+                            <ion-col class="product-data" text-center *ngIf="product?.length && !(product?.catid === 2 || product?.catid === 3 || product?.catid === '8b' || product?.catid === '9b')">
+                                {{product?.length}} Mtrs
+                            </ion-col>
+                            <ion-col class="product-data" text-center *ngIf="product?.weight  && !product?.length">
+                                {{product?.weight}} Kg
+                            </ion-col>
+                        </ion-row>
+                        <ion-row>
+                            <ion-col text-center *ngIf="product?.sizes">
+                                Size
+                            </ion-col>
+                        </ion-row>
+                        <ion-row>
+                            <ion-col class="product-data" text-center *ngIf="product?.sizes">
+                                {{product?.sizes}} {{product?.sizeunit}}
+                            </ion-col>
+                        </ion-row>
+
+                        <ion-row nowrap>
+                            <ion-col text-center *ngIf="product?.width">
+                                Width
+                            </ion-col>
+                            <ion-col text-center *ngIf="product?.thickness">
+                                Thickness
+                            </ion-col>
+                            <ion-col text-center *ngIf="product?.swg">
+                                SWG
+                            </ion-col>
+                            <ion-col text-center *ngIf="product?.sch">
+                                SCH
+                            </ion-col>
+                            <ion-col text-center *ngIf="product?.mm">
+                                MM
+                            </ion-col>
+
+                        </ion-row>
+                        <ion-row nowrap>
+                            <ion-col class="product-data" text-center *ngIf="product?.width">
+                                {{product?.width }} mm
+                            </ion-col>
+                            <ion-col class="product-data" text-center *ngIf="product?.thickness">
+                                {{product?.thickness }} mm
+                            </ion-col>
+
+                            <ion-col class="product-data" text-center *ngIf="product?.swg">
+                                {{product?.swg }}
+                            </ion-col>
+                            <ion-col class="product-data" text-center *ngIf="product?.sch">
+                                {{product?.sch }}
+                            </ion-col>
+                            <ion-col class="product-data" text-center *ngIf="product?.sch">
+                                {{product?.mm }}
+                            </ion-col>
+                        </ion-row>
+                        <ion-row nowrap>
+                            <ion-col text-center *ngIf="product?.mrate">
+                                Market
+                            </ion-col>
+                            <ion-col text-center *ngIf="product?.krate">
+                                Kalamboli
+                            </ion-col>
+                        </ion-row>
+                        <ion-row nowrap>
+                            <ion-col class="product-data" text-center *ngIf="product?.mrate">
+                                {{product?.mrate | currency:"INR":true}}
+                            </ion-col>
+                            <ion-col class="product-data" text-center *ngIf="product?.krate">
+                                {{product?.krate | currency:"INR":true}}
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>
+                </ion-card-content>
+            </ion-card>
+        </ion-col>
+    </ion-row>
+
+</ion-content>

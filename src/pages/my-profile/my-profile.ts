@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, LoadingController } from 'ionic-angular';
 import { AuthService } from '../../providers/auth.service';
 import { CallNumber } from '@ionic-native/call-number';
 import { Platform } from 'ionic-angular';
@@ -19,10 +19,16 @@ export class MyProfilePage {
     public userID: any;
     public userProfile: any;
     public subscription: any
+    public loadingPopup: any;
 
-    constructor(public navCtrl: NavController, public navParams: NavParams, public authService: AuthService, private platform: Platform, private callNumber: CallNumber) {
+    constructor(public navCtrl: NavController, public navParams: NavParams, public authService: AuthService, private platform: Platform, private callNumber: CallNumber, public loadingCtrl: LoadingController) {
 
         this.userID = navParams.get("userID");
+        this.loadingPopup = this.loadingCtrl.create({
+            content: 'Loading...'
+        });
+        this.loadingPopup.present();
+       
 
         this.subscription = this.authService.getFullProfile(this.userID).first()
             .subscribe(user => {
@@ -32,8 +38,10 @@ export class MyProfilePage {
                 //this.user.photoURL = user.photoURL || this.user.photoURL;
                 this.userProfile = user;
                 console.log(this.userProfile);
+                this.loadingPopup.dismiss();
             }, (error) => {
                 //loading.dismiss();
+                this.loadingPopup.dismiss();
                 console.log('Error: ' + JSON.stringify(error));
             });
     }

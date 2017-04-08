@@ -186,9 +186,9 @@
 
         <ion-item *ngIf="form.weight">
             
-            <ion-range ion-input min="0" max="500" dualKnobs="true" pin="true"  [(ngModel)]="form.weightval" name="weightval" color="danger">
+            <ion-range ion-input min="0" max="10000" dualKnobs="true" pin="true"  [(ngModel)]="form.weightval" name="weightval" color="danger">
                 <ion-label range-left>0 Kg</ion-label>
-                <ion-label range-right>500 Kg</ion-label>
+                <ion-label range-right>10000 Kg</ion-label>
             </ion-range>
             
         </ion-item>
@@ -197,15 +197,16 @@
             <ion-label *ngIf="!form.lgthval || !form.lgth">Length </ion-label>
             <ion-label *ngIf="form.lgthval  && form.lgth">Length:  {{form.lgthval.lower}} to {{form.lgthval.upper}} Mtrs</ion-label>
             <ion-checkbox [(ngModel)]="form.lgth" name="lgth" (ionChange)="consolelog()"></ion-checkbox>
-        </ion-item>
 
-        <ion-item *ngIf="form.lgth">
 
-            <ion-range ion-input min="0" max="500" dualKnobs="true" pin="true" [(ngModel)]="form.lgthval" name="lgthval" color="danger">
-                <ion-label range-left>0 Mtrs</ion-label>
-                <ion-label range-right>500 Mtrs</ion-label>
-            </ion-range>
+            <ion-item *ngIf="form.lgth && (category.catid === 5 || category.catid === 6 || category.catid === 7 || category.catid === '8d' || category.catid === '9d' )">
 
+                <ion-range ion-input min="0" max="1000" dualKnobs="true" pin="true" [(ngModel)]="form.lgthval" name="lgthval" color="danger">
+                    <ion-label range-left>0 Mtrs</ion-label>
+                    <ion-label range-right>1000 Mtrs</ion-label>
+                </ion-range>
+
+            </ion-item>
         </ion-item>
 
         <ion-item *ngIf="category.catid === 2 || category.catid === 3 || category.catid === '8b' || category.catid === '9b' ">
@@ -214,14 +215,15 @@
             <ion-checkbox [(ngModel)]="form.lgth" name="lgth" (ionChange)="consolelog()"></ion-checkbox>
         </ion-item>
 
-        <ion-item *ngIf="form.lgth">
+            <ion-item *ngIf="form.lgth && (category.catid === 2 || category.catid === 3 || category.catid === '8b' || category.catid === '9b' )">
 
-            <ion-range ion-input min="0" max="500" dualKnobs="true" pin="true" [(ngModel)]="form.lgthval" name="lgthval" color="danger">
-                <ion-label range-left>0 mm</ion-label>
-                <ion-label range-right>500 mm</ion-label>
-            </ion-range>
+                <ion-range ion-input min="0" max="10000" dualKnobs="true" pin="true" [(ngModel)]="form.lgthval" name="lgthval" color="danger">
+                    <ion-label range-left>0 mm</ion-label>
+                    <ion-label range-right>10000 mm</ion-label>
+                </ion-range>
 
-        </ion-item>
+            </ion-item>
+       
 
         <ion-item *ngIf="category.catid === 1 || category.catid === '8a' || category.catid === '9a' || category.catid === 2 || category.catid === 3 || category.catid === '8b' || category.catid === '9b' || category.catid === 5 ">
             <ion-label *ngIf="!form.wdthval || !form.wdth">Width </ion-label>
@@ -231,9 +233,9 @@
 
         <ion-item *ngIf="form.wdth">
 
-            <ion-range ion-input min="0" max="500" dualKnobs="true" pin="true" [(ngModel)]="form.wdthval" name="wdthval" color="danger">
+            <ion-range ion-input min="0" max="2500" dualKnobs="true" pin="true" [(ngModel)]="form.wdthval" name="wdthval" color="danger">
                 <ion-label range-left>0 mm</ion-label>
-                <ion-label range-right>500 mm</ion-label>
+                <ion-label range-right>2500 mm</ion-label>
             </ion-range>
 
         </ion-item>

@@ -32,7 +32,22 @@ export class DirectoryPage {
         });
         this.loadingPopup.present();
         this.directoryRef = firebase.database().ref('/directory');
-        this.getmembers();
+        this.directoryRef.once('value').then(countryList => {
+            let countries = [];
+
+            countryList.forEach(country => {
+
+                countries.push(country.val());
+            });
+
+            this.directory = countries;
+            this.loadedlist = countries;
+            console.log("here", this.directory);
+            this.loadingPopup.dismiss();
+
+
+        });
+        //this.getmembers();
         
 
 
@@ -41,21 +56,7 @@ export class DirectoryPage {
 
     getmembers() {
         
-        this.directoryRef.once('value').then( countryList => {
-            let countries = [];
-            
-            countryList.forEach(country => {
-                
-                countries.push(country.val());
-            });
-            
-            this.directory = countries;
-            this.loadedlist = countries;
-            console.log("here", this.directory);
-            this.loadingPopup.dismiss();
-           
-            
-        });
+        
     }
     
    

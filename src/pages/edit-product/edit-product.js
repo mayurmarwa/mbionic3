@@ -25,7 +25,7 @@ var EditProductPage = (function () {
         this.alertCtrl = alertCtrl;
         this.myproduct = navParams.get("myproduct");
         this.productData = productData;
-        this.productData.getProduct(this.myproduct.$key)
+        this.productData.getProduct(this.myproduct.$key).first()
             .subscribe(function (product) {
             //loading.dismiss();
             // this.user.displayName = user.displayName;

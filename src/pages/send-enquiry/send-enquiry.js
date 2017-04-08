@@ -41,13 +41,20 @@ var SendEnquiryPage = (function () {
                 //this.currentuser = firebase.auth().currentUser;
                 _this.userEnquiries = af.database.list('/users/' + _this.currentuser.uid + '/enquiries');
                 _this.sellerEnquiries = af.database.list('/users/' + _this.sellerID + '/enquiries');
-                if (!_this.product.unit) {
-                    _this.productunit = "Kg";
+                if (_this.product.mrate) {
+                    _this.productmrate = _this.product.mrate;
                 }
                 else {
-                    _this.productunit = _this.product.unit;
+                    _this.productmrate = null;
                 }
-                _this.authService.getFullProfile(_this.sellerID)
+                if (_this.product.krate) {
+                    _this.productkrate = _this.product.krate;
+                }
+                else {
+                    _this.productkrate = null;
+                }
+                _this.productunit = "Kg";
+                _this.authService.getFullProfile(_this.sellerID).first()
                     .subscribe(function (user) {
                     //loading.dismiss();
                     // this.user.displayName = user.displayName;
@@ -59,7 +66,7 @@ var SendEnquiryPage = (function () {
                     //loading.dismiss();
                     console.log('Error: ' + JSON.stringify(error));
                 });
-                _this.authService.getFullProfile(_this.currentuser.uid)
+                _this.authService.getFullProfile(_this.currentuser.uid).first()
                     .subscribe(function (user) {
                     //loading.dismiss();
                     // this.user.displayName = user.displayName;
@@ -135,8 +142,8 @@ var SendEnquiryPage = (function () {
                 product: _this.product,
                 productName: _this.product.name,
                 productUnit: _this.productunit,
-                productMrate: _this.product.mrate,
-                productKrate: _this.product.krate,
+                productMrate: _this.productmrate,
+                productKrate: _this.productkrate,
                 timestamp: firebase.database['ServerValue']['TIMESTAMP']
                 //detials: this.productForm.value.name,
             }).then(function (info) {
@@ -152,8 +159,8 @@ var SendEnquiryPage = (function () {
                 product: _this.product,
                 productName: _this.product.name,
                 productUnit: _this.productunit,
-                productMrate: _this.product.mrate,
-                productKrate: _this.product.krate,
+                productMrate: _this.productmrate,
+                productKrate: _this.productkrate,
                 rate: _this.enquiryForm.value.rate,
                 quantity: _this.enquiryForm.value.quantity,
                 unit: _this.enquiryForm.value.unit,

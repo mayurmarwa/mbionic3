@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, ModalController } from 'ionic-angular';
 import { NotificationsPage } from '../notifications/notifications';
+import { SearchCategoriesPage } from '../search-categories/search-categories';
+import { PostBuyRequirementsPage } from '../post-buy-requirements/post-buy-requirements';
 import { CategoryProductsPage } from '../category-products/category-products';
 import { AngularFire, FirebaseListObservable } from 'angularfire2';
 import { ProductPagePage } from '../product-page/product-page';
@@ -66,5 +68,11 @@ export class MarketPage {
   }
   openNotificationsPage() {
       this.navCtrl.push(NotificationsPage);
+  }
+  openSearchPage() {
+      this.navCtrl.push(SearchCategoriesPage);
+  }
+  openRequirementPage() {
+      this.navCtrl.push(PostBuyRequirementsPage);
   }
 }

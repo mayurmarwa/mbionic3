@@ -12,6 +12,7 @@ import { NavController, NavParams, AlertController, LoadingController } from 'io
 import { FormBuilder, Validators } from '@angular/forms';
 import { AngularFire } from 'angularfire2';
 import { Storage } from '@ionic/storage';
+import { AuthService } from '../../providers/auth.service';
 import firebase from 'firebase';
 /*
   Generated class for the SendQuotation page.
@@ -20,12 +21,13 @@ import firebase from 'firebase';
   Ionic pages and navigation.
 */
 var SendQuotationPage = (function () {
-    function SendQuotationPage(navCtrl, navParams, formBuilder, af, alertCtrl, loadingCtrl, storage) {
+    function SendQuotationPage(navCtrl, navParams, formBuilder, af, authService, alertCtrl, loadingCtrl, storage) {
         var _this = this;
         this.navCtrl = navCtrl;
         this.navParams = navParams;
         this.formBuilder = formBuilder;
         this.af = af;
+        this.authService = authService;
         this.alertCtrl = alertCtrl;
         this.loadingCtrl = loadingCtrl;
         this.storage = storage;
@@ -36,13 +38,37 @@ var SendQuotationPage = (function () {
                 _this.postuserID = _this.requirement.uid;
                 _this.userEnquiries = af.database.list('/users/' + _this.currentuser.uid + '/enquiries');
                 _this.postuserEnquiries = af.database.list('/users/' + _this.postuserID + '/enquiries');
+                _this.authService.getFullProfile(_this.postuserID).first()
+                    .subscribe(function (user) {
+                    //loading.dismiss();
+                    // this.user.displayName = user.displayName;
+                    //this.user.email = user.email || user.providerData[0].email || 'Not set yet.';
+                    //this.user.photoURL = user.photoURL || this.user.photoURL;
+                    _this.poster = user;
+                    //console.log(this.seller);
+                }, function (error) {
+                    //loading.dismiss();
+                    console.log('Error: ' + JSON.stringify(error));
+                });
+                _this.authService.getFullProfile(_this.currentuser.uid).first()
+                    .subscribe(function (user) {
+                    //loading.dismiss();
+                    // this.user.displayName = user.displayName;
+                    //this.user.email = user.email || user.providerData[0].email || 'Not set yet.';
+                    //this.user.photoURL = user.photoURL || this.user.photoURL;
+                    _this.user = user;
+                    //console.log(this.user);
+                }, function (error) {
+                    //loading.dismiss();
+                    console.log('Error: ' + JSON.stringify(error));
+                });
             });
         });
         this.quoteForm = formBuilder.group({
             price: ['', Validators.required],
             delivery: ['', Validators.required],
             payment: ['', Validators.required],
-            details: ['', Validators.required]
+            details: ['',]
         });
     }
     SendQuotationPage.prototype.ionViewDidLoad = function () {
@@ -87,6 +113,8 @@ var SendQuotationPage = (function () {
             _this.af.database.object('users/' + _this.currentuser.uid + '/enquiries/' + data.key).update({
                 type: 'sent',
                 otheruser: _this.postuserID,
+                otheruserName: _this.poster.name,
+                otheruserNo: _this.poster.mobile,
                 requirement: _this.requirement,
                 quote: _this.quoteForm.value,
                 timestamp: firebase.database['ServerValue']['TIMESTAMP']
@@ -98,6 +126,8 @@ var SendQuotationPage = (function () {
             _this.af.database.object('users/' + _this.postuserID + '/enquiries/' + data.key).update({
                 type: 'received',
                 otheruser: _this.currentuser.uid,
+                otheruserName: _this.user.name,
+                otheruserNo: _this.user.mobile,
                 requirement: _this.requirement,
                 quote: _this.quoteForm.value,
                 timestamp: firebase.database['ServerValue']['TIMESTAMP']
@@ -123,7 +153,7 @@ SendQuotationPage = __decorate([
         selector: 'page-send-quotation',
         templateUrl: 'send-quotation.html'
     }),
-    __metadata("design:paramtypes", [NavController, NavParams, FormBuilder, AngularFire, AlertController, LoadingController, Storage])
+    __metadata("design:paramtypes", [NavController, NavParams, FormBuilder, AngularFire, AuthService, AlertController, LoadingController, Storage])
 ], SendQuotationPage);
 export { SendQuotationPage };
 //# sourceMappingURL=send-quotation.js.map

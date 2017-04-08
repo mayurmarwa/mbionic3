@@ -8,11 +8,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
-import { AngularFire } from 'angularfire2';
+import { NavController, NavParams, LoadingController, AlertController } from 'ionic-angular';
 import { ModalController } from 'ionic-angular';
 import { MemberDetailsPage } from '../member-details/member-details';
 import { PopoverController } from 'ionic-angular';
+import firebase from 'firebase';
 /*
   Generated class for the Directory page.
 
@@ -20,22 +20,71 @@ import { PopoverController } from 'ionic-angular';
   Ionic pages and navigation.
 */
 var DirectoryPage = (function () {
-    function DirectoryPage(navCtrl, navParams, af, modalCtrl, popoverCtrl) {
+    function DirectoryPage(navCtrl, navParams, alertCtrl, modalCtrl, popoverCtrl, loadingCtrl) {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
-        this.af = af;
+        this.alertCtrl = alertCtrl;
         this.modalCtrl = modalCtrl;
         this.popoverCtrl = popoverCtrl;
-        this.directoryList = af.database.list('/directory', { query: { orderByChild: 'name' } });
+        this.loadingCtrl = loadingCtrl;
+        this.loadingPopup = this.loadingCtrl.create({
+            content: 'Updating...'
+        });
+        this.loadingPopup.present();
+        this.directoryRef = firebase.database().ref('/directory');
+        this.getmembers();
     }
+    DirectoryPage.prototype.getmembers = function () {
+        var _this = this;
+        this.directoryRef.once('value').then(function (countryList) {
+            var countries = [];
+            countryList.forEach(function (country) {
+                countries.push(country.val());
+            });
+            _this.directory = countries;
+            _this.loadedlist = countries;
+            console.log("here", _this.directory);
+            _this.loadingPopup.dismiss();
+        });
+    };
+    DirectoryPage.prototype.initializeItems = function () {
+        this.directory = this.loadedlist;
+    };
     DirectoryPage.prototype.ionViewDidLoad = function () {
         console.log('ionViewDidLoad DirectoryPage');
+    };
+    DirectoryPage.prototype.openAlert = function () {
+        var alert = this.alertCtrl.create({
+            title: 'MetBazaar Directory',
+            subTitle: 'To update contact info, company details, excise info or to add your company, send us details at contact@metbazaar.com',
+        });
+        alert.present();
+    };
+    DirectoryPage.prototype.getItems = function (searchbar) {
+        // Reset items back to all of the items
+        this.initializeItems();
+        // set q to the value of the searchbar
+        var q = searchbar.srcElement.value;
+        // if the value is an empty string don't filter the items
+        if (!q) {
+            return;
+        }
+        this.directory = this.directory.filter(function (v) {
+            if (v.Name && q) {
+                if (v.Name.toLowerCase().indexOf(q.toLowerCase()) > -1) {
+                    return true;
+                }
+                return false;
+            }
+        });
+        console.log(q, this.directory.length);
     };
     DirectoryPage.prototype.viewDetails = function (member) {
         //let profileModal = this.modalCtrl.create(MemberDetailsPage, { member: member });
         //profileModal.present();
-        var popover = this.popoverCtrl.create(MemberDetailsPage, { member: member }, { cssClass: 'contact-popover' });
-        popover.present();
+        this.navCtrl.push(MemberDetailsPage, { member: member });
+        //let popover = this.popoverCtrl.create(MemberDetailsPage, { member: member }, { cssClass: 'contact-popover' });
+        //popover.present();
     };
     return DirectoryPage;
 }());
@@ -44,7 +93,7 @@ DirectoryPage = __decorate([
         selector: 'page-directory',
         templateUrl: 'directory.html'
     }),
-    __metadata("design:paramtypes", [NavController, NavParams, AngularFire, ModalController, PopoverController])
+    __metadata("design:paramtypes", [NavController, NavParams, AlertController, ModalController, PopoverController, LoadingController])
 ], DirectoryPage);
 export { DirectoryPage };
 //# sourceMappingURL=directory.js.map

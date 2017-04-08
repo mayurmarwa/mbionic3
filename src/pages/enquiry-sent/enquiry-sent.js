@@ -29,8 +29,8 @@ var EnquirySentPage = (function () {
         this.sellerID = navParams.get("sellerID");
         this.enquiryID = navParams.get("enquiryID");
         this.uid = navParams.get("uid");
-        this.authService.getFullProfile(this.sellerID)
-            .subscribe(function (user) {
+        this.subscription = this.authService.getFullProfile(this.sellerID)
+            .first().subscribe(function (user) {
             //loading.dismiss();
             // this.user.displayName = user.displayName;
             //this.user.email = user.email || user.providerData[0].email || 'Not set yet.';
@@ -41,8 +41,8 @@ var EnquirySentPage = (function () {
             //loading.dismiss();
             console.log('Error: ' + JSON.stringify(error));
         });
-        this.authService.getEnquiry(this.uid, this.enquiryID)
-            .subscribe(function (enquiry) {
+        this.subscription2 = this.authService.getEnquiry(this.uid, this.enquiryID)
+            .first().subscribe(function (enquiry) {
             //loading.dismiss();
             // this.user.displayName = user.displayName;
             //this.user.email = user.email || user.providerData[0].email || 'Not set yet.';

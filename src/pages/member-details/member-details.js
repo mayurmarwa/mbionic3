@@ -9,6 +9,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+import { CallNumber } from '@ionic-native/call-number';
+import { Platform } from 'ionic-angular';
 /*
   Generated class for the MemberDetails page.
 
@@ -16,14 +18,57 @@ import { NavController, NavParams } from 'ionic-angular';
   Ionic pages and navigation.
 */
 var MemberDetailsPage = (function () {
-    function MemberDetailsPage(navCtrl, navParams) {
+    function MemberDetailsPage(navCtrl, navParams, platform, call) {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
+        this.platform = platform;
+        this.call = call;
         console.log(navParams.get('member'));
         this.member = navParams.get('member');
     }
     MemberDetailsPage.prototype.ionViewDidLoad = function () {
         console.log('ionViewDidLoad MemberDetailsPage');
+    };
+    MemberDetailsPage.prototype.callNo = function (type) {
+        if (type == 1) {
+            this.callnumber = this.member["Mobile 1"];
+        }
+        else if (type == 2) {
+            this.callnumber = this.member["Mobile 2"];
+        }
+        else if (type == 3) {
+            this.callnumber = this.member["Mobile 3"];
+        }
+        this.callIt();
+    };
+    MemberDetailsPage.prototype.callLand = function (type) {
+        if (this.member["std"]) {
+            this.callnumber = this.member["std"].toString();
+        }
+        else {
+            this.callnumber = "022";
+        }
+        if (type == 1) {
+            this.callnumber = this.callnumber + this.member["Office 1"];
+        }
+        else if (type == 2) {
+            this.callnumber = this.callnumber + this.member["Office 2"];
+        }
+        else if (type == 3) {
+            this.callnumber = this.callnumber + this.member["Office 3"];
+        }
+        this.callIt();
+    };
+    MemberDetailsPage.prototype.callIt = function () {
+        if (!this.platform.is('cordova')) {
+            window.open("tel:" + this.callnumber);
+            console.log(this.callnumber);
+        }
+        else {
+            this.call.callNumber(this.callnumber, true)
+                .then(function () { return console.log('Launched dialer!'); })
+                .catch(function () { return console.log('Error launching dialer'); });
+        }
     };
     return MemberDetailsPage;
 }());
@@ -32,7 +77,7 @@ MemberDetailsPage = __decorate([
         selector: 'page-member-details',
         templateUrl: 'member-details.html'
     }),
-    __metadata("design:paramtypes", [NavController, NavParams])
+    __metadata("design:paramtypes", [NavController, NavParams, Platform, CallNumber])
 ], MemberDetailsPage);
 export { MemberDetailsPage };
 //# sourceMappingURL=member-details.js.map

@@ -58,13 +58,16 @@ export class MyApp {
               this.currentuser = firebase.auth().currentUser;
               this.storage.ready().then(() => {
                   // set a key/value
-                  this.storage.set('currentuser', JSON.stringify(this.currentuser));
+                  this.storage.set('currentuser', JSON.stringify(this.currentuser)).catch((err) =>
+                      console.log(err));
+             
                   // Or to get a key/value pair
                   // this.storage.get('currentuser').then((val) => {
                   //     console.log('Current User', JSON.parse(val));
                   //})
                   this.initPushNotification();
-              });
+              }).catch((err) =>
+                  console.log(err)); 
              // console.log(this.currentuser);
               this.rootPage = TabsPage;
           }
@@ -132,10 +135,10 @@ export class MyApp {
           firebase.database().ref('/users/' + this.currentuser.uid + '/fcmtokens/').set({
               fcmtoken: data.registrationId
           });
-          firebase.database().ref('/fcmtokens/' + this.currentuser.uid + '/').set({
+          return firebase.database().ref('/fcmtokens/' + this.currentuser.uid + '/').set({
               fcmtoken: data.registrationId
           });
-          return 
+           
       
           // Write the new post's data simultaneously in the posts list and the user's post list.
           //var updates = {};

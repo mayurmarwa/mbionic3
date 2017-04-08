@@ -9,13 +9,13 @@
 
 <ion-content class="product-details">
 
-    <ion-row >
-        <ion-col >            
-            <div text-center ion-item class="profile-photo" *ngIf="userProfile?.photoURL">
+    <ion-row  >
+        <ion-col text-center >            
+            <div  class="profile-photo" *ngIf="userProfile?.photoURL">
                 <img [src]="userProfile?.photoURL">
                 <button ion-button small icon-only (click)="presentActionSheet()"><ion-icon name="camera"></ion-icon></button>
             </div>
-            <div text-center ion-item class="profile-photo" *ngIf="!userProfile?.photoURL">
+            <div  class="profile-photo" *ngIf="!userProfile?.photoURL">
                 <img src="/assets/img/noimage.png">
                 <button ion-button small icon-only (click)="presentActionSheet()"><ion-icon name="camera"></ion-icon></button>
             </div>

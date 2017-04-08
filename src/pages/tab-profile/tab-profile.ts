@@ -15,6 +15,8 @@ export class TabProfilePage {
   public userProfile: any;
   public currentuser: any;
   public productImage: string;
+  public sub1: any;
+  public sub2: any;
 
 
   constructor(
@@ -22,24 +24,43 @@ export class TabProfilePage {
     public loadingCtrl: LoadingController,
     public profileData: ProfileData,
     public alertCtrl: AlertController,
-    public actionSheetCtrl: ActionSheetController,
+    public actionSheetCtrl: ActionSheetController,    
     private camera: Camera
+      
   ) {
       this.user.photoURL = 'assets/img/noimage.png';
       this.profileData = profileData;
       this.currentuser = firebase.auth().currentUser;
 
-      this.authService.getFullProfile(this.currentuser.uid).first()
-          .subscribe(user => {
-              //loading.dismiss();
-             // this.user.displayName = user.displayName;
-              //this.user.email = user.email || user.providerData[0].email || 'Not set yet.';
-              //this.user.photoURL = user.photoURL || this.user.photoURL;
-              this.userProfile = user;
-          }, (error) => {
-              //loading.dismiss();
-              console.log('Error: ' + JSON.stringify(error));
-          });
+      let loading = this.loadingCtrl.create();
+      loading.present();
+
+      if (this.currentuser){
+         this.sub1 = this.authService.getFullProfile(this.currentuser.uid)
+              .subscribe(user => {
+                  //loading.dismiss();
+                  // this.user.displayName = user.displayName;
+                  //this.user.email = user.email || user.providerData[0].email || 'Not set yet.';
+                  //this.user.photoURL = user.photoURL || this.user.photoURL;
+                  this.userProfile = user;
+              }, (error) => {
+                  //loading.dismiss();
+                  console.log('Error: ' + JSON.stringify(error));
+              });
+
+          this.sub2 = this.authService.currentUser
+              .subscribe(user => {
+                  loading.dismiss();
+                  this.user.displayName = user.displayName;
+                  this.user.email = user.email || user.providerData[0].email || 'Not set yet.';
+                  this.user.photoURL = user.photoURL || this.user.photoURL;
+              }, (error) => {
+                  loading.dismiss();
+                  console.log('Error: ' + JSON.stringify(error));
+              });
+      }
+
+      
      /** this.profileData.getUserProfile().on('value', (data) => {
           this.userProfile = data.val();
           alert(this.userProfile);
@@ -47,22 +68,10 @@ export class TabProfilePage {
       });**/
   }
 
-  ionViewDidLoad() {
-    let loading = this.loadingCtrl.create();
-    loading.present();
-    this.authService.currentUser
-      .subscribe(user => {
-        loading.dismiss();
-        this.user.displayName  = user.displayName;
-        this.user.email        = user.email || user.providerData[0].email || 'Not set yet.';
-        this.user.photoURL     = user.photoURL || this.user.photoURL;
-      }, (error)=> {
-        loading.dismiss();
-        console.log('Error: ' + JSON.stringify(error));
-        });
-    console.log(this.userProfile);
-  }
-
+    ionViewDidLeave() {
+        this.sub1.unsubscribe();
+        this.sub2.unsubscribe();
+    }
   
 
   updateName() {

@@ -1,7 +1,14 @@
 page-speed-dial {
+
+    
+
     .dialpad{
+       display: flex;
+  flex-flow: column;
+  height: 100%;
         ion-row{
         padding: 1px;
+        flex: 1;
       
     }
         

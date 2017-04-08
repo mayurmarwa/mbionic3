@@ -9,23 +9,24 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { AlertController, ActionSheetController, LoadingController } from 'ionic-angular';
 import { Component } from '@angular/core';
-import { Camera } from 'ionic-native';
+import { Camera } from '@ionic-native/camera';
 import { AuthService } from '../../providers/auth.service';
 import { ProfileData } from '../../providers/profile-data';
 import firebase from 'firebase';
 var TabProfilePage = (function () {
-    function TabProfilePage(authService, loadingCtrl, profileData, alertCtrl, actionSheetCtrl) {
+    function TabProfilePage(authService, loadingCtrl, profileData, alertCtrl, actionSheetCtrl, camera) {
         var _this = this;
         this.authService = authService;
         this.loadingCtrl = loadingCtrl;
         this.profileData = profileData;
         this.alertCtrl = alertCtrl;
         this.actionSheetCtrl = actionSheetCtrl;
+        this.camera = camera;
         this.user = {};
         this.user.photoURL = 'assets/img/noimage.png';
         this.profileData = profileData;
         this.currentuser = firebase.auth().currentUser;
-        this.authService.getFullProfile(this.currentuser.uid)
+        this.authService.getFullProfile(this.currentuser.uid).first()
             .subscribe(function (user) {
             //loading.dismiss();
             // this.user.displayName = user.displayName;
@@ -355,12 +356,12 @@ var TabProfilePage = (function () {
     };
     TabProfilePage.prototype.takePicture = function () {
         var _this = this;
-        Camera.getPicture({
+        this.camera.getPicture({
             quality: 95,
-            destinationType: Camera.DestinationType.DATA_URL,
-            sourceType: Camera.PictureSourceType.CAMERA,
+            destinationType: this.camera.DestinationType.DATA_URL,
+            sourceType: this.camera.PictureSourceType.CAMERA,
             allowEdit: false,
-            encodingType: Camera.EncodingType.PNG,
+            encodingType: this.camera.EncodingType.PNG,
             targetWidth: 500,
             targetHeight: 500,
             saveToPhotoAlbum: true
@@ -374,12 +375,12 @@ var TabProfilePage = (function () {
     };
     TabProfilePage.prototype.getPicture = function () {
         var _this = this;
-        Camera.getPicture({
+        this.camera.getPicture({
             quality: 95,
-            destinationType: Camera.DestinationType.DATA_URL,
-            sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+            destinationType: this.camera.DestinationType.DATA_URL,
+            sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
             allowEdit: false,
-            encodingType: Camera.EncodingType.PNG,
+            encodingType: this.camera.EncodingType.PNG,
             targetWidth: 500,
             targetHeight: 500,
             saveToPhotoAlbum: true
@@ -402,7 +403,8 @@ TabProfilePage = __decorate([
         LoadingController,
         ProfileData,
         AlertController,
-        ActionSheetController])
+        ActionSheetController,
+        Camera])
 ], TabProfilePage);
 export { TabProfilePage };
 //# sourceMappingURL=tab-profile.js.map

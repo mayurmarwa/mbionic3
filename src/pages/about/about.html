@@ -10,36 +10,38 @@
 <ion-content text-center padding style=" background-color:#f0f4f5;">
     <ion-row>
     <ion-col>
-        <div class="profile-photo" *ngIf="(about | async)?.photoURL">
+        <!--<div class="profile-photo" *ngIf="(about | async)?.photoURL">
             <img [src]="(about | async)?.photoURL">
-        </div>
-        <div class="profile-photo" *ngIf="!(about | async)?.photoURL">
-            <img src="/assets/img/noimage.png">
+        </div>-->
+        <div class="profile-photo" >
+            <img src="/assets/img/about.png">
         </div>
     </ion-col>
     </ion-row>
-    <p text-justify>{{ (about | async)?.content }}</p>    
-    <ion-list no-lines text-wrap>
-        <ion-item text-center>
-            <custom-icon set="mb" name="how1"></custom-icon>
-            <h2>Step 1</h2>
-            <p>{{ (about | async)?.how1 }}</p>
-        </ion-item>
-        <ion-item text-center>
-            <custom-icon set="mb" name="how2"></custom-icon>
-            <h2>Step 2</h2>
-            <p>{{ (about | async)?.how2 }}</p>
-        </ion-item>
-        <ion-item text-center>
-            <custom-icon set="mb" name="how3" style="font-size:7em"></custom-icon>
-            <h2>Step 3</h2>
-            <p>{{ (about | async)?.how3 }} </p>
-        </ion-item>
-        <ion-item text-center>
-            <custom-icon set="mb" name="how4"></custom-icon>
-            <h2>Step 4</h2>
-            <p>{{ (about | async)?.how4 }}</p>
-        </ion-item>
-    </ion-list>
+    <p text-justify>{{ (about | async)?.content }}</p>   
+    <div text-center>
+        <ion-list text-center no-lines text-wrap>
+            <div text-center>
+                <custom-icon set="mb" name="how1"></custom-icon>
+                <h2>Step 1</h2>
+                <p>{{ (about | async)?.how1 }}</p>
+            </div>
+            <div text-center>
+                <custom-icon set="mb" name="how2"></custom-icon>
+                <h2>Step 2</h2>
+                <p>{{ (about | async)?.how2 }}</p>
+            </div>
+            <div text-center>
+                <custom-icon set="mb" name="how3" style="font-size:7em"></custom-icon>
+                <h2>Step 3</h2>
+                <p>{{ (about | async)?.how3 }} </p>
+            </div>
+            <div text-center>
+                <custom-icon style="font-size: 3em;padding-left: 10px;padding-top: 15px;" set="mb" name="how4"></custom-icon>
+                <h2>Step 4</h2>
+                <p>{{ (about | async)?.how4 }}</p>
+            </div>
+        </ion-list>
+    </div>
 
 </ion-content>

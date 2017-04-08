@@ -27,35 +27,87 @@ var PostBuyRequirementsPage = (function () {
         this.alertCtrl = alertCtrl;
         this.loadingCtrl = loadingCtrl;
         this.selecton = true;
+        this.nameon = true;
+        this.selectalloyoff = true;
+        this.emptyname = '';
         this.currentuser = firebase.auth().currentUser;
+        this.currentuserid = this.currentuser.uid;
         this.requirements = af.database.list('/requirements');
-        this.gradeList = af.database.list('/grades');
+        //this.gradeList = af.database.list('/grades');
+        this.selectedCat = "Stainless Steel Coils";
+        this.getGrades();
         this.requirementForm = formBuilder.group({
-            category: ['', Validators.required],
+            category: ['Stainless Steel Coils', Validators.required],
+            ptype: ['Hastelloy',],
             grade: ['', Validators.required],
             quantity: ['', Validators.required],
             unit: ['', Validators.required],
             bid: ['',],
             btype: [''],
+            sizedetails: ['', Validators.required],
             details: ['',],
             uid: ['', Validators.required],
         });
     }
+    PostBuyRequirementsPage.prototype.getGrades = function () {
+        if (this.selectedCat == "Stainless Steel Coils" || this.selectedCat == "Stainless Steel Sheets" || this.selectedCat == "Stainless Steel Packets" || this.selectedCat === "Stainless Steel Seamless Pipes" || this.selectedCat === "Stainless Steel Welded/ERW Pipes" || this.selectedCat === "Stainless Steel Electropolish Pipes" || this.selectedCat === "Stainless Steel Square & Rectangular Pipes" || this.selectedCat === "Stainless Steel Flats" || this.selectedCat == "Stainless Steel Angles" || this.selectedCat == "Stainless Steel Round Bars") {
+            this.selecton = true;
+            this.nameon = true;
+            this.selectalloyoff = true;
+            this.gradecat = 1;
+        }
+        else if (this.selectedCat === "Duplex & Super Duplex Coils" || this.selectedCat === "Duplex & Super Duplex Sheets" || this.selectedCat === "Duplex & Super Duplex Seamless Pipes" || this.selectedCat === "Duplex & Super Duplex Welded/ERW Pipes" || this.selectedCat === "Duplex & Super Duplex Electropolish Pipes" || this.selectedCat === "Duplex & Super Duplex Sqr. & Rect. Pipes" || this.selectedCat === "Duplex & Super Duplex Round Bars") {
+            this.selecton = true;
+            this.nameon = true;
+            this.selectalloyoff = true;
+            this.gradecat = 2;
+        }
+        else if (this.selectedCat === "Nickel Alloys Coils" || this.selectedCat === "Nickel Alloys Sheets" || this.selectedCat === "Nickel Alloys Seamless Pipes" || this.selectedCat === "Nickel Alloys Welded/ERW Pipes" || this.selectedCat === "Nickel Alloys Electropolish Pipes" || this.selectedCat === "Nickel Alloys Sqr. & Rect. Pipes" || this.selectedCat === "Nickel Alloys Round Bars") {
+            this.selecton = true;
+            this.nameon = true;
+            this.selectalloyoff = false;
+            this.selectedAlloy = 'Hastelloy';
+            this.gradecat = 3;
+        }
+        else if (this.selectedCat === "Others") {
+            this.selecton = false;
+            this.nameon = false;
+            this.gradecat = 3;
+        }
+        else {
+            this.gradecat = 1;
+        }
+        this.gradeList = this.af.database.list('/grades/' + this.gradecat);
+    };
+    PostBuyRequirementsPage.prototype.alloySelected = function () {
+        if (this.selectedAlloy === 'Hastelloy') {
+            this.gradecat = 3;
+        }
+        else if (this.selectedAlloy === 'Inconel') {
+            this.gradecat = 4;
+        }
+        else if (this.selectedAlloy === 'Monel') {
+            this.gradecat = 5;
+        }
+        else if (this.selectedAlloy === 'Nimonic') {
+            this.gradecat = 6;
+        }
+        else if (this.selectedAlloy === 'Nickel') {
+            this.gradecat = 7;
+        }
+        else if (this.selectedAlloy === 'Titanium') {
+            this.gradecat = 8;
+        }
+        this.gradeList = this.af.database.list('/grades/' + this.gradecat);
+    };
     PostBuyRequirementsPage.prototype.ionViewDidLoad = function () {
         console.log('ionViewDidLoad PostBuyRequirementsPage');
     };
-    PostBuyRequirementsPage.prototype.onTypeChange = function () {
-        //console.log(this.typeOD);
-        //console.log(this.seamlessForm.value.type);
-        if (this.requirementForm.value.category === "Others") {
-            this.selecton = false;
-        }
-        else {
-            this.selecton = true;
-        }
-    };
     PostBuyRequirementsPage.prototype.showConfirm = function (requirementForm) {
         var _this = this;
+        if (this.selectedCat != "Exotic Alloys Coils" || this.selectedCat != "Exotic Alloys Sheets" || this.selectedCat != "Exotic Alloys Seamless Pipes" || this.selectedCat != "Exotic Alloys Welded/ERW Pipes" || this.selectedCat != "Exotic Alloys Electropolish Pipes" || this.selectedCat != "Exotic Alloys Sqr. & Rect. Pipes" || this.selectedCat != "Exotic Alloys Round Bars") {
+            requirementForm.value.ptype = null;
+        }
         if (!requirementForm.valid) {
             var alert_1 = this.alertCtrl.create({
                 title: 'Invalid Entries!',

@@ -17,6 +17,10 @@
             </button>
         </ion-buttons>-->
         <ion-buttons end>
+            <button ion-button (click)="openSearchPage()" outline style="padding-right: 5px;margin-right: 10px;">
+                <ion-icon name="search" style="padding-right:5px"></ion-icon>
+                Search
+            </button>
          <button ion-button (click)="openNotificationsPage()" clear>
             <ion-icon name="alert"></ion-icon>
         </button>
@@ -27,201 +31,212 @@
 </ion-header>
 
 
-<ion-content parallax-header>
+<!--<ion-content parallax-header>
     <div class="header-image"></div>
 
-    <div class="main-content">
+    <div class="main-content">-->
+<<ion-content class="card-background-page">
+
+    <ion-card style="margin:0px; width:100%;">
+        <img src="assets/img/home-top.png" />
+        <div class="card-title">Post Your Requirement & Get Instant Quotes From Sellers</div>
+        <ion-row class="card-subtitle">
+            <ion-col ><div style="color:white;" ion-button outline (click)="openRequirementPage()">Post Requirement</div></ion-col>
+            <!--<ion-col col-6><div style="color:white;" ion-button outline>Add Product</div></ion-col>-->
+        </ion-row>
+        
+    </ion-card>
 
 
 
 
 
-        <!--<ion-scroll scrollX="true" class="item">
-             <ion-row>
-                 <ion-col width-20>
-                     <h2>Crash Bandicoot</h2>
-                     <h3>Lorem ipsum</h3>
-                     <h4>Dolor sit amet</h4>
-                 </ion-col>
-                 <ion-col width-20>
-                     <h2>The Legend of Zelda</h2>
-                     <h3>Lorem ipsum</h3>
-                     <h4>Dolor sit amet</h4>
-                 </ion-col>
-                 <ion-col width-20>
-                     <h2>Mario Kart</h2>
-                     <h3>Lorem ipsum</h3>
-                     <h4>Dolor sit amet</h4>
-                 </ion-col>
-                 <ion-col width-20>
-                     <h2>Doom</h2>
-                     <h3>Lorem ipsum</h3>
-                     <h4>Dolor sit amet</h4>
-                 </ion-col>
-                 <ion-col width-20>
-                     <h2>Pokémon</h2>
-                     <h3>Lorem ipsum</h3>
-                     <h4>Dolor sit amet</h4>
-                 </ion-col>
-                 <ion-col width-20>
-                     <h2>Final Fantasy</h2>
-                     <h3>Lorem ipsum</h3>
-                     <h4>Dolor sit amet</h4>
-                 </ion-col>
-                 <ion-col width-20>
-                     <h2>Shovel Knight</h2>
-                     <h3>Lorem ipsum</h3>
-                     <h4>Dolor sit amet</h4>
-                 </ion-col>
-                 <ion-col width-20>
-                     <h2>Crash Bandicoot</h2>
-                     <h3>Lorem ipsum</h3>
-                     <h4>Dolor sit amet</h4>
-                 </ion-col>
-                 <ion-col width-20>
-                     <h2>The Legend of Zelda</h2>
-                     <h3>Lorem ipsum</h3>
-                     <h4>Dolor sit amet</h4>
-                 </ion-col>
-                 <ion-col width-20>
-                     <h2>Mario Kart</h2>
-                     <h3>Lorem ipsum</h3>
-                     <h4>Dolor sit amet</h4>
-                 </ion-col>
-                 <ion-col width-20>
-                     <h2>Doom</h2>
-                     <h3>Lorem ipsum</h3>
-                     <h4>Dolor sit amet</h4>
-                 </ion-col>
-                 <ion-col width-20>
-                     <h2>Pokémon</h2>
-                     <h3>Lorem ipsum</h3>
-                     <h4>Dolor sit amet</h4>
-                 </ion-col>
-                 <ion-col width-20>
-                     <h2>Final Fantasy</h2>
-                     <h3>Lorem ipsum</h3>
-                     <h4>Dolor sit amet</h4>
-                 </ion-col>
-                 <ion-col width-20>
-                     <h2>Shovel Knight</h2>
-                     <h3>Lorem ipsum</h3>
-                     <h4>Dolor sit amet</h4>
-                 </ion-col>
-             </ion-row>
-         </ion-scroll>-->
+    <!--<ion-scroll scrollX="true" class="item">
+         <ion-row>
+             <ion-col width-20>
+                 <h2>Crash Bandicoot</h2>
+                 <h3>Lorem ipsum</h3>
+                 <h4>Dolor sit amet</h4>
+             </ion-col>
+             <ion-col width-20>
+                 <h2>The Legend of Zelda</h2>
+                 <h3>Lorem ipsum</h3>
+                 <h4>Dolor sit amet</h4>
+             </ion-col>
+             <ion-col width-20>
+                 <h2>Mario Kart</h2>
+                 <h3>Lorem ipsum</h3>
+                 <h4>Dolor sit amet</h4>
+             </ion-col>
+             <ion-col width-20>
+                 <h2>Doom</h2>
+                 <h3>Lorem ipsum</h3>
+                 <h4>Dolor sit amet</h4>
+             </ion-col>
+             <ion-col width-20>
+                 <h2>Pokémon</h2>
+                 <h3>Lorem ipsum</h3>
+                 <h4>Dolor sit amet</h4>
+             </ion-col>
+             <ion-col width-20>
+                 <h2>Final Fantasy</h2>
+                 <h3>Lorem ipsum</h3>
+                 <h4>Dolor sit amet</h4>
+             </ion-col>
+             <ion-col width-20>
+                 <h2>Shovel Knight</h2>
+                 <h3>Lorem ipsum</h3>
+                 <h4>Dolor sit amet</h4>
+             </ion-col>
+             <ion-col width-20>
+                 <h2>Crash Bandicoot</h2>
+                 <h3>Lorem ipsum</h3>
+                 <h4>Dolor sit amet</h4>
+             </ion-col>
+             <ion-col width-20>
+                 <h2>The Legend of Zelda</h2>
+                 <h3>Lorem ipsum</h3>
+                 <h4>Dolor sit amet</h4>
+             </ion-col>
+             <ion-col width-20>
+                 <h2>Mario Kart</h2>
+                 <h3>Lorem ipsum</h3>
+                 <h4>Dolor sit amet</h4>
+             </ion-col>
+             <ion-col width-20>
+                 <h2>Doom</h2>
+                 <h3>Lorem ipsum</h3>
+                 <h4>Dolor sit amet</h4>
+             </ion-col>
+             <ion-col width-20>
+                 <h2>Pokémon</h2>
+                 <h3>Lorem ipsum</h3>
+                 <h4>Dolor sit amet</h4>
+             </ion-col>
+             <ion-col width-20>
+                 <h2>Final Fantasy</h2>
+                 <h3>Lorem ipsum</h3>
+                 <h4>Dolor sit amet</h4>
+             </ion-col>
+             <ion-col width-20>
+                 <h2>Shovel Knight</h2>
+                 <h3>Lorem ipsum</h3>
+                 <h4>Dolor sit amet</h4>
+             </ion-col>
+         </ion-row>
+     </ion-scroll>-->
 
 
 
-        <ion-grid text-center no-lines>
-            Categories
-            <ion-row no-lines>
-                <ion-col text-wrap no-lines text-center width-33 (click)="categoryProducts(1,'Stainless Steel Coils') ">
+    <ion-grid text-center no-lines>
+        Categories
+        <ion-row no-lines>
+            <ion-col text-wrap no-lines text-center width-33 (click)="categoryProducts(1,'Stainless Steel Coils') ">
+                <div>
+                    <div class="gradeCircle2"><img src="assets/img/1.png"></div>
+                </div>
+                Stainless Steel Coils
+            </ion-col>
+            <ion-col text-wrap no-lines text-center width-33 (click)="categoryProducts(2,' Stainless Steel Sheets')">
+                <div>
+                    <div class="gradeCircle2"><img src="assets/img/2.png"></div>
+                </div>
+                Stainless Steel Sheets
+            </ion-col>
+            <ion-col text-wrap no-lines text-center width-33 (click)="categoryProducts(3,'Stainless Steel Packets') ">
+                <div>
+                    <div class="gradeCircle2"><img src="assets/img/3.png"></div>
+                </div>
+                Stainless Steel Packets
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col text-wrap no-lines text-center width-33 (click)="selectSub(4)">
+                <div>
+                    <div class="gradeCircle2"><img src="assets/img/4.png"></div>
+                </div>
+                Stainless Steel Pipes
+            </ion-col>
+            <ion-col text-wrap no-lines text-center width-33 (click)="categoryProducts(5,'Stainless Steel Flats') ">
+                <div>
+                    <div class="gradeCircle2"><img src="assets/img/5.png"></div>
+                </div>
+                Stainless Steel Flats
+            </ion-col>
+            <ion-col text-wrap no-lines text-center width-33 (click)="categoryProducts(6,'Stainless Steel Angles')">
+                <div>
+                    <div class="gradeCircle2"><img src="assets/img/6.png"></div>
+                </div>
+                Stainless Steel Angles
+            </ion-col>
+        </ion-row>
+        <div *ngIf="viewall">
+            <ion-row>
+                <ion-col text-wrap no-lines text-center width-33 (click)="categoryProducts(7,'Stainless Steel Bars') ">
                     <div>
-                        <div class="gradeCircle2"><img src="https://firebasestorage.googleapis.com/v0/b/metbazaardev.appspot.com/o/sscoils.jpg?alt=media&token=c5f2b20e-d28f-4ae7-8167-957d1ba486dc"></div>
+                        <div class="gradeCircle2"><img src="assets/img/7.png"></div>
                     </div>
-                    Stainless Steel Coils
+                    Stainless Steel Bars
                 </ion-col>
-                <ion-col text-wrap no-lines text-center width-33 (click)="categoryProducts(2,' Stainless Steel Sheets')">
+                <ion-col text-wrap no-lines text-center width-33 (click)="selectSub(8)">
                     <div>
-                        <div class="gradeCircle2"><img src="https://firebasestorage.googleapis.com/v0/b/metbazaardev.appspot.com/o/sscoils.jpg?alt=media&token=c5f2b20e-d28f-4ae7-8167-957d1ba486dc"></div>
+                        <div class="gradeCircle2"><img src="assets/img/8.png"></div>
                     </div>
-                    Stainless Steel Sheets
+                    Duplex & Super Duplex
                 </ion-col>
-                <ion-col text-wrap no-lines text-center width-33 (click)="categoryProducts(3,'Stainless Steel Packets') ">
+                <ion-col text-wrap no-lines text-center width-33 (click)="selectSub(9)">
                     <div>
-                        <div class="gradeCircle2"><img src="https://firebasestorage.googleapis.com/v0/b/metbazaardev.appspot.com/o/sscoils.jpg?alt=media&token=c5f2b20e-d28f-4ae7-8167-957d1ba486dc"></div>
+                        <div class="gradeCircle2"><img src="assets/img/9.png"></div>
                     </div>
-                    Stainless Steel Packets
+                    Nickel Alloys
                 </ion-col>
             </ion-row>
             <ion-row>
-                <ion-col text-wrap no-lines text-center width-33 (click)="selectSub(4)">
+                <ion-col text-wrap no-lines text-center width-33 (click)="categoryProducts(10,'Scrap')">
                     <div>
-                        <div class="gradeCircle2"><img src="https://firebasestorage.googleapis.com/v0/b/metbazaardev.appspot.com/o/sscoils.jpg?alt=media&token=c5f2b20e-d28f-4ae7-8167-957d1ba486dc"></div>
+                        <div class="gradeCircle2"><img src="assets/img/10.png"></div>
                     </div>
-                    Stainless Steel Pipes
-                </ion-col>
-                <ion-col text-wrap no-lines text-center width-33 (click)="categoryProducts(5,'Stainless Steel Flats') ">
-                    <div>
-                        <div class="gradeCircle2"><img src="https://firebasestorage.googleapis.com/v0/b/metbazaardev.appspot.com/o/sscoils.jpg?alt=media&token=c5f2b20e-d28f-4ae7-8167-957d1ba486dc"></div>
-                    </div>
-                    Stainless Steel Flats
-                </ion-col>
-                <ion-col text-wrap no-lines text-center width-33 (click)="categoryProducts(6,'Stainless Steel Angles')">
-                    <div>
-                        <div class="gradeCircle2"><img src="https://firebasestorage.googleapis.com/v0/b/metbazaardev.appspot.com/o/sscoils.jpg?alt=media&token=c5f2b20e-d28f-4ae7-8167-957d1ba486dc"></div>
-                    </div>
-                    Stainless Steel Angles
+                    Scrap
                 </ion-col>
             </ion-row>
-            <div *ngIf="viewall">
-                <ion-row>
-                    <ion-col text-wrap no-lines text-center width-33 (click)="categoryProducts(7,'Stainless Steel Bars') ">
-                        <div>
-                            <div class="gradeCircle2"><img src="https://firebasestorage.googleapis.com/v0/b/metbazaardev.appspot.com/o/sscoils.jpg?alt=media&token=c5f2b20e-d28f-4ae7-8167-957d1ba486dc"></div>
-                        </div>
-                        Stainless Steel Bars
-                    </ion-col>
-                    <ion-col text-wrap no-lines text-center width-33 (click)="selectSub(8)">
-                        <div>
-                            <div class="gradeCircle2"><img src="https://firebasestorage.googleapis.com/v0/b/metbazaardev.appspot.com/o/sscoils.jpg?alt=media&token=c5f2b20e-d28f-4ae7-8167-957d1ba486dc"></div>
-                        </div>
-                        Duplex & Super Duplex
-                    </ion-col>
-                    <ion-col text-wrap no-lines text-center width-33 (click)="selectSub(9)">
-                        <div>
-                            <div class="gradeCircle2"><img src="https://firebasestorage.googleapis.com/v0/b/metbazaardev.appspot.com/o/sscoils.jpg?alt=media&token=c5f2b20e-d28f-4ae7-8167-957d1ba486dc"></div>
-                        </div>
-                        Exotic Alloys
-                    </ion-col>
-                </ion-row>
-                <ion-row>
-                    <ion-col text-wrap no-lines text-center width-33 (click)="categoryProducts(10,'Scrap')">
-                        <div>
-                            <div class="gradeCircle2"><img src="https://firebasestorage.googleapis.com/v0/b/metbazaardev.appspot.com/o/sscoils.jpg?alt=media&token=c5f2b20e-d28f-4ae7-8167-957d1ba486dc"></div>
-                        </div>
-                        Scrap
-                    </ion-col>
-                </ion-row>
-            </div>
-            <div text-center class="viewmore">
-                <button text-center *ngIf="!viewall" ion-button outline (click)="viewall = !viewall">View All</button>
-                <button text-center *ngIf="viewall" ion-button outline (click)="viewall = !viewall">Hide</button>
-            </div>
+        </div>
+        <div text-center class="viewmore">
+            <button text-center style="margin-top:15px" *ngIf="!viewall" ion-button outline (click)="viewall = !viewall">View All</button>
+            <button text-center style="margin-top:15px" *ngIf="viewall" ion-button outline (click)="viewall = !viewall">Hide</button>
+        </div>
 
-        </ion-grid>
-        <!--<ion-scroll scrollX="true" class="item" style="height: 40%">
-                <ion-row>
-                    <ion-col no-lines text-center width-33  ion-item *ngFor="let category of categories | async" (click)="categoryProducts(category)">
-                        <ion-avatar >
-                            <img src="{{category.imgURL}}">
-                        </ion-avatar>
-                        {{category.title}}
-                    </ion-col>
-                </ion-row>
-            </ion-scroll>
+    </ion-grid>
+    <!--<ion-scroll scrollX="true" class="item" style="height: 40%">
+            <ion-row>
+                <ion-col no-lines text-center width-33  ion-item *ngFor="let category of categories | async" (click)="categoryProducts(category)">
+                    <ion-avatar >
+                        <img src="{{category.imgURL}}">
+                    </ion-avatar>
+                    {{category.title}}
+                </ion-col>
+            </ion-row>
+        </ion-scroll>
 
 
 
-        <ion-list  [virtualScroll]="productListRev | async">
-            <ion-item *virtualItem="let product" (click)="openproductpage(product)" approxItemHeight="150px">
-                <ion-card>
-                    <ion-card-content>
-                        <ion-thumbnail item-left>
-                            <img src="{{product.productImage}}">
-                        </ion-thumbnail>
-                        <ion-card-title>
-                            {{product.name}}
-                        </ion-card-title>
+    <ion-list  [virtualScroll]="productListRev | async">
+        <ion-item *virtualItem="let product" (click)="openproductpage(product)" approxItemHeight="150px">
+            <ion-card>
+                <ion-card-content>
+                    <ion-thumbnail item-left>
+                        <img src="{{product.productImage}}">
+                    </ion-thumbnail>
+                    <ion-card-title>
+                        {{product.name}}
+                    </ion-card-title>
 
-                            <h4 *ngIf="product?.mrate">Market Rate: {{product.mrate | currency:"INR":true}}/{{product.unit}}</h4>
-                            <br>
-                            <h4 *ngIf="product?.krate">Kalamboli Rate: {{product.krate | currency:"INR":true}}/{{product.unit}}</h4>
+                        <h4 *ngIf="product?.mrate">Market Rate: {{product.mrate | currency:"INR":true}}/{{product.unit}}</h4>
+                        <br>
+                        <h4 *ngIf="product?.krate">Kalamboli Rate: {{product.krate | currency:"INR":true}}/{{product.unit}}</h4>
 
-                    </ion-card-content>
-                </ion-card>
-            </ion-item>
-        </ion-list>-->
-    </div>
+                </ion-card-content>
+            </ion-card>
+        </ion-item>
+    </ion-list
+    </div>>-->
 </ion-content>

@@ -8,7 +8,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, LoadingController } from 'ionic-angular';
 import { AngularFire } from 'angularfire2';
 import { EnquiryDetailsPage } from '../enquiry-details/enquiry-details';
 import { Storage } from '@ionic/storage';
@@ -19,17 +19,18 @@ import { Storage } from '@ionic/storage';
   Ionic pages and navigation.
 */
 var EnquiriesPage = (function () {
-    function EnquiriesPage(navCtrl, navParams, af, storage) {
+    function EnquiriesPage(navCtrl, navParams, af, storage, loadingCtrl) {
         var _this = this;
         this.navCtrl = navCtrl;
         this.navParams = navParams;
         this.af = af;
         this.storage = storage;
+        this.loadingCtrl = loadingCtrl;
         storage.ready().then(function () {
             storage.get('currentuser').then(function (val) {
                 _this.currentuser = JSON.parse(val);
                 _this.segment = "received";
-                _this.updateEnquiryList();
+                _this.currentuserid = _this.currentuser.uid;
                 //this.enquiryList = af.database.list('/users/' + this.currentuser.uid + '/enquiries');
             })
                 .catch(function (err) {
@@ -42,17 +43,29 @@ var EnquiriesPage = (function () {
     EnquiriesPage.prototype.ionViewDidLoad = function () {
         console.log('ionViewDidLoad EnquiriesPage');
     };
+    EnquiriesPage.prototype.ionViewDidEnter = function () {
+        this.updateEnquiryList();
+    };
     EnquiriesPage.prototype.openenquirypage = function (enquiry) {
         this.navCtrl.push(EnquiryDetailsPage, { enquiry: enquiry });
     };
     EnquiriesPage.prototype.updateEnquiryList = function () {
-        console.log(this.segment);
-        this.enquiryList = this.af.database.list('/users/' + this.currentuser.uid + '/enquiries', {
-            query: {
-                orderByChild: "type",
-                equalTo: this.segment
-            }
+        console.log('ionViewDidEnter EnquiriesPage');
+        this.loadingPopup = this.loadingCtrl.create({
+            content: 'Updating...'
         });
+        this.loadingPopup.present();
+        if (this.currentuserid) {
+            console.log(this.segment);
+            this.enquiryList = this.af.database.list('/users/' + this.currentuserid + '/enquiries', {
+                query: {
+                    orderByChild: "type",
+                    equalTo: this.segment
+                }
+            });
+            this.enqListRev = this.enquiryList.map(function (arr) { return arr.reverse(); });
+            this.loadingPopup.dismiss();
+        }
     };
     return EnquiriesPage;
 }());
@@ -61,7 +74,7 @@ EnquiriesPage = __decorate([
         selector: 'page-enquiries',
         templateUrl: 'enquiries.html'
     }),
-    __metadata("design:paramtypes", [NavController, NavParams, AngularFire, Storage])
+    __metadata("design:paramtypes", [NavController, NavParams, AngularFire, Storage, LoadingController])
 ], EnquiriesPage);
 export { EnquiriesPage };
 //# sourceMappingURL=enquiries.js.map

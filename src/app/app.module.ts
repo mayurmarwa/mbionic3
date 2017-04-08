@@ -16,6 +16,7 @@ import { Facebook } from '@ionic-native/facebook';
 
 
 import { MarketPage } from '../pages/market/market';
+import { SearchCategoriesPage } from '../pages/search-categories/search-categories';
 import { PricesPage } from '../pages/prices/prices';
 import { EnquiriesPage } from '../pages/enquiries/enquiries';
 import { NotificationsPage } from '../pages/notifications/notifications';
@@ -78,6 +79,7 @@ export const firebaseConfig = {
     MyApp,
     TabsPage,
     MarketPage,
+    SearchCategoriesPage,
     PricesPage,
     NotificationsPage,
     EnquiriesPage,
@@ -130,6 +132,7 @@ export const firebaseConfig = {
     MyApp,
     TabsPage,
     MarketPage,
+    SearchCategoriesPage,
     PricesPage,
     EnquiriesPage,
     NotificationsPage,

@@ -8,8 +8,15 @@ import { NgModule, ErrorHandler } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { CustomIconsModule } from 'ionic2-custom-icons';
-import { Storage } from '@ionic/storage';
+import { IonicStorageModule } from '@ionic/storage';
+import { StatusBar } from '@ionic-native/status-bar';
+import { SplashScreen } from '@ionic-native/splash-screen';
 import { SocialSharing } from '@ionic-native/social-sharing';
+import { Camera } from '@ionic-native/camera';
+import { CallNumber } from '@ionic-native/call-number';
+import { Push } from '@ionic-native/push';
+import { GooglePlus } from '@ionic-native/google-plus';
+import { Facebook } from '@ionic-native/facebook';
 import { MarketPage } from '../pages/market/market';
 import { PricesPage } from '../pages/prices/prices';
 import { EnquiriesPage } from '../pages/enquiries/enquiries';
@@ -46,6 +53,7 @@ import { AboutPage } from '../pages/about/about';
 import { ShareAppPage } from '../pages/share-app/share-app';
 import { ResetpasswordPage } from '../pages/resetpassword/resetpassword';
 import { SignupPage } from '../pages/signup/signup';
+import { VerifyMobilePage } from '../pages/verify-mobile/verify-mobile';
 import { MetalCalculatorPage } from '../pages/metal-calculator/metal-calculator';
 import { CreateProfilePage } from '../pages/create-profile/create-profile';
 import { ProfileData } from '../providers/profile-data';
@@ -106,6 +114,7 @@ AppModule = __decorate([
             ShareAppPage,
             ResetpasswordPage,
             SignupPage,
+            VerifyMobilePage,
             CreateAccountPage,
             CreateProfilePage,
             OrderBy,
@@ -115,7 +124,8 @@ AppModule = __decorate([
         imports: [
             IonicModule.forRoot(MyApp),
             AngularFireModule.initializeApp(firebaseConfig),
-            CustomIconsModule
+            CustomIconsModule,
+            IonicStorageModule.forRoot()
         ],
         bootstrap: [IonicApp],
         entryComponents: [
@@ -154,12 +164,13 @@ AppModule = __decorate([
             ShareAppPage,
             ResetpasswordPage,
             SignupPage,
+            VerifyMobilePage,
             CreateAccountPage,
             CreateProfilePage,
             MetalCalculatorPage,
             FilterOptionsPage
         ],
-        providers: [AuthService, ChatsService, ProfileData, ProductData, { provide: ErrorHandler, useClass: IonicErrorHandler }, Storage, SocialSharing]
+        providers: [AuthService, ChatsService, ProfileData, ProductData, StatusBar, SplashScreen, Camera, CallNumber, Push, SocialSharing, GooglePlus, Facebook, { provide: ErrorHandler, useClass: IonicErrorHandler }]
     })
 ], AppModule);
 export { AppModule };

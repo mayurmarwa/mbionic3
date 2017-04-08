@@ -27,13 +27,17 @@ export class EnquiryDetailsPage {
       storage.ready().then(() => {
           storage.get('currentuser').then((val) => {
 
+              
+
               this.currentuser = JSON.parse(val);
               this.enquiry = navParams.get("enquiry");
-              this.messageList = af.database.list('/users/' + this.currentuser.uid + '/enquiries/' + this.enquiry.$key + '/messgaes/');
-              this.otherUserList = af.database.list('/users/' + this.enquiry.otheruser + '/enquiries/' + this.enquiry.$key + '/messgaes/');
+              
+              this.messageList = af.database.list('/users/' + this.currentuser.uid + '/enquiries/' + this.enquiry.key + '/messgaes/');
+              this.otherUserList = af.database.list('/users/' + this.enquiry.otheruser + '/enquiries/' + this.enquiry.key + '/messgaes/');
           })
               .catch((err) =>
                   console.log(err));
+          
       }).catch((err) =>
           console.log(err)); 
 
@@ -46,7 +50,9 @@ export class EnquiryDetailsPage {
   }
 
   send(chatBox){
-		
+
+      console.log(this.enquiry.key);
+      console.log(this.enquiry);
 			//console.log(chatBox);
 			this.messageList.push({
 									

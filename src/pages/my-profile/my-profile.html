@@ -27,10 +27,10 @@
         </ion-row>
 
     <ion-list no-lines>
-         <ion-item text-center>     
+         <div text-center>     
                 <h1>{{userProfile?.name}}</h1>
                 <p>{{userProfile?.companyname}}</p>
-            </ion-item>
+            </div>
 
                 <ion-item ion-item *ngIf="userProfile?.mobile">                    
                     <custom-icon set="mb" name="mobile" item-left></custom-icon>

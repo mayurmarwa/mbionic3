@@ -8,8 +8,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform, LoadingController } from 'ionic-angular';
-import { StatusBar, Splashscreen } from 'ionic-native';
+import { Nav, Platform, LoadingController, AlertController } from 'ionic-angular';
+import { Push } from '@ionic-native/push';
+import { StatusBar } from '@ionic-native/status-bar';
+import { SplashScreen } from '@ionic-native/splash-screen';
 import firebase from 'firebase';
 import { TabsPage } from '../pages/tabs/tabs';
 import { AboutPage } from '../pages/about/about';
@@ -25,13 +27,17 @@ import { Storage } from '@ionic/storage';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { AuthService } from '../providers/auth.service';
 var MyApp = (function () {
-    function MyApp(platform, loadingCtrl, authService, storage, socialSharing) {
+    function MyApp(platform, loadingCtrl, authService, storage, alertCtrl, socialSharing, pushplugin, splashScreen, statusBar) {
         var _this = this;
         this.platform = platform;
         this.loadingCtrl = loadingCtrl;
         this.authService = authService;
         this.storage = storage;
+        this.alertCtrl = alertCtrl;
         this.socialSharing = socialSharing;
+        this.pushplugin = pushplugin;
+        this.splashScreen = splashScreen;
+        this.statusBar = statusBar;
         this.initializeApp();
         var loading = this.loadingCtrl.create();
         loading.present();
@@ -43,11 +49,16 @@ var MyApp = (function () {
                 _this.currentuser = firebase.auth().currentUser;
                 _this.storage.ready().then(function () {
                     // set a key/value
-                    _this.storage.set('currentuser', JSON.stringify(_this.currentuser));
+                    _this.storage.set('currentuser', JSON.stringify(_this.currentuser)).catch(function (err) {
+                        return console.log(err);
+                    });
                     // Or to get a key/value pair
                     // this.storage.get('currentuser').then((val) => {
                     //     console.log('Current User', JSON.parse(val));
                     //})
+                    _this.initPushNotification();
+                }).catch(function (err) {
+                    return console.log(err);
                 });
                 // console.log(this.currentuser);
                 _this.rootPage = TabsPage;
@@ -75,11 +86,83 @@ var MyApp = (function () {
         ];
     }
     MyApp.prototype.initializeApp = function () {
+        var _this = this;
         this.platform.ready().then(function () {
             // Okay, so the platform is ready and our plugins are available.
             // Here you can do any higher level native things you might need.
-            StatusBar.styleDefault();
-            Splashscreen.hide();
+            _this.statusBar.styleDefault();
+            _this.splashScreen.hide();
+        });
+    };
+    MyApp.prototype.initPushNotification = function () {
+        var _this = this;
+        if (!this.platform.is('cordova')) {
+            console.warn("Push notifications not initialized. Cordova is not available - Run in physical device");
+            return;
+        }
+        var push = this.pushplugin.init({
+            android: {
+                senderID: "79899062384"
+            },
+            ios: {
+                alert: "true",
+                badge: false,
+                sound: "true"
+            },
+            windows: {}
+        });
+        push.on('registration').subscribe(function (data) {
+            console.log("device token ->", data.registrationId);
+            //TODO - send device token to server
+            //var newPostKey = firebase.database().ref().child('fcmtokens').push().key;
+            //var postData = {
+            //    fcmtoken: data.registrationId
+            //};
+            firebase.database().ref('/users/' + _this.currentuser.uid + '/fcmtokens/').set({
+                fcmtoken: data.registrationId
+            });
+            return firebase.database().ref('/fcmtokens/' + _this.currentuser.uid + '/').set({
+                fcmtoken: data.registrationId
+            });
+            // Write the new post's data simultaneously in the posts list and the user's post list.
+            //var updates = {};
+            // updates['/fcmtokens/' + this.currentuser.uid + '/' + newPostKey] = postData;
+            // updates['/users/' + this.currentuser.uid + '/fcmtokens/' + newPostKey] = postData;
+            //return firebase.database().ref().update(updates);
+        });
+        push.on('notification').subscribe(function (data) {
+            console.log('message', data.message);
+            //let self = this;
+            //if user using app and push notification comes
+            if (data.additionalData.foreground) {
+                // if application open, show popup
+                var confirmAlert = _this.alertCtrl.create({
+                    title: 'New Notification',
+                    message: data.message,
+                    buttons: [{
+                            text: 'Ignore',
+                            role: 'cancel'
+                        }, {
+                            text: 'View',
+                            handler: function () {
+                                //TODO: Your logic here
+                                //self.nav.push(DetailsPage, { message: data.message });
+                                console.log(data.message);
+                            }
+                        }]
+                });
+                confirmAlert.present();
+            }
+            else {
+                //if user NOT using app and push notification comes
+                //TODO: Your logic on click of push notification directly
+                //self.nav.push(DetailsPage, { message: data.message });
+                console.log("Push notification clicked");
+                console.log(data.message);
+            }
+        });
+        push.on('error').subscribe(function (e) {
+            console.log(e.message);
         });
     };
     MyApp.prototype.openPage = function (page) {
@@ -92,7 +175,7 @@ var MyApp = (function () {
     };
     MyApp.prototype.logout = function () {
         this.authService.logout();
-        this.nav.setRoot(LoginPage);
+        //this.nav.setRoot(LoginPage);
     };
     MyApp.prototype.shareApp = function () {
         this.socialSharing.share("Testing, sharing this from inside an app I'm building right now", null, null, "https://ionicframework.com/docs/v2/native/social-sharing/");
@@ -111,7 +194,11 @@ MyApp = __decorate([
         LoadingController,
         AuthService,
         Storage,
-        SocialSharing])
+        AlertController,
+        SocialSharing,
+        Push,
+        SplashScreen,
+        StatusBar])
 ], MyApp);
 export { MyApp };
 //# sourceMappingURL=app.component.js.map

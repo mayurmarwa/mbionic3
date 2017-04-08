@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import { CallNumber } from 'ionic-native';
+import { CallNumber } from '@ionic-native/call-number';
 import { Platform } from 'ionic-angular';
 /*
   Generated class for the SpeedDial page.
@@ -18,10 +18,11 @@ import { Platform } from 'ionic-angular';
   Ionic pages and navigation.
 */
 var SpeedDialPage = (function () {
-    function SpeedDialPage(navCtrl, navParams, platform) {
+    function SpeedDialPage(navCtrl, navParams, platform, callNumber) {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
         this.platform = platform;
+        this.callNumber = callNumber;
         this.callEnable = false;
         this.speedNumber = '';
         this.dialNumber = '';
@@ -114,7 +115,7 @@ var SpeedDialPage = (function () {
             //console.log(this.dialNumber);
         }
         else {
-            CallNumber.callNumber(this.dialNumber, true)
+            this.callNumber.callNumber(this.dialNumber, true)
                 .then(function () { return console.log('Launched dialer!'); })
                 .catch(function () { return console.log('Error launching dialer'); });
         }
@@ -126,7 +127,7 @@ SpeedDialPage = __decorate([
         selector: 'page-speed-dial',
         templateUrl: 'speed-dial.html'
     }),
-    __metadata("design:paramtypes", [NavController, NavParams, Platform])
+    __metadata("design:paramtypes", [NavController, NavParams, Platform, CallNumber])
 ], SpeedDialPage);
 export { SpeedDialPage };
 //# sourceMappingURL=speed-dial.js.map

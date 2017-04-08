@@ -10,7 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 import { Component } from '@angular/core';
 import { NavController, NavParams, ActionSheetController, AlertController, LoadingController } from 'ionic-angular';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Camera } from 'ionic-native';
+import { Camera } from '@ionic-native/camera';
 import { AngularFire } from 'angularfire2';
 import { AuthService } from '../../providers/auth.service';
 import firebase from 'firebase';
@@ -22,7 +22,7 @@ import { MyProductsPage } from '../my-products/my-products';
   Ionic pages and navigation.
 */
 var AddProductPage = (function () {
-    function AddProductPage(navCtrl, navParams, af, formBuilder, authService, actionSheetCtrl, alertCtrl, loadingCtrl) {
+    function AddProductPage(navCtrl, navParams, af, formBuilder, authService, actionSheetCtrl, alertCtrl, loadingCtrl, camera) {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
         this.af = af;
@@ -31,6 +31,7 @@ var AddProductPage = (function () {
         this.actionSheetCtrl = actionSheetCtrl;
         this.alertCtrl = alertCtrl;
         this.loadingCtrl = loadingCtrl;
+        this.camera = camera;
         this.lastImage = null;
         this.productImageURL = "/assets/img/noimage.png";
         this.mrateTrue = null;
@@ -41,9 +42,10 @@ var AddProductPage = (function () {
         this.imageValid = false;
         this.category = navParams.get("category");
         this.currentuser = firebase.auth().currentUser;
+        this.currentuserid = this.currentuser.uid;
         //this.cattitle = this.category.title + " ";
         this.products = af.database.list('/products');
-        this.userProducts = af.database.list('/users/' + this.currentuser.uid + '/products');
+        this.userProducts = af.database.list('/users/' + this.currentuserid + '/products');
         this.productImageRef = firebase.storage().ref('/productImages/');
         this.getGrades();
         this.compositiontxt = null;
@@ -61,6 +63,7 @@ var AddProductPage = (function () {
             weight: ['', Validators.required],
             mrate: ['',],
             krate: ['',],
+            ratetype: ['',],
             composition: ['',],
             origin: ['',],
             brand: ['',],
@@ -88,9 +91,10 @@ var AddProductPage = (function () {
             width: ['', Validators.required],
             length: ['', Validators.required],
             weight: ['',],
-            nos: ['', Validators.required],
+            nos: ['',],
             mrate: ['',],
             krate: ['',],
+            ratetype: ['',],
             composition: ['',],
             origin: ['',],
             brand: ['',],
@@ -118,6 +122,7 @@ var AddProductPage = (function () {
             unit: ['Kg', Validators.required],
             mrate: ['',],
             krate: ['',],
+            ratetype: ['',],
             origin: ['',],
             brand: ['',],
             mtc: ['',],
@@ -141,6 +146,7 @@ var AddProductPage = (function () {
             unit: ['Kg', Validators.required],
             mrate: ['',],
             krate: ['',],
+            ratetype: ['',],
             details: ['',],
             origin: ['',],
             brand: ['',],
@@ -156,12 +162,13 @@ var AddProductPage = (function () {
             width: ['', Validators.required],
             length: ['', Validators.required],
             quality: ['Original', Validators.required],
-            composition: ['', Validators.required],
+            composition: ['',],
             thickness: ['', Validators.required],
             quantity: ['', Validators.required],
             unit: ['Mtrs', Validators.required],
             mrate: ['',],
             krate: ['',],
+            ratetype: ['',],
             origin: ['',],
             brand: ['',],
             mtc: ['',],
@@ -175,7 +182,7 @@ var AddProductPage = (function () {
             grade: ['', Validators.required],
             astm: ['',],
             gradeval: ['base', Validators.required],
-            composition: ['', Validators.required],
+            composition: ['',],
             sizes: ['', Validators.required],
             sizeunit: ['', Validators.required],
             thickness: ['', Validators.required],
@@ -184,6 +191,7 @@ var AddProductPage = (function () {
             length: ['', Validators.required],
             mrate: ['',],
             krate: ['',],
+            ratetype: ['',],
             origin: ['',],
             brand: ['',],
             mtc: ['',],
@@ -210,6 +218,7 @@ var AddProductPage = (function () {
             length: ['', Validators.required],
             mrate: ['',],
             krate: ['',],
+            ratetype: ['',],
             origin: ['',],
             brand: ['',],
             mtc: ['',],
@@ -226,6 +235,7 @@ var AddProductPage = (function () {
             unit: ['Kg',],
             mrate: ['',],
             krate: ['',],
+            ratetype: ['',],
             catid: ['', Validators.required],
             uid: ['', Validators.required],
             islive: ['true', Validators.required]
@@ -279,7 +289,7 @@ var AddProductPage = (function () {
             alert_1.present();
         }
         else {
-            if (this.category.catid == 10 && this.productImage == null) {
+            if ((this.category.catid == 10 || (this.category.catid == 2 && productForm.value.ptype2 === "Designer")) && this.productImage == null) {
                 var alert_2 = this.alertCtrl.create({
                     title: 'Add Image!',
                     subTitle: 'Please add an image for your product',
@@ -350,21 +360,42 @@ var AddProductPage = (function () {
                 else {
                     this.allValid = true;
                 }
+                if (productForm.value.nos == null || productForm.value.nos === "") {
+                    this.allValid = false;
+                    var alert_6 = this.alertCtrl.create({
+                        title: 'Enter Quantity (Nos.)!',
+                        subTitle: 'Enter values for quantity (Nos.)',
+                        buttons: ['OK']
+                    });
+                    alert_6.present();
+                }
+                else {
+                    this.allValid = true;
+                }
             }
             else {
                 this.allValid = true;
             }
             if ((productForm.value.mrate == null && productForm.value.krate == null) || ((productForm.value.mrate === "" && (productForm.value.krate === "" || productForm.value.krate === null)) || (productForm.value.krate === "" && (productForm.value.mrate === "" || productForm.value.mrate === null)))) {
                 this.priceValid = false;
-                var alert_6 = this.alertCtrl.create({
+                var alert_7 = this.alertCtrl.create({
                     title: 'Enter Price',
                     subTitle: 'Enter either Market Rate or Kalamboli rate or both ',
                     buttons: ['OK']
                 });
-                alert_6.present();
+                alert_7.present();
             }
             else {
                 this.priceValid = true;
+            }
+            if ((this.category.catid === 1 || this.category.catid === 2 || this.category.catid === '4a' || this.category.catid === '4b' || this.category.catid === '4c' || this.category.catid === '4d' || this.category.catid === '4e') && (productForm.value.ratetype == null || productForm.value.ratetype === "")) {
+                this.priceValid = false;
+                var alert_8 = this.alertCtrl.create({
+                    title: 'Select Rate Type',
+                    subTitle: 'Select a rate type',
+                    buttons: ['OK']
+                });
+                alert_8.present();
             }
             if (this.allValid && this.priceValid && this.imageValid) {
                 var confirm_1 = this.alertCtrl.create({
@@ -398,9 +429,12 @@ var AddProductPage = (function () {
     };
     AddProductPage.prototype.gradeSelected = function () {
         var _this = this;
-        this.af.database.object('/grades/' + this.gradecat + '/' + this.selectedGrade)
+        this.af.database.object('/grades/' + this.gradecat + '/' + this.selectedGrade).first()
             .subscribe(function (result) {
             _this.selectedGradeItem = result;
+        }, function (error) {
+            //loading.dismiss();
+            console.log('Error: ' + JSON.stringify(error));
         });
         this.compositiontxt = JSON.stringify(this.selectedGradeItem, this.replacer);
         this.compositiontxt = this.compositiontxt.replace(/\"|{|}/g, "");
@@ -568,12 +602,12 @@ var AddProductPage = (function () {
     };
     AddProductPage.prototype.takePicture = function () {
         var _this = this;
-        Camera.getPicture({
+        this.camera.getPicture({
             quality: 95,
-            destinationType: Camera.DestinationType.DATA_URL,
-            sourceType: Camera.PictureSourceType.CAMERA,
+            destinationType: this.camera.DestinationType.DATA_URL,
+            sourceType: this.camera.PictureSourceType.CAMERA,
             allowEdit: false,
-            encodingType: Camera.EncodingType.PNG,
+            encodingType: this.camera.EncodingType.PNG,
             targetWidth: 500,
             targetHeight: 500,
             saveToPhotoAlbum: true
@@ -586,12 +620,12 @@ var AddProductPage = (function () {
     };
     AddProductPage.prototype.getPicture = function () {
         var _this = this;
-        Camera.getPicture({
+        this.camera.getPicture({
             quality: 95,
-            destinationType: Camera.DestinationType.DATA_URL,
-            sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+            destinationType: this.camera.DestinationType.DATA_URL,
+            sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
             allowEdit: false,
-            encodingType: Camera.EncodingType.PNG,
+            encodingType: this.camera.EncodingType.PNG,
             targetWidth: 500,
             targetHeight: 500,
             saveToPhotoAlbum: true
@@ -609,7 +643,7 @@ AddProductPage = __decorate([
         selector: 'page-add-product',
         templateUrl: 'add-product.html'
     }),
-    __metadata("design:paramtypes", [NavController, NavParams, AngularFire, FormBuilder, AuthService, ActionSheetController, AlertController, LoadingController])
+    __metadata("design:paramtypes", [NavController, NavParams, AngularFire, FormBuilder, AuthService, ActionSheetController, AlertController, LoadingController, Camera])
 ], AddProductPage);
 export { AddProductPage };
 //# sourceMappingURL=add-product.js.map

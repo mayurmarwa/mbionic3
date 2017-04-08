@@ -62,7 +62,7 @@ export class AddProductPage {
         this.currentuserid = this.currentuser.uid;
         //this.cattitle = this.category.title + " ";
         this.products = af.database.list('/products');
-        this.userProducts = af.database.list('/users/' + this.currentuser.uid + '/products'); 
+        this.userProducts = af.database.list('/users/' + this.currentuserid + '/products'); 
         this.productImageRef = firebase.storage().ref('/productImages/');
         
         this.getGrades();

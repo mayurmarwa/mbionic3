@@ -12,7 +12,7 @@
       </button>
     <ion-title>Enquiries</ion-title>
   </ion-navbar>
-    <ion-segment [(ngModel)]="segment" (ionChange)="updateEnquiryList()">
+    <ion-segment [(ngModel)]="segment" >
         <ion-segment-button value="received">
             Received
         </ion-segment-button>
@@ -25,12 +25,14 @@
 
 
 <ion-content>
-    <ion-list no-lines>
-        <ion-item *ngFor="let enquiry of enqListRev | async" (click)="openenquirypage(enquiry)" >
+    
+    <ion-list *ngIf="segment === 'received' " no-lines>
+        
+        <ion-item *ngFor="let enquiry of enqListRev " (click)="openenquirypage(enquiry)" >
             
             <div ion-item *ngIf="!enquiry?.quote">
                 <div item-left>
-                    <div class="gradeCircle2">{{enquiry?.product?.grade}}</div>
+                    <div class="gradeCircle2">{{enquiry?.product?.gradeval}}</div>
                 </div>
                 
                     <h2 style="white-space: normal;">{{enquiry?.productName}}</h2>
@@ -56,6 +58,39 @@
                 <img src="/assets/img/noimage.png">              
             </ion-avatar>-->                    
          </ion-item>
+    </ion-list>
+
+    <ion-list *ngIf="segment === 'sent' " no-lines>
+        <ion-item *ngFor="let enquiry of sentListRev " (click)="openenquirypage(enquiry)">
+
+            <div ion-item *ngIf="!enquiry?.quote">
+                <div item-left>
+                    <div class="gradeCircle2">{{enquiry?.product?.gradeval}}</div>
+                </div>
+
+                <h2 style="white-space: normal;">{{enquiry?.productName}}</h2>
+                <ion-row class="enq-details"><ion-col *ngIf="enquiry?.product?.sizes">Sizes:{{enquiry?.product?.sizes}} {{enquiry?.product?.sizeunit}}</ion-col> </ion-row>
+                <ion-row class="enq-details">
+                    <ion-col *ngIf="enquiry?.product?.thickness">Thkns.:{{enquiry?.product?.thickness}} mm</ion-col>
+                    <ion-col *ngIf="enquiry?.product?.width">W:{{enquiry?.product?.width}} mm</ion-col>
+                    <ion-col *ngIf="enquiry?.product?.length">L:{{enquiry?.product?.length}} mm</ion-col>
+                </ion-row>
+
+            </div>
+
+            <div ion-item *ngIf="enquiry?.quote">
+                <div item-left>
+                    <div class="gradeCircle2">{{enquiry?.requirement?.grade}}</div>
+                </div>
+                <h2>Quotation for Requirement</h2>
+                <p>{{enquiry?.requirement?.category}}</p>
+                <!--<p>{{enquiry?.requirement?.quantity}} {{enquiry?requirement?.unit}}</p>-->
+            </div>
+
+            <!--<ion-avatar item-left>
+                <img src="/assets/img/noimage.png">
+            </ion-avatar>-->
+        </ion-item>
     </ion-list>
 
 </ion-content>

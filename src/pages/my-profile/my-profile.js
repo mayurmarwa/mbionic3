@@ -10,7 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { AuthService } from '../../providers/auth.service';
-import { CallNumber } from 'ionic-native';
+import { CallNumber } from '@ionic-native/call-number';
 import { Platform } from 'ionic-angular';
 /*
   Generated class for the MyProfile page.
@@ -19,14 +19,15 @@ import { Platform } from 'ionic-angular';
   Ionic pages and navigation.
 */
 var MyProfilePage = (function () {
-    function MyProfilePage(navCtrl, navParams, authService, platform) {
+    function MyProfilePage(navCtrl, navParams, authService, platform, callNumber) {
         var _this = this;
         this.navCtrl = navCtrl;
         this.navParams = navParams;
         this.authService = authService;
         this.platform = platform;
+        this.callNumber = callNumber;
         this.userID = navParams.get("userID");
-        this.authService.getFullProfile(this.userID)
+        this.subscription = this.authService.getFullProfile(this.userID).first()
             .subscribe(function (user) {
             //loading.dismiss();
             // this.user.displayName = user.displayName;
@@ -42,13 +43,13 @@ var MyProfilePage = (function () {
     MyProfilePage.prototype.ionViewDidLoad = function () {
         console.log('ionViewDidLoad MyProfilePage');
     };
-    MyProfilePage.prototype.callNumber = function () {
+    MyProfilePage.prototype.callNo = function () {
         if (!this.platform.is('cordova')) {
             window.open("tel:" + this.userProfile.mobile);
             console.log(this.userProfile.mobile);
         }
         else {
-            CallNumber.callNumber(this.userProfile.mobile, true)
+            this.callNumber.callNumber(this.userProfile.mobile, true)
                 .then(function () { return console.log('Launched dialer!'); })
                 .catch(function () { return console.log('Error launching dialer'); });
         }
@@ -60,7 +61,7 @@ MyProfilePage = __decorate([
         selector: 'page-my-profile',
         templateUrl: 'my-profile.html'
     }),
-    __metadata("design:paramtypes", [NavController, NavParams, AuthService, Platform])
+    __metadata("design:paramtypes", [NavController, NavParams, AuthService, Platform, CallNumber])
 ], MyProfilePage);
 export { MyProfilePage };
 //# sourceMappingURL=my-profile.js.map
