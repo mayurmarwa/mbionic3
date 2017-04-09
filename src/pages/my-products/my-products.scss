@@ -1,17 +1,23 @@
 page-my-products {
 
+    .product-card{
+        margin: 0px;
+        width: 100%;
+        height: 100%;
+    }
+
     .ion-card-content{
         padding: 12px 4px 12px 4px;
 
     }
 
     .product-highlighters{
-       font-size: 1rem;
-       padding:0px;
+       //font-size: 1rem;
+       padding: 10px 0px;
 
        ion-col{
            padding: 2px;
-           color: #898989;
+           color: #777777;
        }
 
        ion-col.product-data{
@@ -20,6 +26,9 @@ page-my-products {
    }
 
     .gradeCircle2{
+            overflow: hidden;
+    word-wrap: normal;
+    text-overflow: ellipsis;
         background-color: #f4f4f4;
     border: 3px solid #1a1e5e;
     border-radius: 40px;

@@ -68,41 +68,53 @@ export class LoginPage {
   }
   loginUser() {
       this.submitAttempt = true;
-      let loading = this.loadingCtrl.create();
-      loading.present();
+      this.loading = this.loadingCtrl.create();
+      this.loading.present().then(() => { 
 
       if (!this.loginForm.valid) {
-          console.log(this.loginForm.value);
+          this.loading.dismiss().then(() => {
+              //console.log(error);
+              let toast = this.toastCtrl.create({
+                  message: 'Invalid Entries',
+                  duration: 2000,
+                  position: 'middle'
+              });
+          });
       } else {
           this.authService.loginUser(this.loginForm.value.email,
               this.loginForm.value.password).then(data => {
 
-                  this.storage.ready().then(() => {
+                  this.loading.dismiss();
+                  //this.storage.ready().then(() => {
                       // set a key/value
-                      this.storage.set('currentuser', JSON.stringify(data));
+                      //this.storage.set('currentuser', JSON.stringify(data)).then(() => {
+                          //this.loading.dismiss().then(() => {
+                              //console.log(error);
+                            //  this.navCtrl.setRoot(TabsPage);
+                          //});
+                      //}).catch((err) =>
+                          //console.log(err));
                       // Or to get a key/value pair
                      // this.storage.get('currentuser').then((val) => {
                      //     console.log('Current User', JSON.parse(val));
                       //})
-                  });
-                     
-                
-                      loading.dismiss();
-                  this.navCtrl.setRoot(TabsPage);
-                  
-
-              }, error => {
+                  //}).catch((err) =>
+                      //console.log(err));
+                   
+        }).catch((err) => {
                   this.loading.dismiss().then(() => {
-                      console.log(error);
+                      console.log(err);
                       let alert = this.alertCtrl.create({
-                          message: error.message,
-                          buttons: [{ text: "Okk", role: 'cancell' }]
+                          message: err.message,
+                          buttons: [{ text: "Ok", role: 'cancel' }]
                       });
                       alert.present();
                   });
-              });
+              }); 
+                  
     
-      }
+          }
+      });
   }
   
 
@@ -118,47 +130,64 @@ export class LoginPage {
   }
 
   private login(mode) {
-    let loading = this.loadingCtrl.create();
-    loading.present();
+      this.loading = this.loadingCtrl.create();
+      this.loading.present().then(() => { 
     
     this.authService.login(mode)
       .then((data) => {
         this.authService.getFullProfile(data.uid)
           .first()
           .subscribe((user) => {
-              if (!(user.$value !== null)) {
+              if (user == null) {
                   console.log("Null User");
               this.authService.createAccount(data)
                 .then( _=> {
-                  loading.dismiss();
-                  this.navCtrl.setRoot(CreateProfilePage, { userid: data.uid });
-                }, (error)=> this.showMessage(error.message || 'Unknown error'));
+                    this.loading.dismiss().then(() => {
+                        //console.log(error);
+                        this.navCtrl.setRoot(CreateProfilePage, { userid: data.uid });
+                    });
+                  
+                }).catch( (error)=> this.showMessage(error.message || 'Unknown error'));
               } else {
 
                   this.storage.ready().then(() => {
                       // set a key/value
-                      this.storage.set('currentuser', JSON.stringify(data));
+                      this.storage.set('currentuser', JSON.stringify(data)).then(() => {
+                          this.loading.dismiss().then(() => {
+                              //console.log(error);
+                              this.navCtrl.setRoot(TabsPage);
+                          });
+                      }).catch((err) =>
+                          console.log(err));
                       // Or to get a key/value pair
                       // this.storage.get('currentuser').then((val) => {
                       //     console.log('Current User', JSON.parse(val));
                       //})
-                  });
-              loading.dismiss();
-              this.navCtrl.setRoot(TabsPage);
+                  }).catch((err) =>
+                      console.log(err));
+                  
+              
             }
           }, (error)=> {
-            loading.dismiss();
-            this.showMessage(error.message || 'Unknown error');
+              this.loading.dismiss().then(() => {
+                  //console.log(error);
+                  this.showMessage(error.message || 'Unknown error');
+              });
+            
           });
-      }, (error)=>{
-        loading.dismiss();
-        this.showMessage(error.message || 'Unknown error');
-    });
+      }) .catch((error)=>{
+          this.loading.dismiss().then(() => {
+              //console.log(error);
+              this.showMessage(error.message || 'Unknown error');
+          });
+        
+              });
+      });
   }
 
   private login2() {
-      let loading = this.loadingCtrl.create();
-      loading.present();
+      this.loading = this.loadingCtrl.create();
+      this.loading.present().then(() => { 
 
       this.authService.login2()
           .then((data) => {
@@ -169,30 +198,45 @@ export class LoginPage {
                           console.log("Null User");
                           this.authService.createAccount(data)
                               .then(_ => {
-                                  loading.dismiss();
-                                  this.navCtrl.setRoot(CreateProfilePage, { userid: data.uid });
-                              }, (error) => this.showMessage(error.message || 'Unknown error'));
+                                  this.loading.dismiss().then(() => {
+                                      //console.log(error);
+                                      this.navCtrl.setRoot(CreateProfilePage, { userid: data.uid });
+                                  });
+                                  
+                              }) .catch( (error) => this.showMessage(error.message || 'Unknown error'));
                       } else {
 
                           this.storage.ready().then(() => {
                               // set a key/value
-                              this.storage.set('currentuser', JSON.stringify(data));
+                              this.storage.set('currentuser', JSON.stringify(data)).then(() => {
+                                  this.loading.dismiss().then(() => {
+                                      //console.log(error);
+                                      this.navCtrl.setRoot(TabsPage);
+                                  });
+                              }).catch((err) =>
+                                  console.log(err));
                               // Or to get a key/value pair
                               // this.storage.get('currentuser').then((val) => {
                               //     console.log('Current User', JSON.parse(val));
                               //})
-                          });
-                          loading.dismiss();
-                          this.navCtrl.setRoot(TabsPage);
+                          }).catch((err) =>
+                              console.log(err));
                       }
                   }, (error) => {
-                      loading.dismiss();
-                      this.showMessage(error.message || 'Unknown error');
+                      this.loading.dismiss().then(() => {
+                          //console.log(error);
+                          this.showMessage(error.message || 'Unknown error');
+                      });
                   });
-          }, (error) => {
-              loading.dismiss();
-              this.showMessage(error.message || 'Unknown error');
-          });
+          }) .catch( (error) => {
+              this.loading.dismiss().then(() => {
+                  //console.log(error);
+                  this.showMessage(error.message || 'Unknown error');
+              });
+
+             
+              });
+      });
   }
 
   private showMessage(message: string) {

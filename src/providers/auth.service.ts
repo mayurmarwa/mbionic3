@@ -60,7 +60,7 @@ export class AuthService {
         'webClientId': '79899062384-7monv7m7lgkhmsm5n6ng45qljb2o1dhq.apps.googleusercontent.com'
       }).then( res => {
         return this.signInWithCredential(firebase.auth.GoogleAuthProvider.credential(res.idToken));
-      }, (error) => Promise.reject(error));
+      }).catch ((error) => Promise.reject(error));
   }
 
   /**
@@ -70,10 +70,10 @@ export class AuthService {
     if (!this.platform.is('cordova'))
       return this.signInWithProvider(AuthProviders.Facebook);
     
-    this.fb.login(['email', 'public_profile'])
+     this.fb.login(['email', 'public_profile'])
         .then((res: FacebookLoginResponse) => {
         return this.signInWithCredential(firebase.auth.FacebookAuthProvider.credential(res.authResponse.accessToken));
-      }, (error) => Promise.reject(error));
+      }).catch( (error) => Promise.reject(error));
   }
 
   /**

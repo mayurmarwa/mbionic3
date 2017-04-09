@@ -18,7 +18,7 @@
 
     <ion-row wrap>
         <ion-col width-50 *ngFor="let requirement of requirementList " (click)="openrequirementpage(requirement)">
-            <ion-card>
+            <ion-card class="product-card">
                 <ion-card-content style="padding: 10px 4px 10px 4px;">
                     <div>
                         <div class="gradeCircle2">{{requirement?.grade}}</div>
@@ -26,14 +26,30 @@
                     <h2>
                         {{requirement?.category}}
                     </h2>
-                    <p>                      
-                        
-                        {{requirement?.quantity}} {{requirement?.unit}}
-                     </p>
-                    <p *ngIf="requirement?.bid">   
-                        {{requirement?.bid | currency:"INR":true}}
-                    </p>
-                </ion-card-content>
+                    <ion-grid class="product-highlighters">
+                        <ion-row *ngIf="requirement?.quantity">
+                            <ion-col text-center >
+                                Quantity
+                            </ion-col>
+                        </ion-row>
+                        <ion-row *ngIf="requirement?.quantity">
+                            <ion-col text-center class="product-data"  >
+
+                                {{requirement?.quantity}} {{requirement?.unit}}
+                            </ion-col>
+                         </ion-row>
+                        <ion-row *ngIf="requirement?.bid">
+                            <ion-col text-center >
+                                Bid
+                            </ion-col>
+                        </ion-row>
+                        <ion-row  *ngIf="requirement?.bid">
+                            <ion-col text-center class="product-data">
+                                {{requirement?.bid | currency:"INR":true}}
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>
+</ion-card-content>
             </ion-card>
         </ion-col>
     </ion-row>

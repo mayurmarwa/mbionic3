@@ -1,5 +1,29 @@
 page-browse-requirements {
+
+    .product-highlighters{
+       //font-size: 1rem;
+       padding: 10px 0px;
+
+       ion-col{
+           padding: 2px;
+           color: #777777;
+       }
+
+       ion-col.product-data{
+          color: #1a1e5e;
+       }
+   }
+
+.product-card{
+        margin: 0px;
+        width: 100%;
+        height: 100%;
+    }
+
     .gradeCircle2{
+            overflow: hidden;
+    word-wrap: normal;
+    text-overflow: ellipsis;
         background-color: #f4f4f4;
     border: 3px solid #1a1e5e;
     border-radius: 40px;

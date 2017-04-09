@@ -29,6 +29,7 @@ export class MyApp {
 
   rootPage: any;
   public currentuser: any;
+  public loading: any;
 
 
   openPages: Array<{title: string, component: any, icon: string}>;
@@ -47,12 +48,13 @@ export class MyApp {
   ) {
     this.initializeApp();
 
-    let loading = this.loadingCtrl.create();
-    loading.present();
+    this.loading = this.loadingCtrl.create();
+    this.loading.present().then(() => { 
+
     this.authService.getAuth()
       .map(state => !!state)
       .subscribe(authenticated => {
-          loading.dismiss();
+          
           if (authenticated) {
 
               this.currentuser = firebase.auth().currentUser;
@@ -65,17 +67,30 @@ export class MyApp {
                   // this.storage.get('currentuser').then((val) => {
                   //     console.log('Current User', JSON.parse(val));
                   //})
+                  
                   this.initPushNotification();
+                  this.loading.dismiss().then(() => {
+                      //console.log(error);
+                      this.rootPage = TabsPage;
+                  });
+                  
               }).catch((err) =>
                   console.log(err)); 
              // console.log(this.currentuser);
-              this.rootPage = TabsPage;
+              
           }
-         // else { this.rootPage = LoginPage; }
-        this.rootPage = (authenticated) ? TabsPage : LoginPage;
+          else {
+              this.loading.dismiss().then(() => {
+                  //console.log(error);
+                  this.rootPage = LoginPage;
+              }); }
+        //this.rootPage = (authenticated) ? TabsPage : LoginPage;
       }, (error) => {
-        loading.dismiss();
-        this.rootPage = LoginPage;
+          this.loading.dismiss().then(() => {
+              //console.log(error);
+              this.rootPage = LoginPage;
+          });
+        
         console.log('Error: ' + JSON.stringify(error));
       });
 
@@ -94,7 +109,7 @@ export class MyApp {
         { title: 'Settings', component: SettingsPage, icon: 'settings' },        
         { title: 'About', component: AboutPage, icon: 'about' },
     ];
-
+    });
   }
 
   initializeApp() {
@@ -163,8 +178,9 @@ export class MyApp {
                       text: 'View',
                       handler: () => {
                           //TODO: Your logic here
-                          //self.nav.push(DetailsPage, { message: data.message });
+                          //this.nav.push(DetailsPage, { message: data.message });
                           console.log(data.message);
+                          
                       }
                   }]
               });
