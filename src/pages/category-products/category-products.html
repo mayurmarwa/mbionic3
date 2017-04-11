@@ -32,9 +32,13 @@
 
 
 <ion-content padding >
+    <div text-center *ngIf="productList?.length === 0">
+        No Results Found!
+        
+    </div>
      
     <ion-row >
-        <ion-col col-6 col-sm-4 *ngFor="let product of productList | orderBy : oby" (click)="openproductpage(product)">
+        <ion-col col-6 col-sm-3 *ngFor="let product of productList | orderBy : oby" (click)="openproductpage(product)">
             <ion-card class="product-card" >
                 <ion-card-content style="padding: 10px 4px 10px 4px;">
                     <div >

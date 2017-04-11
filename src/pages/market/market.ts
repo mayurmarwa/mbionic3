@@ -8,6 +8,8 @@ import { AngularFire, FirebaseListObservable } from 'angularfire2';
 import { ProductPagePage } from '../product-page/product-page';
 import { SelectSubcatPage} from '../select-subcat/select-subcat';
 import { Observable } from 'rxjs/Observable';
+import { ProductData } from '../../providers/product-data';
+
 
 
 
@@ -28,25 +30,25 @@ export class MarketPage {
     categories: FirebaseListObservable<any>;
     public viewall : boolean = false;
 
-    constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController, public af: AngularFire) {
+    constructor(public navCtrl: NavController, public productData: ProductData, public navParams: NavParams, public modalCtrl: ModalController, public af: AngularFire) {
 	
-	 this.productList = af.database.list('/products',{query: {orderByChild: 'timestamp' }});
+	 //this.productList = af.database.list('/products',{query: {orderByChild: 'timestamp' }});
      
-     this.categories = af.database.list('/productcategories', { query: { orderByChild: 'catid' } });
+     //this.categories = af.database.list('/productcategories', { query: { orderByChild: 'catid' } });
     }
 
   ionViewDidLoad() {
       console.log('ionViewDidLoad MarketPage');
       
     }
-  ionViewDidEnter() {
-      this.reverseList();
-  }
+  //ionViewDidEnter() {
+  //    this.reverseList();
+  //}
 
-  reverseList() {
-      this.productList = this.af.database.list('/products', { query: { orderByChild: 'timestamp' } });
-      this.productListRev = this.productList.map((arr) => { return arr.reverse(); });
-  }
+  //reverseList() {
+   //   this.productList = this.af.database.list('/products', { query: { orderByChild: 'timestamp' } });
+   //   this.productListRev = this.productList.map((arr) => { return arr.reverse(); });
+ // }
 
   openproductpage(product) {
 

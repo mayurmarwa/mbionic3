@@ -1,6 +1,10 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, LoadingController } from 'ionic-angular';
+import { NavController, NavParams, LoadingController, ViewController } from 'ionic-angular';
 import { RequirementDetailsPage } from '../requirement-details/requirement-details';
+import { MyRequirementsPage } from '../my-requirements/my-requirements';
+import { ProductData } from '../../providers/product-data';
+
+
 import firebase from 'firebase';
 
 /*
@@ -19,29 +23,34 @@ export class BrowseRequirementsPage {
     public loadedlist: any;
     public requirementRef: any;
     public loadingPopup: any;
+    public keys: any;
+    public members: any;
 
-    constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController) {
+
+    constructor(public navCtrl: NavController, public navParams: NavParams, public productData: ProductData, public loadingCtrl: LoadingController, private viewCtrl: ViewController) {
   
       this.loadingPopup = this.loadingCtrl.create({
           content: 'Loading...'
       });
-      this.loadingPopup.present();
-      this.requirementRef = firebase.database().ref('/requirements');
+     
+      //this.requirementRef = firebase.database().ref('/requirements');
+      this.members = this.productData.requirements;
+      
 
-      this.requirementRef.on('value', memberList => {
-          let members = [];
-          memberList.forEach(country => {
-              members.push(country.val());
-          });
-
-          this.buildArray(members);
+          this.buildArray(this.members);
           //this.requirementList = members;
           //this.loadedlist = members;
           //this.loadingPopup.dismiss();
-      });
+      
+    }
+
+    ionViewDidEnter() {
+
+
     }
 
     private buildArray(array) {
+        this.loadingPopup.present().then(() => { 
         return new Promise(resolve => {
             let m = array.length, t, i;
 
@@ -58,8 +67,9 @@ export class BrowseRequirementsPage {
             }
             this.requirementList = array;
             this.loadedlist = array;
-            this.loadingPopup.dismiss();
-            resolve(true);
+            this.loadingPopup.dismiss().then(() => { resolve(true); });
+            
+            });
         });
     }
 
@@ -75,6 +85,17 @@ export class BrowseRequirementsPage {
   openrequirementpage(requirement) {
 
       this.navCtrl.push(RequirementDetailsPage, {requirement: requirement});
+  }
+
+  openmyrequirements() {
+
+      this.navCtrl.push(MyRequirementsPage);
+          //.then(() => {
+          // first we find the index of the current view controller:
+          //const index = this.viewCtrl.index;
+          // then we remove it from the navigation stack
+          //this.navCtrl.remove(index);
+      //});
   }
 
   getItems(searchbar) {

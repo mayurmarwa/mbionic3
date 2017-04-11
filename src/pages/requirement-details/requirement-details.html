@@ -8,6 +8,12 @@
 
   <ion-navbar>
     <ion-title>Requirement Details</ion-title>
+      <ion-buttons *ngIf="this.requirement?.uid === this.currentuser?.uid" end>
+          <button ion-button (click)="confirmDelete()" clear>
+              <ion-icon name="trash"></ion-icon>
+          </button>
+      </ion-buttons>
+
   </ion-navbar>
 
 </ion-header>

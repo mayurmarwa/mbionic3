@@ -16,12 +16,52 @@ import firebase from 'firebase';
 export class ProductData {
 
     productList: any;
+    requirementList: any;
     currentUser: any;
     myProductList: any;
+    public products;
+    public requirements;
     
 
     constructor(public http: Http, public af: AngularFire ) {
         this.productList = firebase.database().ref('/products');
+
+
+
+        this.requirementList = firebase.database().ref('/requirements');
+
+        this.requirementList.on('value', memberList => {
+            let members = [];
+            let keys = [];
+
+            memberList.forEach(country => {
+                members.push(country.val());
+                keys.push(country.key);
+            });
+
+            for (var i in members) {
+                members[i].key = keys[i];
+
+            }
+            this.requirements = members;
+        });
+
+
+        this.productList.on('value', countryList => {
+            let countries = [];
+
+            countryList.forEach(country => {
+
+                countries.push(country.val());
+            });
+
+            this.products = countries;
+            //this.loadedlist = countries;
+            //console.log("here", this.directory);
+            //this.loadingPopup.dismiss();
+
+
+        });
         this.currentUser = firebase.auth().currentUser;
         this.myProductList = firebase.database().ref('/users/' + this.currentUser.uid + '/products');
         
@@ -49,7 +89,7 @@ export class ProductData {
           //lastName: lastName,
       });
   }
-    updateGrade(key: any, Grade: string): any {
+    updateGrade(key: string, Grade: string): any {
 
         this.myProductList.child(key).update({
 
@@ -226,5 +266,10 @@ export class ProductData {
       this.productList.child(key).remove();
       this.myProductList.child(key).remove();
     
+  }
+  deleteRequirement(key: any): any {
+
+      this.requirementList.child(key).remove();
+
   }
 }

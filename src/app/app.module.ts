@@ -32,6 +32,7 @@ import { SendEnquiryPage } from '../pages/send-enquiry/send-enquiry';
 import { EnquirySentPage } from '../pages/enquiry-sent/enquiry-sent';
 import { EnquiryDetailsPage } from '../pages/enquiry-details/enquiry-details';
 import { PostBuyRequirementsPage } from '../pages/post-buy-requirements/post-buy-requirements';
+import { MyRequirementsPage } from '../pages/my-requirements/my-requirements';
 import { BrowseRequirementsPage } from '../pages/browse-requirements/browse-requirements';
 import { SendQuotationPage } from '../pages/send-quotation/send-quotation';
 import { RequirementDetailsPage } from '../pages/requirement-details/requirement-details';
@@ -58,6 +59,7 @@ import { CreateProfilePage } from '../pages/create-profile/create-profile';
 
 import { ProfileData } from '../providers/profile-data';
 import { ProductData } from '../providers/product-data';
+import { DirectoryProvider } from '../providers/directory-provider';
 import { AuthService } from '../providers/auth.service';
 import { ChatsService } from '../providers/chats.service';
 
@@ -97,6 +99,7 @@ export const firebaseConfig = {
 	EnquiryDetailsPage,
     PostBuyRequirementsPage,
     BrowseRequirementsPage,
+    MyRequirementsPage,
 	SendQuotationPage,
 	RequirementDetailsPage,
     DirectoryPage,
@@ -149,6 +152,7 @@ export const firebaseConfig = {
 	EnquiryDetailsPage,
     PostBuyRequirementsPage,
     BrowseRequirementsPage,
+    MyRequirementsPage,
 	SendQuotationPage,
 	RequirementDetailsPage,
     DirectoryPage,
@@ -171,6 +175,6 @@ export const firebaseConfig = {
     MetalCalculatorPage,
     FilterOptionsPage
   ],
-  providers: [AuthService, ChatsService, ProfileData, ProductData,StatusBar,SplashScreen, Camera,CallNumber, Push, SocialSharing, GooglePlus, Facebook, {provide: ErrorHandler, useClass: IonicErrorHandler}]
+  providers: [AuthService, ChatsService, ProfileData, ProductData, DirectoryProvider , StatusBar,SplashScreen, Camera,CallNumber, Push, SocialSharing, GooglePlus, Facebook, {provide: ErrorHandler, useClass: IonicErrorHandler}]
 })
 export class AppModule {}

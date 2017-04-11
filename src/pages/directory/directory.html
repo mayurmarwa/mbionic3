@@ -10,8 +10,8 @@
     <ion-title>Directory</ion-title>
 
       <ion-buttons end>
-          <button ion-button (click)="openAlert()" clear>
-              <ion-icon name="alert"></ion-icon>
+          <button ion-button  outline color="primary" (click)="openAlert()" clear>
+              Info
           </button>
       </ion-buttons>
 
@@ -25,17 +25,23 @@
 
 <ion-content padding>
 
-        <!--<ion-list  [virtualScroll]="directory">
-            <ion-item *virtualItem="let member"  approxItemHeight="150px" (click)="viewDetails(member)">-->
-   
-    <ion-list>
-        <ion-item  *ngFor="let member of directory " (click)="viewDetails(member)">
+    <div text-center *ngIf="directory?.length === 0">
+        No Results Found!
+        To add your company profile, mail us at contact@metbaaar.com
+    </div>
+
+    
+        <ion-list [virtualScroll]="directory" approxItemHeight="45px">
+            <ion-item *virtualItem="let member" (click)="viewDetails(member)">
+
+                <!--<ion-list>
+                    <ion-item  *ngFor="let member of directory " (click)="viewDetails(member)">-->
                 <!--<ion-avatar item-left>
                     <ion-img src="assets/img/noimage.png"></ion-img>
-                </ion-avatar> --> 
+                </ion-avatar> -->
                 <h2>{{member?.Name}}</h2>
                 <!--<p>{{member["Mobile 1"]}} | {{member["Mobile 2"]}}</p>
-                
+
                 <br>
                     <p>Address: {{member?.Address}}</p>
                 <p>
@@ -57,4 +63,5 @@
                 </p>-->
             </ion-item>
         </ion-list>
+    
 </ion-content>

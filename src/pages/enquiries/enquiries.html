@@ -25,6 +25,16 @@
 
 
 <ion-content>
+
+    
+    <div text-center *ngIf="segment === 'received'  && enqListRev?.length === 0">
+        You have not received and enquiries!
+
+    </div>
+    <div text-center *ngIf="segment === 'sent'  && sentListRev?.length === 0">
+        You have not sent any enquiries!
+
+    </div>
     
     <ion-list *ngIf="segment === 'received' " no-lines>
         
@@ -38,9 +48,15 @@
                     <h2 style="white-space: normal;">{{enquiry?.productName}}</h2>
                 <ion-row class="enq-details"><ion-col *ngIf="enquiry?.product?.sizes">Sizes:{{enquiry?.product?.sizes}} {{enquiry?.product?.sizeunit}}</ion-col> </ion-row>
                 <ion-row class="enq-details">
-                    <ion-col *ngIf="enquiry?.product?.thickness">Thkns.:{{enquiry?.product?.thickness}} mm</ion-col>
+                    <ion-col *ngIf="enquiry?.product?.thickness">Thickness:{{enquiry?.product?.thickness}} mm</ion-col>
+                    </ion-row>
+                <ion-row class="enq-details">
                     <ion-col *ngIf="enquiry?.product?.width">W:{{enquiry?.product?.width}} mm</ion-col>
                     <ion-col *ngIf="enquiry?.product?.length">L:{{enquiry?.product?.length}} mm</ion-col>
+
+                    <ion-col *ngIf="enquiry?.product?.swg">SWG:{{enquiry?.product?.swg}} mm</ion-col>
+                    <ion-col *ngIf="enquiry?.product?.sch">SCH:{{enquiry?.product?.sch}} mm</ion-col>
+                    <ion-col *ngIf="enquiry?.product?.mm">MM:{{enquiry?.product?.mm}} mm</ion-col>
                 </ion-row>
                 
             </div>
@@ -71,9 +87,15 @@
                 <h2 style="white-space: normal;">{{enquiry?.productName}}</h2>
                 <ion-row class="enq-details"><ion-col *ngIf="enquiry?.product?.sizes">Sizes:{{enquiry?.product?.sizes}} {{enquiry?.product?.sizeunit}}</ion-col> </ion-row>
                 <ion-row class="enq-details">
-                    <ion-col *ngIf="enquiry?.product?.thickness">Thkns.:{{enquiry?.product?.thickness}} mm</ion-col>
+                    <ion-col *ngIf="enquiry?.product?.thickness">Thickness:{{enquiry?.product?.thickness}} mm</ion-col>
+                </ion-row>
+                <ion-row class="enq-details">
                     <ion-col *ngIf="enquiry?.product?.width">W:{{enquiry?.product?.width}} mm</ion-col>
                     <ion-col *ngIf="enquiry?.product?.length">L:{{enquiry?.product?.length}} mm</ion-col>
+
+                    <ion-col *ngIf="enquiry?.product?.swg">SWG:{{enquiry?.product?.swg}} mm</ion-col>
+                    <ion-col *ngIf="enquiry?.product?.sch">SCH:{{enquiry?.product?.sch}} mm</ion-col>
+                    <ion-col *ngIf="enquiry?.product?.mm">MM:{{enquiry?.product?.mm}} mm</ion-col>
                 </ion-row>
 
             </div>

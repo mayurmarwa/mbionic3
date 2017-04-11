@@ -121,6 +121,8 @@ export class EnquiriesPage {
   ionViewDidLoad() {
       console.log('ionViewDidLoad EnquiriesPage');
       this.segment = "received";
+      
+       
       let loading = this.loadingCtrl.create({
           content: 'Updating...'
       });

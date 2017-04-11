@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { NavController, NavParams, LoadingController } from 'ionic-angular';
 import { AngularFire } from 'angularfire2';
 import { ProductPagePage } from '../product-page/product-page';
+import { ProductData } from '../../providers/product-data';
+
 /*
   Generated class for the SearchCategories page.
 
@@ -23,17 +25,21 @@ export class SearchCategoriesPage {
     public title: any;
     public loadingPopup: any;
 
-    constructor(public navCtrl: NavController, public navParams: NavParams, public af: AngularFire, public loadingCtrl: LoadingController) {
+    constructor(public navCtrl: NavController, public navParams: NavParams, public productData: ProductData, public af: AngularFire, public loadingCtrl: LoadingController) {
+
+
+        this.productList = this.productData.products;
 
         this.loadingPopup = this.loadingCtrl.create({
             content: 'Loading...'
         });
-        this.loadingPopup.present();
+        this.loadingPopup.present().then(() => {
 
-
+            this.buildArray(this.productList);
+        });
         //this.category = navParams.get("category");
         
-        this.getProducts().then(data => { this.buildArray(data); this.loadingPopup.dismiss(); });
+        //this.getProducts().then(data => { this.buildArray(data); this.loadingPopup.dismiss(); });
 
         //this.buildArray(this.productList);
         //console.log(this.productList);
@@ -88,8 +94,10 @@ export class SearchCategoriesPage {
 
             this.productList = array;
             this.backupList = array;
-            
-            resolve(true);
+
+            this.loadingPopup.dismiss().then(() => {
+                resolve(true);
+            });
         });
     }
     initializeItems(): void {

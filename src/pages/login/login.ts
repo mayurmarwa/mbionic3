@@ -79,6 +79,7 @@ export class LoginPage {
                   duration: 2000,
                   position: 'middle'
               });
+              toast.present();
           });
       } else {
           this.authService.loginUser(this.loginForm.value.email,

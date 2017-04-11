@@ -8,79 +8,82 @@
 
 
 <ion-content class="product-details">
+    <div text-center *ngIf="!userProfile">
+        <ion-spinner name="bubbles"></ion-spinner>
+    </div>
+    <div  *ngIf="userProfile" >
+        <ion-row>
+            <ion-col text-center>
+                <div class="profile-photo" *ngIf="userProfile?.photoURL">
+                    <img [src]="userProfile?.photoURL">
+                    <button ion-button small icon-only (click)="presentActionSheet()"><ion-icon name="camera"></ion-icon></button>
+                </div>
+                <div class="profile-photo" *ngIf="!userProfile?.photoURL">
+                    <img src="assets/img/noimage.png">
+                    <button ion-button small icon-only (click)="presentActionSheet()"><ion-icon name="camera"></ion-icon></button>
+                </div>
+            </ion-col>
+        </ion-row>
 
-    <ion-row  >
-        <ion-col text-center >            
-            <div  class="profile-photo" *ngIf="userProfile?.photoURL">
-                <img [src]="userProfile?.photoURL">
-                <button ion-button small icon-only (click)="presentActionSheet()"><ion-icon name="camera"></ion-icon></button>
-            </div>
-            <div  class="profile-photo" *ngIf="!userProfile?.photoURL">
-                <img src="/assets/img/noimage.png">
-                <button ion-button small icon-only (click)="presentActionSheet()"><ion-icon name="camera"></ion-icon></button>
-            </div>
-        </ion-col>
-    </ion-row>
+        <ion-list no-lines>
+            <ion-item text-center>
+                Profile Details
+            </ion-item>
+            <ion-item ion-item>
+                <custom-icon set="mb" name="profile" item-left></custom-icon>
+                <button ion-button clear item-right icon-only (click)="updateName()"><custom-icon set="mb" name="edit"></custom-icon></button>
+                <p>Name</p>
+                <h2 *ngIf="userProfile?.name">{{userProfile?.name}}</h2>
+                <h2 *ngIf="!userProfile?.name" class="placeholder-profile">Enter Your Name</h2>
+            </ion-item>
+            <ion-item ion-item>
+                <custom-icon set="mb" name="companyname" item-left></custom-icon>
+                <button ion-button clear item-right icon-only (click)="updateCompanyName()"><custom-icon set="mb" name="edit"></custom-icon></button>
+                <p>Company Name</p>
+                <h2 *ngIf="userProfile?.companyname">{{userProfile?.companyname}}</h2>
+                <h2 *ngIf="!userProfile?.companyname" class="placeholder-profile">Enter Your Name</h2>
+            </ion-item>
+            <ion-item ion-item>
+                <custom-icon set="mb" name="mobile" item-left></custom-icon>
+                <button ion-button clear item-right icon-only (click)="updateMobile()"><custom-icon set="mb" name="edit"></custom-icon></button>
+                <p>Mobile Number</p>
+                <h2 *ngIf="userProfile?.mobile">{{userProfile?.mobile}}</h2>
+                <h2 *ngIf="!userProfile?.mobile" class="placeholder-profile">Enter Mobile Number</h2>
+            </ion-item>
+            <ion-item ion-item>
+                <custom-icon set="mb" name="dialer" item-left></custom-icon>
+                <button ion-button clear item-right icon-only (click)="updateLandLine()"><custom-icon set="mb" name="edit"></custom-icon></button>
+                <p>Land Line Number</p>
+                <h2 *ngIf="userProfile?.landline">{{userProfile?.landline}}</h2>
+                <h2 *ngIf="!userProfile?.landline" class="placeholder-profile">Enter Land Line Number</h2>
+            </ion-item>
+            <ion-item ion-item>
+                <custom-icon set="mb" name="mail" item-left></custom-icon>
+                <p>Mail ID</p>
+                <h2 *ngIf="userProfile?.email">{{userProfile?.email}}</h2>
+                <h2 *ngIf="!userProfile?.email" class="placeholder-profile">Enter Email Address</h2>
+            </ion-item>
+            <ion-item text-wrap>
+                <button ion-button clear item-right icon-only (click)="updateAddress()"><custom-icon set="mb" name="edit"></custom-icon></button>
+                <!--<custom-icon set="mb" name="home" item-left></custom-icon>-->
+                <custom-icon set="mb" name="home" item-left></custom-icon>
+                <p>Company Address</p>
+                <h2 *ngIf="userProfile?.address">{{userProfile?.address}}</h2>
+                <h2 *ngIf="!userProfile?.address" class="placeholder-profile">Enter Company Address</h2>
+            </ion-item>
+            <ion-item text-wrap>
+                <button ion-button clear item-right icon-only (click)="updateCompanyProfile()"><custom-icon set="mb" name="edit"></custom-icon></button>
+                <custom-icon set="mb" name="about" item-left></custom-icon>
+                <p>Company Profile</p>
+                <h2 *ngIf="userProfile?.companyprofile">{{userProfile?.companyprofile}}</h2>
+                <h2 *ngIf="!userProfile?.companyprofile" class="placeholder-profile">Enter Company Profile</h2>
+            </ion-item>
 
-    <ion-list no-lines>
-        <ion-item text-center>
-            Profile Details
-        </ion-item>
-        <ion-item ion-item>
-            <custom-icon set="mb" name="profile" item-left></custom-icon>
-            <button ion-button clear item-right icon-only (click)="updateName()"><custom-icon set="mb" name="edit"></custom-icon></button>
-            <p>Name</p>
-            <h2 *ngIf="userProfile?.name">{{userProfile?.name}}</h2>
-            <h2 *ngIf="!userProfile?.name" class="placeholder-profile">Enter Your Name</h2>
-        </ion-item>
-        <ion-item ion-item>
-            <custom-icon set="mb" name="companyname" item-left></custom-icon>
-            <button ion-button clear item-right icon-only (click)="updateCompanyName()"><custom-icon set="mb" name="edit"></custom-icon></button>
-            <p>Company Name</p>
-            <h2 *ngIf="userProfile?.companyname">{{userProfile?.companyname}}</h2>
-            <h2 *ngIf="!userProfile?.companyname" class="placeholder-profile">Enter Your Name</h2>
-        </ion-item>
-        <ion-item ion-item >
-            <custom-icon set="mb" name="mobile" item-left></custom-icon>
-            <button ion-button clear item-right icon-only (click)="updateMobile()"><custom-icon set="mb" name="edit"></custom-icon></button>
-            <p>Mobile Number</p>
-            <h2 *ngIf="userProfile?.mobile">{{userProfile?.mobile}}</h2>
-            <h2 *ngIf="!userProfile?.mobile" class="placeholder-profile">Enter Mobile Number</h2>
-        </ion-item>
-        <ion-item ion-item>
-            <custom-icon set="mb" name="dialer" item-left></custom-icon>
-            <button ion-button clear item-right icon-only (click)="updateLandLine()"><custom-icon set="mb" name="edit"></custom-icon></button>
-            <p>Land Line Number</p>
-            <h2 *ngIf="userProfile?.landline">{{userProfile?.landline}}</h2>
-            <h2 *ngIf="!userProfile?.landline" class="placeholder-profile">Enter Land Line Number</h2>
-        </ion-item>
-        <ion-item ion-item>            
-            <custom-icon set="mb" name="mail" item-left></custom-icon>
-            <p>Mail ID</p>
-            <h2  *ngIf="userProfile?.email">{{userProfile?.email}}</h2>
-            <h2 *ngIf="!userProfile?.email" class="placeholder-profile">Enter Email Address</h2>
-        </ion-item>
-        <ion-item text-wrap>
-            <button ion-button clear item-right icon-only (click)="updateAddress()"><custom-icon set="mb" name="edit"></custom-icon></button>
-            <!--<custom-icon set="mb" name="home" item-left></custom-icon>-->
-            <custom-icon set="mb" name="home" item-left></custom-icon>
-            <p>Company Address</p>
-            <h2 *ngIf="userProfile?.address">{{userProfile?.address}}</h2>
-            <h2 *ngIf="!userProfile?.address" class="placeholder-profile">Enter Company Address</h2>
-        </ion-item>
-        <ion-item text-wrap>
-            <button ion-button clear item-right icon-only (click)="updateCompanyProfile()"><custom-icon set="mb" name="edit"></custom-icon></button>
-            <custom-icon set="mb" name="about" item-left></custom-icon>            
-            <p>Company Profile</p>
-            <h2 *ngIf="userProfile?.companyprofile">{{userProfile?.companyprofile}}</h2>
-            <h2 *ngIf="!userProfile?.companyprofile" class="placeholder-profile">Enter Company Profile</h2>
-        </ion-item>
-       
-        <ion-item>
-            <button ion-button clear item-right icon-only (click)="updateExcise()"><custom-icon set="mb" name="edit"></custom-icon></button>
-            <custom-icon set="mb" name="post" item-left></custom-icon>
-            Excise Details:
-        </ion-item>        
+            <ion-item>
+                <button ion-button clear item-right icon-only (click)="updateExcise()"><custom-icon set="mb" name="edit"></custom-icon></button>
+                <custom-icon set="mb" name="post" item-left></custom-icon>
+                Excise Details:
+            </ion-item>
             <ion-grid text-center style="margin-left:5%">
                 <ion-row>
                     <ion-col>
@@ -130,8 +133,9 @@
                         </ion-item>
                     </ion-col>
                 </ion-row>
-            </ion-grid>       
-    </ion-list>
+            </ion-grid>
+        </ion-list>
+    </div>
 
 
 </ion-content>

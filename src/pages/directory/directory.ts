@@ -3,7 +3,7 @@ import { NavController, NavParams, LoadingController, AlertController } from 'io
 import { ModalController } from 'ionic-angular';
 import { MemberDetailsPage } from '../member-details/member-details';
 import { PopoverController } from 'ionic-angular';
-import firebase from 'firebase';
+import { DirectoryProvider } from '../../providers/directory-provider';
 
 /*
   Generated class for the Directory page.
@@ -24,30 +24,31 @@ export class DirectoryPage {
     public members: any;
 
 
-    constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController, public modalCtrl: ModalController, public popoverCtrl: PopoverController, public loadingCtrl: LoadingController) {
+    constructor(public navCtrl: NavController, public directoryData: DirectoryProvider, public navParams: NavParams, public alertCtrl: AlertController, public modalCtrl: ModalController, public popoverCtrl: PopoverController, public loadingCtrl: LoadingController) {
 
         this.directory = [];
-
+        this.directory = this.directoryData.directory;
+        this.loadedlist = this.directoryData.directory;
         this.loadingPopup = this.loadingCtrl.create({
             content: 'Updating...'
         });
-        this.loadingPopup.present();
-        this.directoryRef = firebase.database().ref('/directory');
-        this.directoryRef.on('value', countryList => {
-            let countries = [];
+        //this.loadingPopup.present();
+        //this.directoryRef = firebase.database().ref('/directory');
+       // this.directoryRef.on('value', countryList => {
+           // let countries = [];
 
-            countryList.forEach(country => {
+           // countryList.forEach(country => {
 
-                countries.push(country.val());
-            });
+            //    countries.push(country.val());
+            //});
 
-            this.directory = countries;
-            this.loadedlist = countries;
+            //this.directory = countries;
+            //this.loadedlist = countries;
             //console.log("here", this.directory);
-            this.loadingPopup.dismiss();
+            //this.loadingPopup.dismiss();
 
 
-        });
+        //});
         //this.getmembers();
         
 

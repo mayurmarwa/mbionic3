@@ -153,7 +153,7 @@ export class PostBuyRequirementsPage {
       this.loading = this.loadingCtrl.create({
           content: 'Requrement Posted, Going Home...'
       });
-      
+      this.loading.present().then(() => { 
       console.log(this.requirementForm.value);
       this.requirements.push(this.requirementForm.value).then(data => {
 
@@ -167,24 +167,29 @@ export class PostBuyRequirementsPage {
 
 
 
-          ).then(info => { 
+          ).then(() => {
+              this.loading.dismiss().then(() => {
+                  this.navCtrl.pop({ animate: false });
+              });
 
-                  this.loading.present();
-
-                  setTimeout(() => {
-                      this.navCtrl.pop({ animate: false });
-                      
-                  }, 1000);
-
-                  setTimeout(() => {
-                      this.loading.dismiss();
-                  }, 3000);
-
-              })
+          })
+              .catch((err) => {
+                  this.loading.dismiss().then(() => {
+                      console.log(err);
+                      let alert = this.alertCtrl.create({
+                          message: err.message,
+                          buttons: [{ text: "Ok", role: 'cancel' }]
+                      });
+                      alert.present();
+                  });
               
+     });
 
-              })
 
+
+
+      });
+      });
   }
 
 }

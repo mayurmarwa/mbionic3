@@ -19,6 +19,10 @@ import { Storage } from '@ionic/storage';
 import { SocialSharing } from '@ionic-native/social-sharing';
 
 import { AuthService } from '../providers/auth.service';
+import { DirectoryProvider } from '../providers/directory-provider';
+
+
+
 
 
 @Component({
@@ -44,6 +48,7 @@ export class MyApp {
     private socialSharing: SocialSharing,
     private pushplugin: Push,
     private splashScreen: SplashScreen,
+    public directoryData: DirectoryProvider,   
     private statusBar: StatusBar
   ) {
     this.initializeApp();

@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>filterOptions</ion-title>
+    <ion-title>Filter Options</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -101,7 +101,8 @@
                 <ion-option value="sch std" selected="true">sch std</ion-option>
                 <ion-option value="sch xx" selected="true">sch xx</ion-option>
                 <ion-option value="sch xxx" selected="true">sch xxx</ion-option>
-                <ion-option value="sch xxxx" selected="true">sch xxxx</ion-option>             
+                <ion-option value="sch xxxx" selected="true">sch xxxx</ion-option>
+                <ion-option value="others" selected="true">others</ion-option>             
             </ion-select>
         </ion-item>
 
@@ -113,24 +114,24 @@
 
         <ion-item *ngIf="form.swg">
 
-            <ion-range ion-input min="0" max="500" dualKnobs="true" pin="true" [(ngModel)]="form.swgval" name="swgval" color="danger">
+            <ion-range ion-input min="0" max="50" dualKnobs="true" pin="true" [(ngModel)]="form.swgval" name="swgval" color="danger">
                 <ion-label range-left>0 </ion-label>
-                <ion-label range-right>500 </ion-label>
+                <ion-label range-right>50 </ion-label>
             </ion-range>
 
         </ion-item>
 
         <ion-item *ngIf="category.catid === '4a' || category.catid === '4b' || category.catid === '4c' || category.catid === '4e' || category.catid === '8c1'  || category.catid === '8c5' || category.catid === '8c2' || category.catid === '8c3' || category.catid === '9c1' || category.catid === '9c2' || category.catid === '9c5' || category.catid === '9c3'">
             <ion-label *ngIf="!form.mmval || !form.mm">MM (Wall Thicness) </ion-label>
-            <ion-label *ngIf="form.mmval  && form.mm">SWG:  {{form.mmval.lower}} to {{form.mmval.upper}} </ion-label>
+            <ion-label *ngIf="form.mmval  && form.mm">MM:  {{form.mmval.lower/100}} to {{form.mmval.upper/100}} </ion-label>
             <ion-checkbox [(ngModel)]="form.mm" name="mm" (ionChange)="consolelog()"></ion-checkbox>
         </ion-item>
 
         <ion-item *ngIf="form.mm">
 
-            <ion-range ion-input min="0" max="500" dualKnobs="true" pin="true" [(ngModel)]="form.mmval" name="mmval" color="danger">
+            <ion-range ion-input min="0" max="10000" dualKnobs="true" [(ngModel)]="form.mmval" name="mmval" color="danger">
                 <ion-label range-left>0 </ion-label>
-                <ion-label range-right>500 </ion-label>
+                <ion-label range-right>100 </ion-label>
             </ion-range>
 
         </ion-item>
@@ -201,25 +202,25 @@
 
             <ion-item *ngIf="form.lgth && (category.catid === 5 || category.catid === 6 || category.catid === 7 || category.catid === '8d' || category.catid === '9d' )">
 
-                <ion-range ion-input min="0" max="1000" dualKnobs="true" pin="true" [(ngModel)]="form.lgthval" name="lgthval" color="danger">
+                <ion-range ion-input min="0" max="12000" dualKnobs="true" pin="true" [(ngModel)]="form.lgthval" name="lgthval" color="danger">
                     <ion-label range-left>0 Mtrs</ion-label>
-                    <ion-label range-right>1000 Mtrs</ion-label>
+                    <ion-label range-right>12000 Mtrs</ion-label>
                 </ion-range>
 
             </ion-item>
         </ion-item>
 
         <ion-item *ngIf="category.catid === 2 || category.catid === 3 || category.catid === '8b' || category.catid === '9b' ">
-            <ion-label *ngIf="!form.lgthval || !form.lgth">Length </ion-label>
-            <ion-label *ngIf="form.lgthval  && form.lgth">Length:  {{form.lgthval.lower}} to {{form.lgthval.upper}} mm</ion-label>
-            <ion-checkbox [(ngModel)]="form.lgth" name="lgth" (ionChange)="consolelog()"></ion-checkbox>
+            <ion-label *ngIf="!form.lgth2val || !form.lgth2">Length </ion-label>
+            <ion-label *ngIf="form.lgth2val  && form.lgth2">Length:  {{form.lgth2val.lower/100}} to {{form.lgth2val.upper/100}} mm</ion-label>
+            <ion-checkbox [(ngModel)]="form.lgth2" name="lgth2" (ionChange)="consolelog()"></ion-checkbox>
         </ion-item>
 
-            <ion-item *ngIf="form.lgth && (category.catid === 2 || category.catid === 3 || category.catid === '8b' || category.catid === '9b' )">
+            <ion-item *ngIf="form.lgth2 && (category.catid === 2 || category.catid === 3 || category.catid === '8b' || category.catid === '9b' )">
 
-                <ion-range ion-input min="0" max="10000" dualKnobs="true" pin="true" [(ngModel)]="form.lgthval" name="lgthval" color="danger">
+                <ion-range ion-input min="0" max="10000" dualKnobs="true" [(ngModel)]="form.lgth2val" name="lgth2val" color="danger">
                     <ion-label range-left>0 mm</ion-label>
-                    <ion-label range-right>10000 mm</ion-label>
+                    <ion-label range-right>100 mm</ion-label>
                 </ion-range>
 
             </ion-item>

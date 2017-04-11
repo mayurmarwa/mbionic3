@@ -42,15 +42,7 @@ export class MyProductsPage {
                 //});
                 this.productListref.on('value', snapshot => {
 
-                    let loading = this.loadingCtrl.create({
-                        content: 'Updating...'
-                    });
-
-                    loading.present();
-
-                    setTimeout(() => {
-                        loading.dismiss();
-                    }, 1000);
+                    
 
 
                     this.myproducts = [];
@@ -83,15 +75,15 @@ export class MyProductsPage {
 
   ionViewDidLoad() {
       //this.segment = "received";
-      let loading = this.loadingCtrl.create({
-          content: 'Updating...'
-      });
+      //let loading = this.loadingCtrl.create({
+      //    content: 'Updating...'
+      //});
 
-      loading.present();
+      //loading.present();
 
-      setTimeout(() => {
-          loading.dismiss();
-      }, 3000);
+      //setTimeout(() => {
+       //   loading.dismiss();
+      //}, 3000);
     }
   ionViewDidEnter() {
      
