@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, LoadingController } from 'ionic-angular';
-import { EnquiriesPage } from '../enquiries/enquiries';
+import { NavController, NavParams, LoadingController, Tabs, ViewController  } from 'ionic-angular';
 import { AuthService } from '../../providers/auth.service';
-import { EnquiryDetailsPage } from '../enquiry-details/enquiry-details';
 import { MyProfilePage } from '../my-profile/my-profile';
 /*
   Generated class for the EnquirySent page.
@@ -16,6 +14,7 @@ import { MyProfilePage } from '../my-profile/my-profile';
 })
 export class EnquirySentPage {
 
+    public tab: Tabs;
     public sellerID: any;
     public seller: any;
     public enquiry: any;
@@ -25,11 +24,14 @@ export class EnquirySentPage {
     public subscription: any;
     public subscription2: any;
 
-    constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController, public authService: AuthService) {
-
+    constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController, public authService: AuthService, private viewCtrl: ViewController) {
+        
+        this.tab = this.navCtrl.parent;
         this.sellerID = navParams.get("sellerID");
         this.enquiryID = navParams.get("enquiryID");
         this.uid = navParams.get("uid");
+
+        console.log(this.enquiryID);
 
         this.subscription = this.authService.getFullProfile(this.sellerID)
             .first().subscribe(user => {
@@ -68,41 +70,38 @@ export class EnquirySentPage {
 
 
   sendMessage() {
-      this.loading = this.loadingCtrl.create({
-         
+     
+
+      
+      this.navCtrl.popToRoot({ animate: false }).then(() => {
+          this.tab.select(3);
       });
-
-      this.loading.present();
-
-      setTimeout(() => {
-          this.navCtrl.popToRoot({ animate: false });
-          this.navCtrl.setRoot(EnquiriesPage,{ animate: false });
-          this.navCtrl.push(EnquiryDetailsPage, {enquiry: this.enquiry}, { animate: false });
+          //this.tab.select(3);
+          //this.navCtrl.setRoot(EnquiriesPage,{ animate: false });
+          //this.navCtrl.push(EnquiryDetailsPage, {enquiry: this.enquiry}, { animate: false });
           //this.navCtrl.pop({ animate: false });
-      }, 1000);
+      
 
-      setTimeout(() => {
-          this.loading.dismiss();
-      }, 2000);
-
+      
   }
 
   viewProfile() {
-      this.loading = this.loadingCtrl.create({
+     
 
-      });
-
-      this.loading.present();
-
-      setTimeout(() => {
+      
           //this.navCtrl.pop({ animate: false });          
-          this.navCtrl.push(MyProfilePage, { userID: this.sellerID }, { animate: false });
+      this.navCtrl.push(MyProfilePage, { userID: this.sellerID })
+          .then(() => {
+              const index = this.viewCtrl.index;
+              this.navCtrl.remove(index);
+              //this.navCtrl.remove(index - 1);
+          });
           //this.navCtrl.pop({ animate: false });
-      }, 1000);
+     
 
-      setTimeout(() => {
-          this.loading.dismiss();
-      }, 2000);
+      
+          
+      
 
   }
 

@@ -26,19 +26,29 @@
 
 
 <ion-content padding>
+
+    <div text-center *ngIf="this.segment === 'lme'  && !lmeList">
+        <ion-spinner name="bubbles"></ion-spinner>
+    </div>
+    <div text-center *ngIf="this.segment === 'mcx'  && !mcxList">
+        <ion-spinner name="bubbles"></ion-spinner>
+    </div>
+
    <ion-list *ngIf="this.segment === 'lme' ">
         <ion-item [class.up]="item?.type === 'up' " [class.down]="item?.type === 'down' " *ngFor="let item of lmeList | async" >
                         
             
             
             <ion-row>
-                <ion-col col-8>
+                <ion-col col-6 col-sm-8>
                     <h2>{{item?.name}}</h2>
                     <h4>{{item?.time}}</h4>
                 </ion-col>
-                <ion-col ion-item class="price">
-                    <ion-icon name="arrow-round-up" item-right isActive="false"></ion-icon>
-                    <h3>{{item?.price  | currency:"INR":true}}</h3>
+                <ion-col class="price">
+                    <ion-item no-lines>
+                        <ion-icon name="arrow-round-up" item-right isActive="false"></ion-icon>
+                        <h3>{{item?.price  | currency:"INR":true}}</h3>
+                    </ion-item>
                     
                 </ion-col>
             </ion-row>
@@ -50,13 +60,15 @@
         <ion-item [class.up]="item?.type === 'up' " [class.down]="item?.type === 'down' " *ngFor="let item of mcxList | async" >
             
             <ion-row>
-                <ion-col col-8>
+                <ion-col col-6 col-sm-8>
                     <h2>{{item?.name}}</h2>
                     <h4>{{item?.time}}</h4>
                 </ion-col>
-                <ion-col ion-item class="price">
-                    <ion-icon name="arrow-round-down" item-right isActive="false"></ion-icon>
-                    <h3>{{item?.price  | currency:"INR":true}}</h3>
+                <ion-col  class="price">
+                    <ion-item no-lines >
+                        <ion-icon name="arrow-round-down" item-right isActive="false"></ion-icon>
+                        <h3>{{item?.price  | currency:"INR":true}}</h3>
+                    </ion-item>
                     
                 </ion-col>
             </ion-row>

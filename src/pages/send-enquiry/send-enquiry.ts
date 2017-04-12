@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
+import { NavController, NavParams, AlertController, LoadingController, ViewController } from 'ionic-angular';
 import { FormBuilder, Validators } from '@angular/forms';
 import { AngularFire } from 'angularfire2';
 import { AuthService } from '../../providers/auth.service';
@@ -33,7 +33,7 @@ export class SendEnquiryPage {
     public productmrate: any;
     public productkrate: any;
     
-    constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public af: AngularFire, public alertCtrl: AlertController, public loadingCtrl: LoadingController, public authService: AuthService,public storage: Storage) {
+    constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public af: AngularFire, public alertCtrl: AlertController, public loadingCtrl: LoadingController, public authService: AuthService, public storage: Storage, private viewCtrl: ViewController) {
         storage.ready().then(() => {
             storage.get('currentuser').then((val) => {
 
@@ -147,9 +147,9 @@ export class SendEnquiryPage {
       this.loading = this.loadingCtrl.create({
           content: 'Sending Enquiry, Please Wait...'
       });
-   this.userEnquiries.push(this.enquiryForm.value).then(data => {
-   //console.log(this.enquiryForm.value);
-  this.af.database.object('users/' + this.currentuser.uid + '/enquiries/' + data.key).update(
+      this.userEnquiries.push(this.enquiryForm.value).then(data => {
+          //console.log(this.enquiryForm.value);
+          this.af.database.object('users/' + this.currentuser.uid + '/enquiries/' + data.key).update(
               {
 
                   type: 'sent',
@@ -163,20 +163,20 @@ export class SendEnquiryPage {
                   productKrate: this.productkrate,
                   timestamp: firebase.database['ServerValue']['TIMESTAMP']
                   //detials: this.productForm.value.name,
-                  
+
               }
 
 
 
-          ).then(info => { 
+          ).then(info => {
 
               //console.log("successsent");
               //this.navCtrl.pop();
-              
+
               //this.navCtrl.pop();
 
-              });
-		this.af.database.object('users/' + this.sellerID + '/enquiries/' + data.key).update(
+          });
+          this.af.database.object('users/' + this.sellerID + '/enquiries/' + data.key).update(
               {
 
                   type: 'received',
@@ -195,28 +195,24 @@ export class SendEnquiryPage {
                   details: this.enquiryForm.value.details,
                   timestamp: firebase.database['ServerValue']['TIMESTAMP']
                   //detials: this.productForm.value.name,
-                  
+
               }
-          ).then(info => { 
+          ).then(info => {
 
               //console.log("successrcv");
               //this.navCtrl.pop();
               //this.navCtrl.pop();
+              this.navCtrl.push(EnquirySentPage, { enquiryID: data.key, sellerID: this.sellerID, uid: this.currentuser.uid })
+                  .then(() => {
+                      const index = this.viewCtrl.index;
+                      this.navCtrl.remove(index);
+                      this.navCtrl.remove(index - 1);
+                  });
+
+          });
+
 
       });
-
-        this.loading.present();
-
-        setTimeout(() => {
-            this.navCtrl.pop({animate: false});
-            this.navCtrl.push(EnquirySentPage, { enquiryID: data.key, sellerID: this.sellerID, uid: this.currentuser.uid }, {animate: false});
-        }, 1000);
-
-        setTimeout(() => {
-            this.loading.dismiss();
-        }, 3000);
-        	  
-      })
   }
 
   

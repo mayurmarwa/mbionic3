@@ -3,7 +3,8 @@ import { NavController, NavParams, LoadingController } from 'ionic-angular';
 import { EnquiryDetailsPage } from '../enquiry-details/enquiry-details';
 import { Storage } from '@ionic/storage';
 import firebase from 'firebase';
-import { AngularFire } from 'angularfire2';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/of';
 
 /*
   Generated class for the Enquiries page.
@@ -30,110 +31,126 @@ export class EnquiriesPage {
     public loadingPopup2: any;
     public keys: any;
     public keys2: any;
+    public sub1: any;
+    public sub2: any;
+    public flag: any;
 
 
 
-    constructor(public navCtrl: NavController, public navParams: NavParams, public af: AngularFire, public storage: Storage, public loadingCtrl: LoadingController) {
+    constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage, public loadingCtrl: LoadingController) {
       
-        
        
-        storage.ready().then(() => {
-          storage.get('currentuser').then((val) => {
+       
+        //storage.ready().then(() => {
+          //storage.get('currentuser').then((val) => {
 
-              this.currentuser = JSON.parse(val);
+        this.currentuser = firebase.auth().currentUser;
               
-              this.currentuserid = this.currentuser.uid;
-
+              //this.currentuserid = this.currentuser.uid;
+        this.segment = "received";
+       
+        this.setData();
               
-
-              this.enquiryListref = firebase.database().ref('/users/' + this.currentuserid + '/enquiries' ).orderByChild("type").equalTo("received");
-              //this.enquiryList = this.af.database.list('/users/' + this.currentuserid + '/enquiries', {
-               //   query: {
-               //       orderByChild: "type",
-               //       equalTo: this.segment
-               //   }
-              //});
-              this.enquiryListref.on('value',  snapshot => {
-
-                  //this.enquiryList = this.af.database.list('/users/' + this.currentuserid + '/enquiries', {
-                 //query: {
-                 //    orderByChild: "type",
-                 //    equalTo: this.segment
-                // }
-              //});
-                  
-                  
-                  this.enquiryList = [];
-                  this.keys = [];
-                     snapshot.forEach(country => {
-
-                          this.enquiryList.push(country.val());
-                         this.keys.push(country.key);
-                      
-                  });
-                      for (var i in this.enquiryList) {
-                          this.enquiryList[i].key = this.keys[i];
-                         
-                     } 
-                      
-                      this.updateEnquiryList(1);
-              });
-
-              this.sentListref = firebase.database().ref('/users/' + this.currentuserid + '/enquiries').orderByChild("type").equalTo("sent");
-              //this.enquiryList = this.af.database.list('/users/' + this.currentuserid + '/enquiries', {
-              //   query: {
-              //       orderByChild: "type",
-              //       equalTo: this.segment
-              //   }
-              //});
-              this.sentListref.on('value', snapshot => {
-
-                 
-                  this.sentList = [];
-                  this.keys2 = [];
-                      snapshot.forEach(country => {
-                          //console.log(country.key);
-                          this.sentList.push(country.val());
-                          this.keys2.push(country.key);
-                      });
-                      
-                      for (var i in this.sentList) {
-                          this.sentList[i].key = this.keys2[i];
-
-                      } 
-                      this.updateEnquiryList(2);
-                 
-              });
-              
+      
 
 
               //this.enquiryList = af.database.list('/users/' + this.currentuser.uid + '/enquiries');
 
-          })
-              .catch((err) =>
-                  console.log(err));
-      }).catch((err) =>
-          console.log(err));     
+          //})
+            //  .catch((err) =>
+              //    console.log(err));
+      //}).catch((err) =>
+        //  console.log(err));     
        
   }
   
 
   ionViewDidLoad() {
       console.log('ionViewDidLoad EnquiriesPage');
-      this.segment = "received";
+      //this.segment = "received";
       
        
-      let loading = this.loadingCtrl.create({
-          content: 'Updating...'
-      });
+     // let loading = this.loadingCtrl.create({
+      //    content: 'Updating...'
+      //});
 
-      loading.present();
-
-      setTimeout(() => {
-          loading.dismiss();
-      }, 1800);
+      
     
     }
+
+
+  setData() {
+
+      this.enquiryListref = firebase.database().ref('/users/' + this.currentuser.uid + '/enquiries').orderByChild("type").equalTo("received");
+      //this.enquiryList = this.af.database.list('/users/' + this.currentuserid + '/enquiries', {
+      //   query: {
+      //       orderByChild: "type",
+      //       equalTo: this.segment
+      //   }
+      //});
+      this.enquiryListref.on('value', snapshot => {
+
+          //this.enquiryList = this.af.database.list('/users/' + this.currentuserid + '/enquiries', {
+          //query: {
+          //    orderByChild: "type",
+          //    equalTo: this.segment
+          // }
+          //});
+          //console.log("received");
+          this.enqListRev = [];
+
+          this.enquiryList = [];
+          this.keys = [];
+          snapshot.forEach(country => {
+
+              this.enquiryList.push(country.val());
+              this.keys.push(country.key);
+
+          });
+          for (var i in this.enquiryList) {
+              this.enquiryList[i].key = this.keys[i];
+
+          }
+
+          //this.enqListRev = this.enquiryList.reverse();
+
+          this.enqListRev = Observable.of(this.enquiryList.reverse());
+          this.flag = true;
+      });
+
+      this.sentListref = firebase.database().ref('/users/' + this.currentuser.uid + '/enquiries').orderByChild("type").equalTo("sent");
+      //this.enquiryList = this.af.database.list('/users/' + this.currentuserid + '/enquiries', {
+      //   query: {
+      //       orderByChild: "type",
+      //       equalTo: this.segment
+      //   }
+      //});
+      this.sentListref.on('value', snapshot => {
+
+          this.sentListRev = [];
+          this.sentList = [];
+          this.keys2 = [];
+          snapshot.forEach(country => {
+              //console.log(country.key);
+              this.sentList.push(country.val());
+              this.keys2.push(country.key);
+          });
+
+          for (var i in this.sentList) {
+              this.sentList[i].key = this.keys2[i];
+
+          }
+          //this.updateEnquiryList(2);
+          this.sentListRev = Observable.of(this.sentList.reverse());
+      });
+
+
+  }
+
+
+  
+
+
   ionViewDidEnter() {
      
   }
@@ -145,8 +162,18 @@ export class EnquiriesPage {
 
   updateEnquiryList(type) {
 
-      if (type == 1) { this.enqListRev = this.enquiryList.reverse();}
-      else if (type == 2) { this.sentListRev = this.sentList.reverse();  }
+      if (type == 1) {
+
+          this.enqListRev = this.enquiryList.reverse();
+
+          this.enqListRev = Observable.of(this.enqListRev);
+      }
+      else if (type == 2) {
+
+          this.sentListRev = this.sentList.reverse();
+          this.sentListRev = Observable.of(this.sentList.reverse());
+
+      }
      
       
           

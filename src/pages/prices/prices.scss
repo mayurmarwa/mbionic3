@@ -1,8 +1,15 @@
 page-prices {
+
+   
+
     .up{
         .price{
-            background-color: green;
+            background-color: #6bd3a8;
+
+            .item{
+          background-color: transparent;
         }
+            }
         h3{
             color: white;
         }
@@ -13,7 +20,13 @@ page-prices {
     }
     .down{
         .price{
-            background-color: red;
+            background-color: #ff686b;
+
+             .item{
+          background-color: transparent;
+          }
+
+    
         }
         h3{
             color: white;

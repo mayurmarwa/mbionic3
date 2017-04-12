@@ -19,6 +19,10 @@ export class DirectoryProvider {
   constructor(public http: Http) {
       console.log('Hello DirectoryProvider Provider');
       this.directoryRef = firebase.database().ref('/directory');
+      
+  }
+
+  setDirectory() {
       this.directoryRef.on('value', countryList => {
           let countries = [];
 

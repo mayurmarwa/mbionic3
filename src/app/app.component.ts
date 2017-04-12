@@ -34,6 +34,7 @@ export class MyApp {
   rootPage: any;
   public currentuser: any;
   public loading: any;
+  public directory: any;
 
 
   openPages: Array<{title: string, component: any, icon: string}>;
@@ -72,7 +73,8 @@ export class MyApp {
                   // this.storage.get('currentuser').then((val) => {
                   //     console.log('Current User', JSON.parse(val));
                   //})
-                  
+                  this.directoryData.setDirectory();
+
                   this.initPushNotification();
                   this.loading.dismiss().then(() => {
                       //console.log(error);

@@ -226,7 +226,9 @@ export class CategoryProductsPage {
       showFilter.present();
       showFilter.onDidDismiss(data => { //This is a listener which wil get the data passed from modal when the modal's view controller is dismissed
            //This will log the form entered by user in add modal.
-          this.filterList(data);
+          if (data) {
+              this.filterList(data);
+          }
       })
   }
 

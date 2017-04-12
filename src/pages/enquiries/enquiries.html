@@ -25,20 +25,25 @@
 
 
 <ion-content>
-
+    <div text-center *ngIf="(this.segment === 'received'  && !this.enqListRev)" >
+        <ion-spinner name="bubbles"></ion-spinner>
+    </div>
+    <div text-center *ngIf="(this.segment === 'sent'  && !this.sentListRev)">
+        <ion-spinner name="bubbles"></ion-spinner>
+    </div>
     
-    <div text-center *ngIf="segment === 'received'  && enqListRev?.length === 0">
+    <div text-center *ngIf="(this.segment === 'received'  && this.enqListRev?.length === 0)">
         You have not received and enquiries!
 
     </div>
-    <div text-center *ngIf="segment === 'sent'  && sentListRev?.length === 0">
+    <div text-center *ngIf="(this.segment === 'sent'  && this.sentListRev?.length === 0)">
         You have not sent any enquiries!
 
     </div>
     
-    <ion-list *ngIf="segment === 'received' " no-lines>
+    <ion-list *ngIf="(this.segment === 'received' && this.enqListRev) " no-lines>
         
-        <ion-item *ngFor="let enquiry of enqListRev " (click)="openenquirypage(enquiry)" >
+        <ion-item *ngFor="let enquiry of enqListRev | async " (click)="openenquirypage(enquiry)" >
             
             <div ion-item *ngIf="!enquiry?.quote">
                 <div item-left>
@@ -76,8 +81,8 @@
          </ion-item>
     </ion-list>
 
-    <ion-list *ngIf="segment === 'sent' " no-lines>
-        <ion-item *ngFor="let enquiry of sentListRev " (click)="openenquirypage(enquiry)">
+    <ion-list *ngIf="(this.segment === 'sent' && this.sentListRev)" no-lines>
+        <ion-item *ngFor="let enquiry of sentListRev | async " (click)="openenquirypage(enquiry)">
 
             <div ion-item *ngIf="!enquiry?.quote">
                 <div item-left>
