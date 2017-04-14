@@ -15,101 +15,111 @@
 
 <ion-content padding text-center class="product-details">
 
+    <div class="fullpage" *ngIf="!userProfile">
+        <div class="content">
+            <div text-center>
+                <ion-spinner name="bubbles"></ion-spinner>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="userProfile">
         <ion-row>
             <ion-col>
                 <div class="profile-photo" *ngIf="userProfile?.photoURL">
-                    <img [src]="userProfile?.photoURL" >                    
+                    <img [src]="userProfile?.photoURL">
                 </div>
-                <div  class="profile-photo" *ngIf="!userProfile?.photoURL">                   
-                    <img src="/assets/img/noimage.png" >
-                </div>                
+                <div class="profile-photo" *ngIf="!userProfile?.photoURL">
+                    <img src="assets/img/placeholder-profile.png">
+                </div>
             </ion-col>
         </ion-row>
 
-    <ion-list no-lines>
-         <div text-center>     
+        <ion-list no-lines>
+            <div text-center>
                 <h1>{{userProfile?.name}}</h1>
                 <p>{{userProfile?.companyname}}</p>
             </div>
 
-                <ion-item ion-item *ngIf="userProfile?.mobile">                    
-                    <custom-icon set="mb" name="mobile" item-left></custom-icon>
-                    <button ion-button item-right icon-only color="call" (click)="callNo()"><ion-icon name="call"></ion-icon></button>                
-                    <p>Mobile Number</p>    
-                    <h2>{{userProfile?.mobile}}</h2>               
-                </ion-item>
-        <ion-item ion-item *ngIf="userProfile?.landline">
-            <custom-icon set="mb" name="dialer" item-left></custom-icon>
-            <!--<button ion-button item-right icon-only color="call" (click)="callNumber()"><ion-icon name="call"></ion-icon></button>-->
-            <p>Land Line No.</p>
-            <h2>{{userProfile?.landline}}</h2>
-        </ion-item>
-                <ion-item text-wrap ion-item *ngIf="userProfile?.email">
-                    <custom-icon set="mb" name="mail" item-left></custom-icon>
-                    <p>Mail ID</p>
-                    {{userProfile?.email}}
-                </ion-item>  
-                <ion-item text-wrap *ngIf="userProfile?.address">
-                    <!--<custom-icon set="mb" name="home" item-left></custom-icon>-->
-                    <custom-icon set="mb" name="home" item-left></custom-icon>
-                    <p>Company Address</p>
-                    <h2>{{userProfile?.address}}</h2>
-                </ion-item>
-                <ion-item text-wrap *ngIf="userProfile?.companyprofile">
-                    <!--<custom-icon set="mb" name="post" item-left></custom-icon>-->
-                    <custom-icon set="mb" name="post" item-left></custom-icon>
-                    <p>Company Profile</p>
-                    <h2>{{userProfile?.companyprofile}}</h2>
-                </ion-item> 
-        
-        <ion-item>            
-            <custom-icon set="mb" name="vat" item-left></custom-icon>
-            Excise Details:
-        </ion-item>
-        <ion-grid text-center style="margin-left:5%">
-            <ion-row>
-                <ion-col>
-                    <ion-item text-wrap *ngIf="userProfile?.excise">                        
-                        <p>ECC/Exc.Reg.No:</p>
-                        <h2>{{userProfile?.excise}}</h2>
-                    </ion-item> 
-                </ion-col>
-                <ion-col>
-                    <ion-item text-wrap *ngIf="userProfile?.comsn">                        
-                        <p>Commissionerate:</p>
-                        <h2>{{userProfile?.comsn}}</h2>
-                    </ion-item> 
-                </ion-col>
-            </ion-row>
-            <ion-row>
-                <ion-col>
-                    <ion-item text-wrap *ngIf="userProfile?.range">
-                        <p>Range:</p>
-                        <h2>{{userProfile?.range}}</h2>
-                    </ion-item>
-                </ion-col>
-                <ion-col>
-                    <ion-item text-wrap *ngIf="userProfile?.division">
-                        <p>Division:</p>
-                        <h2>{{userProfile?.division}}</h2>
-                    </ion-item>
-                </ion-col>
-            </ion-row>
-            <ion-row>
-                <ion-col>
-                    <ion-item text-wrap *ngIf="userProfile?.vat">
-                        <p>VAT TIN:</p>
-                        <h2>{{userProfile?.vat}}</h2>
-                    </ion-item>
-                </ion-col>
-                <ion-col>
-                    <ion-item text-wrap *ngIf="userProfile?.pan">
-                        <p>PAN No.:</p>
-                        <h2>{{userProfile?.pan}}</h2>
-                    </ion-item>
-                </ion-col>
-            </ion-row>
-        </ion-grid>  
-    </ion-list>
+            <ion-item ion-item *ngIf="userProfile?.mobile">
+                <custom-icon set="mb" name="mobile" item-left></custom-icon>
+                <button ion-button item-right icon-only color="call" (click)="callNo()"><ion-icon name="call"></ion-icon></button>
+                <p>Mobile Number</p>
+                <h2>{{userProfile?.mobile}}</h2>
+            </ion-item>
+            <ion-item ion-item *ngIf="userProfile?.landline">
+                <custom-icon set="mb" name="dialer" item-left></custom-icon>
+                <!--<button ion-button item-right icon-only color="call" (click)="callNumber()"><ion-icon name="call"></ion-icon></button>-->
+                <p>Land Line No.</p>
+                <h2>{{userProfile?.landline}}</h2>
+            </ion-item>
+            <ion-item text-wrap ion-item *ngIf="userProfile?.email">
+                <custom-icon set="mb" name="mail" item-left></custom-icon>
+                <p>Mail ID</p>
+                {{userProfile?.email}}
+            </ion-item>
+            <ion-item text-wrap *ngIf="userProfile?.address">
+                <!--<custom-icon set="mb" name="home" item-left></custom-icon>-->
+                <custom-icon set="mb" name="home" item-left></custom-icon>
+                <p>Company Address</p>
+                <h2>{{userProfile?.address}}</h2>
+            </ion-item>
+            <ion-item text-wrap *ngIf="userProfile?.companyprofile">
+                <!--<custom-icon set="mb" name="post" item-left></custom-icon>-->
+                <custom-icon set="mb" name="post" item-left></custom-icon>
+                <p>Company Profile</p>
+                <h2>{{userProfile?.companyprofile}}</h2>
+            </ion-item>
+
+            <ion-item>
+                <custom-icon set="mb" name="vat" item-left></custom-icon>
+                Excise Details:
+            </ion-item>
+            <ion-grid text-center style="margin-left:5%">
+                <ion-row>
+                    <ion-col>
+                        <ion-item text-wrap *ngIf="userProfile?.excise">
+                            <p>ECC/Exc.Reg.No:</p>
+                            <h2>{{userProfile?.excise}}</h2>
+                        </ion-item>
+                    </ion-col>
+                    <ion-col>
+                        <ion-item text-wrap *ngIf="userProfile?.comsn">
+                            <p>Commissionerate:</p>
+                            <h2>{{userProfile?.comsn}}</h2>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col>
+                        <ion-item text-wrap *ngIf="userProfile?.range">
+                            <p>Range:</p>
+                            <h2>{{userProfile?.range}}</h2>
+                        </ion-item>
+                    </ion-col>
+                    <ion-col>
+                        <ion-item text-wrap *ngIf="userProfile?.division">
+                            <p>Division:</p>
+                            <h2>{{userProfile?.division}}</h2>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col>
+                        <ion-item text-wrap *ngIf="userProfile?.vat">
+                            <p>VAT TIN:</p>
+                            <h2>{{userProfile?.vat}}</h2>
+                        </ion-item>
+                    </ion-col>
+                    <ion-col>
+                        <ion-item text-wrap *ngIf="userProfile?.pan">
+                            <p>PAN No.:</p>
+                            <h2>{{userProfile?.pan}}</h2>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </ion-list>
+        </div>
 </ion-content>
 

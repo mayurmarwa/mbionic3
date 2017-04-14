@@ -1,4 +1,18 @@
 page-enquiries {
+
+    .fullpage{
+       display: flex;
+  flex-flow: column;
+  height: 100%;
+  }
+
+    .content{
+            position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+
+    }
+
     .enq-details{
         white-space:normal;
     }

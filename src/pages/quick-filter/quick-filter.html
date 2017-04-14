@@ -1,5 +1,5 @@
 <!--
-  Generated template for the CategoryProducts page.
+  Generated template for the QuickFilter page.
 
   See http://ionicframework.com/docs/v2/components/#navigation for more info on
   Ionic pages and navigation.
@@ -7,47 +7,25 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>{{title}}</ion-title>
+    <ion-title>Quick Filter Results</ion-title>
   </ion-navbar>
-    <ion-grid text-center style="background-color: #f4f4f4;">
-        <ion-row nowrap>
-            <ion-col col-6 style=" border-right: sol; border-right-width: thin; border-right-style: inset;">
-                <button clear ion-button icon-left (click)="sortAlert()">
-                    <ion-icon name="cog"></ion-icon>
-                    Sort
-                </button>
-            </ion-col>
-            <ion-col col-6>
-                <button clear ion-button icon-left (click)="showFilter()">
-                    <ion-icon name="funnel"></ion-icon>
-                    Filter
-                </button>
-            </ion-col>
-            <ion-col>
 
-            </ion-col>
-        </ion-row>
-    </ion-grid>
 </ion-header>
 
 
-<ion-content padding >
+<ion-content padding>
+    <div text-center *ngIf="productList?.length === 0">
+        No Results Found!
 
-    <div class="fullpage" *ngIf="productList?.length === 0">
-        <div class="content">
-            <div text-center>
-                No Results Found!
-            </div>
-        </div>
     </div>
-   
-    <ion-row >
-        <ion-col col-6 col-sm-3 *ngFor="let product of productList | orderBy : oby" (click)="openproductpage(product)">
-            <ion-card class="product-card" >
+
+    <ion-row>
+        <ion-col col-6 col-sm-3 *ngFor="let product of productList" (click)="openproductpage(product)">
+            <ion-card class="product-card">
                 <ion-card-content style="padding: 10px 4px 10px 4px;">
-                    <div >
+                    <div>
                         <div class="gradeCircle2">{{product.gradeval}}</div>
-                    </div>              
+                    </div>
                     <ion-grid class="product-highlighters">
                         <ion-row nowrap>
                             <ion-col text-center *ngIf="product?.finish">
@@ -72,13 +50,13 @@
                             </ion-col>
                             <ion-col class="product-data" text-center *ngIf="product?.weight  && !product?.length">
                                 {{product?.weight}} Kg
-                            </ion-col>                           
+                            </ion-col>
                         </ion-row>
                         <ion-row>
                             <ion-col text-center *ngIf="product?.sizes">
                                 Size
                             </ion-col>
-                            </ion-row>
+                        </ion-row>
                         <ion-row>
                             <ion-col class="product-data" text-center *ngIf="product?.sizes">
                                 {{product?.sizes}} {{product?.sizeunit}}
@@ -103,7 +81,7 @@
                             </ion-col>
 
                         </ion-row>
-                        <ion-row nowrap>                             
+                        <ion-row nowrap>
                             <ion-col class="product-data" text-center *ngIf="product?.width">
                                 {{product?.width }} mm
                             </ion-col>
@@ -115,12 +93,12 @@
                                 {{product?.swg }}
                             </ion-col>
                             <ion-col class="product-data" text-center *ngIf="product?.sch">
-                                {{product?.sch }} 
+                                {{product?.sch }}
                             </ion-col>
                             <ion-col class="product-data" text-center *ngIf="product?.sch">
                                 {{product?.mm }}
                             </ion-col>
-                        </ion-row>                                              
+                        </ion-row>
                         <ion-row nowrap>
                             <ion-col text-center *ngIf="product?.mrate">
                                 Market
@@ -136,8 +114,8 @@
                             <ion-col class="product-data" text-center *ngIf="product?.krate">
                                 {{product?.krate | currency:"INR":true}}
                             </ion-col>
-                        </ion-row>                                                           
-                    </ion-grid>                
+                        </ion-row>
+                    </ion-grid>
                 </ion-card-content>
             </ion-card>
         </ion-col>

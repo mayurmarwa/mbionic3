@@ -139,7 +139,7 @@ export class LoginPage {
         this.authService.getFullProfile(data.uid)
           .first()
           .subscribe((user) => {
-              if (user == null) {
+              if (!(user.$value !== null)) {
                   console.log("Null User");
               this.authService.createAccount(data)
                 .then( _=> {

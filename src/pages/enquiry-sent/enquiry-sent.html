@@ -14,17 +14,39 @@
 
 
 <ion-content text-center padding scroll="false">
-    <div style="display:flex">
-        <custom-icon set="mb" name="tick" color="call"></custom-icon>
-        <p>Your enquiry has been sent to the seller. Check enquiries tab for details.</p>
-        <ion-list>
-            <button ion-button round (click)="viewProfile()">
-                View Profile
-            </button>
-            <br />
-            <button ion-button round (click)="sendMessage()">
-                Message
-            </button>
-        </ion-list>
+    
+    <div class="fullpage">
+        <div class="content">
+        <ion-grid>
+            <ion-row>
+                <ion-col text-center>
+                    <custom-icon style="font-size: 3em;padding-left: 10px;padding-top: 15px;color:green;" set="mb" name="how4" color="call"></custom-icon>
+                </ion-col>
+            </ion-row>
+
+            <ion-row>
+                <ion-col text-center>
+                    <h3> Your enquiry has been sent to the seller. Check enquiries tab for details </h3>
+                </ion-col>
+            </ion-row>
+
+            <ion-row>
+                <ion-col text-center>
+                    <button ion-button round (click)="viewProfile()">
+                        View Profile
+                    </button>
+                </ion-col>
+            </ion-row>
+
+            <ion-row>
+                <ion-col text-center>
+                    <button ion-button round (click)="sendMessage()">
+                        Message
+                    </button>
+                </ion-col>
+            </ion-row>
+
+        </ion-grid>
+         </div>
     </div>
 </ion-content>

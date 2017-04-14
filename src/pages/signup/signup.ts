@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, ToastController } from 'ionic-angular';
 import { FormBuilder, Validators } from '@angular/forms';
 import { VerifyMobilePage } from '../verify-mobile/verify-mobile';
 import { EmailValidator } from '../../validators/email';
@@ -23,7 +23,8 @@ export class SignupPage {
 	loading;
 
     constructor(public nav: NavController,
-        public formBuilder: FormBuilder) {
+        public formBuilder: FormBuilder,
+        public toastCtrl: ToastController) {
 
         this.signupForm = formBuilder.group({
             name: ['', Validators.required],
@@ -55,9 +56,14 @@ export class SignupPage {
         this.submitAttempt = true;
 
         if (!this.signupForm.valid) {
-            console.log(this.signupForm.value);
+            let toast = this.toastCtrl.create({
+                message: 'Invalid Entries',
+                duration: 2000,
+                position: 'middle'
+            });
+            toast.present();
         } else {
-            this.nav.push(VerifyMobilePage, { form: this.signupForm });
+            this.nav.push(VerifyMobilePage, { form: this.signupForm, type: "email" });
         }
     }
     ionViewDidLoad() {

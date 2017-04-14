@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { LoadingController, AlertController, NavParams } from 'ionic-angular';
+import { LoadingController, AlertController, NavParams, ToastController } from 'ionic-angular';
+import { AngularFire } from 'angularfire2';
 import { FormBuilder } from '@angular/forms';
 import { AuthService } from '../../providers/auth.service';
 import { TabsPage } from '../tabs/tabs';
@@ -28,13 +29,18 @@ export class VerifyMobilePage {
     public otpValid: any;
     public sessionid: any;
     public otpinput: any;
+    public logintype: any;
+    public userid: any;
 
     constructor(public nav: NavController, public authService: AuthService,
         public formBuilder: FormBuilder, public loadingCtrl: LoadingController,
-        private http:Http,
-        public alertCtrl: AlertController, private app: App, private zone: NgZone, public navParams: NavParams,) {
+        private http: Http, public toastCtrl: ToastController,
+        public alertCtrl: AlertController, private app: App, public af: AngularFire, private zone: NgZone, public navParams: NavParams,) {
 
         this.signupForm = navParams.get("form");
+        this.logintype = navParams.get("type");
+        this.userid = navParams.get("userid");
+
         this.otpValid = false;
         //this.http.get('http://2factor.in/API/V1/068c2321-12f2-11e7-9462-00163ef91450/BAL/SMS').map(res => res.json()).subscribe(data => {
         //    console.log(data);
@@ -89,33 +95,72 @@ export class VerifyMobilePage {
 
       if (this.otpinput == '' || this.otpinput == null) {
           let alert = this.alertCtrl.create({
-              message: "Invalid OTP, please try again.",
+              message: "Enter OTP to proceed.",
               buttons: [{ text: "Ok", role: 'cancel' }]
           });
 
           alert.present();
       }
       else {
+
+
           // this.http.get('http://2factor.in/API/V1/068c2321-12f2-11e7-9462-00163ef91450/SMS/VERIFY/{session_id}/{otp_input}' + this.signupForm.value.mobile + '/AUTOGEN/Registration').map(res => res.json()).subscribe(data => {
           //     console.log(data);
           //   }); 
           //this.http.get('http://2factor.in/API/V1/068c2321-12f2-11e7-9462-00163ef91450/SMS/VERIFY/' + this.sessionid + '/' + this.otpinput).map(res => res.json()).subscribe(data => {
           //this.http.get('/API/V1/068c2321-12f2-11e7-9462-00163ef91450/SMS/VERIFY/' + this.sessionid + '/' + this.otpinput).map(res => res.json()).subscribe(data => {
               //console.log(data);
-          this.http.get('http://2factor.in/API/V1/068c2321-12f2-11e7-9462-00163ef91450/SMS/VERIFY/' + this.sessionid + '/' + this.otpinput).map(res => res.json()).subscribe(data => {
-          if (data.Status == "Success") {
-                  this.signupUser();
-              }
-              else {
-                  let alert = this.alertCtrl.create({
-                      message: "Invalid OTP, please try again.",
-                      buttons: [{ text: "Ok", role: 'cancel' }]
+
+          if (this.logintype === "email") {
+              this.http.get('http://2factor.in/API/V1/068c2321-12f2-11e7-9462-00163ef91450/SMS/VERIFY/' + this.sessionid + '/' + this.otpinput).map(res => res.json()).subscribe(data => {
+                  if (data.Status == "Success") {
+                      this.signupUser();
+                  }
+                  else {
+                      let alert = this.alertCtrl.create({
+                          message: "Invalid OTP, please try again.",
+                          buttons: [{ text: "Ok", role: 'cancel' }]
+                      });
+
+                      alert.present();
+                  }
+              });
+          }
+          else if (this.logintype === "social") {
+
+              this.af.database.list('/users').update(this.userid,
+                  {
+                      //name: userdata.value.name,
+                      mobile: this.signupForm.value.mobile,
+                      companyname: this.signupForm.value.companyname,
+                      address: this.signupForm.value.address,
+                      companyprofile: this.signupForm.value.companyprofile
+                      //email: userdata.value.email,
+                      //uid: authdata.auth.uid,
+                      //photoURL: data.auth.photoURL,
+                      //createdAt: firebase.database['ServerValue']['TIMESTAMP'],
+                      //providerData: authdata.auth.provider
+
+                  }).then(() => {
+                      let toast = this.toastCtrl.create({
+                          message: 'Welcome to MetBazaar',
+                          duration: 2000,
+                          position: 'middle'
+                      });
+                      toast.present().then(() => {
+                          this.app.getRootNav().setRoot(TabsPage);
+                      });
+                      
                   });
+          }
+          else {
+              let alert = this.alertCtrl.create({
+                  message: "Unable to sign up, try again later",
+                  buttons: [{ text: "Ok", role: 'cancel' }]
+              });
 
-                  alert.present();
-              }
-          });
-
+              alert.present();
+          }
           
       }
      
@@ -136,7 +181,14 @@ export class VerifyMobilePage {
                   console.log(this.signupForm.value);
                   this.authService.createAccount2(authData, this.signupForm);
                   this.zone.run(() => {
-                      this.app.getRootNav().setRoot(TabsPage);
+                      let toast = this.toastCtrl.create({
+                          message: 'Welcome to MetBazaar',
+                          duration: 2000,
+                          position: 'middle'
+                      });
+                      toast.present().then(() => {
+                          this.app.getRootNav().setRoot(TabsPage);
+                      });
                   });
               }, (error) => {
                   this.loading.dismiss().then(() => {
@@ -151,12 +203,7 @@ export class VerifyMobilePage {
                   });
               });
 
-          this.loading = this.loadingCtrl.create({
-              //dismissOnPageChange: true,
-              duration: 3000
-          });
-
-          this.loading.present();
+         
 
       }
   }

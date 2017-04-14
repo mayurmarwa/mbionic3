@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import { LoadingController, AlertController } from 'ionic-angular';
+import { LoadingController, ToastController } from 'ionic-angular';
 import { FormBuilder, Validators } from '@angular/forms';
-import { AngularFire } from 'angularfire2';
-import { TabsPage } from '../tabs/tabs';
-import { App } from 'ionic-angular';
+import { VerifyMobilePage } from '../verify-mobile/verify-mobile';
+
 /*
   Generated class for the CreateProfile page.
 
@@ -18,8 +17,7 @@ import { App } from 'ionic-angular';
 export class CreateProfilePage {
     public userid: any; 
     public profileForm; 
-    constructor(public af: AngularFire, public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public loadingCtrl: LoadingController,
-        public alertCtrl: AlertController, private app: App) {
+    constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public loadingCtrl: LoadingController,public toastCtrl: ToastController) {
         this.userid = navParams.get("userid");
 
         this.profileForm = formBuilder.group({
@@ -44,29 +42,19 @@ export class CreateProfilePage {
    createProfile() {
       //this.submitAttempt = true;
 
+
+       
        if (!this.profileForm.valid) {
-           console.log(this.profileForm.value);
+           let toast = this.toastCtrl.create({
+               message: 'Invalid Entries',
+               duration: 2000,
+               position: 'middle'
+           });
+           toast.present();
        } else {
 
-           this.af.database.list('/users').update(this.userid,
-                              {
-                   //name: userdata.value.name,
-                   mobile: this.profileForm.value.mobile,
-                   companyname: this.profileForm.value.companyname,
-                   address: this.profileForm.value.address,
-                   companyprofile: this.profileForm.value.companyprofile
-                   //email: userdata.value.email,
-                   //uid: authdata.auth.uid,
-                   //photoURL: data.auth.photoURL,
-                   //createdAt: firebase.database['ServerValue']['TIMESTAMP'],
-                   //providerData: authdata.auth.provider
-
-               });
-
+           this.navCtrl.push(VerifyMobilePage, { form: this.profileForm, type: "social" , userid: this.userid });
            
-               this.app.getRootNav().setRoot(TabsPage);
-        
-
        }
          
 

@@ -34,9 +34,14 @@
         
     </ion-fab>
 
-    <div text-center *ngIf="productListRev?.length === 0">
-        You have not added any products! Click on add new to get your product listed.
+    
+    <div class="fullpage" *ngIf="productListRev?.length === 0">
+        <div class="content">
+            <div text-center >
+                You have not added any products! Click on add new to get your product listed.
 
+            </div>
+        </div>
     </div>
     <!--<ion-list>
         <ion-item *ngFor="let myproduct of productListRev | async" (click)="detailpage(myproduct)">

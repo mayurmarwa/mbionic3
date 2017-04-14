@@ -15,10 +15,16 @@
 
 <ion-content text-center padding>
 
-    <div text-center *ngIf="requirementListRev?.length === 0">
-        You have not added any requirements! Post a requirement to get quotes from sellers.
+    <div class="fullpage" *ngIf="requirementListRev?.length === 0">
+        <div class="content">
+            <div text-center >
+                You have not added any requirements! Post a requirement to get quotes from sellers.
 
+            </div>
+        </div>
     </div>
+
+    
 
     <ion-row wrap>
         <ion-col col-6 col-sm-3 *ngFor="let requirement of requirementListRev " (click)="openrequirementpage(requirement)">

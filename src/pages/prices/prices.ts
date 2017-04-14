@@ -36,9 +36,7 @@ export class PricesPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad PricesPage');
   }
-  updatePriceList() {
-      console.log(this.segment);
-  }
+  
 
   ionViewWillEnter() {
       console.log("prices will enter");
@@ -72,7 +70,7 @@ export class PricesPage {
   ionViewWillLeave() {
       //this.lme
       //this.
-      console.log("price will unload");
+      //console.log("price will unload");
       this.sub1.unsubscribe();
       this.sub2.unsubscribe();
   }

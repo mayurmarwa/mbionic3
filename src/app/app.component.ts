@@ -35,7 +35,8 @@ export class MyApp {
   public currentuser: any;
   public loading: any;
   public directory: any;
-
+  public currentprofile: any;
+  public sub1: any;
 
   openPages: Array<{title: string, component: any, icon: string}>;
   pushPages: Array<{title: string, component: any, icon: string}>;
@@ -50,7 +51,8 @@ export class MyApp {
     private pushplugin: Push,
     private splashScreen: SplashScreen,
     public directoryData: DirectoryProvider,   
-    private statusBar: StatusBar
+    private statusBar: StatusBar,
+    
   ) {
     this.initializeApp();
 
@@ -66,9 +68,27 @@ export class MyApp {
               this.currentuser = firebase.auth().currentUser;
               this.storage.ready().then(() => {
                   // set a key/value
-                  this.storage.set('currentuser', JSON.stringify(this.currentuser)).catch((err) =>
+                  this.storage.set('currentuser', JSON.stringify(this.currentuser)).then(() => {
+                     this.sub1 =  this.authService.getFullProfile(this.currentuser.uid).first()
+                          .subscribe(user => {
+                              //loading.dismiss();
+                              // this.user.displayName = user.displayName;
+                              //this.user.email = user.email || user.providerData[0].email || 'Not set yet.';
+                              //this.user.photoURL = user.photoURL || this.user.photoURL;
+                              this.currentprofile = user;
+                          }, (error) => {
+                              //loading.dismiss();
+                              console.log('Error: ' + JSON.stringify(error));
+                          });
+
+                  })
+
+
+                      .catch((err) =>
                       console.log(err));
-             
+
+                 
+                  //console.log(this.currentprofile);
                   // Or to get a key/value pair
                   // this.storage.get('currentuser').then((val) => {
                   //     console.log('Current User', JSON.parse(val));
@@ -89,6 +109,9 @@ export class MyApp {
           else {
               this.loading.dismiss().then(() => {
                   //console.log(error);
+                  //if (this.currentprofile) {
+                   //this.sub1.unsubscribe();
+                  //}
                   this.rootPage = LoginPage;
               }); }
         //this.rootPage = (authenticated) ? TabsPage : LoginPage;
@@ -113,7 +136,7 @@ export class MyApp {
         { title: 'My Products', component: MyProductsPage, icon: 'products' },
         { title: 'Directory', component: DirectoryPage, icon: 'directory' },
         { title: 'Speed Dial', component: SpeedDialPage, icon: 'dialer' },
-        { title: 'Settings', component: SettingsPage, icon: 'settings' },        
+        //{ title: 'Settings', component: SettingsPage, icon: 'settings' },        
         { title: 'About', component: AboutPage, icon: 'about' },
     ];
     });

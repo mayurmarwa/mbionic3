@@ -56,19 +56,19 @@ export class PostBuyRequirementsPage {
   }
 
     getGrades() {
-        if (this.selectedCat == "Stainless Steel Coils" || this.selectedCat == "Stainless Steel Sheets" || this.selectedCat == "Stainless Steel Packets" || this.selectedCat === "Stainless Steel Seamless Pipes" || this.selectedCat === "Stainless Steel Welded/ERW Pipes" || this.selectedCat === "Stainless Steel Electropolish Pipes" || this.selectedCat === "Stainless Steel Square & Rectangular Pipes" || this.selectedCat === "Stainless Steel Flats" || this.selectedCat == "Stainless Steel Angles" || this.selectedCat == "Stainless Steel Round Bars" ) {
+        if (this.selectedCat == "Stainless Steel Coils" || this.selectedCat == "Stainless Steel Sheets" || this.selectedCat == "Stainless Steel Packets" || this.selectedCat === "Stainless Steel Seamless Pipes" || this.selectedCat === "Stainless Steel Welded/ERW Pipes" || this.selectedCat === "Stainless Steel Semi-Welded/ERW Pipes" || this.selectedCat === "Stainless Steel Electropolish Pipes" || this.selectedCat === "Stainless Steel Square & Rectangular Pipes" || this.selectedCat === "Stainless Steel Flats" || this.selectedCat == "Stainless Steel Angles" || this.selectedCat == "Stainless Steel Round Bars" ) {
             this.selecton = true;
             this.nameon = true;
             this.selectalloyoff = true;
             this.gradecat = 1;
         }
-        else if (this.selectedCat === "Duplex & Super Duplex Coils" || this.selectedCat === "Duplex & Super Duplex Sheets" || this.selectedCat === "Duplex & Super Duplex Seamless Pipes" || this.selectedCat === "Duplex & Super Duplex Welded/ERW Pipes" || this.selectedCat === "Duplex & Super Duplex Electropolish Pipes" || this.selectedCat === "Duplex & Super Duplex Sqr. & Rect. Pipes" || this.selectedCat === "Duplex & Super Duplex Round Bars" ) {
+        else if (this.selectedCat === "Duplex & Super Duplex Coils" || this.selectedCat === "Duplex & Super Duplex Sheets" || this.selectedCat === "Duplex & Super Duplex Seamless Pipes" || this.selectedCat === "Duplex & Super Duplex Welded/ERW Pipes" || this.selectedCat === "Duplex & Super Duplex Semi-Welded/ERW Pipes" || this.selectedCat === "Duplex & Super Duplex Electropolish Pipes" || this.selectedCat === "Duplex & Super Duplex Sqr. & Rect. Pipes" || this.selectedCat === "Duplex & Super Duplex Round Bars" ) {
             this.selecton = true;
             this.nameon = true;
             this.selectalloyoff = true;
             this.gradecat = 2;
         }
-        else if (this.selectedCat === "Nickel Alloys Coils" || this.selectedCat === "Nickel Alloys Sheets" || this.selectedCat === "Nickel Alloys Seamless Pipes" || this.selectedCat === "Nickel Alloys Welded/ERW Pipes" || this.selectedCat === "Nickel Alloys Electropolish Pipes" || this.selectedCat === "Nickel Alloys Sqr. & Rect. Pipes" || this.selectedCat === "Nickel Alloys Round Bars") {
+        else if (this.selectedCat === "Nickel Alloys Coils" || this.selectedCat === "Nickel Alloys Sheets" || this.selectedCat === "Nickel Alloys Seamless Pipes" || this.selectedCat === "Nickel Alloys Welded/ERW Pipes" || this.selectedCat === "Nickel Alloys Semi-Welded/ERW Pipes" || this.selectedCat === "Nickel Alloys Electropolish Pipes" || this.selectedCat === "Nickel Alloys Sqr. & Rect. Pipes" || this.selectedCat === "Nickel Alloys Round Bars") {
             this.selecton = true;
             this.nameon = true;
             this.selectalloyoff = false;

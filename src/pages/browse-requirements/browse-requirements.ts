@@ -5,7 +5,6 @@ import { MyRequirementsPage } from '../my-requirements/my-requirements';
 import { ProductData } from '../../providers/product-data';
 
 
-import firebase from 'firebase';
 
 /*
   Generated class for the BrowseRequirements page.

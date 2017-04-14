@@ -12,7 +12,7 @@
         </button>
         <ion-title>Prices</ion-title>
     </ion-navbar>
-      <ion-segment [(ngModel)]="segment" (ionChange)="updatePriceList()">
+      <ion-segment [(ngModel)]="segment" >
         <ion-segment-button value="mcx">
             MCX
         </ion-segment-button>
@@ -27,13 +27,14 @@
 
 <ion-content padding>
 
-    <div text-center *ngIf="this.segment === 'lme'  && !lmeList">
-        <ion-spinner name="bubbles"></ion-spinner>
-    </div>
-    <div text-center *ngIf="this.segment === 'mcx'  && !mcxList">
-        <ion-spinner name="bubbles"></ion-spinner>
-    </div>
-
+    <div class="fullpage" *ngIf="(this.segment === 'lme'  && !lmeList) || (this.segment === 'mcx'  && !mcxList) " >
+        <div class="content">
+            <div text-center >
+                <ion-spinner name="bubbles"></ion-spinner>
+            </div>
+         </div>
+     </div>
+    
    <ion-list *ngIf="this.segment === 'lme' ">
         <ion-item [class.up]="item?.type === 'up' " [class.down]="item?.type === 'down' " *ngFor="let item of lmeList | async" >
                         

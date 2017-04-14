@@ -13,11 +13,16 @@
 </ion-header>
 
 
-<ion-content text-center padding>
-    <ion-item>
-        <ion-label stacked>Enter OTP</ion-label>
-        <ion-input type="number" placeholder="OTP" [(ngModel)] = "otpinput"  >
-        </ion-input>
-    </ion-item>
-    <button ion-button (click)="verifyotp()">Verify</button>
+<ion-content text-center padding scroll="false">
+
+    <div class="fullpage">
+        <div class="content">
+            <ion-item>
+                <ion-label stacked>Enter OTP</ion-label>
+                <ion-input type="number" placeholder="OTP" [(ngModel)]="otpinput">
+                </ion-input>
+            </ion-item>
+            <button ion-button (click)="verifyotp()">Verify</button>
+            </div>
+        </div>
 </ion-content>

@@ -30,6 +30,14 @@
             </ion-col>
         </ion-row>
     </ion-card>-->
+    <ion-row *ngIf="product?.productImage">
+    <ion-col text-center>
+        <div class="profile-photo" >
+            <img [src]="product?.productImage">
+        </div>
+    </ion-col>
+    </ion-row>
+
     <h2>{{product?.name}}</h2>
     <ion-list text-wrap>
         <ion-list-header no-lines>

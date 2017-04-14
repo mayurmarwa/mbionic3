@@ -211,8 +211,9 @@ export class CategoryProductsPage {
 
           this.productList = array;
           this.backupList = array;
-          this.loadingPopup.dismiss();
-          resolve(true);
+          this.loadingPopup.dismiss().then(() => {
+              resolve(true);
+          });
       });
   }
 
@@ -310,13 +311,13 @@ export class CategoryProductsPage {
 
       if (data.lgth && data.lgthval) {
           this.productList = this.productList.filter(item => {
-              return (item["length"] >= data.lgthval.lower && item["length"] <= data.lgthval.upper)
+              return (item["length"] >= (data.lgthval.lower/100) && item["length"] <= (data.lgthval.upper/100))
           });
       }
 
       if (data.lgth2 && data.lgth2val) {
           this.productList = this.productList.filter(item => {
-              return (item["length"] >= (data.lgth2val.lower/100) && item["length"] <= (data.lgth2val.upper/100))
+              return (item["length"] >= data.lgth2val.lower && item["length"] <= data.lgth2val.upper)
           });
       }
 
@@ -330,7 +331,7 @@ export class CategoryProductsPage {
       if (data.thickness && data.thicknessval) {
           this.productList = this.productList.filter(item => {
               //console.log(item);
-              return (item['thickness'] >= data.thicknessval.lower && item['thickness'] <= data.thicknessval.upper)
+              return (item['thickness'] >= (data.thicknessval.lower/100) && item['thickness'] <= (data.thicknessval.upper/100))
           });
       }
 

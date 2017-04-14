@@ -22,7 +22,7 @@
                     <img [src]="product?.productImage">
                 </div>
                 <div class="profile-photo" *ngIf="!product?.productImage">
-                    <img src="/assets/img/noimage.png">
+                    <img [src]="this.prodImg">
                 </div>
             </ion-col>
         </ion-row>

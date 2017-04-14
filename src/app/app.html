@@ -1,17 +1,17 @@
 <ion-menu [content]="content">
   <ion-header>
     <ion-toolbar color="royal">
-        <ion-item *ngIf="currentuser?.displayName" no-lines color="royal">
-            <ion-avatar item-left *ngIf="currentuser?.photoURL">
-                <img [src]="currentuser?.photoURL"> 
+        <ion-item *ngIf="currentprofile?.name" no-lines color="royal">
+            <ion-avatar item-left *ngIf="currentprofile?.photoURL">
+                <img [src]="currentprofile?.photoURL"> 
             </ion-avatar>
-            <ion-avatar item-left *ngIf="!currentuser?.photoURL">
-                <img src="/assets/img/noimage.png">
+            <ion-avatar item-left *ngIf="!currentprofile?.photoURL">
+                <img src="assets/img/placeholder-profile.png">
             </ion-avatar>
-            <h2>{{currentuser?.displayName}}</h2>
+            <h2>{{currentprofile?.name}}</h2>
             <!--<p>Ugh. As if.</p>-->
         </ion-item>
-        <ion-item *ngIf="!currentuser?.displayName" no-lines color="royal">
+        <ion-item *ngIf="!currentprofile?.name" no-lines color="royal">
             
             <h2>MetBazaar</h2>
             <!--<p>Ugh. As if.</p>-->

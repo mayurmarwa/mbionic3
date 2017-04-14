@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable'; 
-import { AngularFire} from 'angularfire2';
+import { AngularFire } from 'angularfire2';
 import firebase from 'firebase';
 
 
@@ -19,11 +19,14 @@ export class ProductData {
     requirementList: any;
     currentUser: any;
     myProductList: any;
+    recentList: any;
+    count: any;
+    counter: any;
     public products;
     public requirements;
     
 
-    constructor(public http: Http, public af: AngularFire ) {
+    constructor(public http: Http, public af: AngularFire) {
         this.productList = firebase.database().ref('/products');
 
 
@@ -64,6 +67,33 @@ export class ProductData {
         });
         this.currentUser = firebase.auth().currentUser;
         this.myProductList = firebase.database().ref('/users/' + this.currentUser.uid + '/products');
+        this.recentList = firebase.database().ref('/users/' + this.currentUser.uid + '/recent');
+
+        this.count = firebase.database().ref('/users/' + this.currentUser.uid + '/recent');
+        this.count.once('value', snapshot => {
+            console.log(snapshot);
+            if (snapshot.numChildren() > 0) {
+                snapshot.forEach(value => {
+
+                    if (value.key === "count") {
+
+                        this.counter = value.val();
+                        return
+                    }
+                    this.counter = 0;
+
+                });
+            }
+            else {
+                this.recentList.set({
+                    count: 0
+                });
+                this.counter = 0;
+            }
+        });
+
+
+
         
   }
     getProduct(key: any): Observable<any> {
@@ -270,6 +300,32 @@ export class ProductData {
   deleteRequirement(key: any): any {
 
       this.requirementList.child(key).remove();
+
+  }
+
+  setRecent(product: any) {
+
+      //if (this.count == 4) {
+      //    this.counter = 0
+      //}
+      //else {
+      //    this.counter = this.count + 1;
+      //}
+      if (this.counter == 3) {
+          this.counter = 0
+      }
+      else{
+        this.counter = this.counter + 1;
+      }
+      this.recentList.child(this.counter).set({
+          product: product
+
+      });
+
+      this.recentList.update({
+          count : this.counter
+      });
+
 
   }
 }

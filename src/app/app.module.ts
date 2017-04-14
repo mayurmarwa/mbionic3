@@ -16,6 +16,7 @@ import { Facebook } from '@ionic-native/facebook';
 
 
 import { MarketPage } from '../pages/market/market';
+import { QuickFilterPage } from '../pages/quick-filter/quick-filter';
 import { SearchCategoriesPage } from '../pages/search-categories/search-categories';
 import { PricesPage } from '../pages/prices/prices';
 import { EnquiriesPage } from '../pages/enquiries/enquiries';
@@ -45,10 +46,7 @@ import { FilterOptionsPage } from '../pages/filter-options/filter-options';
 import { TabContactsPage } from '../pages/tab-contacts/tab-contacts';
 import { TabProfilePage } from '../pages/tab-profile/tab-profile';
 import { TabChatsPage } from '../pages/tab-chats/tab-chats';
-import { ChatChannelPage } from '../pages/chat-channel/chat-channel';
-import { ChatMessagePage } from '../pages/chat-message/chat-message';
 import { LoginPage } from '../pages/login/login';
-import { CreateAccountPage } from '../pages/create-account/create-account';
 import { AboutPage } from '../pages/about/about';
 import { ShareAppPage } from '../pages/share-app/share-app';
 import { ResetpasswordPage } from '../pages/resetpassword/resetpassword';
@@ -81,6 +79,7 @@ export const firebaseConfig = {
     MyApp,
     TabsPage,
     MarketPage,
+    QuickFilterPage,
     SearchCategoriesPage,
     PricesPage,
     NotificationsPage,
@@ -109,15 +108,12 @@ export const firebaseConfig = {
     TabContactsPage,
     TabProfilePage,
     TabChatsPage,
-    ChatChannelPage,
-    ChatMessagePage,
     LoginPage,
     AboutPage,
     ShareAppPage,
     ResetpasswordPage,
     SignupPage,
     VerifyMobilePage,
-    CreateAccountPage,
     CreateProfilePage,
     OrderBy,
     MetalCalculatorPage,
@@ -135,6 +131,7 @@ export const firebaseConfig = {
     MyApp,
     TabsPage,
     MarketPage,
+    QuickFilterPage,
     SearchCategoriesPage,
     PricesPage,
     EnquiriesPage,
@@ -162,15 +159,12 @@ export const firebaseConfig = {
     TabContactsPage,
     TabProfilePage,
     TabChatsPage,
-    ChatChannelPage,
-    ChatMessagePage,
     LoginPage,
     AboutPage,
     ShareAppPage,
     ResetpasswordPage,
     SignupPage,
     VerifyMobilePage,
-    CreateAccountPage,
     CreateProfilePage,
     MetalCalculatorPage,
     FilterOptionsPage

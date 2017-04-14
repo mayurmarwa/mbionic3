@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ActionSheetController, AlertController, LoadingController} from 'ionic-angular';
+import { NavController, NavParams, ActionSheetController, AlertController,  ToastController} from 'ionic-angular';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Camera } from '@ionic-native/camera';
 import { AngularFire, FirebaseListObservable} from 'angularfire2';
@@ -24,7 +24,6 @@ export class AddProductPage {
     public currentuser: any;
     public currentuserid: any;
     //public cattitle: string;
-    public loading: any;
     products: FirebaseListObservable<any>;
     userProducts: FirebaseListObservable<any>;
     public coilsForm;
@@ -39,7 +38,7 @@ export class AddProductPage {
     public productImage: string;
     public productPreview: string;
     public productImageRef: any;
-    public productImageURL: string = "/assets/img/noimage.png"
+    public productImageURL: any;
     public mrateTrue: number = null;
     public krateTrue: number = null;
     public typeOD: boolean = true;
@@ -56,7 +55,7 @@ export class AddProductPage {
     public compositiontxt: string;
     public selptype2: any;
     
-    constructor(public navCtrl: NavController, public navParams: NavParams, public af: AngularFire, public formBuilder: FormBuilder, public authService: AuthService, public actionSheetCtrl: ActionSheetController, public alertCtrl: AlertController, public loadingCtrl: LoadingController, private camera: Camera) {
+    constructor(public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController, public af: AngularFire, public formBuilder: FormBuilder, public authService: AuthService, public actionSheetCtrl: ActionSheetController, public alertCtrl: AlertController,  private camera: Camera) {
         this.category = navParams.get("category");
         this.currentuser = firebase.auth().currentUser;
         this.currentuserid = this.currentuser.uid;
@@ -485,7 +484,7 @@ export class AddProductPage {
                 
                 this.selectedGradeItem = result;
             }, (error) => {
-                //loading.dismiss();
+                
                 console.log('Error: ' + JSON.stringify(error));
             });
         
@@ -519,9 +518,7 @@ export class AddProductPage {
 
   submitProduct(productForm) {
 
-      this.loading = this.loadingCtrl.create({
-         content: 'Submitting, Please Wait...'
-      });
+     
 
             
           if(this.allValid && this.priceValid && this.imageValid) {
@@ -560,17 +557,21 @@ export class AddProductPage {
 
                                   ).then(info => {
                                       //console.log("success");
-                                      this.loading.present();
 
-                                      setTimeout(() => {
-                                          this.navCtrl.popToRoot({ animate: false });
-                                          this.navCtrl.push(MyProductsPage, { animate: false });
+                                      let toast = this.toastCtrl.create({
+                                          message: 'Product Uploaded Successfully',
+                                          duration: 2000,
+                                          position: 'middle'
+                                      });
+                                      toast.present().then(() => {
+                                              this.navCtrl.popToRoot({ animate: false }).then(() => {
+                                              this.navCtrl.push(MyProductsPage, { animate: false });
+                                          });
+                                      });
+                                          
+                                          
                                           //this.navCtrl.pop({ animate: false });
-                                      }, 1000);
-
-                                      setTimeout(() => {
-                                          this.loading.dismiss();
-                                      }, 3000);
+                                      
 
 
 
@@ -595,16 +596,16 @@ export class AddProductPage {
                                   ).then(info => {
 
                                       //console.log("success");
-                                      this.loading.present();
-
-                                      setTimeout(() => {
-                                          this.navCtrl.popToRoot({ animate: false });
-                                          this.navCtrl.push(MyProductsPage, { animate: false });
-                                      }, 1000);
-
-                                      setTimeout(() => {
-                                          this.loading.dismiss();
-                                      }, 3000);
+                                      let toast = this.toastCtrl.create({
+                                          message: 'Product Uploaded Successfully',
+                                          duration: 2000,
+                                          position: 'middle'
+                                      });
+                                      toast.present().then(() => {
+                                          this.navCtrl.popToRoot({ animate: false }).then(() => {
+                                              this.navCtrl.push(MyProductsPage, { animate: false });
+                                          });
+                                      });
 
                                   })
 
@@ -616,7 +617,7 @@ export class AddProductPage {
                           {
                               islive: true,
                               timestamp: firebase.database['ServerValue']['TIMESTAMP'],
-                              productImage: this.productImageURL
+                              //productImage: this.productImageURL
                           }
                       )
                       if (this.category.catid === 10) {
@@ -628,24 +629,23 @@ export class AddProductPage {
                                   name: productForm.value.name,
                                   mrate: productForm.value.mrate,
                                   krate: productForm.value.krate,
-                                  productImage: this.productImageURL
+                                  //productImage: this.productImageURL
                               }
 
 
 
                           ).then(info => {
                               //console.log("success");
-                              this.loading.present();
-
-                              setTimeout(() => {
-                                  this.navCtrl.popToRoot({ animate: false });
-                                  this.navCtrl.push(MyProductsPage, { animate: false });
-                                  //this.navCtrl.pop({ animate: false });
-                              }, 1000);
-
-                              setTimeout(() => {
-                                  this.loading.dismiss();
-                              }, 3000);
+                              let toast = this.toastCtrl.create({
+                                  message: 'Product Uploaded Successfully',
+                                  duration: 2000,
+                                  position: 'middle'
+                              });
+                              toast.present().then(() => {
+                                  this.navCtrl.popToRoot({ animate: false }).then(() => {
+                                      this.navCtrl.push(MyProductsPage, { animate: false });
+                                  });
+                              });
 
 
 
@@ -662,7 +662,7 @@ export class AddProductPage {
                                   grade: productForm.value.gradeval,
                                   mrate: productForm.value.mrate,
                                   krate: productForm.value.krate,
-                                  productImage: this.productImageURL
+                                  //productImage: this.productImageURL
                               }
 
 
@@ -670,16 +670,17 @@ export class AddProductPage {
                           ).then(info => {
 
                               //console.log("success");
-                              this.loading.present();
-
-                              setTimeout(() => {
-                                  this.navCtrl.popToRoot({ animate: false });
-                                  this.navCtrl.push(MyProductsPage, { animate: false });
-                              }, 1000);
-
-                              setTimeout(() => {
-                                  this.loading.dismiss();
-                              }, 3000);
+                              
+                              let toast = this.toastCtrl.create({
+                                  message: 'Product Uploaded Successfully',
+                                  duration: 2000,
+                                  position: 'middle'
+                              });
+                              toast.present().then(() => {
+                                  this.navCtrl.popToRoot({ animate: false }).then(() => {
+                                      this.navCtrl.push(MyProductsPage, { animate: false });
+                                  });
+                              });
 
                           })
 
@@ -730,6 +731,13 @@ export class AddProductPage {
       }).then(imageData => {
           this.productImage = imageData;
           this.productPreview = "data:image/jpeg;base64," + imageData;
+
+          let toast = this.toastCtrl.create({
+              message: 'Image will be uploaded shortly',
+              duration: 2000,
+              position: 'middle'
+          });
+          toast.present();
       }, error => {
           console.log("ERROR -> " + JSON.stringify(error));
       });
@@ -748,6 +756,13 @@ export class AddProductPage {
       }).then(imageData => {
           this.productImage = imageData;
           this.productPreview = "data:image/jpeg;base64," + imageData;
+
+          let toast = this.toastCtrl.create({
+              message: 'Image will be uploaded shortly',
+              duration: 2000,
+              position: 'middle'
+          });
+          toast.present();
       }, error => {
           console.log("ERROR -> " + JSON.stringify(error));
       });

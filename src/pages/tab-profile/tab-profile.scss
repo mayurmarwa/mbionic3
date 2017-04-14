@@ -1,4 +1,19 @@
 page-tab-profile {
+
+
+    .fullpage{
+       display: flex;
+  flex-flow: column;
+  height: 100%;
+  }
+
+    .content{
+            position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+
+    }
+
   .product-details{
          background-color:#f0f4f5;
         color:#898989;

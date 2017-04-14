@@ -24,24 +24,21 @@ export class MyProfilePage {
     constructor(public navCtrl: NavController, public navParams: NavParams, public authService: AuthService, private platform: Platform, private callNumber: CallNumber, public loadingCtrl: LoadingController) {
 
         this.userID = navParams.get("userID");
-        this.loadingPopup = this.loadingCtrl.create({
-            content: 'Loading...'
-        });
-        this.loadingPopup.present();
+        
        
 
-        this.subscription = this.authService.getFullProfile(this.userID).first()
+        this.subscription = this.authService.getFullProfile(this.userID)
             .subscribe(user => {
                 //loading.dismiss();
                 // this.user.displayName = user.displayName;
                 //this.user.email = user.email || user.providerData[0].email || 'Not set yet.';
                 //this.user.photoURL = user.photoURL || this.user.photoURL;
                 this.userProfile = user;
-                console.log(this.userProfile);
-                this.loadingPopup.dismiss();
+                //console.log(this.userProfile);
+               
             }, (error) => {
                 //loading.dismiss();
-                this.loadingPopup.dismiss();
+                
                 console.log('Error: ' + JSON.stringify(error));
             });
     }
@@ -50,6 +47,10 @@ export class MyProfilePage {
     console.log('ionViewDidLoad MyProfilePage');
     }
 
+  ionViewDidLeave() {
+      this.subscription.unsubscribe();
+      //this.sub2.unsubscribe();
+  }
 
 
   callNo() {

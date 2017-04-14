@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, ModalController } from 'ionic-angular';
 
-import { ChatChannelPage } from '../chat-channel/chat-channel';
 
 
 @Component({
@@ -21,8 +20,8 @@ export class TabChatsPage {
   }
 
   openChannelPage(ev: any) {
-    let modal = this.modalCtrl.create(ChatChannelPage);
-    modal.present();
+    //let modal = this.modalCtrl.create(ChatChannelPage);
+   //modal.present();
   }
 
 }

@@ -1,32 +1,13 @@
-page-my-products {
-
-     .fullpage{
-       display: flex;
-  flex-flow: column;
-  height: 100%;
-  }
-
-    .content{
-            position: relative;
-    top: 50%;
-    transform: translateY(-50%);
-
-    }
-
+page-quick-filter {
     .product-card{
         margin: 0px;
         width: 100%;
-        height: 100% !important;
+        height:100%;
     }
 
-    .ion-card-content{
-        padding: 12px 4px 12px 4px;
-
-    }
-
-    .product-highlighters{
+   .product-highlighters{
        font-size: 1.2rem;
-       padding: 10px 0px;
+      padding: 10px 0px;
 
        ion-col{
            padding: 2px;
@@ -37,6 +18,24 @@ page-my-products {
           color: #1a1e5e;
        }
    }
+    .gradeCircle{
+        
+    display: inline-block;
+    text-align: center;
+    /* width: 10%; */
+    /* border: 1.2em solid #dddddd; */
+    background-color: #ddd;
+    width: 2.4em;
+    height: 2.4em;
+    line-height: 2.4em;
+    border-radius: 50%;
+    /* max-width: 1.2em; */
+    /* max-height: 1.2em; */
+    /* box-sizing: border-box; */    
+    /* margin: 0 auto; */
+
+
+    }
 
     .gradeCircle2{
             overflow: hidden;

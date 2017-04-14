@@ -8,9 +8,16 @@
 
 
 <ion-content class="product-details">
-    <div text-center *ngIf="!userProfile">
-        <ion-spinner name="bubbles"></ion-spinner>
+
+    <div class="fullpage" *ngIf="!userProfile">
+        <div class="content">
+            <div text-center>
+                <ion-spinner name="bubbles"></ion-spinner>
+            </div>
+        </div>
     </div>
+
+    
     <div  *ngIf="userProfile" >
         <ion-row>
             <ion-col text-center>
@@ -19,7 +26,7 @@
                     <button ion-button small icon-only (click)="presentActionSheet()"><ion-icon name="camera"></ion-icon></button>
                 </div>
                 <div class="profile-photo" *ngIf="!userProfile?.photoURL">
-                    <img src="assets/img/noimage.png">
+                    <img src="assets/img/placeholder-profile.png">
                     <button ion-button small icon-only (click)="presentActionSheet()"><ion-icon name="camera"></ion-icon></button>
                 </div>
             </ion-col>

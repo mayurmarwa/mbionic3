@@ -1,3 +1,19 @@
 page-verify-mobile {
+    .fullpage{
+       display: flex;
+  flex-flow: column;
+  height: 100%;
+  }
+
+    .content{
+            position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+
+        .button{
+
+            width:250px;
+        }
+    }
 
 }

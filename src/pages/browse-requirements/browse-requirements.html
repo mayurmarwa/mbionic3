@@ -22,6 +22,15 @@
 
 <ion-content text-center padding>
 
+    <div class="fullpage" *ngIf="requirementList?.length === 0">
+        <div class="content">
+            <div text-center>
+                No Requirements Found!
+
+            </div>
+        </div>
+    </div>
+
     <ion-row wrap>
         <ion-col col-6 col-sm-3 *ngFor="let requirement of requirementList " (click)="openrequirementpage(requirement)">
             <ion-card class="product-card">

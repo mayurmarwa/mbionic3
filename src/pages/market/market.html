@@ -21,9 +21,9 @@
                 <ion-icon name="search" style="padding-right:5px"></ion-icon>
                 Search
             </button>
-         <button ion-button (click)="openNotificationsPage()" clear>
+         <!--<button ion-button (click)="openNotificationsPage()" clear>
             <ion-icon name="alert"></ion-icon>
-        </button>
+        </button>-->
     </ion-buttons>
 
     </ion-navbar>
@@ -35,17 +35,19 @@
     <div class="header-image"></div>
 
     <div class="main-content">-->
-<<ion-content class="card-background-page">
+<<ion-content text-center >
 
-    <ion-card style="margin:0px; width:100%;border-radius:0px">
-        <img src="assets/img/home-top.png" />
-        <div class="card-title">Post Your Requirement & Get Instant Quotes From Sellers</div>
-        <ion-row class="card-subtitle">
-            <ion-col ><div style="color:white;" ion-button outline (click)="openRequirementPage()">Post Requirement</div></ion-col>
-            <!--<ion-col col-6><div style="color:white;" ion-button outline>Add Product</div></ion-col>-->
-        </ion-row>
-        
-    </ion-card>
+     <div class="card-background-page">
+         <ion-card class="top-card">
+             <img src="assets/img/home-top.png" />
+             <div class="card-title">Post Your Requirement & Get Instant Quotes From Sellers</div>
+             <ion-row class="card-subtitle">
+                 <ion-col><div style="color:white;" ion-button outline (click)="openRequirementPage()">Post Requirement</div></ion-col>
+                 <!--<ion-col col-6><div style="color:white;" ion-button outline>Add Product</div></ion-col>-->
+             </ion-row>
+
+         </ion-card>
+     </div>
 
 
 
@@ -206,6 +208,10 @@
         </div>
 
     </ion-grid>
+
+
+
+
     <!--<ion-scroll scrollX="true" class="item" style="height: 40%">
             <ion-row>
                 <ion-col no-lines text-center width-33  ion-item *ngFor="let category of categories | async" (click)="categoryProducts(category)">
@@ -239,4 +245,181 @@
         </ion-item>
     </ion-list
     </div>>-->
+    <div class="quick-filter" >
+        Quick Filter
+        <ion-item >
+            <ion-label stacked>Product Category</ion-label>
+            <custom-icon set="mb" name="products" item-left></custom-icon>
+            <ion-select class="grade-select" text-wrap [(ngModel)]="selectedCat" (ionChange)="getGrades()">
+                <ion-option value="1" selected="true">Stainless Steel Coils</ion-option>
+                <ion-option value="2">Stainless Steel Sheets / Plates</ion-option>
+                <ion-option value="3">Stainless Steel Packets</ion-option>
+                <ion-option value="4a">Stainless Steel Seamless Pipes</ion-option>
+                <ion-option value="4b">Stainless Steel Welded/ERW Pipes</ion-option>
+                <ion-option value="4e">Stainless Steel Semi-Welded/ERW Pipes</ion-option>
+                <ion-option value="4c">Stainless Steel Electropolish Pipes</ion-option>
+                <ion-option value="4d">Stainless Steel Square & Rectangular Pipes</ion-option>
+                <ion-option value="5">Stainless Steel Flats</ion-option>
+                <ion-option value="6">Stainless Steel Angles</ion-option>
+                <ion-option value="7">Stainless Steel Round Bars</ion-option>
+                <ion-option value="8a">Duplex & Super Duplex Coils</ion-option>
+                <ion-option value="8b">Duplex & Super Duplex Sheets</ion-option>
+                <ion-option value="8c1">Duplex & Super Duplex Seamless Pipes</ion-option>
+                <ion-option value="8c2">Duplex & Super Duplex Welded/ERW Pipes</ion-option>
+                <ion-option value="8c5">Duplex & Super Duplex Semi-Welded/ERW Pipes</ion-option>
+                <ion-option value="8c3">Duplex & Super Duplex Electropolish Pipes</ion-option>
+                <ion-option value="8c4">Duplex & Super Duplex Sqr. & Rect. Pipes</ion-option>
+                <ion-option value="8d">Duplex & Super Duplex Round Bars</ion-option>
+                <ion-option value="9a">Nickel Alloys Coils</ion-option>
+                <ion-option value="9b">Nickel Alloys Sheets</ion-option>
+                <ion-option value="9c1">Nickel Alloys Seamless Pipes</ion-option>
+                <ion-option value="9c2">Nickel Alloys Welded/ERW Pipes</ion-option>
+                <ion-option value="9c5">Nickel Alloys Semi-Welded/ERW Pipes</ion-option>
+                <ion-option value="9c3">Nickel Alloys Electropolish Pipes</ion-option>
+                <ion-option value="9c4">Nickel Alloys Sqr. & Rect. Pipes</ion-option>
+                <ion-option value="9d">Nickel Alloys Round Bars</ion-option>
+                
+            </ion-select>
+        </ion-item>  
+        
+        <ion-item *ngIf="!selectalloyoff">
+            <custom-icon set="mb" name="star" item-left></custom-icon>
+            <ion-label stacked>Product Alloy Type</ion-label>
+            <ion-select [(ngModel)]="selectedAlloy" (ionChange)="alloySelected()">
+                <ion-option value="Hastelloy" selected="true">Hastelloy</ion-option>
+                <ion-option value="Inconel">Inconel</ion-option>
+                <ion-option value="Monel">Monel</ion-option>
+                <ion-option value="Nimonic">Nimonic</ion-option>
+                <ion-option value="Nickel">Nickel</ion-option>
+                <ion-option value="Titanium">Titanium</ion-option>
+            </ion-select>
+        </ion-item>
+        
+          
+        <ion-item >
+            <custom-icon set="mb" name="grade" item-left></custom-icon>
+            <ion-label stacked>Grade</ion-label>            
+            <ion-select [(ngModel)]="selectedGrade" >
+                <ion-option *ngFor="let grade of gradeList | async" >{{grade}}</ion-option>
+            </ion-select>
+        </ion-item>
+
+        
+
+        <button style="margin-top:20px" ion-button (click)="quickFilter()" outline>
+            <ion-icon name="funnel" style="padding-right:5px"></ion-icon>
+            Filter
+        </button>
+    </div>
+
+
+     <div *ngIf="flag" class="recent-list">
+
+         Recently Viewed
+         <ion-row>
+             
+             <ion-col col-6 col-sm-3 *ngFor="let product of recentList | async " (click)="openproductpage(product?.product)">
+                 <ion-card *ngIf="product?.product" class="product-card">
+                     <ion-card-content style="padding: 10px 4px 10px 4px;">
+                         <div>
+                             <div class="gradeCircle2">{{product?.product?.gradeval}}</div>
+                         </div>
+                         <h2>
+                             {{product?.product?.name}}
+                         </h2>
+                         <ion-grid class="product-highlighters">
+                             <ion-row nowrap>
+                                 <ion-col text-center *ngIf="product?.product?.finish">
+                                     Finish
+                                 </ion-col>
+                                 <ion-col text-center *ngIf="product?.product?.length">
+                                     Length
+                                 </ion-col>
+                                 <ion-col text-center *ngIf="product?.product?.weight && !product?.product?.length">
+                                     Weight
+                                 </ion-col>
+                             </ion-row>
+                             <ion-row nowrap>
+                                 <ion-col class="product-data" text-center *ngIf="product?.product?.finish">
+                                     {{product?.product?.finish}}
+                                 </ion-col>
+                                 <ion-col class="product-data" text-center *ngIf="product?.product?.length && (product?.product?.catid === 2 || product?.product?.catid === 3 || product?.product?.catid === '8b' || product?.product?.catid === '9b')">
+                                     {{product?.product?.length}} mm
+                                 </ion-col>
+                                 <ion-col class="product-data" text-center *ngIf="product?.product?.length && !(product?.product?.catid === 2 || product?.product?.catid === 3 || product?.product?.catid === '8b' || product?.product?.catid === '9b')">
+                                     {{product?.product?.length}} Mtrs
+                                 </ion-col>
+                                 <ion-col class="product-data" text-center *ngIf="product?.product?.weight  && !product?.product?.length">
+                                     {{product?.product?.weight}} Kg
+                                 </ion-col>
+                             </ion-row>
+                             <ion-row>
+                                 <ion-col text-center *ngIf="product?.product?.sizes">
+                                     Size
+                                 </ion-col>
+                             </ion-row>
+                             <ion-row>
+                                 <ion-col class="product-data" text-center *ngIf="product?.product?.sizes">
+                                     {{product?.product?.sizes}} {{product?.product?.sizeunit}}
+                                 </ion-col>
+                             </ion-row>
+
+                             <ion-row nowrap>
+                                 <ion-col text-center *ngIf="product?.product?.width">
+                                     Width
+                                 </ion-col>
+                                 <ion-col text-center *ngIf="product?.product?.thickness">
+                                     Thickness
+                                 </ion-col>
+                                 <ion-col text-center *ngIf="product?.product?.swg">
+                                     SWG
+                                 </ion-col>
+                                 <ion-col text-center *ngIf="product?.product?.sch">
+                                     SCH
+                                 </ion-col>
+                                 <ion-col text-center *ngIf="product?.product?.mm">
+                                     MM
+                                 </ion-col>
+
+                             </ion-row>
+                             <ion-row nowrap>
+                                 <ion-col class="product-data" text-center *ngIf="product?.product?.width">
+                                     {{product?.product?.width }} mm
+                                 </ion-col>
+                                 <ion-col class="product-data" text-center *ngIf="product?.product?.thickness">
+                                     {{product?.product?.thickness }} mm
+                                 </ion-col>
+
+                                 <ion-col class="product-data" text-center *ngIf="product?.product?.swg">
+                                     {{product?.product?.swg }}
+                                 </ion-col>
+                                 <ion-col class="product-data" text-center *ngIf="product?.product?.sch">
+                                     {{product?.product?.sch }}
+                                 </ion-col>
+                                 <ion-col class="product-data" text-center *ngIf="product?.product?.sch">
+                                     {{product?.product?.mm }}
+                                 </ion-col>
+                             </ion-row>
+                             <ion-row nowrap>
+                                 <ion-col text-center *ngIf="product?.product?.mrate">
+                                     Market
+                                 </ion-col>
+                                 <ion-col text-center *ngIf="product?.product?.krate">
+                                     Kalamboli
+                                 </ion-col>
+                             </ion-row>
+                             <ion-row nowrap>
+                                 <ion-col class="product-data" text-center *ngIf="product?.product?.mrate">
+                                     {{product?.product?.mrate | currency:"INR":true}}
+                                 </ion-col>
+                                 <ion-col class="product-data" text-center *ngIf="product?.product?.krate">
+                                     {{product?.product?.krate | currency:"INR":true}}
+                                 </ion-col>
+                             </ion-row>
+                         </ion-grid>
+                     </ion-card-content>
+                 </ion-card>
+             </ion-col>
+         </ion-row>
+     </div>
 </ion-content>
