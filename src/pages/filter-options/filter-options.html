@@ -123,18 +123,45 @@
 
         <ion-item *ngIf="category.catid === '4a' || category.catid === '4b' || category.catid === '4c' || category.catid === '4e' || category.catid === '8c1'  || category.catid === '8c5' || category.catid === '8c2' || category.catid === '8c3' || category.catid === '9c1' || category.catid === '9c2' || category.catid === '9c5' || category.catid === '9c3'">
             <ion-label *ngIf="!form.mmval || !form.mm">MM (Wall Thicness) </ion-label>
-            <ion-label *ngIf="form.mmval  && form.mm">MM:  {{form.mmval.lower/100}} to {{form.mmval.upper/100}} </ion-label>
+            <ion-label *ngIf="form.mmval  && form.mm">MM:  </ion-label>
             <ion-checkbox [(ngModel)]="form.mm" name="mm" (ionChange)="consolelog()"></ion-checkbox>
         </ion-item>
 
-        <ion-item *ngIf="form.mm">
+        
+            <ion-grid text-center *ngIf="form.mm">
+            <ion-row>
+                <ion-col col-2>
 
-            <ion-range ion-input min="0" max="10000" dualKnobs="true" [(ngModel)]="form.mmval" name="mmval" color="danger">
-                <ion-label range-left>0 </ion-label>
-                <ion-label range-right>100 </ion-label>
-            </ion-range>
+                </ion-col>
+                <ion-col col-4>
+                    <ion-item>
+                        <ion-label stacked>Min (mm)</ion-label>
+                        <ion-input name="mmlower" [(ngModel)]="mmval.lower" type="number"
+                                    min="0" step="0.01">
+                        </ion-input>
+                    </ion-item>
+                   
+                </ion-col>
+                <ion-col col-4>
+                    <ion-item>
+                        <ion-label stacked>Max (mm)</ion-label>
+                        <ion-input name="mmupper" [(ngModel)]="mmval.upper" type="number"
+                                 min="0" step="0.01">
+                        </ion-input>
+                    </ion-item>
+                </ion-col>
+                <ion-col col-2>
 
-        </ion-item>
+                </ion-col>
+
+                <!--<ion-range ion-input min="0" max="10000" dualKnobs="true" [(ngModel)]="form.mmval" name="mmval" color="danger">
+                    <ion-label range-left>0 </ion-label>
+                    <ion-label range-right>100 </ion-label>
+                </ion-range>-->
+
+                </ion-row>
+            </ion-grid>
+                
        
 
         <ion-item *ngIf="category.catid === '4d' || category.catid === '8c4' || category.catid === '9c4' ">
@@ -243,18 +270,44 @@
         
         <ion-item *ngIf="category.catid === 1 || category.catid === '8a' || category.catid === '9a' || category.catid === 2 || category.catid === 3 || category.catid === '8b' || category.catid === '9b' || category.catid === '4d' || category.catid === '8c4' || category.catid === '9c4' || category.catid === 5 || category.catid === 6">
             <ion-label *ngIf="!form.thicknessval || !form.thickness">Thickness </ion-label>
-            <ion-label *ngIf="form.thicknessval  && form.thickness">Thickness:  {{form.thicknessval.lower/100}} to {{form.thicknessval.upper/100}} mm</ion-label>
+            <ion-label *ngIf="form.thicknessval  && form.thickness">Thickness:  </ion-label>
             <ion-checkbox [(ngModel)]="form.thickness" name="thickness" (ionChange)="consolelog()"></ion-checkbox>
         </ion-item>
 
-        <ion-item *ngIf="form.thickness">
+        
+            <ion-grid text-center *ngIf="form.thickness">
+                <ion-row >
+                    <ion-col col-2>
 
-            <ion-range ion-input min="0" max="10000" dualKnobs="true" pin="true" [(ngModel)]="form.thicknessval" name="thicknessval" color="danger">
+                    </ion-col>
+                    <ion-col col-4 >
+                        <ion-item>
+                            <ion-label stacked>Min (mm)</ion-label>
+                            <ion-input name="thicknesslower" [(ngModel)]="thicknessval.lower" type="number"
+                                       min="0" step="0.01">
+                            </ion-input>
+                        </ion-item>
+                        
+                    </ion-col>
+                    <ion-col col-4>
+                        <ion-item>
+                            <ion-label stacked>Max (mm)</ion-label>
+                            <ion-input name="thicknessupper" [(ngModel)]="thicknessval.upper" type="number"
+                                       min="0" step="0.01">
+                            </ion-input>
+                        </ion-item>
+                    </ion-col>
+                    <ion-col col-2>
+
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+            <!--<ion-range ion-input min="0" max="10000" dualKnobs="true" pin="true" [(ngModel)]="form.thicknessval" name="thicknessval" color="danger">
                 <ion-label range-left>0 mm</ion-label>
                 <ion-label range-right>100 mm</ion-label>
-            </ion-range>
+            </ion-range>-->
 
-        </ion-item>
+       
 
         <!--<ion-item *ngIf="category.catid === '9a' ">
             <ion-label stacked>Product Alloy Type</ion-label>

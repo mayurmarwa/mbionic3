@@ -31,6 +31,7 @@ export class VerifyMobilePage {
     public otpinput: any;
     public logintype: any;
     public userid: any;
+    public resend: boolean = false;
 
     constructor(public nav: NavController, public authService: AuthService,
         public formBuilder: FormBuilder, public loadingCtrl: LoadingController,
@@ -42,6 +43,11 @@ export class VerifyMobilePage {
         this.userid = navParams.get("userid");
 
         this.otpValid = false;
+
+        setTimeout(() => {
+            this.resend = true;
+        }, 30000);
+
         //this.http.get('http://2factor.in/API/V1/068c2321-12f2-11e7-9462-00163ef91450/BAL/SMS').map(res => res.json()).subscribe(data => {
         //    console.log(data);
         //});
@@ -54,7 +60,9 @@ export class VerifyMobilePage {
         //this.http.get('/API/V1/068c2321-12f2-11e7-9462-00163ef91450/SMS/' + this.signupForm.value.mobile + '/AUTOGEN/Registration').map(res => res.json()).subscribe(data => {
             //console.log(data);
         this.http.get('http://2factor.in/API/V1/068c2321-12f2-11e7-9462-00163ef91450/SMS/' + this.signupForm.value.mobile + '/AUTOGEN/Registration').map(res => res.json()).subscribe(data => {
-        this.sessionid = data.Details;
+            this.sessionid = data.Details;
+            console.log(data);
+
             if (SMS) {
                 SMS.startWatch(function () {
                     //update('watching', 'watching started');
@@ -88,6 +96,32 @@ export class VerifyMobilePage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad VerifyMobilePage');
   }
+
+
+  resendOTP() {
+
+      if (this.resend) {
+          this.http.get('http://2factor.in/API/V1/068c2321-12f2-11e7-9462-00163ef91450/SMS/' + this.signupForm.value.mobile + '/AUTOGEN/Registration').map(res => res.json()).subscribe(data => {
+              this.sessionid = data.Details;
+
+              console.log(data);
+          });
+          this.resend = false;
+          setTimeout(() => {
+              this.resend = true;
+          }, 30000);
+      }
+      else {
+          let toast = this.toastCtrl.create({
+              message: 'Kindly wait 30 seconds before trying again',
+              duration: 2000,
+              position: 'middle'
+          });
+          toast.present();
+      }
+  }
+
+
 
 
   verifyotp() {

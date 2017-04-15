@@ -22,7 +22,16 @@
                 <ion-input type="number" placeholder="OTP" [(ngModel)]="otpinput">
                 </ion-input>
             </ion-item>
-            <button ion-button (click)="verifyotp()">Verify</button>
+            <ion-row>
+                <ion-col text-center>
+                    <button ion-button (click)="verifyotp()">Verify</button>
+                </ion-col>
+             </ion-row>
+            <ion-row>
+                <ion-col text-center>
+                    <button ion-button clear (click)="resendOTP()">Resend OTP</button>
+                </ion-col>
+            </ion-row>
             </div>
         </div>
 </ion-content>

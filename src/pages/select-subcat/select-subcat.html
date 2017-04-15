@@ -14,6 +14,14 @@
 
 
 <ion-content padding>
+    <div class="fullpage" *ngIf="!this.categories">
+        <div class="content">
+            <div text-center>
+                <ion-spinner name="bubbles"></ion-spinner>
+            </div>
+        </div>
+    </div>
+
     <ion-list>
         <ion-item text-wrap *ngFor="let category of categories | async" (click)="loadCategory(category.catid,category.title)">
             <ion-thumbnail item-left>

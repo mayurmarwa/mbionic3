@@ -32,7 +32,7 @@
     </div>
 
     <ion-row wrap>
-        <ion-col col-6 col-sm-3 *ngFor="let requirement of requirementList " (click)="openrequirementpage(requirement)">
+        <ion-col tappable col-6 col-sm-3 *ngFor="let requirement of displayList " (click)="openrequirementpage(requirement)">
             <ion-card class="product-card">
                 <ion-card-content style="padding: 10px 4px 10px 4px;">
                     <div>

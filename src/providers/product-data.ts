@@ -46,19 +46,27 @@ export class ProductData {
                 members[i].key = keys[i];
 
             }
+            //this.buildRequirementArray(members);
             this.requirements = members;
+            console.log("requirements ready");
         });
 
 
         this.productList.on('value', countryList => {
             let countries = [];
+            let keys = [];
 
             countryList.forEach(country => {
 
                 countries.push(country.val());
+                keys.push(country.key);
             });
+            for (var i in countries) {
+                countries[i].key = keys[i];
+            } 
 
-            this.products = countries;
+            this.buildArray(countries);
+            //this.products = countries;
             //this.loadedlist = countries;
             //console.log("here", this.directory);
             //this.loadingPopup.dismiss();
@@ -95,7 +103,52 @@ export class ProductData {
 
 
         
-  }
+    }
+
+    private buildArray(array) {
+        return new Promise(resolve => {
+            let m = array.length, t, i;
+
+            // While there remain elements to shuffle…
+            while (m) {
+
+                // Pick a remaining element…
+                i = Math.floor(Math.random() * m--);
+
+                // And swap it with the current element.
+                t = array[m];
+                array[m] = array[i];
+                array[i] = t;
+            }
+
+            this.products = array;
+            console.log("products ready");
+        });
+    }
+
+   /**
+     private buildRequirementArray(array) {
+        return new Promise(resolve => {
+            let m = array.length, t, i;
+
+            // While there remain elements to shuffle…
+            while (m) {
+
+                // Pick a remaining element…
+                i = Math.floor(Math.random() * m--);
+
+                // And swap it with the current element.
+                t = array[m];
+                array[m] = array[i];
+                array[i] = t;
+            }
+
+            this.requirements = array;
+
+        });
+    }**/
+
+
     getProduct(key: any): Observable<any> {
         return this.af.database.object('products/' + key);
     }

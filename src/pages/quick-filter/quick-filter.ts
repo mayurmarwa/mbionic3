@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { NavController, NavParams, LoadingController } from 'ionic-angular';
 import { ProductPagePage } from '../product-page/product-page';
 import { AngularFire } from 'angularfire2';
+import { ProductData } from '../../providers/product-data';
+
 
 
 /*
@@ -16,6 +18,10 @@ import { AngularFire } from 'angularfire2';
 })
 export class QuickFilterPage {
 
+    public displayList: Array<any>;
+    public startNumber: any;
+    public endNumber: any;
+    public end: boolean = false;
     public catid: any;
     public grade: any;
     public loadingPopup: any;
@@ -24,8 +30,10 @@ export class QuickFilterPage {
     public keys: any;
     public arrkey: any;
     public alloy: any;
+    private infiniteScroll: any
 
-    constructor(public navCtrl: NavController, public navParams: NavParams, public af: AngularFire, public loadingCtrl: LoadingController) {
+
+    constructor(public navCtrl: NavController, public navParams: NavParams, public productData: ProductData, public af: AngularFire, public loadingCtrl: LoadingController) {
 
         this.loadingPopup = this.loadingCtrl.create({
             content: 'Filtering...'
@@ -35,14 +43,67 @@ export class QuickFilterPage {
         this.grade = navParams.get("grade");
         this.alloy = navParams.get("alloy");
 
-        this.loadingPopup.present().then(() => {
+        //this.loadingPopup.present().then(() => {
             this.getProducts().then(data => { this.buildArray(data).then(() => { this.filterList(); }); });
-        });
+        //});
     }
+
+    doInfinite(infiniteScroll) {
+        //console.log(this.startNumber);
+        this.infiniteScroll = infiniteScroll;
+        console.log(this.productList.length);
+        if (this.productList.length > 20) {
+
+            if (this.productList.length < 40) {
+                for (let i = this.startNumber; i < this.productList.length; i++) {
+                    this.displayList.push(this.productList[i]);
+                    //this.displayList.push(i);
+
+
+                }
+            }
+            else {
+                for (let i = this.startNumber; i < this.endNumber; i++) {
+                    this.displayList.push(this.productList[i]);
+                    //this.displayList.push(i);
+
+
+                }
+            }
+
+            if (this.end) {
+                infiniteScroll.enable(false);
+            }
+            else {
+                this.startNumber = this.endNumber;
+                if (this.endNumber + 20 > this.productList.length) {
+
+                    this.endNumber = this.productList.length;
+                    this.end = true;
+
+                }
+                else {
+                    this.endNumber = this.endNumber + 20;
+
+                }
+
+            }
+        }
+        else {
+            infiniteScroll.enable(false);
+        }
+        //console.log("start", this.startNumber);
+        //console.log("i", i);
+
+
+        infiniteScroll.complete();
+
+    }
+
 
     getProducts() {
         return new Promise(resolve => {
-            this.products = this.af.database.list('/products', {
+            /**this.products = this.af.database.list('/products', {
                 query: {
                     orderByChild: "catid",
                     equalTo: this.catid
@@ -60,14 +121,21 @@ export class QuickFilterPage {
                 });
                 for (var i in this.productList) {
                     this.productList[i].key = this.keys[i];
-                }
-                resolve(this.productList);
-                // console.log(random);
-                //if (random == 1) {
-                //   this.buildArray(this.productList);
-                // }
+                } **/
+            this.productList = this.productData.products.filter(item => {
+                //console.log(item);
+                return (item['catid'] === this.catid)
+            });
+            
 
-            })
+
+            resolve(this.productList);
+            // console.log(random);
+            //if (random == 1) {
+            //   this.buildArray(this.productList);
+            // }
+
+            //})
 
 
         });
@@ -76,26 +144,46 @@ export class QuickFilterPage {
 
     private buildArray(array) {
         return new Promise(resolve => {
-            let m = array.length, t, i;
-
+            this.startNumber = 20;
+            this.endNumber = 40;
+            this.end = false;
+            this.displayList = [];
+            if (this.infiniteScroll) {
+                this.infiniteScroll.enable(true);
+            }
+            /**let m = array.length, t, i;
+  
             // While there remain elements to shuffle…
             while (m) {
-
+  
                 // Pick a remaining element…
                 i = Math.floor(Math.random() * m--);
-
+  
                 // And swap it with the current element.
                 t = array[m];
                 array[m] = array[i];
                 array[i] = t;
             }
-
+  
             this.productList = array;
-            console.log(array);
-            //this.backupList = array;
-            this.loadingPopup.dismiss().then(() => {
-                resolve(true);
-            });
+            this.backupList = array;**/
+
+            if (array.length < 20) {
+                for (let i = 0; i < array.length; i++) {
+                    this.displayList.push(array[i]);
+                    //this.displayList.push(i);
+                }
+            }
+            else {
+                for (let i = 0; i < 20; i++) {
+                    this.displayList.push(array[i]);
+                    //this.displayList.push(i);
+                }
+            }
+
+            //this.loadingPopup.dismiss().then(() => {
+            resolve(true);
+            //});
         });
     }
 
@@ -109,7 +197,7 @@ export class QuickFilterPage {
 
 
         if (this.alloy) {
-            this.productList = this.productList.filter(item => {
+            this.displayList = this.displayList.filter(item => {
                 //console.log(item);
                 //console.log(item['gradeval']);
 
@@ -117,7 +205,7 @@ export class QuickFilterPage {
             });
         }
         else {
-            this.productList = this.productList.filter(item => {
+            this.displayList = this.displayList.filter(item => {
                 //console.log(item);
                 console.log(item['gradeval']);
 

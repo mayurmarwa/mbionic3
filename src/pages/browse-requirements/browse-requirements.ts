@@ -18,12 +18,18 @@ import { ProductData } from '../../providers/product-data';
 })
 export class BrowseRequirementsPage {
 
+    public startNumber: any;
+    public endNumber: any;
+    public end: boolean = false;
+    public displayList: any;
     public requirementList: any;
     public loadedlist: any;
     public requirementRef: any;
     public loadingPopup: any;
     public keys: any;
     public members: any;
+    private infiniteScroll: any;
+
 
 
     constructor(public navCtrl: NavController, public navParams: NavParams, public productData: ProductData, public loadingCtrl: LoadingController, private viewCtrl: ViewController) {
@@ -34,13 +40,68 @@ export class BrowseRequirementsPage {
      
       //this.requirementRef = firebase.database().ref('/requirements');
       this.members = this.productData.requirements;
-      
+      this.requirementList = this.productData.requirements;
+      this.loadedlist = this.productData.requirements;
+      this.buildArray(this.requirementList);
 
-          this.buildArray(this.members);
+
+          //this.buildArray(this.members);
           //this.requirementList = members;
           //this.loadedlist = members;
           //this.loadingPopup.dismiss();
       
+    }
+
+    doInfinite(infiniteScroll) {
+        //console.log(this.startNumber);
+        this.infiniteScroll = infiniteScroll;
+        console.log(this.requirementList.length);
+        if (this.requirementList.length > 20) {
+
+            if (this.requirementList.length < 40) {
+                for (let i = this.startNumber; i < this.requirementList.length; i++) {
+                    this.displayList.push(this.requirementList[i]);
+                    //this.displayList.push(i);
+
+
+                }
+            }
+            else {
+                for (let i = this.startNumber; i < this.endNumber; i++) {
+                    this.displayList.push(this.requirementList[i]);
+                    //this.displayList.push(i);
+
+
+                }
+            }
+
+            if (this.end) {
+                infiniteScroll.enable(false);
+            }
+            else {
+                this.startNumber = this.endNumber;
+                if (this.endNumber + 20 > this.requirementList.length) {
+
+                    this.endNumber = this.requirementList.length;
+                    this.end = true;
+
+                }
+                else {
+                    this.endNumber = this.endNumber + 20;
+
+                }
+
+            }
+        }
+        else {
+            infiniteScroll.enable(false);
+        }
+        //console.log("start", this.startNumber);
+        //console.log("i", i);
+
+
+        infiniteScroll.complete();
+
     }
 
     ionViewDidEnter() {
@@ -49,9 +110,15 @@ export class BrowseRequirementsPage {
     }
 
     private buildArray(array) {
-        this.loadingPopup.present().then(() => { 
         return new Promise(resolve => {
-            let m = array.length, t, i;
+            this.startNumber = 20;
+            this.endNumber = 40;
+            this.end = false;
+            this.displayList = [];
+            if (this.infiniteScroll) {
+                this.infiniteScroll.enable(true);
+            }
+            /**let m = array.length, t, i;
 
             // While there remain elements to shuffle…
             while (m) {
@@ -64,17 +131,33 @@ export class BrowseRequirementsPage {
                 array[m] = array[i];
                 array[i] = t;
             }
-            this.requirementList = array;
-            this.loadedlist = array;
-            this.loadingPopup.dismiss().then(() => { resolve(true); });
-            
-            });
+
+            this.productList = array;
+            this.backupList = array;**/
+
+            if (array.length < 20) {
+                for (let i = 0; i < array.length; i++) {
+                    this.displayList.push(array[i]);
+                    //this.displayList.push(i);
+                }
+            }
+            else {
+                for (let i = 0; i < 20; i++) {
+                    this.displayList.push(array[i]);
+                    //this.displayList.push(i);
+                }
+            }
+
+            //this.loadingPopup.dismiss().then(() => {
+            resolve(true);
+            //});
         });
     }
 
 
   initializeItems(): void {
       this.requirementList = this.loadedlist;
+      this.buildArray(this.requirementList);
   }
 
   ionViewDidLoad() {
@@ -111,14 +194,29 @@ export class BrowseRequirementsPage {
       }
 
       this.requirementList = this.requirementList.filter((v) => {
-          if (v.category && q) {
-              if (v.category.toLowerCase().indexOf(q.toLowerCase()) > -1) {
+          
+          if (v.category && v.grade && q) {
+              let search = v.name + ' ' + v.gradeval;
+              let search2 = v.gradeval + ' ' + v.name;
+              if (search.toLowerCase().indexOf(q.toLowerCase()) > -1 || search2.toLowerCase().indexOf(q.toLowerCase()) > -1) {
                   return true;
               }
               return false;
           }
+          else {
+              if(v.category && q) {
+                  if (v.category.toLowerCase().indexOf(q.toLowerCase()) > -1) {
+                      return true;
+                  }
+                  return false;
+              }
+          }
       });
 
+      console.log(q, this.requirementList.length);
+
+
+      this.buildArray(this.requirementList);
       //console.log(q, this.directory.length);
 
   }

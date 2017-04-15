@@ -3,6 +3,8 @@ import { Nav, Platform, LoadingController, AlertController } from 'ionic-angular
 import { Push, RegistrationEventResponse, NotificationEventResponse } from '@ionic-native/push';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { Market } from '@ionic-native/market';
+
 import firebase from 'firebase';
 
 import { TabsPage } from '../pages/tabs/tabs';
@@ -37,6 +39,12 @@ export class MyApp {
   public directory: any;
   public currentprofile: any;
   public sub1: any;
+  public updateRef: any;
+  public update: any;
+  public sharetxt: any;
+  public shareURL: any;
+  public alert: any;
+  public version: string = "1.0";
 
   openPages: Array<{title: string, component: any, icon: string}>;
   pushPages: Array<{title: string, component: any, icon: string}>;
@@ -52,6 +60,7 @@ export class MyApp {
     private splashScreen: SplashScreen,
     public directoryData: DirectoryProvider,   
     private statusBar: StatusBar,
+    private market: Market
     
   ) {
     this.initializeApp();
@@ -94,6 +103,7 @@ export class MyApp {
                   //     console.log('Current User', JSON.parse(val));
                   //})
                   this.directoryData.setDirectory();
+                  this.checkUpdate();
 
                   this.initPushNotification();
                   this.loading.dismiss().then(() => {
@@ -148,9 +158,151 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
        this.statusBar.styleDefault();
        this.splashScreen.hide();
+       this.platform.registerBackButtonAction(() => {
+
+           
+           //uncomment this and comment code below to to show toast and exit app
+           // if (this.backButtonPressedOnceToExit) {
+           //   this.platform.exitApp();
+           // } else if (this.nav.canGoBack()) {
+           //   this.nav.pop({});
+           // } else {
+           //   this.showToast();
+           //   this.backButtonPressedOnceToExit = true;
+           //   setTimeout(() => {
+
+           //     this.backButtonPressedOnceToExit = false;
+           //   },2000)
+           // }
+
+           if (this.nav.canGoBack()) {
+               this.nav.pop();
+           } else {
+               if (this.alert) {
+                   this.alert.dismiss();
+                   this.alert = null;
+               } else {
+                   this.showAlert();
+               }
+           }
+       });
 
       
     });
+  }
+
+  showAlert() {
+      this.alert = this.alertCtrl.create({
+          title: 'Exit?',
+          message: 'Do you want to exit the app?',
+          buttons: [
+              {
+                  text: 'Cancel',
+                  role: 'cancel',
+                  handler: () => {
+                      this.alert = null;
+                  }
+              },
+              {
+                  text: 'Exit',
+                  handler: () => {
+                      this.platform.exitApp();
+                  }
+              }
+          ]
+      });
+      this.alert.present();
+  }
+
+  /**
+  showToast() {
+      let toast = this.toastCtrl.create({
+          message: 'Press Again to exit',
+          duration: 2000,
+          position: 'bottom'
+      });
+
+      toast.onDidDismiss(() => {
+          console.log('Dismissed toast');
+      });
+
+      toast.present();
+  }
+    **/
+
+  checkUpdate() {
+
+      this.updateRef = firebase.database().ref('/update');
+      this.updateRef.on('value', snapshot => {
+          //console.log(snapshot.val());
+          //console.log(snapshot.val().version);
+          //console.log(this.version);
+          this.sharetxt = snapshot.val().sharetxt;
+          this.shareURL = snapshot.val().playURL
+
+          if (!(snapshot.val().version === this.version)) {
+
+              if (snapshot.val().force) {
+                  let alert = this.alertCtrl.create({
+                      title: 'Update Required !!!',
+                      message: 'Kindly update the application to continue',
+                      enableBackdropDismiss: false,
+                      buttons: [
+                          
+                          {
+                              text: 'Update',
+                              handler: () => {
+                                  if (!this.platform.is('cordova')) {
+                                      window.open( snapshot.val().playURL, '_system')
+                                      this.logout();
+                                  }
+                                  else {
+                                      this.market.open('com.croogster.metbzr');
+                                      this.logout();
+                                  }
+                                  
+                              }
+                          }
+                      ]
+                  });
+                  alert.present();
+
+              }
+              else {
+                  
+                  let alert = this.alertCtrl.create({
+                      title: 'New Update Available!',
+                      message: 'Update the app for the best experience',
+                      buttons: [
+                          {
+                              text: 'Later',
+                              role: 'cancel',
+                              handler: () => {
+                                  console.log('Update Later');
+                              }
+                          },
+                          {
+                              text: 'Update',
+                              handler: () => {
+                                  if (!this.platform.is('cordova')) {
+                                      window.open(snapshot.val().playURL, '_system')
+                                      this.logout();
+                                  }
+                                  else {
+                                      this.market.open('com.croogster.metbzr');
+                                      this.logout();
+                                  }
+                              }
+                          }
+                      ]
+                  });
+                  alert.present();
+
+
+              }
+          }
+      });
+
   }
 
   initPushNotification() {
@@ -201,11 +353,13 @@ export class MyApp {
               let confirmAlert = this.alertCtrl.create({
                   title: 'New Notification',
                   message: data.message,
-                  buttons: [{
-                      text: 'Ignore',
-                      role: 'cancel'
-                  }, {
-                      text: 'View',
+                  buttons: [
+                      //{
+                      //text: 'Ignore',
+                      //role: 'cancel'
+                      //},
+                  {
+                      text: 'Ok',
                       handler: () => {
                           //TODO: Your logic here
                           //this.nav.push(DetailsPage, { message: data.message });
@@ -246,7 +400,7 @@ export class MyApp {
   }
 
   shareApp() {
-      this.socialSharing.share("Testing, sharing this from inside an app I'm building right now", null, null, "https://ionicframework.com/docs/v2/native/social-sharing/");
+      this.socialSharing.share(this.sharetxt, null, null, this.shareURL);
   }
 
 }

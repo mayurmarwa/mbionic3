@@ -25,8 +25,8 @@ export class EnquiriesPage {
     public currentuser: any;
     public currentuserid: any;
     public segment: any;
-    public enqListRev: any;
-    public sentListRev: any;
+    public enqListRev: Observable<any>;
+    public sentListRev: Observable<any>;
     public loadingPopup: any;
     public loadingPopup2: any;
     public keys: any;
@@ -48,8 +48,9 @@ export class EnquiriesPage {
               
               //this.currentuserid = this.currentuser.uid;
         this.segment = "received";
-       
-        this.setData();
+        //setTimeout(() => {
+            this.setData();
+        //},3000);
               
       
 
@@ -67,13 +68,17 @@ export class EnquiriesPage {
 
   ionViewDidLoad() {
       console.log('ionViewDidLoad EnquiriesPage');
-      //this.segment = "received";
+      this.segment = "received";
       
        
-     // let loading = this.loadingCtrl.create({
-      //    content: 'Updating...'
-      //});
+     let loading = this.loadingCtrl.create({
+          content: 'Updating...'
+      });
+     loading.present();
 
+     setTimeout(() => {
+         loading.dismiss();
+     }, 1500);
       
     
     }
@@ -97,7 +102,7 @@ export class EnquiriesPage {
           // }
           //});
           //console.log("received");
-          this.enqListRev = [];
+          //this.enqListRev = [];
 
           this.enquiryList = [];
           this.keys = [];
@@ -115,6 +120,8 @@ export class EnquiriesPage {
           //this.enqListRev = this.enquiryList.reverse();
 
           this.enqListRev = Observable.of(this.enquiryList.reverse());
+          console.log(this.enqListRev);
+
           this.flag = true;
       });
 
@@ -127,7 +134,7 @@ export class EnquiriesPage {
       //});
       this.sentListref.on('value', snapshot => {
 
-          this.sentListRev = [];
+          //this.sentListRev = [];
           this.sentList = [];
           this.keys2 = [];
           snapshot.forEach(country => {

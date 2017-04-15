@@ -100,10 +100,10 @@ export class MarketPage {
                     //this.enqListRev = this.enquiryList.reverse();
                     if (this.flag ==  true){
                         this.recentList = Observable.of(this.recentl);
-                        console.log(this.recentList);
+                        //console.log(this.recentList);
                     }
 
-                    console.log(this.flag);
+                    //console.log(this.flag);
                     
                 });
 

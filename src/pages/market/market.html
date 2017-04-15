@@ -42,7 +42,7 @@
              <img src="assets/img/home-top.png" />
              <div class="card-title">Post Your Requirement & Get Instant Quotes From Sellers</div>
              <ion-row class="card-subtitle">
-                 <ion-col><div style="color:white;" ion-button outline (click)="openRequirementPage()">Post Requirement</div></ion-col>
+                 <ion-col><div tappable style="color:white;" ion-button outline (click)="openRequirementPage()">Post Requirement</div></ion-col>
                  <!--<ion-col col-6><div style="color:white;" ion-button outline>Add Product</div></ion-col>-->
              </ion-row>
 
@@ -133,19 +133,19 @@
     <ion-grid text-center no-lines>
         Categories
         <ion-row no-lines>
-            <ion-col text-wrap no-lines text-center width-33 (click)="categoryProducts(1,'Stainless Steel Coils') ">
+            <ion-col tappable text-wrap no-lines text-center  (click)="categoryProducts(1,'Stainless Steel Coils') ">
                 <div>
                     <div class="gradeCircle2"><img src="assets/img/1.png"></div>
                 </div>
                 Stainless Steel Coils
             </ion-col>
-            <ion-col text-wrap no-lines text-center width-33 (click)="categoryProducts(2,' Stainless Steel Sheets')">
+            <ion-col tappable text-wrap no-lines text-center  (click)="categoryProducts(2,' Stainless Steel Sheets')">
                 <div>
                     <div class="gradeCircle2"><img src="assets/img/2.png"></div>
                 </div>
                 Stainless Steel Sheets
             </ion-col>
-            <ion-col text-wrap no-lines text-center width-33 (click)="categoryProducts(3,'Stainless Steel Packets') ">
+            <ion-col tappable text-wrap no-lines text-center  (click)="categoryProducts(3,'Stainless Steel Packets') ">
                 <div>
                     <div class="gradeCircle2"><img src="assets/img/3.png"></div>
                 </div>
@@ -153,19 +153,19 @@
             </ion-col>
         </ion-row>
         <ion-row>
-            <ion-col text-wrap no-lines text-center width-33 (click)="selectSub(4)">
+            <ion-col tappable text-wrap no-lines text-center  (click)="selectSub(4)">
                 <div>
                     <div class="gradeCircle2"><img src="assets/img/4.png"></div>
                 </div>
                 Stainless Steel Pipes
             </ion-col>
-            <ion-col text-wrap no-lines text-center width-33 (click)="categoryProducts(5,'Stainless Steel Flats') ">
+            <ion-col tappable text-wrap no-lines text-center  (click)="categoryProducts(5,'Stainless Steel Flats') ">
                 <div>
                     <div class="gradeCircle2"><img src="assets/img/5.png"></div>
                 </div>
                 Stainless Steel Flats
             </ion-col>
-            <ion-col text-wrap no-lines text-center width-33 (click)="categoryProducts(6,'Stainless Steel Angles')">
+            <ion-col tappable text-wrap no-lines text-center  (click)="categoryProducts(6,'Stainless Steel Angles')">
                 <div>
                     <div class="gradeCircle2"><img src="assets/img/6.png"></div>
                 </div>
@@ -174,19 +174,19 @@
         </ion-row>
         <div *ngIf="viewall">
             <ion-row>
-                <ion-col text-wrap no-lines text-center width-33 (click)="categoryProducts(7,'Stainless Steel Bars') ">
+                <ion-col tappable text-wrap no-lines text-center  (click)="categoryProducts(7,'Stainless Steel Bars') ">
                     <div>
                         <div class="gradeCircle2"><img src="assets/img/7.png"></div>
                     </div>
                     Stainless Steel Bars
                 </ion-col>
-                <ion-col text-wrap no-lines text-center width-33 (click)="selectSub(8)">
+                <ion-col tappable text-wrap no-lines text-center  (click)="selectSub(8)">
                     <div>
                         <div class="gradeCircle2"><img src="assets/img/8.png"></div>
                     </div>
                     Duplex & Super Duplex
                 </ion-col>
-                <ion-col text-wrap no-lines text-center width-33 (click)="selectSub(9)">
+                <ion-col tappable text-wrap no-lines text-center  (click)="selectSub(9)">
                     <div>
                         <div class="gradeCircle2"><img src="assets/img/9.png"></div>
                     </div>
@@ -194,7 +194,7 @@
                 </ion-col>
             </ion-row>
             <ion-row>
-                <ion-col text-wrap no-lines text-center width-33 (click)="categoryProducts(10,'Scrap')">
+                <ion-col tappable text-wrap no-lines text-center  (click)="categoryProducts(10,'Scrap')">
                     <div>
                         <div class="gradeCircle2"><img src="assets/img/10.png"></div>
                     </div>
@@ -318,7 +318,7 @@
          Recently Viewed
          <ion-row>
              
-             <ion-col col-6 col-sm-3 *ngFor="let product of recentList | async " (click)="openproductpage(product?.product)">
+             <ion-col tappable col-6 col-sm-3 *ngFor="let product of recentList | async " (click)="openproductpage(product?.product)">
                  <ion-card *ngIf="product?.product" class="product-card">
                      <ion-card-content style="padding: 10px 4px 10px 4px;">
                          <div>

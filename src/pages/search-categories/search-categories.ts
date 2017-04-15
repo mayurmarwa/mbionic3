@@ -16,7 +16,11 @@ import { ProductData } from '../../providers/product-data';
 })
 export class SearchCategoriesPage {
 
+    public startNumber: any;
+    public endNumber: any;
+    public end: boolean = false;
     public productList: any;
+    public displayList: Array<any>;
     public backupList: any;
     public products: any;
     public arrkey: any;
@@ -24,19 +28,23 @@ export class SearchCategoriesPage {
     public oby: any;
     public title: any;
     public loadingPopup: any;
+    private infiniteScroll: any;
 
     constructor(public navCtrl: NavController, public navParams: NavParams, public productData: ProductData, public af: AngularFire, public loadingCtrl: LoadingController) {
 
-
+        
         this.productList = this.productData.products;
+        this.backupList = this.productData.products;
 
-        this.loadingPopup = this.loadingCtrl.create({
+        this.buildArray(this.productList);
+
+       /** this.loadingPopup = this.loadingCtrl.create({
             content: 'Loading...'
         });
         this.loadingPopup.present().then(() => {
-
+            console.log(this.productList);
             this.buildArray(this.productList);
-        });
+        });**/
         //this.category = navParams.get("category");
         
         //this.getProducts().then(data => { this.buildArray(data); this.loadingPopup.dismiss(); });
@@ -45,7 +53,57 @@ export class SearchCategoriesPage {
         //console.log(this.productList);
     }
 
+    doInfinite(infiniteScroll) {
+        //console.log(this.startNumber);
+        this.infiniteScroll = infiniteScroll;
+        console.log(this.productList.length);
+        if (this.productList.length > 20) {
 
+            if (this.productList.length < 40) {
+                for (let i = this.startNumber; i < this.productList.length; i++) {
+                    this.displayList.push(this.productList[i]);
+                    //this.displayList.push(i);
+
+
+                }
+            }
+            else { 
+            for (let i = this.startNumber; i < this.endNumber; i++) {
+                this.displayList.push(this.productList[i]);
+                //this.displayList.push(i);
+
+
+                }
+            }
+
+            if (this.end) {
+                infiniteScroll.enable(false);
+            }
+            else {
+                this.startNumber = this.endNumber;
+                if (this.endNumber + 20 > this.productList.length) {
+
+                    this.endNumber = this.productList.length;
+                    this.end = true;
+
+                }
+                else {
+                    this.endNumber = this.endNumber + 20;
+
+                }
+
+            }
+        }
+        else {
+            infiniteScroll.enable(false);
+        }
+            //console.log("start", this.startNumber);
+            //console.log("i", i);
+            
+
+            infiniteScroll.complete();
+        
+    }
 
     getProducts() {
         return new Promise(resolve => {
@@ -78,7 +136,14 @@ export class SearchCategoriesPage {
 
     private buildArray(array) {
         return new Promise(resolve => {
-            let m = array.length, t, i;
+            this.startNumber = 20;
+            this.endNumber = 40;
+            this.end = false;
+            this.displayList = [];
+            if (this.infiniteScroll) {
+                this.infiniteScroll.enable(true);
+            }
+            /**let m = array.length, t, i;
 
             // While there remain elements to shuffle…
             while (m) {
@@ -93,15 +158,30 @@ export class SearchCategoriesPage {
             }
 
             this.productList = array;
-            this.backupList = array;
+            this.backupList = array;**/
 
-            this.loadingPopup.dismiss().then(() => {
+            if (array.length < 20) {
+                for (let i = 0; i < array.length; i++) {
+                    this.displayList.push(array[i]);
+                    //this.displayList.push(i);
+                }
+            }
+            else{
+            for (let i = 0; i < 20; i++) {
+                this.displayList.push(array[i]);
+                //this.displayList.push(i);
+                }
+            }
+
+            //this.loadingPopup.dismiss().then(() => {
                 resolve(true);
-            });
+            //});
         });
     }
     initializeItems(): void {
         this.productList = this.backupList;
+        this.buildArray(this.productList);
+        
     }
     getItems(searchbar) {
         // Reset items back to all of the items
@@ -113,6 +193,8 @@ export class SearchCategoriesPage {
 
         // if the value is an empty string don't filter the items
         if (!q) {
+            
+            
             return;
         }
 
@@ -120,7 +202,7 @@ export class SearchCategoriesPage {
             if (v.name && v.ptype && q) {
                 let search = v.name + ' ' + v.ptype;
                 let search2 = v.ptype + ' ' + v.name;
-                console.log(search);
+                //console.log(search);
                 if (search.toLowerCase().indexOf(q.toLowerCase()) > -1 || search2.toLowerCase().indexOf(q.toLowerCase()) > -1) {
                     return true;
                 }
@@ -145,8 +227,12 @@ export class SearchCategoriesPage {
             }
         });
         
-
         console.log(q, this.productList.length);
+        
+        
+            this.buildArray(this.productList);
+        
+        
 
     }
 

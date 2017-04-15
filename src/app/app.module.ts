@@ -13,6 +13,7 @@ import { CallNumber } from '@ionic-native/call-number';
 import { Push } from '@ionic-native/push';
 import { GooglePlus } from '@ionic-native/google-plus';
 import { Facebook } from '@ionic-native/facebook';
+import { Market } from '@ionic-native/market';
 
 
 import { MarketPage } from '../pages/market/market';
@@ -169,6 +170,6 @@ export const firebaseConfig = {
     MetalCalculatorPage,
     FilterOptionsPage
   ],
-  providers: [AuthService, ChatsService, ProfileData, ProductData, DirectoryProvider , StatusBar,SplashScreen, Camera,CallNumber, Push, SocialSharing, GooglePlus, Facebook, {provide: ErrorHandler, useClass: IonicErrorHandler}]
+  providers: [AuthService, ChatsService, ProfileData, ProductData, DirectoryProvider , StatusBar,SplashScreen, Camera,CallNumber, Push, SocialSharing, GooglePlus, Facebook, Market, {provide: ErrorHandler, useClass: IonicErrorHandler}]
 })
 export class AppModule {}

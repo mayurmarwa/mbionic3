@@ -3,6 +3,7 @@ import { NavController, NavParams, AlertController, ModalController, LoadingCont
 import { AngularFire } from 'angularfire2';
 import { ProductPagePage } from '../product-page/product-page';
 import { FilterOptionsPage } from '../filter-options/filter-options';
+import { ProductData } from '../../providers/product-data';
 
 /*
   Generated class for the CategoryProducts page.
@@ -16,6 +17,10 @@ import { FilterOptionsPage } from '../filter-options/filter-options';
 })
 export class CategoryProductsPage {
 
+    public displayList: Array<any>;
+    public startNumber: any;
+    public endNumber: any;
+    public end: boolean = false;
     public productList: any;
     public backupList: any;
     public productListRev: any;
@@ -28,8 +33,9 @@ export class CategoryProductsPage {
     public sortType: any;
     public title: any;
     public loadingPopup: any;
+    private infiniteScroll: any
 
-    constructor(public navCtrl: NavController, public navParams: NavParams, public af: AngularFire, public alertCtrl: AlertController, public modalCtrl: ModalController, public loadingCtrl: LoadingController) {
+    constructor(public navCtrl: NavController, public navParams: NavParams, public productData: ProductData, public af: AngularFire, public alertCtrl: AlertController, public modalCtrl: ModalController, public loadingCtrl: LoadingController) {
 
         this.loadingPopup = this.loadingCtrl.create({
             content: 'Loading...'
@@ -40,18 +46,70 @@ export class CategoryProductsPage {
         //this.category = navParams.get("category");
         this.catid = navParams.get("catid");
         this.title = navParams.get("cattitle");
-        this.loadingPopup.present().then(() => {
+       
+        //this.loadingPopup.present().then(() => {
             this.getProducts().then(data => { this.buildArray(data) });
-        });
+        //});
         //this.buildArray(this.productList);
             //console.log(this.productList);
     }
 
+    doInfinite(infiniteScroll) {
+        //console.log(this.startNumber);
+        this.infiniteScroll = infiniteScroll;
+        console.log(this.productList.length);
+        if (this.productList.length > 20) {
+
+            if (this.productList.length < 40) {
+                for (let i = this.startNumber; i < this.productList.length; i++) {
+                    this.displayList.push(this.productList[i]);
+                    //this.displayList.push(i);
+
+
+                }
+            }
+            else {
+                for (let i = this.startNumber; i < this.endNumber; i++) {
+                    this.displayList.push(this.productList[i]);
+                    //this.displayList.push(i);
+
+
+                }
+            }
+
+            if (this.end) {
+                infiniteScroll.enable(false);
+            }
+            else {
+                this.startNumber = this.endNumber;
+                if (this.endNumber + 20 > this.productList.length) {
+
+                    this.endNumber = this.productList.length;
+                    this.end = true;
+
+                }
+                else {
+                    this.endNumber = this.endNumber + 20;
+
+                }
+
+            }
+        }
+        else {
+            infiniteScroll.enable(false);
+        }
+        //console.log("start", this.startNumber);
+        //console.log("i", i);
+
+
+        infiniteScroll.complete();
+
+    }
 
 
     getProducts() {
         return new Promise(resolve => {
-        this.products = this.af.database.list('/products', {
+        /**this.products = this.af.database.list('/products', {
             query: {
                 orderByChild: "catid",
                 equalTo: this.catid
@@ -69,14 +127,24 @@ export class CategoryProductsPage {
             });
             for (var i in this.productList) {
                 this.productList[i].key = this.keys[i];
-            } 
+            } **/
+            this.productList = this.productData.products.filter(item => {
+                //console.log(item);
+                return (item['catid'] === this.catid)
+            });
+            this.backupList = this.productData.products.filter(item => {
+                //console.log(item);
+                return (item['catid'] === this.catid)
+            });
+            
+
             resolve(this.productList);   
             // console.log(random);
             //if (random == 1) {
             //   this.buildArray(this.productList);
             // }
 
-        })
+        //})
        
         
         });
@@ -191,11 +259,20 @@ export class CategoryProductsPage {
           //console.log(item);
           return item[filter];
       });
+
+      this.buildArray(this.productList);
   }
 
   private buildArray(array) {
       return new Promise(resolve => {
-          let m = array.length, t, i;
+          this.startNumber = 20;
+          this.endNumber = 40;
+          this.end = false;
+          this.displayList = [];
+          if (this.infiniteScroll) {
+              this.infiniteScroll.enable(true);
+          }
+          /**let m = array.length, t, i;
 
           // While there remain elements to shuffle…
           while (m) {
@@ -210,16 +287,31 @@ export class CategoryProductsPage {
           }
 
           this.productList = array;
-          this.backupList = array;
-          this.loadingPopup.dismiss().then(() => {
-              resolve(true);
-          });
+          this.backupList = array;**/
+
+          if (array.length < 20) {
+              for (let i = 0; i < array.length; i++) {
+                  this.displayList.push(array[i]);
+                  //this.displayList.push(i);
+              }
+          }
+          else {
+              for (let i = 0; i < 20; i++) {
+                  this.displayList.push(array[i]);
+                  //this.displayList.push(i);
+              }
+          }
+
+          //this.loadingPopup.dismiss().then(() => {
+          resolve(true);
+          //});
       });
   }
 
 
   initializeItems(): void {
       this.productList = this.backupList;
+      this.buildArray(this.productList);
   }
   showFilter() {
       let showFilter = this.modalCtrl.create(FilterOptionsPage, {catid : this.catid});
@@ -297,7 +389,7 @@ export class CategoryProductsPage {
       if (data.mm && data.mmval) {
           this.productList = this.productList.filter(item => {
               //console.log(item);
-              return (item['mm'] >= (data.mmval.lower/100) && item['mm'] <= (data.mmval.upper/100))
+              return (item['mm'] >= (data.mmval.lower) && item['mm'] <= (data.mmval.upper))
           });
 
       }
@@ -330,12 +422,16 @@ export class CategoryProductsPage {
 
       if (data.thickness && data.thicknessval) {
           this.productList = this.productList.filter(item => {
-              //console.log(item);
-              return (item['thickness'] >= (data.thicknessval.lower/100) && item['thickness'] <= (data.thicknessval.upper/100))
+              console.log(data.thicknessval);
+              return (item['thickness'] >= data.thicknessval.lower && item['thickness'] <= data.thicknessval.upper)
           });
       }
 
-      
+      console.log(this.productList.length);
+
+
+      this.buildArray(this.productList);
+
 
   }
 
