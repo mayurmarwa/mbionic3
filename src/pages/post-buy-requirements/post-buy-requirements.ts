@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
+import { NavController, NavParams, AlertController, LoadingController, ToastController } from 'ionic-angular';
 import { FormBuilder, Validators } from '@angular/forms';
 import { AngularFire, FirebaseListObservable } from 'angularfire2';
 import firebase from 'firebase';
@@ -32,7 +32,7 @@ export class PostBuyRequirementsPage {
     public selectedCat: any;    
     public gradecat: any;
 
-    constructor(public navCtrl: NavController, public navParams: NavParams, public af: AngularFire, public formBuilder: FormBuilder, public alertCtrl: AlertController, public loadingCtrl: LoadingController) {
+    constructor(public navCtrl: NavController, public navParams: NavParams, public af: AngularFire, public formBuilder: FormBuilder, public alertCtrl: AlertController, public loadingCtrl: LoadingController, public toastCtrl: ToastController) {
 
         this.emptyname = '';
         this.currentuser = firebase.auth().currentUser;
@@ -151,7 +151,7 @@ export class PostBuyRequirementsPage {
 
   submitRequirement() {
       this.loading = this.loadingCtrl.create({
-          content: 'Requrement Posted, Going Home...'
+          content: 'Posting Requirement...'
       });
       this.loading.present().then(() => { 
       console.log(this.requirementForm.value);
@@ -169,7 +169,13 @@ export class PostBuyRequirementsPage {
 
           ).then(() => {
               this.loading.dismiss().then(() => {
-                  this.navCtrl.pop({ animate: false });
+                  let toast = this.toastCtrl.create({
+                      message: 'Requirement posted. Check My Requirements for details...',
+                      duration: 3500,
+                      position: 'middle'
+                  });
+                  toast.present();
+                  this.navCtrl.pop();
               });
 
           })

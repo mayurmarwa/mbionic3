@@ -1,9 +1,4 @@
-<!--
-  Generated template for the BrowseRequirements page.
 
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
 
   <ion-navbar>
@@ -21,6 +16,14 @@
 
 
 <ion-content text-center padding>
+
+    <div class="fullpage" *ngIf="!displayList">
+        <div class="content">
+            <div text-center>
+                <ion-spinner name="bubbles"></ion-spinner>
+            </div>
+        </div>
+    </div>
 
     <div class="fullpage" *ngIf="requirementList?.length === 0">
         <div class="content">
@@ -79,23 +82,10 @@
             </ion-card>
         </ion-col>
     </ion-row>
-    <!--<ion-list>
-        <ion-item *ngFor="let requirement of requirementList | async" (click)="openrequirementpage(requirement)">
-            <ion-card>
-                <ion-card-content>
-                    <ion-card-title>
-                        {{requirement.category}}
-                    </ion-card-title>
-                    <p>
-                        {{requirement.grade}}
-                        <br>
-                        {{requirement.quantity}} {{requirement.unit}}
-                        <br>
-                        {{requirement.bid | currency:"INR":true}}
-                    </p>
-                </ion-card-content>
-            </ion-card>
-        </ion-item>
-    </ion-list>-->
+    <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+        <ion-infinite-scroll-content loadingSpinner="bubbles"
+                                     loadingText="Loading more data...">
+        </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
 
 </ion-content>

@@ -19,12 +19,12 @@
         <div class="content">
             <ion-item>
                 <ion-label stacked>Enter OTP</ion-label>
-                <ion-input type="number" placeholder="OTP" [(ngModel)]="otpinput">
+                <ion-input type="number" placeholder="OTP" [(ngModel)]="otpinput" maxlength="6">
                 </ion-input>
             </ion-item>
-            <ion-row>
+            <ion-row style="margin-top:20px">
                 <ion-col text-center>
-                    <button ion-button (click)="verifyotp()">Verify</button>
+                    <button  *ngIf="verifybutton" ion-button (click)="verifyotp()">Verify</button>
                 </ion-col>
              </ion-row>
             <ion-row>

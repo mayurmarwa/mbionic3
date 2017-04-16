@@ -31,6 +31,7 @@ export class VerifyMobilePage {
     public otpinput: any;
     public logintype: any;
     public userid: any;
+    public verifybutton: boolean = true;
     public resend: boolean = false;
 
     constructor(public nav: NavController, public authService: AuthService,
@@ -63,18 +64,25 @@ export class VerifyMobilePage {
             this.sessionid = data.Details;
             console.log(data);
 
-            if (SMS) {
-                SMS.startWatch(function () {
+            //if (SMS) {
+             //   SMS.startWatch(function () {
                     //update('watching', 'watching started');
-                }, function () {
+              //  }, function () {
                     //updateStatus('failed to start watching');
-                });
-            }
-        });
+               // });
+            //}
+        },(error)=> {
+            let toast = this.toastCtrl.create({
+                message: 'Unable to request OTP. Check your network connection',
+                duration: 2000,
+                position: 'middle'
+            });
+            toast.present();
+            });
         
-        document.addEventListener('onSMSArrive', function (e) {
-            var sms = (e as any).data;
-            console.log(sms);
+        //document.addEventListener('onSMSArrive', function (e) {
+           // var sms = (e as any).data;
+            //console.log(sms);
             //this.otpinput = sms.substring(0, 5);
 
             //smsList.push(sms); // optional, if you want to push that arrived SMS to a list
@@ -86,7 +94,7 @@ export class VerifyMobilePage {
             //var divdata = $('div#data');
             //divdata.html(divdata.html() + JSON.stringify(sms));
 
-        });
+        //});
         //this.verifyotp();
 
     }
@@ -105,7 +113,20 @@ export class VerifyMobilePage {
               this.sessionid = data.Details;
 
               console.log(data);
+          }, (error) => {
+              let toast = this.toastCtrl.create({
+                  message: 'Unable to request OTP. Check your network connection',
+                  duration: 2000,
+                  position: 'middle'
+              });
+              toast.present();
           });
+          let toast = this.toastCtrl.create({
+              message: 'OTP request sent',
+              duration: 2000,
+              position: 'middle'
+          });
+          toast.present();
           this.resend = false;
           setTimeout(() => {
               this.resend = true;
@@ -136,7 +157,13 @@ export class VerifyMobilePage {
           alert.present();
       }
       else {
-
+          let toast = this.toastCtrl.create({
+              message: 'Verifying...',
+              duration: 1500,
+              position: 'middle'
+          });
+          toast.present();
+          this.verifybutton = !this.verifybutton;
 
           // this.http.get('http://2factor.in/API/V1/068c2321-12f2-11e7-9462-00163ef91450/SMS/VERIFY/{session_id}/{otp_input}' + this.signupForm.value.mobile + '/AUTOGEN/Registration').map(res => res.json()).subscribe(data => {
           //     console.log(data);
@@ -157,35 +184,71 @@ export class VerifyMobilePage {
                       });
 
                       alert.present();
+                      this.otpinput = "";
+                      this.verifybutton = !this.verifybutton;
                   }
+              }, (error) => {
+                  let toast = this.toastCtrl.create({
+                      message: 'Invalid OTP , please try again.',
+                      duration: 2000,
+                      position: 'middle'
+                  });
+                  toast.present();
+                  this.otpinput = "";
+                  this.verifybutton = !this.verifybutton;
               });
           }
           else if (this.logintype === "social") {
 
-              this.af.database.list('/users').update(this.userid,
-                  {
-                      //name: userdata.value.name,
-                      mobile: this.signupForm.value.mobile,
-                      companyname: this.signupForm.value.companyname,
-                      address: this.signupForm.value.address,
-                      companyprofile: this.signupForm.value.companyprofile
-                      //email: userdata.value.email,
-                      //uid: authdata.auth.uid,
-                      //photoURL: data.auth.photoURL,
-                      //createdAt: firebase.database['ServerValue']['TIMESTAMP'],
-                      //providerData: authdata.auth.provider
+              this.http.get('http://2factor.in/API/V1/068c2321-12f2-11e7-9462-00163ef91450/SMS/VERIFY/' + this.sessionid + '/' + this.otpinput).map(res => res.json()).subscribe(data => {
+                  if (data.Status == "Success") {
+                      this.af.database.list('/users').update(this.userid,
+                          {
+                              //name: userdata.value.name,
+                              mobile: this.signupForm.value.mobile,
+                              companyname: this.signupForm.value.companyname,
+                              address: this.signupForm.value.address,
+                              companyprofile: this.signupForm.value.companyprofile
+                              //email: userdata.value.email,
+                              //uid: authdata.auth.uid,
+                              //photoURL: data.auth.photoURL,
+                              //createdAt: firebase.database['ServerValue']['TIMESTAMP'],
+                              //providerData: authdata.auth.provider
 
-                  }).then(() => {
-                      let toast = this.toastCtrl.create({
-                          message: 'Welcome to MetBazaar',
-                          duration: 2000,
-                          position: 'middle'
+                          }).then(() => {
+                              let toast = this.toastCtrl.create({
+                                  message: 'Welcome to MetBazaar',
+                                  duration: 2000,
+                                  position: 'middle'
+                              });
+                              toast.present().then(() => {
+                                  this.app.getRootNav().setRoot(TabsPage);
+                              });
+
+                          });
+                  }
+                  else {
+                      let alert = this.alertCtrl.create({
+                          message: "Invalid OTP, please try again.",
+                          buttons: [{ text: "Ok", role: 'cancel' }]
                       });
-                      toast.present().then(() => {
-                          this.app.getRootNav().setRoot(TabsPage);
-                      });
-                      
+
+                      alert.present();
+                      this.otpinput = "";
+                      this.verifybutton = !this.verifybutton;
+                  }
+              }, (error) => {
+                  let toast = this.toastCtrl.create({
+                      message: 'Invalid OTP , please try again.',
+                      duration: 2000,
+                      position: 'middle'
                   });
+                  toast.present();
+                  this.otpinput = "";
+                  this.verifybutton = !this.verifybutton;
+              });
+
+              
           }
           else {
               let alert = this.alertCtrl.create({

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, AlertController, LoadingController  } from 'ionic-angular';
+import { NavController, NavParams, AlertController, LoadingController, ToastController  } from 'ionic-angular';
 import { FormBuilder, Validators } from '@angular/forms';
 import { AngularFire } from 'angularfire2';
 import { Storage } from '@ionic/storage';
@@ -28,7 +28,7 @@ export class SendQuotationPage {
     public poster: any;
     public user: any;
 
-    constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public af: AngularFire, public authService: AuthService, public alertCtrl: AlertController, public loadingCtrl: LoadingController, public storage: Storage) {
+    constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public af: AngularFire, public authService: AuthService, public alertCtrl: AlertController, public loadingCtrl: LoadingController, public storage: Storage, public toastCtrl: ToastController) {
         storage.ready().then(() => {
             storage.get('currentuser').then((val) => {
 
@@ -115,66 +115,90 @@ export class SendQuotationPage {
   submitQuote() {
 
       this.loading = this.loadingCtrl.create({
-          content: 'Quote sent, check enquiries for details...'
+          content: 'Sending Quote...'
       });
+      this.loading.present().then(() => {
+          this.userEnquiries.push(this.quoteForm.value).then(data => {
+              //console.log(this.enquiryForm.value);
+              this.af.database.object('users/' + this.currentuser.uid + '/enquiries/' + data.key).update(
+                  {
 
-   this.userEnquiries.push(this.quoteForm.value).then(data => {
-   //console.log(this.enquiryForm.value);
-  this.af.database.object('users/' + this.currentuser.uid + '/enquiries/' + data.key).update(
-              {
+                      type: 'sent',
+                      otheruser: this.postuserID,
+                      otheruserName: this.poster.name,
+                      otheruserNo: this.poster.mobile,
+                      requirement: this.requirement,
+                      quote: this.quoteForm.value,
+                      timestamp: firebase.database['ServerValue']['TIMESTAMP']
 
-                  type: 'sent',
-                  otheruser: this.postuserID,
-                  otheruserName: this.poster.name,
-                  otheruserNo: this.poster.mobile,
-				  requirement: this.requirement,
-                  quote: this.quoteForm.value,
-                  timestamp: firebase.database['ServerValue']['TIMESTAMP']
-                  
-              }
+                  }
 
 
 
-          ).then(info => { 
+              ).then(info => {
+
+                  //console.log("successsent");
+                  //this.navCtrl.pop();
+                  //this.navCtrl.pop();
+
+                  }).catch(info => {
+
+                      //console.log("successsent");
+                      //this.navCtrl.pop();
+
+                      //this.navCtrl.pop();
+
+                  });
+              this.af.database.object('users/' + this.postuserID + '/enquiries/' + data.key).update(
+                  {
+
+                      type: 'received',
+                      otheruser: this.currentuser.uid,
+                      otheruserName: this.user.name,
+                      otheruserNo: this.user.mobile,
+                      requirement: this.requirement,
+                      quote: this.quoteForm.value,
+                      timestamp: firebase.database['ServerValue']['TIMESTAMP']
+                      //detials: this.productForm.value.name,
+
+                  }
+              ).then(info => {
+
+                  this.loading.dismiss().then(() => {
+
+                      let toast = this.toastCtrl.create({
+                          message: 'Quote sent, check enquiries for details',
+                          duration: 2500,
+                          position: 'middle'
+                      });
+                      toast.present();
+                      this.navCtrl.popToRoot();
+
+                  });
+
+                 
+                  //this.navCtrl.pop();
+                  //this.navCtrl.pop();
+
+                  }).catch(info => {
+
+                      //console.log("successsent");
+                      //this.navCtrl.pop();
+
+                      //this.navCtrl.pop();
+
+                  });
+
+
+          }).catch(info => {
 
               //console.log("successsent");
               //this.navCtrl.pop();
+
               //this.navCtrl.pop();
 
-              });
-		this.af.database.object('users/' + this.postuserID + '/enquiries/' + data.key).update(
-              {
+          });
 
-                  type: 'received',
-                  otheruser: this.currentuser.uid,
-                  otheruserName: this.user.name,
-                  otheruserNo: this.user.mobile,
-				  requirement: this.requirement,
-                  quote: this.quoteForm.value,
-                  timestamp: firebase.database['ServerValue']['TIMESTAMP']
-                  //detials: this.productForm.value.name,
-                  
-              }
-          ).then(info => { 
-
-              this.loading.present();
-
-              setTimeout(() => {
-                  this.navCtrl.popToRoot({ animate: false });
-                  //this.navCtrl.setRoot(EnquiriesPage, { animate: false });
-
-              }, 1000);
-
-              setTimeout(() => {
-                  this.loading.dismiss();
-              }, 3000);
-              //this.navCtrl.pop();
-              //this.navCtrl.pop();
-
-              });
-		 
-			  
-	})
-  
+      });
   }
 }

@@ -1,9 +1,3 @@
-<!--
-  Generated template for the RequirementDetails page.
-
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
 
   <ion-navbar>
@@ -30,41 +24,55 @@
             </div>
         </ion-col>
     </ion-row>
-    <ion-list no-lines>
-        <ion-item text-wrap text-center>
-            <h1>{{this.requirement?.category}}</h1>
+    <ion-list text-center >
+        <ion-row >
+            <ion-col text-wrap text-center>
+                <h1>{{this.requirement?.category}}</h1>
+            </ion-col>
+        </ion-row>
+        <ion-item  *ngIf="this.requirement?.ptype">
+            
+                <custom-icon set="mb" name="star" item-left></custom-icon>
+                <p>Alloy Type</p>
+                <h2>{{this.requirement?.ptype}} </h2>
+            
         </ion-item>
-        <ion-item ion-item *ngIf="this.requirement?.ptype">
-            <custom-icon set="mb" name="star" item-left></custom-icon>
-            <p>Alloy Type</p>
-            <h2>{{this.requirement?.ptype}} </h2>
+        <ion-item  *ngIf="this.requirement?.grade">
+            
+                <custom-icon set="mb" name="grade" item-left></custom-icon>
+                <p>Grade</p>
+                <h2>{{this.requirement?.grade}} </h2>
+            
         </ion-item>
-        <ion-item ion-item *ngIf="this.requirement?.grade">
-            <custom-icon set="mb" name="grade" item-left></custom-icon>
-            <p>Grade</p>
-            <h2>{{this.requirement?.grade}} </h2>
+        <ion-item  *ngIf="this.requirement?.sizedetails">
+            
+                <custom-icon set="mb" name="settings" item-left></custom-icon>
+                <p>Size Details</p>
+                <h2>{{this.requirement?.sizedetails}} </h2>
+           
         </ion-item>
-        <ion-item ion-item *ngIf="this.requirement?.sizedetails">
-            <custom-icon set="mb" name="settings" item-left></custom-icon>
-            <p>Size Details</p>
-            <h2>{{this.requirement?.sizedetails}} </h2>
+        <ion-item  *ngIf="this.requirement?.quantity">
+            
+                <custom-icon set="mb" name="quantity" item-left></custom-icon>
+                <p>Required Quantity</p>
+                <h2>{{this.requirement?.quantity}} {{this.requirement?.unit}}</h2>
+           
         </ion-item>
-        <ion-item ion-item *ngIf="this.requirement?.quantity">
-            <custom-icon set="mb" name="quantity" item-left></custom-icon>
-            <p>Required Quantity</p>
-            <h2>{{this.requirement?.quantity}} {{this.requirement?.unit}}</h2>
-        </ion-item>
-        <ion-item ion-item *ngIf="this.requirement?.bid">
-            <custom-icon set="mb" name="bidprice" item-left></custom-icon>
-            <p>Bid Price</p>
-            <h2 *ngIf="this.requirement?.btype === 'exv'">{{this.requirement?.bid | currency:"INR":true}}/Kg (+ excise + vat)</h2>
-            <h2 *ngIf="this.requirement?.btype === 'vat'">{{this.requirement?.bid | currency:"INR":true}}/Kg (+ vat)</h2>
-            <h2 *ngIf="!this.requirement?.btype">{{this.requirement?.bid | currency:"INR":true}}/Kg</h2>
+        <ion-item  *ngIf="this.requirement?.bid">
+            
+                <custom-icon set="mb" name="bidprice" item-left></custom-icon>
+                <p>Bid Price</p>
+                <h2 *ngIf="this.requirement?.btype === 'exv'">{{this.requirement?.bid | currency:"INR":true}}/Kg (+ excise + vat)</h2>
+                <h2 *ngIf="this.requirement?.btype === 'vat'">{{this.requirement?.bid | currency:"INR":true}}/Kg (+ vat)</h2>
+                <h2 *ngIf="!this.requirement?.btype">{{this.requirement?.bid | currency:"INR":true}}/Kg</h2>
+           
         </ion-item>
         <ion-item text-wrap ion-item *ngIf="this.requirement?.details">
-            <custom-icon set="mb" name="post" item-left></custom-icon>
-            <p>Requirement Details</p>
-            <h2>{{this.requirement?.details}}</h2>
+            
+                <custom-icon set="mb" name="post" item-left></custom-icon>
+                <p>Requirement Details</p>
+                <h2>{{this.requirement?.details}}</h2>
+                
         </ion-item>
     </ion-list>   
  

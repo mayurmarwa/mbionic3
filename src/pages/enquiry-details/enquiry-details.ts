@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, AlertController, ToastController } from 'ionic-angular';
 import { AngularFire, FirebaseListObservable } from 'angularfire2';
 import { Storage } from '@ionic/storage';
 import { MyProfilePage } from '../my-profile/my-profile';
@@ -22,8 +22,10 @@ export class EnquiryDetailsPage {
 	chatBox: any;
 	currentuser: any;
 	messageList: FirebaseListObservable<any>;
-	otherUserList: any;
-  constructor(public navCtrl: NavController, public navParams: NavParams,  public af: AngularFire, public storage: Storage) {
+    otherUserList: any;
+    myenquiries: any;
+    otherenquiries: any;
+    constructor(public navCtrl: NavController, public navParams: NavParams, public af: AngularFire, public storage: Storage, public alertCtrl: AlertController, public toastCtrl: ToastController) {
       storage.ready().then(() => {
           storage.get('currentuser').then((val) => {
 
@@ -34,6 +36,9 @@ export class EnquiryDetailsPage {
               
               this.messageList = af.database.list('/users/' + this.currentuser.uid + '/enquiries/' + this.enquiry.key + '/messgaes/');
               this.otherUserList = af.database.list('/users/' + this.enquiry.otheruser + '/enquiries/' + this.enquiry.key + '/messgaes/');
+
+              this.myenquiries = af.database.list('/users/' + this.currentuser.uid + '/enquiries');
+              this.otherenquiries = af.database.list('/users/' + this.enquiry.otheruser + '/enquiries');
           })
               .catch((err) =>
                   console.log(err));
@@ -66,6 +71,35 @@ export class EnquiryDetailsPage {
 			})
 			this.chatBox = '';
 
+  }
+
+  confirmDelete() {
+      let alert = this.alertCtrl.create({
+          title: 'Delete Enquiry?',
+          message: 'Do you want to delete this enquiry?',
+          buttons: [
+              {
+                  text: 'Cancel',
+              },
+              {
+                  text: 'Confirm',
+                  handler: data => {
+                      this.myenquiries.remove(this.enquiry.key);
+                      this.otherenquiries.remove(this.enquiry.key);
+                      let toast = this.toastCtrl.create({
+                          message: 'Enquiry will be deleted',
+                          duration: 2000,
+                          position: 'middle'
+                      });
+                      toast.present().then(() => {
+                          this.navCtrl.pop();
+                      });
+                      
+                  }
+              }
+          ]
+      });
+      alert.present();
   }
 
   viewProfile() {

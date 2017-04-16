@@ -196,8 +196,8 @@ export class BrowseRequirementsPage {
       this.requirementList = this.requirementList.filter((v) => {
           
           if (v.category && v.grade && q) {
-              let search = v.name + ' ' + v.gradeval;
-              let search2 = v.gradeval + ' ' + v.name;
+              let search = v.category + ' ' + v.grade;
+              let search2 = v.grade + ' ' + v.category;
               if (search.toLowerCase().indexOf(q.toLowerCase()) > -1 || search2.toLowerCase().indexOf(q.toLowerCase()) > -1) {
                   return true;
               }

@@ -47,7 +47,7 @@ export class ProductData {
 
             }
             //this.buildRequirementArray(members);
-            this.requirements = members;
+            this.requirements = members.reverse();
             console.log("requirements ready");
         });
 

@@ -1,11 +1,12 @@
 <ion-header>
-  <ion-navbar>
+  <!--<ion-navbar>
     <ion-title>Sign in</ion-title>
-  </ion-navbar>
+  </ion-navbar>-->
 </ion-header>
 
 <ion-content padding scroll="false">
-    <div text-center style="height:100%">
+
+    <div class="login" text-center >
         <div text-center style="padding: 30px 0px 20px 10px">
             <img src="assets/img/textlogo.png">
         </div>
@@ -57,21 +58,19 @@
                 Forgot Password
             </button>
 
-            <!--/div>
-
-        <div class="position-bottom">-->
+           
             <div text-center>
                 <p>OR</p>
                  <ion-row>
                     <ion-col col-3></ion-col>
                     <ion-col text-center>
-                        <div ion-button clear text-center (click)="loginWithFacebook()" style="height: 100%; width: 100%;">
+                        <div tappable ion-button clear text-center (click)="loginWithFacebook()" style="height: 100%; width: 100%;">
                             <img src="assets/img/facebook.png">
                         </div>
                     </ion-col>
                      
                     <ion-col text-center>
-                        <div ion-button clear text-center (click)="loginWithGoogle()" style="height: 100%; width: 100%;">
+                        <div tappable ion-button clear text-center (click)="loginWithGoogle()" style="height: 100%; width: 100%;">
                             <img src="assets/img/google.png">
                         </div>
                     </ion-col>
