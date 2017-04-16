@@ -129,7 +129,7 @@
                 </ion-col>
                 <ion-col col-4>
                     <ion-item>
-                        <ion-label stacked>Min (mm)</ion-label>
+                        <ion-label stacked>Min</ion-label>
                         <ion-input name="mmlower" [(ngModel)]="mmval.lower" type="number"
                                     min="0" step="0.01">
                         </ion-input>
@@ -138,7 +138,7 @@
                 </ion-col>
                 <ion-col col-4>
                     <ion-item>
-                        <ion-label stacked>Max (mm)</ion-label>
+                        <ion-label stacked>Max</ion-label>
                         <ion-input name="mmupper" [(ngModel)]="mmval.upper" type="number"
                                  min="0" step="0.01">
                         </ion-input>
@@ -264,7 +264,7 @@
         
         <ion-item *ngIf="category.catid === 1 || category.catid === '8a' || category.catid === '9a' || category.catid === 2 || category.catid === 3 || category.catid === '8b' || category.catid === '9b' || category.catid === '4d' || category.catid === '8c4' || category.catid === '9c4' || category.catid === 5 || category.catid === 6">
             <ion-label *ngIf="!form.thicknessval || !form.thickness">Thickness </ion-label>
-            <ion-label *ngIf="form.thicknessval  && form.thickness">Thickness:  </ion-label>
+            <ion-label *ngIf="form.thicknessval  && form.thickness">Thickness: mm </ion-label>
             <ion-checkbox [(ngModel)]="form.thickness" name="thickness" (ionChange)="consolelog()"></ion-checkbox>
         </ion-item>
 
@@ -276,7 +276,7 @@
                     </ion-col>
                     <ion-col col-4 >
                         <ion-item>
-                            <ion-label stacked>Min (mm)</ion-label>
+                            <ion-label stacked>Min</ion-label>
                             <ion-input name="thicknesslower" [(ngModel)]="thicknessval.lower" type="number"
                                        min="0" step="0.01">
                             </ion-input>
@@ -285,7 +285,7 @@
                     </ion-col>
                     <ion-col col-4>
                         <ion-item>
-                            <ion-label stacked>Max (mm)</ion-label>
+                            <ion-label stacked>Max</ion-label>
                             <ion-input name="thicknessupper" [(ngModel)]="thicknessval.upper" type="number"
                                        min="0" step="0.01">
                             </ion-input>

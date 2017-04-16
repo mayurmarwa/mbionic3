@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform, LoadingController, AlertController } from 'ionic-angular';
+import { Nav, App , Platform, LoadingController, AlertController } from 'ionic-angular';
 import { Push, RegistrationEventResponse, NotificationEventResponse } from '@ionic-native/push';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -51,6 +51,7 @@ export class MyApp {
 
   constructor(
     public platform: Platform,
+    public app: App,
     public loadingCtrl: LoadingController,
     public authService: AuthService,
     public storage: Storage,
@@ -66,7 +67,7 @@ export class MyApp {
     this.initializeApp();
 
     this.loading = this.loadingCtrl.create();
-    this.loading.present().then(() => { 
+    //this.loading.present().then(() => { 
 
     this.authService.getAuth()
       .map(state => !!state)
@@ -106,10 +107,10 @@ export class MyApp {
                   this.checkUpdate();
 
                   this.initPushNotification();
-                  this.loading.dismiss().then(() => {
+                  //this.loading.dismiss().then(() => {
                       //console.log(error);
                       this.rootPage = TabsPage;
-                  });
+                  //});
                   
               }).catch((err) =>
                   console.log(err)); 
@@ -117,21 +118,23 @@ export class MyApp {
               
           }
           else {
-              this.loading.dismiss().then(() => {
+              //this.loading.dismiss().then(() => {
                   //console.log(error);
                   //if (this.currentprofile) {
                    //this.sub1.unsubscribe();
                   //}
                   this.rootPage = LoginPage;
-              }); }
+              //}); 
+          }
         //this.rootPage = (authenticated) ? TabsPage : LoginPage;
-      }, (error) => {
-          this.loading.dismiss().then(() => {
-              //console.log(error);
-              this.rootPage = LoginPage;
-          });
+        }, (error) => {
+            //this.loading.dismiss().then(() => {
+            //console.log(error);
+            this.rootPage = LoginPage;
+            //});
+
+            console.log('Error: ' + JSON.stringify(error));
         
-        console.log('Error: ' + JSON.stringify(error));
       });
 
     // used for an example of ngFor and navigation
@@ -149,15 +152,18 @@ export class MyApp {
         //{ title: 'Settings', component: SettingsPage, icon: 'settings' },        
         { title: 'About', component: AboutPage, icon: 'about' },
     ];
-    });
+   // });
   }
 
   initializeApp() {
     this.platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
-       this.statusBar.styleDefault();
-       this.splashScreen.hide();
+        this.statusBar.styleDefault();
+        
+       setTimeout(()  => {
+           this.splashScreen.hide();
+       }, 500);
        this.platform.registerBackButtonAction(() => {
 
            
@@ -175,8 +181,9 @@ export class MyApp {
            //   },2000)
            // }
 
-           if (this.nav.canGoBack()) {
-               this.nav.pop();
+           let navi = this.app.getActiveNav();
+           if (navi.canGoBack()) { //Can we go back?
+               navi.pop();
            } else {
                if (this.alert) {
                    this.alert.dismiss();
