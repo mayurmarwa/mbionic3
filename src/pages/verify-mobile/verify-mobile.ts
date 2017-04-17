@@ -208,7 +208,8 @@ export class VerifyMobilePage {
                               mobile: this.signupForm.value.mobile,
                               companyname: this.signupForm.value.companyname,
                               address: this.signupForm.value.address,
-                              companyprofile: this.signupForm.value.companyprofile
+                              companyprofile: this.signupForm.value.companyprofile,
+                              profiledone: true
                               //email: userdata.value.email,
                               //uid: authdata.auth.uid,
                               //photoURL: data.auth.photoURL,
@@ -218,7 +219,7 @@ export class VerifyMobilePage {
                           }).then(() => {
                               let toast = this.toastCtrl.create({
                                   message: 'Welcome to MetBazaar',
-                                  duration: 2000,
+                                  duration: 2500,
                                   position: 'middle'
                               });
                               toast.present().then(() => {
@@ -280,7 +281,7 @@ export class VerifyMobilePage {
                   this.zone.run(() => {
                       let toast = this.toastCtrl.create({
                           message: 'Welcome to MetBazaar',
-                          duration: 2000,
+                          duration: 2500,
                           position: 'middle'
                       });
                       toast.present().then(() => {
