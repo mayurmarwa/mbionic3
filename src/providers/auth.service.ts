@@ -52,7 +52,7 @@ export class AuthService {
         if (!this.platform.is('cordova'))
             return this.signInWithProvider(AuthProviders.Facebook);
 
-        return this.fb.login(['email', 'public_profile'])
+        this.fb.login(['email', 'public_profile'])
             .then((res: FacebookLoginResponse) => {
                 return firebase.auth().signInWithCredential(firebase.auth.FacebookAuthProvider.credential(res.authResponse.accessToken));
             }).catch((error) => Promise.reject(error));
@@ -107,12 +107,12 @@ export class AuthService {
     createAccount(data): firebase.Promise_Instance<void> {
         return this.af.database.object('users/' + data.uid).set(
             {
-                uid: data.auth.uid,
-                email: data.auth.email,
-                name: data.auth.displayName,
-                photoURL: data.auth.photoURL,
+                uid: data.uid,
+                email: data.email,
+                name: data.displayName,
+                photoURL: data.photoURL,
                 createdAt: firebase.database['ServerValue']['TIMESTAMP'],
-                providerData: data.auth.providerData[0]
+                providerData: data.providerData[0]
             });
     }
 
@@ -127,6 +127,7 @@ export class AuthService {
                 uid: authdata.auth.uid,
                 //photoURL: data.auth.photoURL,
                 createdAt: firebase.database['ServerValue']['TIMESTAMP'],
+                profiledone: true
                 //providerData: authdata.auth.provider
 
             });

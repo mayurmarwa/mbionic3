@@ -3,6 +3,8 @@ import { NavController, NavParams } from 'ionic-angular';
 import { LoadingController, ToastController } from 'ionic-angular';
 import { FormBuilder, Validators } from '@angular/forms';
 import { VerifyMobilePage } from '../verify-mobile/verify-mobile';
+import firebase from 'firebase';
+
 
 /*
   Generated class for the CreateProfile page.
@@ -15,10 +17,13 @@ import { VerifyMobilePage } from '../verify-mobile/verify-mobile';
   templateUrl: 'create-profile.html'
 })
 export class CreateProfilePage {
+    public currentuser: any;
     public userid: any; 
     public profileForm; 
     constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public loadingCtrl: LoadingController,public toastCtrl: ToastController) {
-        this.userid = navParams.get("userid");
+
+        this.currentuser = firebase.auth().currentUser;
+        this.userid = this.currentuser.uid;
 
         this.profileForm = formBuilder.group({
             //name: ['', Validators.required],

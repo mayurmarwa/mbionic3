@@ -12,6 +12,7 @@ import { AboutPage } from '../pages/about/about';
 import { LoginPage } from '../pages/login/login';
 import { TabProfilePage } from '../pages/tab-profile/tab-profile';
 import { MyProductsPage } from '../pages/my-products/my-products';
+import { CreateProfilePage } from '../pages/create-profile/create-profile';
 import { PostBuyRequirementsPage } from '../pages/post-buy-requirements/post-buy-requirements';
 import { BrowseRequirementsPage } from '../pages/browse-requirements/browse-requirements';
 import { DirectoryPage } from '../pages/directory/directory';
@@ -76,16 +77,51 @@ export class MyApp {
           if (authenticated) {
 
               this.currentuser = firebase.auth().currentUser;
+
+
+
+
               this.storage.ready().then(() => {
                   // set a key/value
+                  console.log(this.currentuser);
                   this.storage.set('currentuser', JSON.stringify(this.currentuser)).then(() => {
                      this.sub1 =  this.authService.getFullProfile(this.currentuser.uid).first()
                           .subscribe(user => {
-                              //loading.dismiss();
-                              // this.user.displayName = user.displayName;
-                              //this.user.email = user.email || user.providerData[0].email || 'Not set yet.';
-                              //this.user.photoURL = user.photoURL || this.user.photoURL;
-                              this.currentprofile = user;
+                              if (user.profiledone) {
+                                  this.currentprofile = user;
+                                  console.log(user);
+                                  this.rootPage = TabsPage;
+                              }
+                              else {
+                                  console.log(user);
+                                  this.authService.createAccount(this.currentuser)
+                                      .then(_ => {
+                                          //this.loading.dismiss().then(() => {
+                                          //console.log(error);
+                                          this.rootPage = CreateProfilePage;
+                                          //});
+
+                                      }).catch((error) => {
+                                          let alert = this.alertCtrl.create({
+                                              title: 'Error! Try Again',
+                                              message: error.message || 'Unknown error',
+                                              enableBackdropDismiss: false,
+                                              buttons: [
+
+                                                  {
+                                                      text: 'ok',
+                                                      role: 'cancel',
+                                                      handler: () => {
+                                                          this.alert = null;
+                                                      }
+                                                  }
+                                              ]
+                                          });
+                                          alert.present();
+
+                                      });
+                              }                              
+                             
                           }, (error) => {
                               //loading.dismiss();
                               console.log('Error: ' + JSON.stringify(error));
@@ -109,7 +145,8 @@ export class MyApp {
                   this.initPushNotification();
                   //this.loading.dismiss().then(() => {
                       //console.log(error);
-                      this.rootPage = TabsPage;
+                  
+                      
                   //});
                   
               }).catch((err) =>

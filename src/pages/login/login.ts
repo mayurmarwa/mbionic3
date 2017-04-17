@@ -135,8 +135,9 @@ export class LoginPage {
       this.loading.present().then(() => { 
     
     this.authService.login(mode)
-      .then((data) => {
-        this.authService.getFullProfile(data.uid)
+        .then((data) => {
+            this.loading.dismiss();
+       /* this.authService.getFullProfile(data.uid)
           .first()
           .subscribe((user) => {
               if (!user.profiledone) {
@@ -175,8 +176,9 @@ export class LoginPage {
                   this.showMessage(error.message || 'Unknown error');
               });
             
-          });
-      }) .catch((error)=>{
+          });*/
+      })
+        .catch((error) => {
           this.loading.dismiss().then(() => {
               //console.log(error);
               this.showMessage(error.message || 'Unknown error');
@@ -192,6 +194,8 @@ export class LoginPage {
 
       this.authService.login2()
           .then((data) => {
+              this.loading.dismiss()
+              /*console.log(data);
               this.authService.getFullProfile(data.uid)
                   .first()
                   .subscribe((user) => {
@@ -229,8 +233,9 @@ export class LoginPage {
                           //console.log(error);
                           this.showMessage(error.message || 'Unknown error');
                       });
-                  });
-          }) .catch( (error) => {
+                  });*/
+          })
+          .catch((error) => {
               this.loading.dismiss().then(() => {
                   //console.log(error);
                   this.showMessage(error.message || 'Unknown error');
