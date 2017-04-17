@@ -62,7 +62,6 @@
     "cordova-plugin-googleplus",
     "cordova-sqlite-storage",
     "cordova-plugin-x-socialsharing",
-    "cordova-plugin-console",
     {
       "id": "phonegap-plugin-push",
       "locator": "phonegap-plugin-push",
