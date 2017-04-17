@@ -57,7 +57,7 @@ export class AuthService {
     
     return this.googlePlus.login({
         'scopes': 'email profile',
-        'webClientId': '79899062384-7monv7m7lgkhmsm5n6ng45qljb2o1dhq.apps.googleusercontent.com'
+        'webClientId': '639273963235-levd0bsp6858tj6dcgovohs25ehpmmbd.apps.googleusercontent.com'
       }).then( res => {
         return this.signInWithCredential(firebase.auth.GoogleAuthProvider.credential(res.idToken));
       }).catch ((error) => Promise.reject(error));

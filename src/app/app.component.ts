@@ -16,7 +16,7 @@ import { PostBuyRequirementsPage } from '../pages/post-buy-requirements/post-buy
 import { BrowseRequirementsPage } from '../pages/browse-requirements/browse-requirements';
 import { DirectoryPage } from '../pages/directory/directory';
 import { SpeedDialPage } from '../pages/speed-dial/speed-dial';
-import { SettingsPage } from '../pages/settings/settings';
+//import { SettingsPage } from '../pages/settings/settings';
 import { Storage } from '@ionic/storage';
 import { SocialSharing } from '@ionic-native/social-sharing';
 
@@ -319,11 +319,11 @@ export class MyApp {
       }
       let push = this.pushplugin.init({
           android: {
-              senderID: "79899062384"
+              senderID: "639273963235"
           },
           ios: {
               alert: "true",
-              badge: false,
+              badge: true,
               sound: "true"
           },
           windows: {}

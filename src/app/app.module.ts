@@ -4,6 +4,8 @@ import { MyApp } from './app.component';
 import { CustomIconsModule } from 'ionic2-custom-icons';
 import { IonicStorageModule } from '@ionic/storage';
 
+import { BrowserModule } from '@angular/platform-browser';
+import { HttpModule } from '@angular/http';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -68,11 +70,12 @@ import { OrderBy } from '../pipes/orderBy';
 import { AngularFireModule } from 'angularfire2';
 
 export const firebaseConfig = {
-    apiKey: "AIzaSyBQHf2p8RLOuw7i_DHdsfc8HHCFfwcIPEQ",
-    authDomain: "metbazaardev.firebaseapp.com",
-    databaseURL: "https://metbazaardev.firebaseio.com",
-    storageBucket: "metbazaardev.appspot.com",
-    messagingSenderId: "79899062384"
+    apiKey: "AIzaSyBLx3cXHMhd6TOWWDGZS-J1stb2w34B47A",
+    authDomain: "metbazaar.firebaseapp.com",
+    databaseURL: "https://metbazaar.firebaseio.com",
+    projectId: "metbazaar",
+    storageBucket: "metbazaar.appspot.com",
+    messagingSenderId: "639273963235"
 };
 
 @NgModule({
@@ -122,6 +125,8 @@ export const firebaseConfig = {
 
   ],
   imports: [
+    BrowserModule,
+    HttpModule,
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(firebaseConfig),
     CustomIconsModule,
