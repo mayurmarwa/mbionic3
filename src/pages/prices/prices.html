@@ -42,11 +42,11 @@
                 <ion-col col-6 class="price">
                     <ion-item *ngIf="item?.type === 'up' " no-lines>
                         <ion-icon name="arrow-up" item-right isActive="false"></ion-icon>
-                        <h3>{{item?.price  | currency:"INR":true}}</h3>
+                        <h3>{{item?.price  | currency:"USD":true}}</h3>
                     </ion-item>
                     <ion-item *ngIf="item?.type === 'down' " no-lines>
                         <ion-icon name="arrow-down" item-right isActive="false"></ion-icon>
-                        <h3>{{item?.price  | currency:"INR":true}}</h3>
+                        <h3>{{item?.price  | currency:"USD":true}}</h3>
                     </ion-item>
 
                 </ion-col>

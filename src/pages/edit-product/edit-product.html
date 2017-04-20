@@ -42,8 +42,8 @@
         <ion-item (click)="updateMrate()">
             <ion-grid>
                 <ion-row>
-                    <ion-col width-33>
-                        Market Rate
+                    <ion-col col-4>
+                        Market Rate (Rs/Kg)
                     </ion-col>
                     <ion-col *ngIf="product?.mrate">
                         : {{product?.mrate}}
@@ -60,8 +60,8 @@
         <ion-item (click)="updateKrate()">
             <ion-grid>
                 <ion-row>
-                    <ion-col width-33>
-                        Kalamboli Rate
+                    <ion-col col-4>
+                        Kalamboli Rate (Rs/Kg)
                     </ion-col>
                     <ion-col *ngIf="product?.krate">
                         : {{product?.krate}}
@@ -78,7 +78,7 @@
         <ion-item (click)="updateGrade()">
             <ion-grid>
                 <ion-row>
-                    <ion-col width-33>
+                    <ion-col col-4>
                         Grade
                     </ion-col>
                     <ion-col *ngIf="product?.gradeval">
@@ -96,7 +96,7 @@
         <ion-item *ngIf="product?.ptype" (click)="updatePtype()">
             <ion-grid>
                 <ion-row>
-                    <ion-col width-33>
+                    <ion-col col-4>
                         Product Type
                     </ion-col>
                     <ion-col *ngIf="product?.ptype">
@@ -109,7 +109,7 @@
         <ion-item *ngIf="product?.pcategory" (click)="updateCategory()">
             <ion-grid>
                 <ion-row>
-                    <ion-col width-33>
+                    <ion-col col-4>
                         Category
                     </ion-col>
                     <ion-col *ngIf="product?.pcategory">
@@ -122,8 +122,8 @@
         <ion-item *ngIf="product?.sizes" (click)="updateSizes()">
             <ion-grid>
                 <ion-row>
-                    <ion-col width-33>
-                        Sizes
+                    <ion-col col-4>
+                        Sizes ({{product?.sizeunit}})
                     </ion-col>
                     <ion-col *ngIf="product?.sizes">
                         : {{product?.sizes}}
@@ -131,11 +131,13 @@
                 </ion-row>
             </ion-grid>
         </ion-item>
+
+
         
         <ion-item *ngIf="product?.finish" (click)="updateFinish()">
             <ion-grid>
                 <ion-row>
-                    <ion-col width-33>
+                    <ion-col col-4>
                         Finish
                     </ion-col>
                     <ion-col *ngIf="product?.finish">
@@ -148,7 +150,7 @@
         <ion-item *ngIf="product?.type" (click)="updateType()">
             <ion-grid>
                 <ion-row>
-                    <ion-col width-33>
+                    <ion-col col-4>
                         Type
                     </ion-col>
                     <ion-col *ngIf="product?.type">
@@ -161,7 +163,7 @@
         <ion-item *ngIf="product?.swg" (click)="updateSwg()">
             <ion-grid>
                 <ion-row>
-                    <ion-col width-33>
+                    <ion-col col-4>
                         SWG
                     </ion-col>
                     <ion-col *ngIf="product?.swg">
@@ -174,7 +176,7 @@
         <ion-item *ngIf="product?.sch" (click)="updateSch()">
             <ion-grid>
                 <ion-row>
-                    <ion-col width-33>
+                    <ion-col col-4>
                         SCH
                     </ion-col>
                     <ion-col *ngIf="product?.sch">
@@ -186,7 +188,7 @@
         <ion-item *ngIf="product?.mm" (click)="updateMm()">
             <ion-grid>
                 <ion-row>
-                    <ion-col width-33>
+                    <ion-col col-4>
                         MM
                     </ion-col>
                     <ion-col *ngIf="product?.mm">
@@ -198,7 +200,7 @@
         <ion-item *ngIf="product?.quantity" (click)="updateQuantity()">
             <ion-grid>
                 <ion-row>
-                    <ion-col width-33>
+                    <ion-col col-4>
                         Quantity
                     </ion-col>
                     <ion-col *ngIf="product?.quantity">
@@ -210,8 +212,8 @@
         <ion-item *ngIf="product?.unit" (click)="updateUnit()">
             <ion-grid>
                 <ion-row>
-                    <ion-col width-33>
-                        Unit
+                    <ion-col col-4>
+                       Quantity  Unit
                     </ion-col>
                     <ion-col *ngIf="product?.unit">
                         : {{product?.unit}}
@@ -222,7 +224,7 @@
         <ion-item *ngIf="product?.guarantee" (click)="updateGuarantee()">
             <ion-grid>
                 <ion-row>
-                    <ion-col width-33>
+                    <ion-col col-4>
                         Ultra Guarantee
                     </ion-col>
                     <ion-col *ngIf="product?.unit">
@@ -234,8 +236,8 @@
         <ion-item *ngIf="product?.thickness" (click)="updateThickness()">
             <ion-grid>
                 <ion-row>
-                    <ion-col width-33>
-                        Thickness
+                    <ion-col col-4>
+                        Thickness (mm)
                     </ion-col>
                     <ion-col *ngIf="product?.thickness">
                         : {{product?.thickness}}
@@ -252,8 +254,8 @@
         <ion-item *ngIf="product?.width" (click)="updateWidth()">
             <ion-grid>
                 <ion-row>
-                    <ion-col width-33>
-                        Width
+                    <ion-col col-4>
+                        Width (mm)
                     </ion-col>
                     <ion-col *ngIf="product?.width">
                         : {{product?.width}}
@@ -267,11 +269,29 @@
             </ion-grid>
         </ion-item>
 
-        <ion-item *ngIf="product?.length" (click)="updateLength()">
+        <ion-item *ngIf="product?.length && (product.catid === 5 || product.catid === 6)" (click)="updateLength()">
             <ion-grid>
                 <ion-row>
-                    <ion-col width-33>
-                        Length
+                    <ion-col col-4>
+                        Length (mtrs)
+                    </ion-col>
+                    <ion-col *ngIf="product?.length">
+                        : {{product?.length}}
+                    </ion-col>
+                    <ion-col class="placeholder-profile" *ngIf="!product?.length">
+                        <span>
+                            : Tap here to edit.
+                        </span>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </ion-item>
+
+        <ion-item *ngIf="product?.length && product.catid != 5 && product.catid != 6" (click)="updateLength()">
+            <ion-grid>
+                <ion-row>
+                    <ion-col col-4>
+                        Length (mm)
                     </ion-col>
                     <ion-col *ngIf="product?.length">
                         : {{product?.length}}
@@ -288,8 +308,8 @@
         <ion-item *ngIf="product?.weight" (click)="updateWeight()">
             <ion-grid>
                 <ion-row>
-                    <ion-col width-33>
-                        Weight
+                    <ion-col col-4>
+                        Weight (Kg)
                     </ion-col>
                     <ion-col *ngIf="product?.weight">
                         : {{product?.weight}}
@@ -306,7 +326,7 @@
         <ion-item *ngIf="product?.nos" (click)="updateNos()">
             <ion-grid>
                 <ion-row>
-                    <ion-col width-33>
+                    <ion-col col-4>
                         Nos.
                     </ion-col>
                     <ion-col *ngIf="product?.nos">
@@ -319,7 +339,7 @@
         <ion-item *ngIf="product?.quality" (click)="updateQuality()">
             <ion-grid>
                 <ion-row>
-                    <ion-col width-33>
+                    <ion-col col-4>
                         Quality
                     </ion-col>
                     <ion-col *ngIf="product?.quality">
@@ -333,7 +353,7 @@
         <ion-item (click)="updateComposition()">
             <ion-grid>
                 <ion-row>
-                    <ion-col width-33>
+                    <ion-col col-4>
                         Composition
                     </ion-col>
                     <ion-col *ngIf="product?.composition">
@@ -351,7 +371,7 @@
         <ion-item (click)="updateOrigin()">
             <ion-grid>
                 <ion-row>
-                    <ion-col width-33>
+                    <ion-col col-4>
                         Origin
                     </ion-col>
                     <ion-col *ngIf="product?.origin">
@@ -369,7 +389,7 @@
         <ion-item (click)="updateBrand()">
             <ion-grid>
                 <ion-row>
-                    <ion-col width-33>
+                    <ion-col col-4>
                         Brand
                     </ion-col>
                     <ion-col *ngIf="product?.brand">
@@ -387,7 +407,7 @@
         <ion-item (click)="updateMtc()">
             <ion-grid>
                 <ion-row>
-                    <ion-col width-33>
+                    <ion-col col-4>
                         MTC
                     </ion-col>
                     <ion-col *ngIf="product?.mtc">

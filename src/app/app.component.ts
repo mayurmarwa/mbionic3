@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Nav, App , Platform, LoadingController, AlertController } from 'ionic-angular';
+import { Nav, App , Platform, LoadingController, AlertController, ToastController, Keyboard, IonicApp, MenuController } from 'ionic-angular';
 import { Push, RegistrationEventResponse, NotificationEventResponse } from '@ionic-native/push';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -18,7 +18,7 @@ import { BrowseRequirementsPage } from '../pages/browse-requirements/browse-requ
 import { DirectoryPage } from '../pages/directory/directory';
 import { SpeedDialPage } from '../pages/speed-dial/speed-dial';
 //import { SettingsPage } from '../pages/settings/settings';
-import { Storage } from '@ionic/storage';
+//import { Storage } from '@ionic/storage';
 import { SocialSharing } from '@ionic-native/social-sharing';
 
 import { AuthService } from '../providers/auth.service';
@@ -55,8 +55,11 @@ export class MyApp {
     public app: App,
     public loadingCtrl: LoadingController,
     public authService: AuthService,
-    public storage: Storage,
     public alertCtrl: AlertController,
+    public toastCtrl: ToastController,
+    public menuCtrl: MenuController,
+    public keyboard: Keyboard,
+    private ionicApp: IonicApp,
     private socialSharing: SocialSharing,
     private pushplugin: Push,
     private splashScreen: SplashScreen,
@@ -70,110 +73,7 @@ export class MyApp {
     this.loading = this.loadingCtrl.create();
     //this.loading.present().then(() => { 
 
-    this.authService.getAuth()
-      .map(state => !!state)
-      .subscribe(authenticated => {
-          
-          if (authenticated) {
-
-              this.currentuser = firebase.auth().currentUser;
-
-
-
-
-              this.storage.ready().then(() => {
-                  // set a key/value
-                  console.log(this.currentuser);
-                  this.storage.set('currentuser', JSON.stringify(this.currentuser)).then(() => {
-                     this.sub1 =  this.authService.getFullProfile(this.currentuser.uid).first()
-                          .subscribe(user => {
-                              if (user.profiledone) {
-                                  this.currentprofile = user;
-                                  console.log(user);
-                                  this.rootPage = TabsPage;
-                              }
-                              else {
-                                  console.log(user);
-                                  this.authService.createAccount(this.currentuser)
-                                      .then(_ => {
-                                          //this.loading.dismiss().then(() => {
-                                          //console.log(error);
-                                          this.rootPage = CreateProfilePage;
-                                          //});
-
-                                      }).catch((error) => {
-                                          let alert = this.alertCtrl.create({
-                                              title: 'Error! Try Again',
-                                              message: error.message || 'Unknown error',
-                                              enableBackdropDismiss: false,
-                                              buttons: [
-
-                                                  {
-                                                      text: 'ok',
-                                                      role: 'cancel',
-                                                      handler: () => {
-                                                          this.alert = null;
-                                                      }
-                                                  }
-                                              ]
-                                          });
-                                          alert.present();
-
-                                      });
-                              }                              
-                             
-                          }, (error) => {
-                              //loading.dismiss();
-                              console.log('Error: ' + JSON.stringify(error));
-                          });
-
-                  })
-
-
-                      .catch((err) =>
-                      console.log(err));
-
-                 
-                  //console.log(this.currentprofile);
-                  // Or to get a key/value pair
-                  // this.storage.get('currentuser').then((val) => {
-                  //     console.log('Current User', JSON.parse(val));
-                  //})
-                  this.directoryData.setDirectory();
-                  this.checkUpdate();
-
-                  this.initPushNotification();
-                  //this.loading.dismiss().then(() => {
-                      //console.log(error);
-                  
-                      
-                  //});
-                  
-              }).catch((err) =>
-                  console.log(err)); 
-             // console.log(this.currentuser);
-              
-          }
-          else {
-              //this.loading.dismiss().then(() => {
-                  //console.log(error);
-                  //if (this.currentprofile) {
-                   //this.sub1.unsubscribe();
-                  //}
-                  this.rootPage = LoginPage;
-              //}); 
-          }
-        //this.rootPage = (authenticated) ? TabsPage : LoginPage;
-        }, (error) => {
-            //this.loading.dismiss().then(() => {
-            //console.log(error);
-            this.rootPage = LoginPage;
-            //});
-
-            console.log('Error: ' + JSON.stringify(error));
-        
-      });
-
+    
     // used for an example of ngFor and navigation
     this.openPages = [
       { title: 'Home', component: TabsPage, icon: 'home'  }
@@ -197,40 +97,214 @@ export class MyApp {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
         this.statusBar.styleDefault();
-        
-       setTimeout(()  => {
-           this.splashScreen.hide();
-       }, 500);
-       this.platform.registerBackButtonAction(() => {
 
+        this.authService.getAuth()
+            .map(state => !!state)
+            .subscribe(authenticated => {
+
+                if (authenticated) {
+
+                    this.currentuser = firebase.auth().currentUser;
+                    let toast = this.toastCtrl.create({
+                        message: 'Signing in, please wait...',
+                        duration: 1500,
+                        position: 'bottom'
+                    });
+                    toast.present();
+
+                    this.sub1 = this.authService.getFullProfile(this.currentuser.uid).first()
+                        .subscribe(user => {
+                            console.log(user);
+                            if (user.profiledone) {
+                                setTimeout(() => {
+                                    this.splashScreen.hide();
+                                }, 500);
+                                this.currentprofile = user;
+                                //console.log(user);
+                                this.rootPage = TabsPage;
+
+                            }
+                            else {
+                                console.log(user);
+                                this.authService.createAccount(this.currentuser)
+                                    .then(_ => {
+                                        //this.loading.dismiss().then(() => {
+                                        //console.log(error);
+                                        setTimeout(() => {
+                                            this.splashScreen.hide();
+                                        }, 500);
+                                        this.rootPage = CreateProfilePage;
+                                        //});
+
+                                    }).catch((error) => {
+                                        setTimeout(() => {
+                                            this.splashScreen.hide();
+                                        }, 500);
+                                        let alert = this.alertCtrl.create({
+                                            title: 'Error! Try Again',
+                                            message: error.message || 'Unknown error',
+                                            enableBackdropDismiss: false,
+                                            buttons: [
+
+                                                {
+                                                    text: 'ok',
+                                                    role: 'cancel',
+                                                    handler: () => {
+                                                        this.alert = null;
+                                                    }
+                                                }
+                                            ]
+                                        });
+                                        alert.present();
+
+                                    });
+                            }
+
+                        }, (error) => {
+                            //loading.dismiss();
+                            setTimeout(() => {
+                                this.splashScreen.hide();
+                            }, 500);
+                            let alert = this.alertCtrl.create({
+                                title: 'Network Error! Try Again',
+                                message: error.message || 'Unknown error',
+                                enableBackdropDismiss: false,
+                                buttons: [
+
+                                    {
+                                        text: 'ok',
+                                        role: 'cancel',
+                                        handler: () => {
+                                            this.alert = null;
+                                        }
+                                    }
+                                ]
+                            });
+                            alert.present();
+                        });
+
+
+                    this.directoryData.setDirectory();
+                    this.checkUpdate();
+
+                    this.initPushNotification();
+
+
+
+                    // console.log(this.currentuser);
+
+                }
+                else {
+                    //this.loading.dismiss().then(() => {
+                    //console.log(error);
+                    //if (this.currentprofile) {
+                    //this.sub1.unsubscribe();
+                    //}
+                    setTimeout(() => {
+                        this.splashScreen.hide();
+                    }, 500);
+                    this.rootPage = LoginPage;
+                    //}); 
+                }
+                //this.rootPage = (authenticated) ? TabsPage : LoginPage;
+            }, (error) => {
+                //this.loading.dismiss().then(() => {
+                //console.log(error);
+                setTimeout(() => {
+                    this.splashScreen.hide();
+                }, 500);
+                this.rootPage = LoginPage;
+                //});
+
+                console.log('Error: ' + JSON.stringify(error));
+
+            });
+
+
+
+        /*this.platform.registerBackButtonAction(() => {
+
+
+            //uncomment this and comment code below to to show toast and exit app
+            // if (this.backButtonPressedOnceToExit) {
+            //   this.platform.exitApp();
+            // } else if (this.nav.canGoBack()) {
+            //   this.nav.pop({});
+            // } else {
+            //   this.showToast();
+            //   this.backButtonPressedOnceToExit = true;
+            //   setTimeout(() => {
+
+            //     this.backButtonPressedOnceToExit = false;
+            //   },2000)
+            // }
+
+            // let navi = this.app.getActiveNav();
+            //if (navi.canGoBack()) { //Can we go back?
+            //  navi.pop();
+            //} else {
+            if (this.alert) {
+                this.alert.dismiss();
+                this.alert = null;
+            } else {
+                this.showAlert();
+            }
+            //}
+        });*/
+        this.platform.registerBackButtonAction(() => {
+            if (this.keyboard.isOpen()) {//???????????
+                this.keyboard.close();
+                return;
+            }
+
+            let activePortal = this.ionicApp._loadingPortal.getActive() ||
+               this.ionicApp._modalPortal.getActive() ||
+               this.ionicApp._toastPortal.getActive() ||
+                this.ionicApp._overlayPortal.getActive();
+
+            if (activePortal) {
+                activePortal.dismiss();
+                return
+            }
+            else if (this.menuCtrl.isOpen()) {
+                this.menuCtrl.close();
+                return
+            }
+
+            let view = this.nav.getActive();
+            let activeVC = this.nav.getActive();
            
-           //uncomment this and comment code below to to show toast and exit app
-           // if (this.backButtonPressedOnceToExit) {
-           //   this.platform.exitApp();
-           // } else if (this.nav.canGoBack()) {
-           //   this.nav.pop({});
-           // } else {
-           //   this.showToast();
-           //   this.backButtonPressedOnceToExit = true;
-           //   setTimeout(() => {
+            let page = activeVC.instance;
+                     
+ 
+            if (!(page instanceof TabsPage)) {
+                
+                if (this.nav.canGoBack() || view && view.isOverlay) {
+                    this.nav.pop();
+                }             
+                else {
+                    this.showAlert();
+                }
 
-           //     this.backButtonPressedOnceToExit = false;
-           //   },2000)
-           // }
+                return;
+            }
+            
+            let tabs = this.app.getActiveNav();
+            console.log(tabs);
+            //let activeNav = tabs.getSelected();
 
-           let navi = this.app.getActiveNav();
-           if (navi.canGoBack()) { //Can we go back?
-               navi.pop();
-           } else {
-               if (this.alert) {
-                   this.alert.dismiss();
-                   this.alert = null;
-               } else {
-                   this.showAlert();
-               }
-           }
-       });
+            if (!tabs.canGoBack()) {
+                console.log('Exiting app due to back button press at the bottom of current tab\'s navigation stack');
+                return this.showAlert();
+            }
 
+            console.log('Detected a back button press - popping a view from the current tab\'s navigation stack');
+            return tabs.pop();
+
+            
+        }, 0);
+         
+      
       
     });
   }
@@ -257,6 +331,7 @@ export class MyApp {
       });
       this.alert.present();
   }
+  
 
   /**
   showToast() {
@@ -273,6 +348,8 @@ export class MyApp {
       toast.present();
   }
     **/
+
+  
 
   checkUpdate() {
 

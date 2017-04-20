@@ -198,9 +198,9 @@ export class LoginPage {
       });
       this.loading.present().then(() => { 
 
-      this.authService.login2()
-          .then(() => {
-              this.loading.dismiss()
+          this.authService.login2();
+          //.then(() => {
+            //  this.loading.dismiss()
               /*console.log(data);
               this.authService.getFullProfile(data.uid)
                   .first()
@@ -240,15 +240,15 @@ export class LoginPage {
                           this.showMessage(error.message || 'Unknown error');
                       });
                   });*/
-          })
-          .catch((error) => {
-              this.loading.dismiss().then(() => {
+          //})
+          //.catch((error) => {
+              //this.loading.dismiss().then(() => {
                   //console.log(error);
-                  this.showMessage(error.message || 'Unknown error');
-              });
+                 // this.showMessage(error.message || 'Unknown error');
+              ///});
 
              
-              });
+             // });
       });
   }
 

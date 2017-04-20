@@ -3,7 +3,9 @@ import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable'; 
 import { AngularFire } from 'angularfire2';
+import { Storage } from '@ionic/storage';
 import firebase from 'firebase';
+
 
 
 /*
@@ -26,7 +28,7 @@ export class ProductData {
     public requirements;
     
 
-    constructor(public http: Http, public af: AngularFire) {
+    constructor(public http: Http, public af: AngularFire, public storage: Storage) {
         this.productList = firebase.database().ref('/products');
 
 
@@ -99,6 +101,7 @@ export class ProductData {
                 this.counter = 0;
             }
         });
+        this.setUser();
 
 
 
@@ -147,7 +150,38 @@ export class ProductData {
 
         });
     }**/
+    setUser() {
 
+        this.storage.ready().then(() => {
+            // set a key/value
+
+            console.log("storage ready");
+            this.storage.set('currentuser', JSON.stringify(this.currentUser)).then(() => {
+                //this.currentprofile = user;
+                console.log("storage set");
+                //this.rootPage = TabsPage;
+            })
+
+
+                .catch((err) =>
+                    console.log(err));
+
+
+            //console.log(this.currentprofile);
+            // Or to get a key/value pair
+            // this.storage.get('currentuser').then((val) => {
+            //     console.log('Current User', JSON.parse(val));
+            //})
+
+            //this.loading.dismiss().then(() => {
+            //console.log(error);
+
+
+            //});
+
+        }).catch((err) =>
+            console.log(err));
+    }
 
     getProduct(key: any): Observable<any> {
         return this.af.database.object('products/' + key);

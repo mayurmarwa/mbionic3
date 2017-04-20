@@ -66,7 +66,7 @@
     <ion-grid style="padding-left: 20px">
         <h4>Specifications</h4>
         <ion-row *ngIf="product?.ptype">
-            <ion-col width-25>
+            <ion-col col-3>
                 Product Type
             </ion-col>
             <ion-col>
@@ -74,7 +74,7 @@
             </ion-col>
         </ion-row>
         <ion-row *ngIf="product?.ptype2">
-            <ion-col width-25>
+            <ion-col col-3>
                 Design Type
             </ion-col>
             <ion-col>
@@ -82,7 +82,7 @@
             </ion-col>
         </ion-row>
         <ion-row *ngIf="product?.gradeval">
-            <ion-col width-25>
+            <ion-col col-3>
                 Grade
             </ion-col>
             <ion-col>
@@ -90,7 +90,7 @@
             </ion-col>
         </ion-row>
         <ion-row *ngIf="product?.composition">
-            <ion-col width-25>
+            <ion-col col-3>
                 Composition
             </ion-col>
             <ion-col text-wrap>
@@ -98,7 +98,7 @@
             </ion-col>
         </ion-row>
         <ion-row *ngIf="product?.astm">
-            <ion-col width-25>
+            <ion-col col-3>
                 ASTM Standard
             </ion-col>
             <ion-col>
@@ -106,7 +106,7 @@
             </ion-col>
         </ion-row>
         <ion-row *ngIf="product?.sizes">
-            <ion-col width-25>
+            <ion-col col-3>
                 Sizes
             </ion-col>
             <ion-col>
@@ -114,7 +114,7 @@
             </ion-col>
         </ion-row>
         <ion-row *ngIf="product?.finish">
-            <ion-col width-25>
+            <ion-col col-3>
                 Finish
             </ion-col>
             <ion-col>
@@ -122,7 +122,7 @@
             </ion-col>
         </ion-row>
         <ion-row *ngIf="product?.type">
-            <ion-col width-25>
+            <ion-col col-3>
                 Type
             </ion-col>
             <ion-col>
@@ -130,21 +130,21 @@
             </ion-col>
         </ion-row>
         <ion-row>
-            <ion-col width-25 *ngIf="product?.mm || product?.swg">
+            <ion-col col-3 *ngIf="product?.mm || product?.swg">
                 Wall Thickness
             </ion-col>
             <ion-col *ngIf="product?.swg">
-                SWG: {{product?.swg}}
+                : SWG: {{product?.swg}}
             </ion-col>
             <ion-col *ngIf="product?.sch">
-                SCH: {{product?.sch}}
+                : SCH: {{product?.sch}}
             </ion-col>
             <ion-col *ngIf="product?.mm">
                 MM: {{product?.mm}}
             </ion-col>
         </ion-row>
         <ion-row *ngIf="product?.pcategory">
-            <ion-col width-25>
+            <ion-col col-3>
                 Category
             </ion-col>
             <ion-col>
@@ -152,7 +152,7 @@
             </ion-col>
         </ion-row>
         <ion-row *ngIf="product?.quantity">
-            <ion-col width-25>
+            <ion-col col-3>
                 Quantity
             </ion-col>
             <ion-col>
@@ -160,7 +160,7 @@
             </ion-col>
         </ion-row>
         <ion-row *ngIf="product?.guarantee">
-            <ion-col width-25>
+            <ion-col col-3>
                 Ultra Guarantee
             </ion-col>
             <ion-col>
@@ -168,42 +168,42 @@
             </ion-col>
         </ion-row>
         <ion-row>
-            <ion-col width-25 *ngIf="product?.thickness">
+            <ion-col col-3 *ngIf="product?.thickness">
                 Thickness
             </ion-col>
-            <ion-col width-25 *ngIf="product?.thickness">
+            <ion-col col-3 *ngIf="product?.thickness">
                 : {{product?.thickness}} mm
             </ion-col>
-            <ion-col width-25 *ngIf="product?.width">
+            <ion-col col-3 *ngIf="product?.width">
                 Width
             </ion-col>
-            <ion-col width-25 *ngIf="product?.width">
+            <ion-col col-3 *ngIf="product?.width">
                 : {{product?.width}} mm
             </ion-col>
         </ion-row>
         <ion-row>
-            <ion-col width-25 *ngIf="product?.weight">
+            <ion-col col-3 *ngIf="product?.weight">
                 Weight
             </ion-col>
-            <ion-col width-25 *ngIf="product?.weight">
+            <ion-col col-3 *ngIf="product?.weight">
                 : {{product?.weight}} Kg
             </ion-col>
-            <ion-col width-25 *ngIf="product?.length && (product.catid === 5 || product.catid === 6)">
+            <ion-col col-3 *ngIf="product?.length && (product.catid === 5 || product.catid === 6)">
                 Length
             </ion-col>
-            <ion-col width-25 *ngIf="product?.length && (product.catid === 5 || product.catid === 6)">
+            <ion-col col-3 *ngIf="product?.length && (product.catid === 5 || product.catid === 6)">
                 : {{product?.length}} Mtrs
             </ion-col>
 
-            <ion-col width-25 *ngIf="product?.length && product.catid != 5 && product.catid != 6">
+            <ion-col col-3 *ngIf="product?.length && product.catid != 5 && product.catid != 6">
                 Length
             </ion-col>
-            <ion-col width-25 *ngIf="product?.length && product.catid != 5 && product.catid != 6">
+            <ion-col col-3 *ngIf="product?.length && product.catid != 5 && product.catid != 6">
                 : {{product?.length}} mm
             </ion-col>
         </ion-row>
         <ion-row *ngIf="product?.nos">
-            <ion-col>
+            <ion-col col-3>
                 Nos
             </ion-col>
             <ion-col>
@@ -211,7 +211,7 @@
             </ion-col>
         </ion-row>
         <ion-row *ngIf="product?.quality">
-            <ion-col width-25>
+            <ion-col col-3>
                 Quality
             </ion-col>
             <ion-col>
@@ -219,21 +219,21 @@
             </ion-col>
         </ion-row>
         <ion-row>
-            <ion-col width-25 *ngIf="product?.origin">
+            <ion-col col-3 *ngIf="product?.origin">
                 Origin
             </ion-col>
-            <ion-col width-25 *ngIf="product?.origin">
+            <ion-col col-3 *ngIf="product?.origin">
                 : {{product?.origin}}
             </ion-col>
-            <ion-col width-25 *ngIf="product?.brand">
+            <ion-col col-3 *ngIf="product?.brand">
                 Brand
             </ion-col>
-            <ion-col width-25 *ngIf="product?.brand">
+            <ion-col col-3 *ngIf="product?.brand">
                 : {{product?.brand}}
             </ion-col>
         </ion-row>
         <ion-row *ngIf="product?.mtc">
-            <ion-col width-25>
+            <ion-col col-3>
                 MTC
             </ion-col>
             <ion-col>
@@ -241,7 +241,7 @@
             </ion-col>
         </ion-row>
         <ion-row *ngIf="product?.details">
-            <ion-col width-25>
+            <ion-col col-3>
                 Other Details
             </ion-col>
             <ion-col text-wrap>

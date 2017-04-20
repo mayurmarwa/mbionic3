@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-
+import { Platform, AlertController} from 'ionic-angular'
 import { MarketPage } from '../market/market';
 import { PricesPage } from '../prices/prices';
 import { EnquiriesPage } from '../enquiries/enquiries';
@@ -17,8 +17,10 @@ export class TabsPage {
   tab3Root: any;
   tab4Root: any;
   tab5Root: any;
+  public alert: any;
 
-  constructor() {
+
+  constructor(public platform: Platform, public alertCtrl: AlertController) {
     //this.tab1Root = TabChatsPage;
     //this.tab2Root = TabContactsPage;
     //this.tab3Root = TabProfilePage;
@@ -28,5 +30,11 @@ export class TabsPage {
       this.tab3Root = SpeedDialPage;
       this.tab4Root = EnquiriesPage;
       this.tab5Root = MetalCalculatorPage;
-  }
+
+
+
+      
+}
+
+    
 }
