@@ -19,6 +19,7 @@ import { Market } from '@ionic-native/market';
 
 
 import { MarketPage } from '../pages/market/market';
+import { WaitingApproval } from '../pages/waiting-approval/waiting-approval';
 import { QuickFilterPage } from '../pages/quick-filter/quick-filter';
 import { SearchCategoriesPage } from '../pages/search-categories/search-categories';
 import { PricesPage } from '../pages/prices/prices';
@@ -83,6 +84,7 @@ export const firebaseConfig = {
     MyApp,
     TabsPage,
     MarketPage,
+    WaitingApproval,
     QuickFilterPage,
     SearchCategoriesPage,
     PricesPage,
@@ -137,6 +139,7 @@ export const firebaseConfig = {
     MyApp,
     TabsPage,
     MarketPage,
+    WaitingApproval,
     QuickFilterPage,
     SearchCategoriesPage,
     PricesPage,

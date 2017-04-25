@@ -44,7 +44,7 @@
                 <h2>{{this.requirement?.grade}} </h2>
             
         </ion-item>
-        <ion-item  *ngIf="this.requirement?.sizedetails">
+        <ion-item text-wrap  *ngIf="this.requirement?.sizedetails">
             
                 <custom-icon set="mb" name="settings" item-left></custom-icon>
                 <p>Size Details</p>
@@ -58,7 +58,7 @@
                 <h2>{{this.requirement?.quantity}} {{this.requirement?.unit}}</h2>
            
         </ion-item>
-        <ion-item  *ngIf="this.requirement?.bid">
+        <ion-item text-wrap *ngIf="this.requirement?.bid">
             
                 <custom-icon set="mb" name="bidprice" item-left></custom-icon>
                 <p>Bid Price</p>

@@ -37,10 +37,10 @@
                     </ion-row>
                 <ion-row>
                     <ion-col *ngIf="enquiry?.rate === 'mrate' ">
-                        Market Rate: {{enquiry?.productMrate | currency:"INR":true}}/{{enquiry?.productUnit}}
+                        Market Rate: {{enquiry?.productMrate | currency:"INR":true}}/Kg
                     </ion-col>
                     <ion-col *ngIf="enquiry?.rate === 'krate' ">
-                        Kalamboli Rate: {{enquiry?.productKrate | currency:"INR":true}}/{{enquiry?.productUnit}}
+                        Kalamboli Rate: {{enquiry?.productKrate | currency:"INR":true}}/Kg
                     </ion-col>
                 </ion-row>
                 <ion-row *ngIf="enquiry?.payment === 'cash' ">
@@ -73,7 +73,7 @@
                 Quote:
                 <ion-row>
                     <ion-col>
-                        Price: {{enquiry?.quote?.price | currency:"INR":true}} / {{enquiry?.requirement?.unit}}
+                        Price: {{enquiry?.quote?.price | currency:"INR":true}}/Kg
                     </ion-col>
                     </ion-row>
                 <ion-row>

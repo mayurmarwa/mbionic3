@@ -41,7 +41,12 @@ export class PricesPage {
   ionViewWillEnter() {
       console.log("prices will enter");
 
-      this.sub1 = this.af.database.list('/prices/lme')
+      this.sub1 = this.af.database.list('/prices/lme', {
+          query: {
+              orderByChild: 'time'
+
+          }
+      })
           .subscribe(data => {
               this.lmeList = [];
               data.forEach(obj => {
@@ -49,12 +54,17 @@ export class PricesPage {
                   this.lmeList.push(obj);
               });
               //this.requests.unsubscribe();
-              this.lmeList = Observable.of(this.lmeList);
+              this.lmeList = Observable.of(this.lmeList.reverse());
               //console.log(this.lmeList);
           });
 
 
-      this.sub2 = this.af.database.list('/prices/mcx')
+      this.sub2 = this.af.database.list('/prices/mcx', {
+          query: {
+              orderByChild: 'time'
+
+          }
+      })
           .subscribe(data => {
               this.mcxList = [];
               data.forEach(obj => {
@@ -62,7 +72,7 @@ export class PricesPage {
                   this.mcxList.push(obj);
               });
               //this.requests.unsubscribe();
-              this.mcxList = Observable.of(this.mcxList);
+              this.mcxList = Observable.of(this.mcxList.reverse());
               //console.log(this.mcxList);
           });
   }

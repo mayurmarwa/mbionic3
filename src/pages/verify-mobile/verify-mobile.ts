@@ -5,6 +5,7 @@ import { AngularFire } from 'angularfire2';
 import { FormBuilder } from '@angular/forms';
 import { AuthService } from '../../providers/auth.service';
 import { TabsPage } from '../tabs/tabs';
+import { WaitingApproval } from '../waiting-approval/waiting-approval';
 import { App } from 'ionic-angular';
 import { NgZone } from '@angular/core';
 import { Http } from '@angular/http';
@@ -209,7 +210,8 @@ export class VerifyMobilePage {
                               companyname: this.signupForm.value.companyname,
                               address: this.signupForm.value.address,
                               companyprofile: this.signupForm.value.companyprofile,
-                              profiledone: true
+                              profiledone: true,
+                              isApproved: false
                               //email: userdata.value.email,
                               //uid: authdata.auth.uid,
                               //photoURL: data.auth.photoURL,
@@ -223,7 +225,7 @@ export class VerifyMobilePage {
                                   position: 'middle'
                               });
                               toast.present().then(() => {
-                                  this.app.getRootNav().setRoot(TabsPage);
+                                  this.app.getRootNav().setRoot(WaitingApproval);
                               });
 
                           });
@@ -285,7 +287,7 @@ export class VerifyMobilePage {
                           position: 'middle'
                       });
                       toast.present().then(() => {
-                          this.app.getRootNav().setRoot(TabsPage);
+                          this.app.getRootNav().setRoot(WaitingApproval);
                       });
                   });
               }, (error) => {

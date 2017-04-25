@@ -127,7 +127,8 @@ export class AuthService {
                 uid: authdata.auth.uid,
                 //photoURL: data.auth.photoURL,
                 createdAt: firebase.database['ServerValue']['TIMESTAMP'],
-                profiledone: true
+                profiledone: true,
+                isApproved: false
                 //providerData: authdata.auth.provider
 
             });

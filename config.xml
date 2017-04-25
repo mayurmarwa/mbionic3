@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget android-versionCode="1" id="com.croogster.metbzr" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget android-versionCode="2" id="com.croogster.metbzr" version="1.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>MetBazaar</name>
     <description>Platform for Metal Traders</description>
     <author email="developer@metbazaar.com" href="http://metbazaar.com/">Croogster</author>

@@ -8,6 +8,7 @@ import { Market } from '@ionic-native/market';
 import firebase from 'firebase';
 
 import { TabsPage } from '../pages/tabs/tabs';
+import { WaitingApproval } from '../pages/waiting-approval/waiting-approval';
 import { AboutPage } from '../pages/about/about';
 import { LoginPage } from '../pages/login/login';
 import { TabProfilePage } from '../pages/tab-profile/tab-profile';
@@ -116,12 +117,23 @@ export class MyApp {
                         .subscribe(user => {
                             console.log(user);
                             if (user.profiledone) {
-                                setTimeout(() => {
-                                    this.splashScreen.hide();
-                                }, 500);
-                                this.currentprofile = user;
-                                //console.log(user);
-                                this.rootPage = TabsPage;
+
+                                if (user.isApproved) {
+                                    setTimeout(() => {
+                                        this.splashScreen.hide();
+                                    }, 500);
+                                    this.currentprofile = user;
+                                    //console.log(user);
+                                    this.rootPage = TabsPage;
+                                }
+                                else {
+                                    setTimeout(() => {
+                                        this.splashScreen.hide();
+                                    }, 500);
+                                    this.currentprofile = user;
+                                    //console.log(user);
+                                    this.rootPage = WaitingApproval;
+                                }
 
                             }
                             else {
