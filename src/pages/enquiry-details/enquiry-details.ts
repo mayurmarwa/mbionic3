@@ -5,6 +5,8 @@ import { Storage } from '@ionic/storage';
 import { MyProfilePage } from '../my-profile/my-profile';
 import { ProductPagePage } from '../product-page/product-page';
 import { RequirementDetailsPage } from '../requirement-details/requirement-details';
+import firebase from 'firebase';
+
 
 /*
   Generated class for the EnquiryDetails page.
@@ -26,12 +28,15 @@ export class EnquiryDetailsPage {
     myenquiries: any;
     otherenquiries: any;
     constructor(public navCtrl: NavController, public navParams: NavParams, public af: AngularFire, public storage: Storage, public alertCtrl: AlertController, public toastCtrl: ToastController) {
-      storage.ready().then(() => {
-          storage.get('currentuser').then((val) => {
+
+
+        //storage.ready().then(() => {
+          //storage.get('currentuser').then((val) => {
 
               
+               this.currentuser = firebase.auth().currentUser;
 
-              this.currentuser = JSON.parse(val);
+             // this.currentuser = JSON.parse(val);
               this.enquiry = navParams.get("enquiry");
               
               this.messageList = af.database.list('/users/' + this.currentuser.uid + '/enquiries/' + this.enquiry.key + '/messgaes/');
@@ -39,12 +44,12 @@ export class EnquiryDetailsPage {
 
               this.myenquiries = af.database.list('/users/' + this.currentuser.uid + '/enquiries');
               this.otherenquiries = af.database.list('/users/' + this.enquiry.otheruser + '/enquiries');
-          })
-              .catch((err) =>
-                  console.log(err));
+          //})
+              //.catch((err) =>
+            //      console.log(err));
           
-      }).catch((err) =>
-          console.log(err)); 
+      //}).catch((err) =>
+        //  console.log(err)); 
 
       
         //console.log(this.enquiry);

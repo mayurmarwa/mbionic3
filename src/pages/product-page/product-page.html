@@ -188,17 +188,17 @@
             <ion-col col-3 *ngIf="product?.weight">
                 : {{product?.weight}} Kg
             </ion-col>
-            <ion-col col-3 *ngIf="product?.length && (product.catid === 5 || product.catid === 6)">
+            <ion-col col-3 *ngIf="product?.length && !(product?.catid === 2 || product?.catid === 3 || product?.catid === '8b' || product?.catid === '9b')">
                 Length
             </ion-col>
-            <ion-col col-3 *ngIf="product?.length && (product.catid === 5 || product.catid === 6)">
+            <ion-col col-3 *ngIf="product?.length && !(product?.catid === 2 || product?.catid === 3 || product?.catid === '8b' || product?.catid === '9b')">
                 : {{product?.length}} Mtrs
             </ion-col>
 
-            <ion-col col-3 *ngIf="product?.length && product.catid != 5 && product.catid != 6">
+            <ion-col col-3 *ngIf="product?.length && (product?.catid === 2 || product?.catid === 3 || product?.catid === '8b' || product?.catid === '9b')">
                 Length
             </ion-col>
-            <ion-col col-3 *ngIf="product?.length && product.catid != 5 && product.catid != 6">
+            <ion-col col-3 *ngIf="product?.length && (product?.catid === 2 || product?.catid === 3 || product?.catid === '8b' || product?.catid === '9b')">
                 : {{product?.length}} mm
             </ion-col>
         </ion-row>

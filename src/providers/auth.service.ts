@@ -27,7 +27,7 @@ export class AuthService {
 
         if (mode === AuthMode.GooglePlus) {
             if (!this.platform.is('cordova'))
-               this.signInWithProvider(AuthProviders.Google);
+             return  this.signInWithProvider(AuthProviders.Google);
 
             return this.googlePlus.login({
                 'scopes': 'email profile',
@@ -50,7 +50,7 @@ export class AuthService {
         //if (mode == AuthMode.Facebook)
         //return this.signInWithFacebook();
         if (!this.platform.is('cordova'))
-             this.signInWithProvider(AuthProviders.Facebook);
+          return   this.signInWithProvider(AuthProviders.Facebook);
 
         this.fb.login(['email', 'public_profile'])
             .then((res: FacebookLoginResponse) => {

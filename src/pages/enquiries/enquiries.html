@@ -64,7 +64,8 @@
                     </ion-row>
                 <ion-row class="enq-details">
                     <ion-col *ngIf="enquiry?.product?.width">W:{{enquiry?.product?.width}} mm</ion-col>
-                    <ion-col *ngIf="enquiry?.product?.length">L:{{enquiry?.product?.length}} mm</ion-col>
+                    <ion-col *ngIf="enquiry?.product?.length && (enquiry?.product?.catid === 5 || enquiry?.product?.catid === 6 || enquiry?.product?.catid === 7 || enquiry?.product?.catid === '8d' || enquiry?.product?.catid === '9d' )">L:{{enquiry?.product?.length}} mtrs</ion-col>
+                    <ion-col *ngIf="enquiry?.product?.length && enquiry?.product?.catid != 5 && enquiry?.product?.catid != 6 && enquiry?.product?.catid != 7 && enquiry?.product?.catid != '8d' && enquiry?.product?.catid != '9d' ">L:{{enquiry?.product?.length}} mm</ion-col>
 
                     <ion-col *ngIf="enquiry?.product?.swg">SWG:{{enquiry?.product?.swg}} mm</ion-col>
                     <ion-col *ngIf="enquiry?.product?.sch">SCH:{{enquiry?.product?.sch}} mm</ion-col>
@@ -103,7 +104,8 @@
                 </ion-row>
                 <ion-row class="enq-details">
                     <ion-col *ngIf="enquiry?.product?.width">W:{{enquiry?.product?.width}} mm</ion-col>
-                    <ion-col *ngIf="enquiry?.product?.length">L:{{enquiry?.product?.length}} mm</ion-col>
+                    <ion-col *ngIf="enquiry?.product?.length && (enquiry?.product?.catid === 5 || enquiry?.product?.catid === 6 || enquiry?.product?.catid === 7 || enquiry?.product?.catid === '8d' || enquiry?.product?.catid === '9d' )">L:{{enquiry?.product?.length}} mtrs</ion-col>
+                    <ion-col *ngIf="enquiry?.product?.length && enquiry?.product?.catid != 5 && enquiry?.product?.catid != 6 && enquiry?.product?.catid != 7 && enquiry?.product?.catid != '8d' && enquiry?.product?.catid != '9d' ">L:{{enquiry?.product?.length}} mm</ion-col>
 
                     <ion-col *ngIf="enquiry?.product?.swg">SWG:{{enquiry?.product?.swg}} mm</ion-col>
                     <ion-col *ngIf="enquiry?.product?.sch">SCH:{{enquiry?.product?.sch}} mm</ion-col>

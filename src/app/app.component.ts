@@ -46,7 +46,7 @@ export class MyApp {
   public sharetxt: any;
   public shareURL: any;
   public alert: any;
-  public version: string = "1.0";
+  public version: string = "1.0.1";
 
   openPages: Array<{title: string, component: any, icon: string}>;
   pushPages: Array<{title: string, component: any, icon: string}>;

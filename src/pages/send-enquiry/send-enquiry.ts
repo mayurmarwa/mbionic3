@@ -34,10 +34,13 @@ export class SendEnquiryPage {
     public productkrate: any;
 
     constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public af: AngularFire, public alertCtrl: AlertController, public loadingCtrl: LoadingController, public authService: AuthService, public storage: Storage, private viewCtrl: ViewController) {
-        storage.ready().then(() => {
-            storage.get('currentuser').then((val) => {
 
-                this.currentuser = JSON.parse(val);
+        this.currentuser = firebase.auth().currentUser;
+
+       // storage.ready().then(() => {
+          //  storage.get('currentuser').then((val) => {
+
+                //this.currentuser = JSON.parse(val);
                 this.product = navParams.get("product");
                 this.sellerID = this.product.uid;
                 //console.log(this.currentuser);
@@ -87,11 +90,11 @@ export class SendEnquiryPage {
                         console.log('Error: ' + JSON.stringify(error));
                     });
 
-            })
-                .catch((err) =>
-                    console.log(err));
-        }).catch((err) =>
-            console.log(err));
+            //})
+              //  .catch((err) =>
+                //    console.log(err));
+        //}).catch((err) =>
+          //  console.log(err));
 
         this.enquiryForm = formBuilder.group({
             rate: ['', Validators.required],

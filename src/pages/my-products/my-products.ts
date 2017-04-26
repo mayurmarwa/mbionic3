@@ -27,12 +27,12 @@ export class MyProductsPage {
 
     constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage, public loadingCtrl: LoadingController) {
         
+        this.currentuser = firebase.auth().currentUser;
 
+        //storage.ready().then(() => {
+            //storage.get('currentuser').then((val) => {
 
-        storage.ready().then(() => {
-            storage.get('currentuser').then((val) => {
-
-                this.currentuser = JSON.parse(val);
+                //this.currentuser = JSON.parse(val);
                 this.productListref = firebase.database().ref('/products').orderByChild("uid").equalTo(this.currentuser.uid);
                 //this.enquiryList = this.af.database.list('/users/' + this.currentuserid + '/enquiries', {
                 //   query: {
@@ -63,11 +63,11 @@ export class MyProductsPage {
                     this.updateList();
                 });
                 
-            })
-                .catch((err) =>
-                    console.log(err));
-        }).catch((err) =>
-            console.log(err)); 
+            //})
+              //  .catch((err) =>
+                //    console.log(err));
+        //}).catch((err) =>
+          //  console.log(err)); 
 
         //this.currentuser = firebase.auth().currentUser;
         

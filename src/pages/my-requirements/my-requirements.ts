@@ -26,10 +26,12 @@ export class MyRequirementsPage {
 
     constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage) {
 
-        storage.ready().then(() => {
-            storage.get('currentuser').then((val) => {
+        this.currentuser = firebase.auth().currentUser;
 
-                this.currentuser = JSON.parse(val);
+        //storage.ready().then(() => {
+           // storage.get('currentuser').then((val) => {
+
+                //this.currentuser = JSON.parse(val);
                 this.requirementListref = firebase.database().ref('/requirements').orderByChild("uid").equalTo(this.currentuser.uid);
                 //this.enquiryList = this.af.database.list('/users/' + this.currentuserid + '/enquiries', {
                 //   query: {
@@ -60,11 +62,11 @@ export class MyRequirementsPage {
                     this.updateList();
                 });
 
-            })
-                .catch((err) =>
-                    console.log(err));
-        }).catch((err) =>
-            console.log(err)); 
+            //})
+               // .catch((err) =>
+                 //   console.log(err));
+        //}).catch((err) =>
+          //  console.log(err)); 
 
 
 

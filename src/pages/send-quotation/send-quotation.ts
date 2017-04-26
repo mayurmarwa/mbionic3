@@ -29,10 +29,13 @@ export class SendQuotationPage {
     public user: any;
 
     constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public af: AngularFire, public authService: AuthService, public alertCtrl: AlertController, public loadingCtrl: LoadingController, public storage: Storage, public toastCtrl: ToastController) {
-        storage.ready().then(() => {
-            storage.get('currentuser').then((val) => {
 
-                this.currentuser = JSON.parse(val);
+        this.currentuser = firebase.auth().currentUser;
+
+        //storage.ready().then(() => {
+          //  storage.get('currentuser').then((val) => {
+
+                //this.currentuser = JSON.parse(val);
                 this.requirement = navParams.get("requirement");
                 this.postuserID = this.requirement.uid;
 
@@ -66,9 +69,9 @@ export class SendQuotationPage {
                     });
 
 
-            });
+            //});
 
-        });
+        //});
         this.quoteForm = formBuilder.group({
             price: ['', Validators.required],
             delivery: ['', Validators.required],
