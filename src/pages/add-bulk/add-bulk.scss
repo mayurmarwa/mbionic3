@@ -1,0 +1,14 @@
+page-add-bulk {
+ .fullpage{
+       display: flex;
+  flex-flow: column;
+  height: 100%;
+  }
+
+    .content{
+            position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+
+    }
+}
