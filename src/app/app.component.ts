@@ -8,6 +8,7 @@ import { Market } from '@ionic-native/market';
 import firebase from 'firebase';
 
 import { TabsPage } from '../pages/tabs/tabs';
+import { MarketPage } from '../pages/market/market';
 import { WaitingApproval } from '../pages/waiting-approval/waiting-approval';
 import { AboutPage } from '../pages/about/about';
 import { LoginPage } from '../pages/login/login';
@@ -46,7 +47,7 @@ export class MyApp {
   public sharetxt: any;
   public shareURL: any;
   public alert: any;
-  public version: string = "1.0.1";
+  public version: string = "1.1.0";
 
   openPages: Array<{title: string, component: any, icon: string}>;
   pushPages: Array<{title: string, component: any, icon: string}>;
@@ -74,7 +75,6 @@ export class MyApp {
     this.loading = this.loadingCtrl.create();
     //this.loading.present().then(() => { 
 
-    
     // used for an example of ngFor and navigation
     this.openPages = [
       { title: 'Home', component: TabsPage, icon: 'home'  }
@@ -82,9 +82,9 @@ export class MyApp {
 
     this.pushPages = [
         { title: 'Profile', component: TabProfilePage, icon: 'profile' },
-        { title: 'Post A Requirement', component: PostBuyRequirementsPage, icon: 'post' },
+        { title: 'Post Buy Requirement', component: PostBuyRequirementsPage, icon: 'post' },
         { title: 'Browse Requirements', component: BrowseRequirementsPage, icon: 'search' },
-        { title: 'My Products', component: MyProductsPage, icon: 'products' },
+        { title: 'Sell Products', component: MyProductsPage, icon: 'products' },
         { title: 'Directory', component: DirectoryPage, icon: 'directory' },
         { title: 'Speed Dial', component: SpeedDialPage, icon: 'dialer' },
         //{ title: 'Settings', component: SettingsPage, icon: 'settings' },        
@@ -482,26 +482,28 @@ export class MyApp {
           //let self = this;
           //if user using app and push notification comes
           if (data.additionalData.foreground) {
+              console.log("Push notification in foreground");
               // if application open, show popup
-              let confirmAlert = this.alertCtrl.create({
-                  title: 'New Notification',
-                  message: data.message,
-                  buttons: [
+              /// acmemaverick: uncomment -> /// for intial implementation
+              ///let confirmAlert = this.alertCtrl.create({
+                 /// title: 'New Notification',
+                 /// message: data.message,
+                 /// buttons: [
                       //{
                       //text: 'Ignore',
                       //role: 'cancel'
                       //},
-                  {
-                      text: 'Ok',
-                      handler: () => {
+                 /// {
+                 ///     text: 'Ok',
+                 ///     handler: () => {
                           //TODO: Your logic here
                           //this.nav.push(DetailsPage, { message: data.message });
-                          console.log(data.message);
+                ///          console.log(data.message);
                           
-                      }
-                  }]
-              });
-              confirmAlert.present();
+                ///      }
+                ///  }]
+             /// });
+            ///  confirmAlert.present();
           } else {
               //if user NOT using app and push notification comes
               //TODO: Your logic on click of push notification directly
@@ -528,7 +530,9 @@ export class MyApp {
   }
 
   logout() {
-    this.authService.logout();
+      this.nav.setRoot(MarketPage).then(()=>{    this.authService.logout();
+});
+      
     //this.nav.setRoot(LoginPage);
   }
 

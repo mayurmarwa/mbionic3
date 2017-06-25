@@ -33,8 +33,17 @@ var AuthService = (function () {
         return this.af.auth;
     };
     AuthService.prototype.login = function (mode) {
-        if (mode === AuthMode.GooglePlus)
-            return this.signInWithGoogle();
+        if (mode === AuthMode.GooglePlus) {
+            if (!this.platform.is('cordova'))
+                return this.signInWithProvider(AuthProviders.Google);
+            return this.googlePlus.login({
+                'scopes': 'email profile',
+                'webClientId': '639273963235-levd0bsp6858tj6dcgovohs25ehpmmbd.apps.googleusercontent.com'
+            }).then(function (res) {
+                return firebase.auth().signInWithCredential(firebase.auth.GoogleAuthProvider.credential(res.idToken));
+            }).catch(function (error) { return Promise.reject(error); });
+        }
+        //return this.signInWithGoogle();
         /**if (mode == AuthMode.Facebook)
           return this.signInWithFacebook();
     
@@ -43,7 +52,13 @@ var AuthService = (function () {
     };
     AuthService.prototype.login2 = function () {
         //if (mode == AuthMode.Facebook)
-        return this.signInWithFacebook();
+        //return this.signInWithFacebook();
+        if (!this.platform.is('cordova'))
+            return this.signInWithProvider(AuthProviders.Facebook);
+        this.fb.login(['email', 'public_profile'])
+            .then(function (res) {
+            firebase.auth().signInWithCredential(firebase.auth.FacebookAuthProvider.credential(res.authResponse.accessToken));
+        }).catch(function (error) { return Promise.reject(error); });
     };
     AuthService.prototype.loginUser = function (newEmail, newPassword) {
         console.log("loginUser");
@@ -51,30 +66,30 @@ var AuthService = (function () {
     };
     /**
      * sign in wiht google+
-     */
-    AuthService.prototype.signInWithGoogle = function () {
-        var _this = this;
+     
+    private signInWithGoogle() {
         if (!this.platform.is('cordova'))
             return this.signInWithProvider(AuthProviders.Google);
+
         return this.googlePlus.login({
             'scopes': 'email profile',
-            'webClientId': '79899062384-7monv7m7lgkhmsm5n6ng45qljb2o1dhq.apps.googleusercontent.com'
-        }).then(function (res) {
-            return _this.signInWithCredential(firebase.auth.GoogleAuthProvider.credential(res.idToken));
-        }, function (error) { return Promise.reject(error); });
-    };
+            'webClientId': '639273963235-levd0bsp6858tj6dcgovohs25ehpmmbd.apps.googleusercontent.com'
+        }).then(res => {
+            return firebase.auth().signInWithCredential(firebase.auth.GoogleAuthProvider.credential(res.idToken));
+        }).catch((error) => Promise.reject(error));
+    }*/
     /**
      * sign in with facebook
-     */
-    AuthService.prototype.signInWithFacebook = function () {
-        var _this = this;
+     
+    private signInWithFacebook() {
         if (!this.platform.is('cordova'))
             return this.signInWithProvider(AuthProviders.Facebook);
-        this.fb.login(['email', 'public_profile'])
-            .then(function (res) {
-            return _this.signInWithCredential(firebase.auth.FacebookAuthProvider.credential(res.authResponse.accessToken));
-        }, function (error) { return Promise.reject(error); });
-    };
+
+        return this.fb.login(['email', 'public_profile'])
+            .then((res: FacebookLoginResponse) => {
+                return firebase.auth().signInWithCredential(firebase.auth.FacebookAuthProvider.credential(res.authResponse.accessToken));
+            }).catch((error) => Promise.reject(error));
+    }*/
     /**
      * sign in with github
      */
@@ -82,17 +97,17 @@ var AuthService = (function () {
         if (method === void 0) { method = AuthMethods.Popup; }
         return this.af.auth.login({ provider: provider, method: method });
     };
-    AuthService.prototype.signInWithCredential = function (credential) {
-        return firebase.auth().signInWithCredential(credential);
-    };
+    //private signInWithCredential(credential) {
+    //   return firebase.auth().signInWithCredential(credential);
+    //}
     AuthService.prototype.createAccount = function (data) {
         return this.af.database.object('users/' + data.uid).set({
-            uid: data.auth.uid,
-            email: data.auth.email,
-            name: data.auth.displayName,
-            photoURL: data.auth.photoURL,
+            uid: data.uid,
+            email: data.email,
+            name: data.displayName,
+            photoURL: data.photoURL,
             createdAt: firebase.database['ServerValue']['TIMESTAMP'],
-            providerData: data.auth.providerData[0]
+            providerData: data.providerData[0]
         });
     };
     AuthService.prototype.createAccount2 = function (authdata, userdata) {
@@ -105,6 +120,9 @@ var AuthService = (function () {
             uid: authdata.auth.uid,
             //photoURL: data.auth.photoURL,
             createdAt: firebase.database['ServerValue']['TIMESTAMP'],
+            profiledone: true,
+            isApproved: false
+            //providerData: authdata.auth.provider
         });
     };
     AuthService.prototype.logout = function () {

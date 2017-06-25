@@ -23,7 +23,7 @@ export class DirectoryProvider {
   }
 
   setDirectory() {
-      this.directoryRef.on('value', countryList => {
+      this.directoryRef.orderByChild("Name").on('value', countryList => {
           let countries = [];
 
           countryList.forEach(country => {

@@ -8,7 +8,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, ToastController } from 'ionic-angular';
 import { FormBuilder, Validators } from '@angular/forms';
 import { VerifyMobilePage } from '../verify-mobile/verify-mobile';
 import { EmailValidator } from '../../validators/email';
@@ -19,9 +19,10 @@ import { EmailValidator } from '../../validators/email';
   Ionic pages and navigation.
 */
 var SignupPage = (function () {
-    function SignupPage(nav, formBuilder) {
+    function SignupPage(nav, formBuilder, toastCtrl) {
         this.nav = nav;
         this.formBuilder = formBuilder;
+        this.toastCtrl = toastCtrl;
         this.emailChanged = false;
         this.passwordChanged = false;
         this.submitAttempt = false;
@@ -51,10 +52,15 @@ var SignupPage = (function () {
     SignupPage.prototype.signupUser = function () {
         this.submitAttempt = true;
         if (!this.signupForm.valid) {
-            console.log(this.signupForm.value);
+            var toast = this.toastCtrl.create({
+                message: 'Invalid Entries',
+                duration: 2000,
+                position: 'middle'
+            });
+            toast.present();
         }
         else {
-            this.nav.push(VerifyMobilePage, { form: this.signupForm });
+            this.nav.push(VerifyMobilePage, { form: this.signupForm, type: "email" });
         }
     };
     SignupPage.prototype.ionViewDidLoad = function () {
@@ -68,7 +74,8 @@ SignupPage = __decorate([
         templateUrl: 'signup.html'
     }),
     __metadata("design:paramtypes", [NavController,
-        FormBuilder])
+        FormBuilder,
+        ToastController])
 ], SignupPage);
 export { SignupPage };
 //# sourceMappingURL=signup.js.map

@@ -8,68 +8,49 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform, LoadingController, AlertController } from 'ionic-angular';
+import { Nav, App, Platform, LoadingController, AlertController, ToastController, Keyboard, IonicApp, MenuController } from 'ionic-angular';
 import { Push } from '@ionic-native/push';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { Market } from '@ionic-native/market';
 import firebase from 'firebase';
 import { TabsPage } from '../pages/tabs/tabs';
+import { WaitingApproval } from '../pages/waiting-approval/waiting-approval';
 import { AboutPage } from '../pages/about/about';
 import { LoginPage } from '../pages/login/login';
 import { TabProfilePage } from '../pages/tab-profile/tab-profile';
 import { MyProductsPage } from '../pages/my-products/my-products';
+import { CreateProfilePage } from '../pages/create-profile/create-profile';
 import { PostBuyRequirementsPage } from '../pages/post-buy-requirements/post-buy-requirements';
 import { BrowseRequirementsPage } from '../pages/browse-requirements/browse-requirements';
 import { DirectoryPage } from '../pages/directory/directory';
 import { SpeedDialPage } from '../pages/speed-dial/speed-dial';
-import { SettingsPage } from '../pages/settings/settings';
-import { Storage } from '@ionic/storage';
+//import { SettingsPage } from '../pages/settings/settings';
+//import { Storage } from '@ionic/storage';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { AuthService } from '../providers/auth.service';
+import { DirectoryProvider } from '../providers/directory-provider';
 var MyApp = (function () {
-    function MyApp(platform, loadingCtrl, authService, storage, alertCtrl, socialSharing, pushplugin, splashScreen, statusBar) {
-        var _this = this;
+    function MyApp(platform, app, loadingCtrl, authService, alertCtrl, toastCtrl, menuCtrl, keyboard, ionicApp, socialSharing, pushplugin, splashScreen, directoryData, statusBar, market) {
         this.platform = platform;
+        this.app = app;
         this.loadingCtrl = loadingCtrl;
         this.authService = authService;
-        this.storage = storage;
         this.alertCtrl = alertCtrl;
+        this.toastCtrl = toastCtrl;
+        this.menuCtrl = menuCtrl;
+        this.keyboard = keyboard;
+        this.ionicApp = ionicApp;
         this.socialSharing = socialSharing;
         this.pushplugin = pushplugin;
         this.splashScreen = splashScreen;
+        this.directoryData = directoryData;
         this.statusBar = statusBar;
+        this.market = market;
+        this.version = "1.0.1";
         this.initializeApp();
-        var loading = this.loadingCtrl.create();
-        loading.present();
-        this.authService.getAuth()
-            .map(function (state) { return !!state; })
-            .subscribe(function (authenticated) {
-            loading.dismiss();
-            if (authenticated) {
-                _this.currentuser = firebase.auth().currentUser;
-                _this.storage.ready().then(function () {
-                    // set a key/value
-                    _this.storage.set('currentuser', JSON.stringify(_this.currentuser)).catch(function (err) {
-                        return console.log(err);
-                    });
-                    // Or to get a key/value pair
-                    // this.storage.get('currentuser').then((val) => {
-                    //     console.log('Current User', JSON.parse(val));
-                    //})
-                    _this.initPushNotification();
-                }).catch(function (err) {
-                    return console.log(err);
-                });
-                // console.log(this.currentuser);
-                _this.rootPage = TabsPage;
-            }
-            // else { this.rootPage = LoginPage; }
-            _this.rootPage = (authenticated) ? TabsPage : LoginPage;
-        }, function (error) {
-            loading.dismiss();
-            _this.rootPage = LoginPage;
-            console.log('Error: ' + JSON.stringify(error));
-        });
+        this.loading = this.loadingCtrl.create();
+        //this.loading.present().then(() => { 
         // used for an example of ngFor and navigation
         this.openPages = [
             { title: 'Home', component: TabsPage, icon: 'home' }
@@ -81,9 +62,10 @@ var MyApp = (function () {
             { title: 'My Products', component: MyProductsPage, icon: 'products' },
             { title: 'Directory', component: DirectoryPage, icon: 'directory' },
             { title: 'Speed Dial', component: SpeedDialPage, icon: 'dialer' },
-            { title: 'Settings', component: SettingsPage, icon: 'settings' },
+            //{ title: 'Settings', component: SettingsPage, icon: 'settings' },        
             { title: 'About', component: AboutPage, icon: 'about' },
         ];
+        // });
     }
     MyApp.prototype.initializeApp = function () {
         var _this = this;
@@ -91,7 +73,290 @@ var MyApp = (function () {
             // Okay, so the platform is ready and our plugins are available.
             // Here you can do any higher level native things you might need.
             _this.statusBar.styleDefault();
-            _this.splashScreen.hide();
+            _this.authService.getAuth()
+                .map(function (state) { return !!state; })
+                .subscribe(function (authenticated) {
+                if (authenticated) {
+                    _this.currentuser = firebase.auth().currentUser;
+                    var toast = _this.toastCtrl.create({
+                        message: 'Signing in, please wait...',
+                        duration: 1500,
+                        position: 'bottom'
+                    });
+                    toast.present();
+                    _this.sub1 = _this.authService.getFullProfile(_this.currentuser.uid).first()
+                        .subscribe(function (user) {
+                        console.log(user);
+                        if (user.profiledone) {
+                            if (user.isApproved) {
+                                setTimeout(function () {
+                                    _this.splashScreen.hide();
+                                }, 500);
+                                _this.currentprofile = user;
+                                //console.log(user);
+                                _this.rootPage = TabsPage;
+                            }
+                            else {
+                                setTimeout(function () {
+                                    _this.splashScreen.hide();
+                                }, 500);
+                                _this.currentprofile = user;
+                                //console.log(user);
+                                _this.rootPage = WaitingApproval;
+                            }
+                        }
+                        else {
+                            console.log(user);
+                            _this.authService.createAccount(_this.currentuser)
+                                .then(function (_) {
+                                //this.loading.dismiss().then(() => {
+                                //console.log(error);
+                                setTimeout(function () {
+                                    _this.splashScreen.hide();
+                                }, 500);
+                                _this.rootPage = CreateProfilePage;
+                                //});
+                            }).catch(function (error) {
+                                setTimeout(function () {
+                                    _this.splashScreen.hide();
+                                }, 500);
+                                var alert = _this.alertCtrl.create({
+                                    title: 'Error! Try Again',
+                                    message: error.message || 'Unknown error',
+                                    enableBackdropDismiss: false,
+                                    buttons: [
+                                        {
+                                            text: 'ok',
+                                            role: 'cancel',
+                                            handler: function () {
+                                                _this.alert = null;
+                                            }
+                                        }
+                                    ]
+                                });
+                                alert.present();
+                            });
+                        }
+                    }, function (error) {
+                        //loading.dismiss();
+                        setTimeout(function () {
+                            _this.splashScreen.hide();
+                        }, 500);
+                        var alert = _this.alertCtrl.create({
+                            title: 'Network Error! Try Again',
+                            message: error.message || 'Unknown error',
+                            enableBackdropDismiss: false,
+                            buttons: [
+                                {
+                                    text: 'ok',
+                                    role: 'cancel',
+                                    handler: function () {
+                                        _this.alert = null;
+                                    }
+                                }
+                            ]
+                        });
+                        alert.present();
+                    });
+                    _this.directoryData.setDirectory();
+                    _this.checkUpdate();
+                    _this.initPushNotification();
+                    // console.log(this.currentuser);
+                }
+                else {
+                    //this.loading.dismiss().then(() => {
+                    //console.log(error);
+                    //if (this.currentprofile) {
+                    //this.sub1.unsubscribe();
+                    //}
+                    setTimeout(function () {
+                        _this.splashScreen.hide();
+                    }, 500);
+                    _this.rootPage = LoginPage;
+                    //}); 
+                }
+                //this.rootPage = (authenticated) ? TabsPage : LoginPage;
+            }, function (error) {
+                //this.loading.dismiss().then(() => {
+                //console.log(error);
+                setTimeout(function () {
+                    _this.splashScreen.hide();
+                }, 500);
+                _this.rootPage = LoginPage;
+                //});
+                console.log('Error: ' + JSON.stringify(error));
+            });
+            /*this.platform.registerBackButtonAction(() => {
+    
+    
+                //uncomment this and comment code below to to show toast and exit app
+                // if (this.backButtonPressedOnceToExit) {
+                //   this.platform.exitApp();
+                // } else if (this.nav.canGoBack()) {
+                //   this.nav.pop({});
+                // } else {
+                //   this.showToast();
+                //   this.backButtonPressedOnceToExit = true;
+                //   setTimeout(() => {
+    
+                //     this.backButtonPressedOnceToExit = false;
+                //   },2000)
+                // }
+    
+                // let navi = this.app.getActiveNav();
+                //if (navi.canGoBack()) { //Can we go back?
+                //  navi.pop();
+                //} else {
+                if (this.alert) {
+                    this.alert.dismiss();
+                    this.alert = null;
+                } else {
+                    this.showAlert();
+                }
+                //}
+            });*/
+            _this.platform.registerBackButtonAction(function () {
+                if (_this.keyboard.isOpen()) {
+                    _this.keyboard.close();
+                    return;
+                }
+                var activePortal = _this.ionicApp._loadingPortal.getActive() ||
+                    _this.ionicApp._modalPortal.getActive() ||
+                    _this.ionicApp._toastPortal.getActive() ||
+                    _this.ionicApp._overlayPortal.getActive();
+                if (activePortal) {
+                    activePortal.dismiss();
+                    return;
+                }
+                else if (_this.menuCtrl.isOpen()) {
+                    _this.menuCtrl.close();
+                    return;
+                }
+                var view = _this.nav.getActive();
+                var activeVC = _this.nav.getActive();
+                var page = activeVC.instance;
+                if (!(page instanceof TabsPage)) {
+                    if (_this.nav.canGoBack() || view && view.isOverlay) {
+                        _this.nav.pop();
+                    }
+                    else {
+                        _this.showAlert();
+                    }
+                    return;
+                }
+                var tabs = _this.app.getActiveNav();
+                console.log(tabs);
+                //let activeNav = tabs.getSelected();
+                if (!tabs.canGoBack()) {
+                    console.log('Exiting app due to back button press at the bottom of current tab\'s navigation stack');
+                    return _this.showAlert();
+                }
+                console.log('Detected a back button press - popping a view from the current tab\'s navigation stack');
+                return tabs.pop();
+            }, 0);
+        });
+    };
+    MyApp.prototype.showAlert = function () {
+        var _this = this;
+        this.alert = this.alertCtrl.create({
+            title: 'Exit?',
+            message: 'Do you want to exit the app?',
+            buttons: [
+                {
+                    text: 'Cancel',
+                    role: 'cancel',
+                    handler: function () {
+                        _this.alert = null;
+                    }
+                },
+                {
+                    text: 'Exit',
+                    handler: function () {
+                        _this.platform.exitApp();
+                    }
+                }
+            ]
+        });
+        this.alert.present();
+    };
+    /**
+    showToast() {
+        let toast = this.toastCtrl.create({
+            message: 'Press Again to exit',
+            duration: 2000,
+            position: 'bottom'
+        });
+  
+        toast.onDidDismiss(() => {
+            console.log('Dismissed toast');
+        });
+  
+        toast.present();
+    }
+      **/
+    MyApp.prototype.checkUpdate = function () {
+        var _this = this;
+        this.updateRef = firebase.database().ref('/update');
+        this.updateRef.on('value', function (snapshot) {
+            //console.log(snapshot.val());
+            //console.log(snapshot.val().version);
+            //console.log(this.version);
+            _this.sharetxt = snapshot.val().sharetxt;
+            _this.shareURL = snapshot.val().playURL;
+            if (!(snapshot.val().version === _this.version)) {
+                if (snapshot.val().force) {
+                    var alert_1 = _this.alertCtrl.create({
+                        title: 'Update Required !!!',
+                        message: 'Kindly update the application to continue',
+                        enableBackdropDismiss: false,
+                        buttons: [
+                            {
+                                text: 'Update',
+                                handler: function () {
+                                    if (!_this.platform.is('cordova')) {
+                                        window.open(snapshot.val().playURL, '_system');
+                                        _this.logout();
+                                    }
+                                    else {
+                                        _this.market.open('com.croogster.metbzr');
+                                        _this.logout();
+                                    }
+                                }
+                            }
+                        ]
+                    });
+                    alert_1.present();
+                }
+                else {
+                    var alert_2 = _this.alertCtrl.create({
+                        title: 'New Update Available!',
+                        message: 'Update the app for the best experience',
+                        buttons: [
+                            {
+                                text: 'Later',
+                                role: 'cancel',
+                                handler: function () {
+                                    console.log('Update Later');
+                                }
+                            },
+                            {
+                                text: 'Update',
+                                handler: function () {
+                                    if (!_this.platform.is('cordova')) {
+                                        window.open(snapshot.val().playURL, '_system');
+                                        _this.logout();
+                                    }
+                                    else {
+                                        _this.market.open('com.croogster.metbzr');
+                                        _this.logout();
+                                    }
+                                }
+                            }
+                        ]
+                    });
+                    alert_2.present();
+                }
+            }
         });
     };
     MyApp.prototype.initPushNotification = function () {
@@ -102,11 +367,11 @@ var MyApp = (function () {
         }
         var push = this.pushplugin.init({
             android: {
-                senderID: "79899062384"
+                senderID: "639273963235"
             },
             ios: {
                 alert: "true",
-                badge: false,
+                badge: true,
                 sound: "true"
             },
             windows: {}
@@ -139,17 +404,20 @@ var MyApp = (function () {
                 var confirmAlert = _this.alertCtrl.create({
                     title: 'New Notification',
                     message: data.message,
-                    buttons: [{
-                            text: 'Ignore',
-                            role: 'cancel'
-                        }, {
-                            text: 'View',
+                    buttons: [
+                        //{
+                        //text: 'Ignore',
+                        //role: 'cancel'
+                        //},
+                        {
+                            text: 'Ok',
                             handler: function () {
                                 //TODO: Your logic here
-                                //self.nav.push(DetailsPage, { message: data.message });
+                                //this.nav.push(DetailsPage, { message: data.message });
                                 console.log(data.message);
                             }
-                        }]
+                        }
+                    ]
                 });
                 confirmAlert.present();
             }
@@ -178,7 +446,7 @@ var MyApp = (function () {
         //this.nav.setRoot(LoginPage);
     };
     MyApp.prototype.shareApp = function () {
-        this.socialSharing.share("Testing, sharing this from inside an app I'm building right now", null, null, "https://ionicframework.com/docs/v2/native/social-sharing/");
+        this.socialSharing.share(this.sharetxt, null, null, this.shareURL);
     };
     return MyApp;
 }());
@@ -191,14 +459,20 @@ MyApp = __decorate([
         templateUrl: 'app.html'
     }),
     __metadata("design:paramtypes", [Platform,
+        App,
         LoadingController,
         AuthService,
-        Storage,
         AlertController,
+        ToastController,
+        MenuController,
+        Keyboard,
+        IonicApp,
         SocialSharing,
         Push,
         SplashScreen,
-        StatusBar])
+        DirectoryProvider,
+        StatusBar,
+        Market])
 ], MyApp);
 export { MyApp };
 //# sourceMappingURL=app.component.js.map

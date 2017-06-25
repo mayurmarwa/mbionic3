@@ -10,6 +10,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { AngularFire } from 'angularfire2';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/of';
 /*
   Generated class for the Prices page.
 
@@ -22,14 +24,50 @@ var PricesPage = (function () {
         this.navParams = navParams;
         this.af = af;
         this.segment = "mcx";
-        this.lmeList = this.af.database.list('/prices/lme');
-        this.mcxList = this.af.database.list('/prices/mcx');
     }
     PricesPage.prototype.ionViewDidLoad = function () {
         console.log('ionViewDidLoad PricesPage');
     };
-    PricesPage.prototype.updatePriceList = function () {
-        console.log(this.segment);
+    PricesPage.prototype.ionViewWillEnter = function () {
+        var _this = this;
+        console.log("prices will enter");
+        this.sub1 = this.af.database.list('/prices/lme', {
+            query: {
+                orderByChild: 'time'
+            }
+        })
+            .subscribe(function (data) {
+            _this.lmeList = [];
+            data.forEach(function (obj) {
+                //console.log(obj.$key);
+                _this.lmeList.push(obj);
+            });
+            //this.requests.unsubscribe();
+            _this.lmeList = Observable.of(_this.lmeList.reverse());
+            //console.log(this.lmeList);
+        });
+        this.sub2 = this.af.database.list('/prices/mcx', {
+            query: {
+                orderByChild: 'time'
+            }
+        })
+            .subscribe(function (data) {
+            _this.mcxList = [];
+            data.forEach(function (obj) {
+                //console.log(obj);
+                _this.mcxList.push(obj);
+            });
+            //this.requests.unsubscribe();
+            _this.mcxList = Observable.of(_this.mcxList.reverse());
+            //console.log(this.mcxList);
+        });
+    };
+    PricesPage.prototype.ionViewWillLeave = function () {
+        //this.lme
+        //this.
+        //console.log("price will unload");
+        this.sub1.unsubscribe();
+        this.sub2.unsubscribe();
     };
     return PricesPage;
 }());

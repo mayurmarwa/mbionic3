@@ -205,6 +205,7 @@ export class SendEnquiryPage {
                         unit: this.enquiryForm.value.unit,
                         payment: this.enquiryForm.value.payment,
                         details: this.enquiryForm.value.details,
+                        unread: true,
                         timestamp: firebase.database['ServerValue']['TIMESTAMP']
                         //detials: this.productForm.value.name,
 

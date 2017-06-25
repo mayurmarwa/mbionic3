@@ -12,6 +12,7 @@ import { NavController, NavParams, AlertController, ModalController, LoadingCont
 import { AngularFire } from 'angularfire2';
 import { ProductPagePage } from '../product-page/product-page';
 import { FilterOptionsPage } from '../filter-options/filter-options';
+import { ProductData } from '../../providers/product-data';
 /*
   Generated class for the CategoryProducts page.
 
@@ -19,53 +20,102 @@ import { FilterOptionsPage } from '../filter-options/filter-options';
   Ionic pages and navigation.
 */
 var CategoryProductsPage = (function () {
-    function CategoryProductsPage(navCtrl, navParams, af, alertCtrl, modalCtrl, loadingCtrl) {
+    function CategoryProductsPage(navCtrl, navParams, productData, af, alertCtrl, modalCtrl, loadingCtrl) {
         var _this = this;
         this.navCtrl = navCtrl;
         this.navParams = navParams;
+        this.productData = productData;
         this.af = af;
         this.alertCtrl = alertCtrl;
         this.modalCtrl = modalCtrl;
         this.loadingCtrl = loadingCtrl;
+        this.end = false;
         this.loadingPopup = this.loadingCtrl.create({
             content: 'Loading...'
         });
-        this.loadingPopup.present();
         //this.category = navParams.get("category");
         this.catid = navParams.get("catid");
         this.title = navParams.get("cattitle");
+        //this.loadingPopup.present().then(() => {
         this.getProducts().then(function (data) { _this.buildArray(data); });
+        //});
         //this.buildArray(this.productList);
         //console.log(this.productList);
     }
+    CategoryProductsPage.prototype.doInfinite = function (infiniteScroll) {
+        //console.log(this.startNumber);
+        this.infiniteScroll = infiniteScroll;
+        console.log(this.productList.length);
+        if (this.productList.length > 20) {
+            if (this.productList.length < 40) {
+                for (var i = this.startNumber; i < this.productList.length; i++) {
+                    this.displayList.push(this.productList[i]);
+                    //this.displayList.push(i);
+                }
+            }
+            else {
+                for (var i = this.startNumber; i < this.endNumber; i++) {
+                    this.displayList.push(this.productList[i]);
+                    //this.displayList.push(i);
+                }
+            }
+            if (this.end) {
+                infiniteScroll.enable(false);
+            }
+            else {
+                this.startNumber = this.endNumber;
+                if (this.endNumber + 20 > this.productList.length) {
+                    this.endNumber = this.productList.length;
+                    this.end = true;
+                }
+                else {
+                    this.endNumber = this.endNumber + 20;
+                }
+            }
+        }
+        else {
+            infiniteScroll.enable(false);
+        }
+        //console.log("start", this.startNumber);
+        //console.log("i", i);
+        infiniteScroll.complete();
+    };
     CategoryProductsPage.prototype.getProducts = function () {
         var _this = this;
         return new Promise(function (resolve) {
-            _this.products = _this.af.database.list('/products', {
+            /**this.products = this.af.database.list('/products', {
                 query: {
                     orderByChild: "catid",
-                    equalTo: _this.catid
+                    equalTo: this.catid
                 }, preserveSnapshot: true
-            }).first().subscribe(function (snapshots) {
-                _this.productList = [];
-                _this.keys = [];
-                snapshots.forEach(function (snapshot) {
-                    _this.arrkey = _this.productList.push(snapshot.val());
-                    _this.keys.push(snapshot.key);
+            }).first().subscribe(snapshots => {
+                this.productList = [];
+                this.keys = [];
+                snapshots.forEach(snapshot => {
+                    this.arrkey = this.productList.push(snapshot.val());
+                    this.keys.push(snapshot.key);
                     //console.log(snapshot.key);
-                }, function (error) {
+                }, (error) => {
                     //loading.dismiss();
                     console.log('Error: ' + JSON.stringify(error));
                 });
-                for (var i in _this.productList) {
-                    _this.productList[i].key = _this.keys[i];
-                }
-                resolve(_this.productList);
-                // console.log(random);
-                //if (random == 1) {
-                //   this.buildArray(this.productList);
-                // }
+                for (var i in this.productList) {
+                    this.productList[i].key = this.keys[i];
+                } **/
+            _this.productList = _this.productData.products.filter(function (item) {
+                //console.log(item);
+                return (item['catid'] === _this.catid);
             });
+            _this.backupList = _this.productData.products.filter(function (item) {
+                //console.log(item);
+                return (item['catid'] === _this.catid);
+            });
+            resolve(_this.productList);
+            // console.log(random);
+            //if (random == 1) {
+            //   this.buildArray(this.productList);
+            // }
+            //})
         });
     };
     CategoryProductsPage.prototype.ionViewDidLoad = function () {
@@ -155,28 +205,54 @@ var CategoryProductsPage = (function () {
             //console.log(item);
             return item[filter];
         });
+        this.buildArray(this.productList);
     };
     CategoryProductsPage.prototype.buildArray = function (array) {
         var _this = this;
         return new Promise(function (resolve) {
-            var m = array.length, t, i;
+            _this.startNumber = 20;
+            _this.endNumber = 40;
+            _this.end = false;
+            _this.displayList = [];
+            if (_this.infiniteScroll) {
+                _this.infiniteScroll.enable(true);
+            }
+            /**let m = array.length, t, i;
+  
             // While there remain elements to shuffle�
             while (m) {
+  
                 // Pick a remaining element�
                 i = Math.floor(Math.random() * m--);
+  
                 // And swap it with the current element.
                 t = array[m];
                 array[m] = array[i];
                 array[i] = t;
             }
-            _this.productList = array;
-            _this.backupList = array;
-            _this.loadingPopup.dismiss();
+  
+            this.productList = array;
+            this.backupList = array;**/
+            if (array.length < 20) {
+                for (var i = 0; i < array.length; i++) {
+                    _this.displayList.push(array[i]);
+                    //this.displayList.push(i);
+                }
+            }
+            else {
+                for (var i = 0; i < 20; i++) {
+                    _this.displayList.push(array[i]);
+                    //this.displayList.push(i);
+                }
+            }
+            //this.loadingPopup.dismiss().then(() => {
             resolve(true);
+            //});
         });
     };
     CategoryProductsPage.prototype.initializeItems = function () {
         this.productList = this.backupList;
+        this.buildArray(this.productList);
     };
     CategoryProductsPage.prototype.showFilter = function () {
         var _this = this;
@@ -184,7 +260,9 @@ var CategoryProductsPage = (function () {
         showFilter.present();
         showFilter.onDidDismiss(function (data) {
             //This will log the form entered by user in add modal.
-            _this.filterList(data);
+            if (data) {
+                _this.filterList(data);
+            }
         });
     };
     CategoryProductsPage.prototype.filterList = function (data) {
@@ -235,7 +313,7 @@ var CategoryProductsPage = (function () {
         if (data.mm && data.mmval) {
             this.productList = this.productList.filter(function (item) {
                 //console.log(item);
-                return (item['mm'] >= data.mmval.lower && item['mm'] <= data.mmval.upper);
+                return (item['mm'] >= (data.mmval.lower) && item['mm'] <= (data.mmval.upper));
             });
         }
         if (data.weight && data.weightval) {
@@ -246,7 +324,12 @@ var CategoryProductsPage = (function () {
         }
         if (data.lgth && data.lgthval) {
             this.productList = this.productList.filter(function (item) {
-                return (item["length"] >= data.lgthval.lower && item["length"] <= data.lgthval.upper);
+                return (item["length"] >= (data.lgthval.lower / 100) && item["length"] <= (data.lgthval.upper / 100));
+            });
+        }
+        if (data.lgth2 && data.lgth2val) {
+            this.productList = this.productList.filter(function (item) {
+                return (item["length"] >= data.lgth2val.lower && item["length"] <= data.lgth2val.upper);
             });
         }
         if (data.wdth && data.wdthval) {
@@ -257,10 +340,12 @@ var CategoryProductsPage = (function () {
         }
         if (data.thickness && data.thicknessval) {
             this.productList = this.productList.filter(function (item) {
-                //console.log(item);
+                console.log(data.thicknessval);
                 return (item['thickness'] >= data.thicknessval.lower && item['thickness'] <= data.thicknessval.upper);
             });
         }
+        console.log(this.productList.length);
+        this.buildArray(this.productList);
     };
     return CategoryProductsPage;
 }());
@@ -269,7 +354,7 @@ CategoryProductsPage = __decorate([
         selector: 'page-category-products',
         templateUrl: 'category-products.html'
     }),
-    __metadata("design:paramtypes", [NavController, NavParams, AngularFire, AlertController, ModalController, LoadingController])
+    __metadata("design:paramtypes", [NavController, NavParams, ProductData, AngularFire, AlertController, ModalController, LoadingController])
 ], CategoryProductsPage);
 export { CategoryProductsPage };
 //# sourceMappingURL=category-products.js.map

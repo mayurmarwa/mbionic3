@@ -9,9 +9,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { Component } from '@angular/core';
 import { NavController, NavParams, LoadingController } from 'ionic-angular';
-import { AngularFire } from 'angularfire2';
 import { EnquiryDetailsPage } from '../enquiry-details/enquiry-details';
 import { Storage } from '@ionic/storage';
+import firebase from 'firebase';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/of';
 /*
   Generated class for the Enquiries page.
 
@@ -19,52 +21,105 @@ import { Storage } from '@ionic/storage';
   Ionic pages and navigation.
 */
 var EnquiriesPage = (function () {
-    function EnquiriesPage(navCtrl, navParams, af, storage, loadingCtrl) {
-        var _this = this;
+    function EnquiriesPage(navCtrl, navParams, storage, loadingCtrl) {
+        //storage.ready().then(() => {
+        //storage.get('currentuser').then((val) => {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
-        this.af = af;
         this.storage = storage;
         this.loadingCtrl = loadingCtrl;
-        storage.ready().then(function () {
-            storage.get('currentuser').then(function (val) {
-                _this.currentuser = JSON.parse(val);
-                _this.segment = "received";
-                _this.currentuserid = _this.currentuser.uid;
-                //this.enquiryList = af.database.list('/users/' + this.currentuser.uid + '/enquiries');
-            })
-                .catch(function (err) {
-                return console.log(err);
-            });
-        }).catch(function (err) {
-            return console.log(err);
-        });
+        this.currentuser = firebase.auth().currentUser;
+        //this.currentuserid = this.currentuser.uid;
+        this.segment = "received";
+        //setTimeout(() => {
+        this.setData();
+        //},3000);
+        //this.enquiryList = af.database.list('/users/' + this.currentuser.uid + '/enquiries');
+        //})
+        //  .catch((err) =>
+        //    console.log(err));
+        //}).catch((err) =>
+        //  console.log(err));     
     }
     EnquiriesPage.prototype.ionViewDidLoad = function () {
         console.log('ionViewDidLoad EnquiriesPage');
+        this.segment = "received";
+        var loading = this.loadingCtrl.create({
+            content: 'Updating...'
+        });
+        loading.present();
+        setTimeout(function () {
+            loading.dismiss();
+        }, 1500);
+    };
+    EnquiriesPage.prototype.setData = function () {
+        var _this = this;
+        this.enquiryListref = firebase.database().ref('/users/' + this.currentuser.uid + '/enquiries').orderByChild("type").equalTo("received");
+        //this.enquiryList = this.af.database.list('/users/' + this.currentuserid + '/enquiries', {
+        //   query: {
+        //       orderByChild: "type",
+        //       equalTo: this.segment
+        //   }
+        //});
+        this.enquiryListref.on('value', function (snapshot) {
+            //this.enquiryList = this.af.database.list('/users/' + this.currentuserid + '/enquiries', {
+            //query: {
+            //    orderByChild: "type",
+            //    equalTo: this.segment
+            // }
+            //});
+            //console.log("received");
+            //this.enqListRev = [];
+            _this.enquiryList = [];
+            _this.keys = [];
+            snapshot.forEach(function (country) {
+                _this.enquiryList.push(country.val());
+                _this.keys.push(country.key);
+            });
+            for (var i in _this.enquiryList) {
+                _this.enquiryList[i].key = _this.keys[i];
+            }
+            //this.enqListRev = this.enquiryList.reverse();
+            _this.enqListRev = Observable.of(_this.enquiryList.reverse());
+            console.log(_this.enqListRev);
+            _this.flag = true;
+        });
+        this.sentListref = firebase.database().ref('/users/' + this.currentuser.uid + '/enquiries').orderByChild("type").equalTo("sent");
+        //this.enquiryList = this.af.database.list('/users/' + this.currentuserid + '/enquiries', {
+        //   query: {
+        //       orderByChild: "type",
+        //       equalTo: this.segment
+        //   }
+        //});
+        this.sentListref.on('value', function (snapshot) {
+            //this.sentListRev = [];
+            _this.sentList = [];
+            _this.keys2 = [];
+            snapshot.forEach(function (country) {
+                //console.log(country.key);
+                _this.sentList.push(country.val());
+                _this.keys2.push(country.key);
+            });
+            for (var i in _this.sentList) {
+                _this.sentList[i].key = _this.keys2[i];
+            }
+            //this.updateEnquiryList(2);
+            _this.sentListRev = Observable.of(_this.sentList.reverse());
+        });
     };
     EnquiriesPage.prototype.ionViewDidEnter = function () {
-        this.updateEnquiryList();
     };
     EnquiriesPage.prototype.openenquirypage = function (enquiry) {
         this.navCtrl.push(EnquiryDetailsPage, { enquiry: enquiry });
     };
-    EnquiriesPage.prototype.updateEnquiryList = function () {
-        console.log('ionViewDidEnter EnquiriesPage');
-        this.loadingPopup = this.loadingCtrl.create({
-            content: 'Updating...'
-        });
-        this.loadingPopup.present();
-        if (this.currentuserid) {
-            console.log(this.segment);
-            this.enquiryList = this.af.database.list('/users/' + this.currentuserid + '/enquiries', {
-                query: {
-                    orderByChild: "type",
-                    equalTo: this.segment
-                }
-            });
-            this.enqListRev = this.enquiryList.map(function (arr) { return arr.reverse(); });
-            this.loadingPopup.dismiss();
+    EnquiriesPage.prototype.updateEnquiryList = function (type) {
+        if (type == 1) {
+            this.enqListRev = this.enquiryList.reverse();
+            this.enqListRev = Observable.of(this.enqListRev);
+        }
+        else if (type == 2) {
+            this.sentListRev = this.sentList.reverse();
+            this.sentListRev = Observable.of(this.sentList.reverse());
         }
     };
     return EnquiriesPage;
@@ -74,7 +129,7 @@ EnquiriesPage = __decorate([
         selector: 'page-enquiries',
         templateUrl: 'enquiries.html'
     }),
-    __metadata("design:paramtypes", [NavController, NavParams, AngularFire, Storage, LoadingController])
+    __metadata("design:paramtypes", [NavController, NavParams, Storage, LoadingController])
 ], EnquiriesPage);
 export { EnquiriesPage };
 //# sourceMappingURL=enquiries.js.map

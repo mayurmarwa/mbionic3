@@ -61,7 +61,7 @@ export class VerifyMobilePage {
         //});
         //this.http.get('/API/V1/068c2321-12f2-11e7-9462-00163ef91450/SMS/' + this.signupForm.value.mobile + '/AUTOGEN/Registration').map(res => res.json()).subscribe(data => {
             //console.log(data);
-        this.http.get('http://2factor.in/API/V1/068c2321-12f2-11e7-9462-00163ef91450/SMS/' + this.signupForm.value.mobile + '/AUTOGEN/Registration').map(res => res.json()).subscribe(data => {
+        this.http.get('https://2factor.in/API/V1/068c2321-12f2-11e7-9462-00163ef91450/SMS/' + this.signupForm.value.mobile + '/AUTOGEN/Registration').map(res => res.json()).subscribe(data => {
             this.sessionid = data.Details;
             console.log(data);
 
@@ -110,7 +110,7 @@ export class VerifyMobilePage {
   resendOTP() {
 
       if (this.resend) {
-          this.http.get('http://2factor.in/API/V1/068c2321-12f2-11e7-9462-00163ef91450/SMS/' + this.signupForm.value.mobile + '/AUTOGEN/Registration').map(res => res.json()).subscribe(data => {
+          this.http.get('https://2factor.in/API/V1/068c2321-12f2-11e7-9462-00163ef91450/SMS/' + this.signupForm.value.mobile + '/AUTOGEN/Registration').map(res => res.json()).subscribe(data => {
               this.sessionid = data.Details;
 
               console.log(data);
@@ -174,7 +174,7 @@ export class VerifyMobilePage {
               //console.log(data);
 
           if (this.logintype === "email") {
-              this.http.get('http://2factor.in/API/V1/068c2321-12f2-11e7-9462-00163ef91450/SMS/VERIFY/' + this.sessionid + '/' + this.otpinput).map(res => res.json()).subscribe(data => {
+              this.http.get('https://2factor.in/API/V1/068c2321-12f2-11e7-9462-00163ef91450/SMS/VERIFY/' + this.sessionid + '/' + this.otpinput).map(res => res.json()).subscribe(data => {
                   if (data.Status == "Success") {
                       this.signupUser();
                   }
@@ -201,7 +201,7 @@ export class VerifyMobilePage {
           }
           else if (this.logintype === "social") {
 
-              this.http.get('http://2factor.in/API/V1/068c2321-12f2-11e7-9462-00163ef91450/SMS/VERIFY/' + this.sessionid + '/' + this.otpinput).map(res => res.json()).subscribe(data => {
+              this.http.get('https://2factor.in/API/V1/068c2321-12f2-11e7-9462-00163ef91450/SMS/VERIFY/' + this.sessionid + '/' + this.otpinput).map(res => res.json()).subscribe(data => {
                   if (data.Status == "Success") {
                       this.af.database.list('/users').update(this.userid,
                           {

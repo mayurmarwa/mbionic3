@@ -8,7 +8,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Component } from '@angular/core';
-import { NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
+import { NavController, NavParams, AlertController, LoadingController, ToastController } from 'ionic-angular';
 import { FormBuilder, Validators } from '@angular/forms';
 import { AngularFire } from 'angularfire2';
 import { Storage } from '@ionic/storage';
@@ -21,7 +21,7 @@ import firebase from 'firebase';
   Ionic pages and navigation.
 */
 var SendQuotationPage = (function () {
-    function SendQuotationPage(navCtrl, navParams, formBuilder, af, authService, alertCtrl, loadingCtrl, storage) {
+    function SendQuotationPage(navCtrl, navParams, formBuilder, af, authService, alertCtrl, loadingCtrl, storage, toastCtrl) {
         var _this = this;
         this.navCtrl = navCtrl;
         this.navParams = navParams;
@@ -31,39 +31,41 @@ var SendQuotationPage = (function () {
         this.alertCtrl = alertCtrl;
         this.loadingCtrl = loadingCtrl;
         this.storage = storage;
-        storage.ready().then(function () {
-            storage.get('currentuser').then(function (val) {
-                _this.currentuser = JSON.parse(val);
-                _this.requirement = navParams.get("requirement");
-                _this.postuserID = _this.requirement.uid;
-                _this.userEnquiries = af.database.list('/users/' + _this.currentuser.uid + '/enquiries');
-                _this.postuserEnquiries = af.database.list('/users/' + _this.postuserID + '/enquiries');
-                _this.authService.getFullProfile(_this.postuserID).first()
-                    .subscribe(function (user) {
-                    //loading.dismiss();
-                    // this.user.displayName = user.displayName;
-                    //this.user.email = user.email || user.providerData[0].email || 'Not set yet.';
-                    //this.user.photoURL = user.photoURL || this.user.photoURL;
-                    _this.poster = user;
-                    //console.log(this.seller);
-                }, function (error) {
-                    //loading.dismiss();
-                    console.log('Error: ' + JSON.stringify(error));
-                });
-                _this.authService.getFullProfile(_this.currentuser.uid).first()
-                    .subscribe(function (user) {
-                    //loading.dismiss();
-                    // this.user.displayName = user.displayName;
-                    //this.user.email = user.email || user.providerData[0].email || 'Not set yet.';
-                    //this.user.photoURL = user.photoURL || this.user.photoURL;
-                    _this.user = user;
-                    //console.log(this.user);
-                }, function (error) {
-                    //loading.dismiss();
-                    console.log('Error: ' + JSON.stringify(error));
-                });
-            });
+        this.toastCtrl = toastCtrl;
+        this.currentuser = firebase.auth().currentUser;
+        //storage.ready().then(() => {
+        //  storage.get('currentuser').then((val) => {
+        //this.currentuser = JSON.parse(val);
+        this.requirement = navParams.get("requirement");
+        this.postuserID = this.requirement.uid;
+        this.userEnquiries = af.database.list('/users/' + this.currentuser.uid + '/enquiries');
+        this.postuserEnquiries = af.database.list('/users/' + this.postuserID + '/enquiries');
+        this.authService.getFullProfile(this.postuserID).first()
+            .subscribe(function (user) {
+            //loading.dismiss();
+            // this.user.displayName = user.displayName;
+            //this.user.email = user.email || user.providerData[0].email || 'Not set yet.';
+            //this.user.photoURL = user.photoURL || this.user.photoURL;
+            _this.poster = user;
+            //console.log(this.seller);
+        }, function (error) {
+            //loading.dismiss();
+            console.log('Error: ' + JSON.stringify(error));
         });
+        this.authService.getFullProfile(this.currentuser.uid).first()
+            .subscribe(function (user) {
+            //loading.dismiss();
+            // this.user.displayName = user.displayName;
+            //this.user.email = user.email || user.providerData[0].email || 'Not set yet.';
+            //this.user.photoURL = user.photoURL || this.user.photoURL;
+            _this.user = user;
+            //console.log(this.user);
+        }, function (error) {
+            //loading.dismiss();
+            console.log('Error: ' + JSON.stringify(error));
+        });
+        //});
+        //});
         this.quoteForm = formBuilder.group({
             price: ['', Validators.required],
             delivery: ['', Validators.required],
@@ -106,41 +108,56 @@ var SendQuotationPage = (function () {
     SendQuotationPage.prototype.submitQuote = function () {
         var _this = this;
         this.loading = this.loadingCtrl.create({
-            content: 'Quote sent, check enquiries for details...'
+            content: 'Sending Quote...'
         });
-        this.userEnquiries.push(this.quoteForm.value).then(function (data) {
-            //console.log(this.enquiryForm.value);
-            _this.af.database.object('users/' + _this.currentuser.uid + '/enquiries/' + data.key).update({
-                type: 'sent',
-                otheruser: _this.postuserID,
-                otheruserName: _this.poster.name,
-                otheruserNo: _this.poster.mobile,
-                requirement: _this.requirement,
-                quote: _this.quoteForm.value,
-                timestamp: firebase.database['ServerValue']['TIMESTAMP']
-            }).then(function (info) {
+        this.loading.present().then(function () {
+            _this.userEnquiries.push(_this.quoteForm.value).then(function (data) {
+                //console.log(this.enquiryForm.value);
+                _this.af.database.object('users/' + _this.currentuser.uid + '/enquiries/' + data.key).update({
+                    type: 'sent',
+                    otheruser: _this.postuserID,
+                    otheruserName: _this.poster.name,
+                    otheruserNo: _this.poster.mobile,
+                    requirement: _this.requirement,
+                    quote: _this.quoteForm.value,
+                    timestamp: firebase.database['ServerValue']['TIMESTAMP']
+                }).then(function (info) {
+                    //console.log("successsent");
+                    //this.navCtrl.pop();
+                    //this.navCtrl.pop();
+                }).catch(function (info) {
+                    //console.log("successsent");
+                    //this.navCtrl.pop();
+                    //this.navCtrl.pop();
+                });
+                _this.af.database.object('users/' + _this.postuserID + '/enquiries/' + data.key).update({
+                    type: 'received',
+                    otheruser: _this.currentuser.uid,
+                    otheruserName: _this.user.name,
+                    otheruserNo: _this.user.mobile,
+                    requirement: _this.requirement,
+                    quote: _this.quoteForm.value,
+                    timestamp: firebase.database['ServerValue']['TIMESTAMP']
+                    //detials: this.productForm.value.name,
+                }).then(function (info) {
+                    _this.loading.dismiss().then(function () {
+                        var toast = _this.toastCtrl.create({
+                            message: 'Quote sent, check enquiries for details',
+                            duration: 2500,
+                            position: 'middle'
+                        });
+                        toast.present();
+                        _this.navCtrl.popToRoot();
+                    });
+                    //this.navCtrl.pop();
+                    //this.navCtrl.pop();
+                }).catch(function (info) {
+                    //console.log("successsent");
+                    //this.navCtrl.pop();
+                    //this.navCtrl.pop();
+                });
+            }).catch(function (info) {
                 //console.log("successsent");
-                //this.navCtrl.pop();
-                //this.navCtrl.pop();
-            });
-            _this.af.database.object('users/' + _this.postuserID + '/enquiries/' + data.key).update({
-                type: 'received',
-                otheruser: _this.currentuser.uid,
-                otheruserName: _this.user.name,
-                otheruserNo: _this.user.mobile,
-                requirement: _this.requirement,
-                quote: _this.quoteForm.value,
-                timestamp: firebase.database['ServerValue']['TIMESTAMP']
-                //detials: this.productForm.value.name,
-            }).then(function (info) {
-                _this.loading.present();
-                setTimeout(function () {
-                    _this.navCtrl.popToRoot({ animate: false });
-                    //this.navCtrl.setRoot(EnquiriesPage, { animate: false });
-                }, 1000);
-                setTimeout(function () {
-                    _this.loading.dismiss();
-                }, 3000);
                 //this.navCtrl.pop();
                 //this.navCtrl.pop();
             });
@@ -153,7 +170,7 @@ SendQuotationPage = __decorate([
         selector: 'page-send-quotation',
         templateUrl: 'send-quotation.html'
     }),
-    __metadata("design:paramtypes", [NavController, NavParams, FormBuilder, AngularFire, AuthService, AlertController, LoadingController, Storage])
+    __metadata("design:paramtypes", [NavController, NavParams, FormBuilder, AngularFire, AuthService, AlertController, LoadingController, Storage, ToastController])
 ], SendQuotationPage);
 export { SendQuotationPage };
 //# sourceMappingURL=send-quotation.js.map

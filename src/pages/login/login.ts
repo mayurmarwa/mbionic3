@@ -139,7 +139,7 @@ export class LoginPage {
     
     this.authService.login(mode)
         .then(() => {
-            this.loading.dismiss();
+            //this.loading.dismiss();
        /* this.authService.getFullProfile(data.uid)
           .first()
           .subscribe((user) => {

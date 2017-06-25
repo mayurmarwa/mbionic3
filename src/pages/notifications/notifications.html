@@ -14,5 +14,20 @@
 
 
 <ion-content  text-center padding>
-    <h1>No Notifications!</h1>
+    <div class="fullpage" *ngIf="!this.userlist">
+        <div class="content">
+            <div text-center>
+                <ion-spinner name="bubbles"></ion-spinner>
+            </div>
+        </div>
+    </div>
+
+
+    <ion-list>
+        <ion-item text-wrap *ngFor="let item of userlist | async">
+            <h3>{{item?.msg}}</h3>
+            <p>{{item?.createdAt | date:'dd MMM hh:mm a'}}</p>
+        </ion-item>
+
+    </ion-list>
 </ion-content>

@@ -8,16 +8,19 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Component } from '@angular/core';
+import { Platform, AlertController } from 'ionic-angular';
 import { MarketPage } from '../market/market';
 import { PricesPage } from '../prices/prices';
 import { EnquiriesPage } from '../enquiries/enquiries';
 import { SpeedDialPage } from '../speed-dial/speed-dial';
 import { MetalCalculatorPage } from '../metal-calculator/metal-calculator';
 var TabsPage = (function () {
-    function TabsPage() {
+    function TabsPage(platform, alertCtrl) {
         //this.tab1Root = TabChatsPage;
         //this.tab2Root = TabContactsPage;
         //this.tab3Root = TabProfilePage;
+        this.platform = platform;
+        this.alertCtrl = alertCtrl;
         this.tab1Root = MarketPage;
         this.tab2Root = PricesPage;
         this.tab3Root = SpeedDialPage;
@@ -31,7 +34,7 @@ TabsPage = __decorate([
         selector: 'page-tabs',
         templateUrl: 'tabs.html'
     }),
-    __metadata("design:paramtypes", [])
+    __metadata("design:paramtypes", [Platform, AlertController])
 ], TabsPage);
 export { TabsPage };
 //# sourceMappingURL=tabs.js.map

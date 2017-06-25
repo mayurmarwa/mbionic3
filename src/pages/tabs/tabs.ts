@@ -5,6 +5,9 @@ import { PricesPage } from '../prices/prices';
 import { EnquiriesPage } from '../enquiries/enquiries';
 import { SpeedDialPage } from '../speed-dial/speed-dial';
 import { MetalCalculatorPage } from '../metal-calculator/metal-calculator';
+import { AngularFire } from 'angularfire2';
+import firebase from 'firebase';
+
 
 
 @Component({
@@ -19,11 +22,18 @@ export class TabsPage {
   tab5Root: any;
   public alert: any;
 
+      public msgbadge: any;
+      public currentuser: any;
+      enqobject: any;
+      msgobject: any;
 
-  constructor(public platform: Platform, public alertCtrl: AlertController) {
+
+  constructor(public platform: Platform, public alertCtrl: AlertController, public af: AngularFire) {
     //this.tab1Root = TabChatsPage;
     //this.tab2Root = TabContactsPage;
     //this.tab3Root = TabProfilePage;
+              this.currentuser = firebase.auth().currentUser;
+      this.msgbadge = '';
 
       this.tab1Root = MarketPage;
       this.tab2Root = PricesPage;
@@ -31,10 +41,34 @@ export class TabsPage {
       this.tab4Root = EnquiriesPage;
       this.tab5Root = MetalCalculatorPage;
 
+        this.enqobject = this.af.database.object('/users/' + this.currentuser.uid + '/enquiries/').subscribe(snapshot => {
+            //console.log(snapshot.key)
+            console.log(snapshot)
+          if(snapshot.unreadrcv || snapshot.unreadsent ){
+            this.msgbadge = "!";
+          }
+            else{
+            this.msgbadge = "";
+          }
+       });
 
-
+       this.msgobject = this.af.database.object('/users/' + this.currentuser.uid + '/support/').subscribe(snapshot => {
+            //console.log(snapshot.key)
+            console.log(snapshot)
+          if(snapshot.unread ){
+            this.msgbadge = "!";
+          }
+           else{
+            this.msgbadge = "";
+          }
+       });
       
 }
 
+    ionViewWillUnload(){
+        console.log("tabs unload");
+        this.enqobject.unsubscribe();
+        this.msgobject.unsubscribe();
+    }
     
 }

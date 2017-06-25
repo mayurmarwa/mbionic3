@@ -105,6 +105,10 @@ export class MyProductsPage {
 
       this.navCtrl.push(SelectCategoryPage);
   }
+    addbulk() {
+
+      this.navCtrl.push('AddBulkPage');
+  }
   uploadProduct() {
 
       if (this.segment === 'add') {

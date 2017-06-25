@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Platform } from 'ionic-angular';
+import { Platform, NavController} from 'ionic-angular';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { GooglePlus } from '@ionic-native/google-plus';
 import { Storage } from '@ionic/storage';
@@ -28,6 +28,7 @@ export class AuthService {
         if (mode === AuthMode.GooglePlus) {
             if (!this.platform.is('cordova'))
              return  this.signInWithProvider(AuthProviders.Google);
+      
 
             return this.googlePlus.login({
                 'scopes': 'email profile',
@@ -139,6 +140,7 @@ export class AuthService {
             this.storage.remove('currentuser').then((val) => {
 
                 this.af.auth.logout();
+                
                 //this.enquiryList = af.database.list('/users/' + this.currentuser.uid + '/enquiries');
 
             })

@@ -12,7 +12,7 @@ import { NavController, NavParams, LoadingController, AlertController } from 'io
 import { ModalController } from 'ionic-angular';
 import { MemberDetailsPage } from '../member-details/member-details';
 import { PopoverController } from 'ionic-angular';
-import firebase from 'firebase';
+import { DirectoryProvider } from '../../providers/directory-provider';
 /*
   Generated class for the Directory page.
 
@@ -20,32 +20,35 @@ import firebase from 'firebase';
   Ionic pages and navigation.
 */
 var DirectoryPage = (function () {
-    function DirectoryPage(navCtrl, navParams, alertCtrl, modalCtrl, popoverCtrl, loadingCtrl) {
+    function DirectoryPage(navCtrl, directoryData, navParams, alertCtrl, modalCtrl, popoverCtrl, loadingCtrl) {
         this.navCtrl = navCtrl;
+        this.directoryData = directoryData;
         this.navParams = navParams;
         this.alertCtrl = alertCtrl;
         this.modalCtrl = modalCtrl;
         this.popoverCtrl = popoverCtrl;
         this.loadingCtrl = loadingCtrl;
+        this.directory = [];
+        this.directory = this.directoryData.directory;
+        this.loadedlist = this.directoryData.directory;
         this.loadingPopup = this.loadingCtrl.create({
             content: 'Updating...'
         });
-        this.loadingPopup.present();
-        this.directoryRef = firebase.database().ref('/directory');
-        this.getmembers();
+        //this.loadingPopup.present();
+        //this.directoryRef = firebase.database().ref('/directory');
+        // this.directoryRef.on('value', countryList => {
+        // let countries = [];
+        // countryList.forEach(country => {
+        //    countries.push(country.val());
+        //});
+        //this.directory = countries;
+        //this.loadedlist = countries;
+        //console.log("here", this.directory);
+        //this.loadingPopup.dismiss();
+        //});
+        //this.getmembers();
     }
     DirectoryPage.prototype.getmembers = function () {
-        var _this = this;
-        this.directoryRef.once('value').then(function (countryList) {
-            var countries = [];
-            countryList.forEach(function (country) {
-                countries.push(country.val());
-            });
-            _this.directory = countries;
-            _this.loadedlist = countries;
-            console.log("here", _this.directory);
-            _this.loadingPopup.dismiss();
-        });
     };
     DirectoryPage.prototype.initializeItems = function () {
         this.directory = this.loadedlist;
@@ -93,7 +96,7 @@ DirectoryPage = __decorate([
         selector: 'page-directory',
         templateUrl: 'directory.html'
     }),
-    __metadata("design:paramtypes", [NavController, NavParams, AlertController, ModalController, PopoverController, LoadingController])
+    __metadata("design:paramtypes", [NavController, DirectoryProvider, NavParams, AlertController, ModalController, PopoverController, LoadingController])
 ], DirectoryPage);
 export { DirectoryPage };
 //# sourceMappingURL=directory.js.map

@@ -8,7 +8,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Component } from '@angular/core';
-import { NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
+import { NavController, NavParams, AlertController, LoadingController, ToastController } from 'ionic-angular';
 import { FormBuilder, Validators } from '@angular/forms';
 import { AngularFire } from 'angularfire2';
 import firebase from 'firebase';
@@ -19,13 +19,14 @@ import firebase from 'firebase';
   Ionic pages and navigation.
 */
 var PostBuyRequirementsPage = (function () {
-    function PostBuyRequirementsPage(navCtrl, navParams, af, formBuilder, alertCtrl, loadingCtrl) {
+    function PostBuyRequirementsPage(navCtrl, navParams, af, formBuilder, alertCtrl, loadingCtrl, toastCtrl) {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
         this.af = af;
         this.formBuilder = formBuilder;
         this.alertCtrl = alertCtrl;
         this.loadingCtrl = loadingCtrl;
+        this.toastCtrl = toastCtrl;
         this.selecton = true;
         this.nameon = true;
         this.selectalloyoff = true;
@@ -50,19 +51,19 @@ var PostBuyRequirementsPage = (function () {
         });
     }
     PostBuyRequirementsPage.prototype.getGrades = function () {
-        if (this.selectedCat == "Stainless Steel Coils" || this.selectedCat == "Stainless Steel Sheets" || this.selectedCat == "Stainless Steel Packets" || this.selectedCat === "Stainless Steel Seamless Pipes" || this.selectedCat === "Stainless Steel Welded/ERW Pipes" || this.selectedCat === "Stainless Steel Electropolish Pipes" || this.selectedCat === "Stainless Steel Square & Rectangular Pipes" || this.selectedCat === "Stainless Steel Flats" || this.selectedCat == "Stainless Steel Angles" || this.selectedCat == "Stainless Steel Round Bars") {
+        if (this.selectedCat == "Stainless Steel Coils" || this.selectedCat == "Stainless Steel Sheets" || this.selectedCat == "Stainless Steel Packets" || this.selectedCat === "Stainless Steel Seamless Pipes" || this.selectedCat === "Stainless Steel Welded/ERW Pipes" || this.selectedCat === "Stainless Steel Semi-Welded/ERW Pipes" || this.selectedCat === "Stainless Steel Electropolish Pipes" || this.selectedCat === "Stainless Steel Square & Rectangular Pipes" || this.selectedCat === "Stainless Steel Flats" || this.selectedCat == "Stainless Steel Angles" || this.selectedCat == "Stainless Steel Round Bars") {
             this.selecton = true;
             this.nameon = true;
             this.selectalloyoff = true;
             this.gradecat = 1;
         }
-        else if (this.selectedCat === "Duplex & Super Duplex Coils" || this.selectedCat === "Duplex & Super Duplex Sheets" || this.selectedCat === "Duplex & Super Duplex Seamless Pipes" || this.selectedCat === "Duplex & Super Duplex Welded/ERW Pipes" || this.selectedCat === "Duplex & Super Duplex Electropolish Pipes" || this.selectedCat === "Duplex & Super Duplex Sqr. & Rect. Pipes" || this.selectedCat === "Duplex & Super Duplex Round Bars") {
+        else if (this.selectedCat === "Duplex & Super Duplex Coils" || this.selectedCat === "Duplex & Super Duplex Sheets" || this.selectedCat === "Duplex & Super Duplex Seamless Pipes" || this.selectedCat === "Duplex & Super Duplex Welded/ERW Pipes" || this.selectedCat === "Duplex & Super Duplex Semi-Welded/ERW Pipes" || this.selectedCat === "Duplex & Super Duplex Electropolish Pipes" || this.selectedCat === "Duplex & Super Duplex Sqr. & Rect. Pipes" || this.selectedCat === "Duplex & Super Duplex Round Bars") {
             this.selecton = true;
             this.nameon = true;
             this.selectalloyoff = true;
             this.gradecat = 2;
         }
-        else if (this.selectedCat === "Nickel Alloys Coils" || this.selectedCat === "Nickel Alloys Sheets" || this.selectedCat === "Nickel Alloys Seamless Pipes" || this.selectedCat === "Nickel Alloys Welded/ERW Pipes" || this.selectedCat === "Nickel Alloys Electropolish Pipes" || this.selectedCat === "Nickel Alloys Sqr. & Rect. Pipes" || this.selectedCat === "Nickel Alloys Round Bars") {
+        else if (this.selectedCat === "Nickel Alloys Coils" || this.selectedCat === "Nickel Alloys Sheets" || this.selectedCat === "Nickel Alloys Seamless Pipes" || this.selectedCat === "Nickel Alloys Welded/ERW Pipes" || this.selectedCat === "Nickel Alloys Semi-Welded/ERW Pipes" || this.selectedCat === "Nickel Alloys Electropolish Pipes" || this.selectedCat === "Nickel Alloys Sqr. & Rect. Pipes" || this.selectedCat === "Nickel Alloys Round Bars") {
             this.selecton = true;
             this.nameon = true;
             this.selectalloyoff = false;
@@ -138,22 +139,36 @@ var PostBuyRequirementsPage = (function () {
     PostBuyRequirementsPage.prototype.submitRequirement = function () {
         var _this = this;
         this.loading = this.loadingCtrl.create({
-            content: 'Requrement Posted, Going Home...'
+            content: 'Posting Requirement...'
         });
-        console.log(this.requirementForm.value);
-        this.requirements.push(this.requirementForm.value).then(function (data) {
-            console.log(data.key);
-            _this.af.database.object('users/' + _this.currentuser.uid + '/requirements/' + data.key).set({
-                islive: true,
-                details: _this.requirementForm.value
-            }).then(function (info) {
-                _this.loading.present();
-                setTimeout(function () {
-                    _this.navCtrl.pop({ animate: false });
-                }, 1000);
-                setTimeout(function () {
-                    _this.loading.dismiss();
-                }, 3000);
+        this.loading.present().then(function () {
+            console.log(_this.requirementForm.value);
+            _this.requirements.push(_this.requirementForm.value).then(function (data) {
+                console.log(data.key);
+                _this.af.database.object('users/' + _this.currentuser.uid + '/requirements/' + data.key).set({
+                    islive: true,
+                    details: _this.requirementForm.value
+                }).then(function () {
+                    _this.loading.dismiss().then(function () {
+                        var toast = _this.toastCtrl.create({
+                            message: 'Requirement posted. Check My Requirements for details...',
+                            duration: 3500,
+                            position: 'middle'
+                        });
+                        toast.present();
+                        _this.navCtrl.pop();
+                    });
+                })
+                    .catch(function (err) {
+                    _this.loading.dismiss().then(function () {
+                        console.log(err);
+                        var alert = _this.alertCtrl.create({
+                            message: err.message,
+                            buttons: [{ text: "Ok", role: 'cancel' }]
+                        });
+                        alert.present();
+                    });
+                });
             });
         });
     };
@@ -164,7 +179,7 @@ PostBuyRequirementsPage = __decorate([
         selector: 'page-post-buy-requirements',
         templateUrl: 'post-buy-requirements.html'
     }),
-    __metadata("design:paramtypes", [NavController, NavParams, AngularFire, FormBuilder, AlertController, LoadingController])
+    __metadata("design:paramtypes", [NavController, NavParams, AngularFire, FormBuilder, AlertController, LoadingController, ToastController])
 ], PostBuyRequirementsPage);
 export { PostBuyRequirementsPage };
 //# sourceMappingURL=post-buy-requirements.js.map

@@ -8,7 +8,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Component } from '@angular/core';
-import { NavController, NavParams, ActionSheetController, AlertController, LoadingController } from 'ionic-angular';
+import { NavController, NavParams, ActionSheetController, AlertController, ToastController } from 'ionic-angular';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Camera } from '@ionic-native/camera';
 import { AngularFire } from 'angularfire2';
@@ -22,18 +22,17 @@ import { MyProductsPage } from '../my-products/my-products';
   Ionic pages and navigation.
 */
 var AddProductPage = (function () {
-    function AddProductPage(navCtrl, navParams, af, formBuilder, authService, actionSheetCtrl, alertCtrl, loadingCtrl, camera) {
+    function AddProductPage(navCtrl, navParams, toastCtrl, af, formBuilder, authService, actionSheetCtrl, alertCtrl, camera) {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
+        this.toastCtrl = toastCtrl;
         this.af = af;
         this.formBuilder = formBuilder;
         this.authService = authService;
         this.actionSheetCtrl = actionSheetCtrl;
         this.alertCtrl = alertCtrl;
-        this.loadingCtrl = loadingCtrl;
         this.camera = camera;
         this.lastImage = null;
-        this.productImageURL = "/assets/img/noimage.png";
         this.mrateTrue = null;
         this.krateTrue = null;
         this.typeOD = true;
@@ -50,6 +49,7 @@ var AddProductPage = (function () {
         this.getGrades();
         this.compositiontxt = null;
         this.gradeval = "test";
+        this.selptype2 = "Standard";
         //this.catDetails = this.af.database.object('productcategories/' + this.catid);
         this.coilsForm = formBuilder.group({
             name: ['', Validators.required],
@@ -433,7 +433,6 @@ var AddProductPage = (function () {
             .subscribe(function (result) {
             _this.selectedGradeItem = result;
         }, function (error) {
-            //loading.dismiss();
             console.log('Error: ' + JSON.stringify(error));
         });
         this.compositiontxt = JSON.stringify(this.selectedGradeItem, this.replacer);
@@ -458,9 +457,6 @@ var AddProductPage = (function () {
     };
     AddProductPage.prototype.submitProduct = function (productForm) {
         var _this = this;
-        this.loading = this.loadingCtrl.create({
-            content: 'Submitting, Please Wait...'
-        });
         if (this.allValid && this.priceValid && this.imageValid) {
             console.log(productForm.value);
             this.products.push(productForm.value).then(function (data) {
@@ -487,15 +483,17 @@ var AddProductPage = (function () {
                                 productImage: _this.productImageURL
                             }).then(function (info) {
                                 //console.log("success");
-                                _this.loading.present();
-                                setTimeout(function () {
-                                    _this.navCtrl.popToRoot({ animate: false });
-                                    _this.navCtrl.push(MyProductsPage, { animate: false });
-                                    //this.navCtrl.pop({ animate: false });
-                                }, 1000);
-                                setTimeout(function () {
-                                    _this.loading.dismiss();
-                                }, 3000);
+                                var toast = _this.toastCtrl.create({
+                                    message: 'Product Uploaded Successfully',
+                                    duration: 2000,
+                                    position: 'middle'
+                                });
+                                toast.present().then(function () {
+                                    _this.navCtrl.popToRoot({ animate: false }).then(function () {
+                                        _this.navCtrl.push(MyProductsPage, { animate: false });
+                                    });
+                                });
+                                //this.navCtrl.pop({ animate: false });
                             });
                         }
                         else {
@@ -509,14 +507,16 @@ var AddProductPage = (function () {
                                 productImage: _this.productImageURL
                             }).then(function (info) {
                                 //console.log("success");
-                                _this.loading.present();
-                                setTimeout(function () {
-                                    _this.navCtrl.popToRoot({ animate: false });
-                                    _this.navCtrl.push(MyProductsPage, { animate: false });
-                                }, 1000);
-                                setTimeout(function () {
-                                    _this.loading.dismiss();
-                                }, 3000);
+                                var toast = _this.toastCtrl.create({
+                                    message: 'Product Uploaded Successfully',
+                                    duration: 2000,
+                                    position: 'middle'
+                                });
+                                toast.present().then(function () {
+                                    _this.navCtrl.popToRoot({ animate: false }).then(function () {
+                                        _this.navCtrl.push(MyProductsPage, { animate: false });
+                                    });
+                                });
                             });
                         }
                     });
@@ -525,7 +525,6 @@ var AddProductPage = (function () {
                     _this.af.database.object('products/' + data.key).update({
                         islive: true,
                         timestamp: firebase.database['ServerValue']['TIMESTAMP'],
-                        productImage: _this.productImageURL
                     });
                     if (_this.category.catid === 10) {
                         _this.af.database.object('users/' + _this.currentuser.uid + '/products/' + data.key).set({
@@ -534,18 +533,18 @@ var AddProductPage = (function () {
                             name: productForm.value.name,
                             mrate: productForm.value.mrate,
                             krate: productForm.value.krate,
-                            productImage: _this.productImageURL
                         }).then(function (info) {
                             //console.log("success");
-                            _this.loading.present();
-                            setTimeout(function () {
-                                _this.navCtrl.popToRoot({ animate: false });
-                                _this.navCtrl.push(MyProductsPage, { animate: false });
-                                //this.navCtrl.pop({ animate: false });
-                            }, 1000);
-                            setTimeout(function () {
-                                _this.loading.dismiss();
-                            }, 3000);
+                            var toast = _this.toastCtrl.create({
+                                message: 'Product Uploaded Successfully',
+                                duration: 2000,
+                                position: 'middle'
+                            });
+                            toast.present().then(function () {
+                                _this.navCtrl.popToRoot({ animate: false }).then(function () {
+                                    _this.navCtrl.push(MyProductsPage, { animate: false });
+                                });
+                            });
                         });
                     }
                     else {
@@ -556,17 +555,18 @@ var AddProductPage = (function () {
                             grade: productForm.value.gradeval,
                             mrate: productForm.value.mrate,
                             krate: productForm.value.krate,
-                            productImage: _this.productImageURL
                         }).then(function (info) {
                             //console.log("success");
-                            _this.loading.present();
-                            setTimeout(function () {
-                                _this.navCtrl.popToRoot({ animate: false });
-                                _this.navCtrl.push(MyProductsPage, { animate: false });
-                            }, 1000);
-                            setTimeout(function () {
-                                _this.loading.dismiss();
-                            }, 3000);
+                            var toast = _this.toastCtrl.create({
+                                message: 'Product Uploaded Successfully',
+                                duration: 2000,
+                                position: 'middle'
+                            });
+                            toast.present().then(function () {
+                                _this.navCtrl.popToRoot({ animate: false }).then(function () {
+                                    _this.navCtrl.push(MyProductsPage, { animate: false });
+                                });
+                            });
                         });
                     }
                 }
@@ -614,6 +614,12 @@ var AddProductPage = (function () {
         }).then(function (imageData) {
             _this.productImage = imageData;
             _this.productPreview = "data:image/jpeg;base64," + imageData;
+            var toast = _this.toastCtrl.create({
+                message: 'Image will be uploaded shortly',
+                duration: 2000,
+                position: 'middle'
+            });
+            toast.present();
         }, function (error) {
             console.log("ERROR -> " + JSON.stringify(error));
         });
@@ -632,6 +638,12 @@ var AddProductPage = (function () {
         }).then(function (imageData) {
             _this.productImage = imageData;
             _this.productPreview = "data:image/jpeg;base64," + imageData;
+            var toast = _this.toastCtrl.create({
+                message: 'Image will be uploaded shortly',
+                duration: 2000,
+                position: 'middle'
+            });
+            toast.present();
         }, function (error) {
             console.log("ERROR -> " + JSON.stringify(error));
         });
@@ -643,7 +655,7 @@ AddProductPage = __decorate([
         selector: 'page-add-product',
         templateUrl: 'add-product.html'
     }),
-    __metadata("design:paramtypes", [NavController, NavParams, AngularFire, FormBuilder, AuthService, ActionSheetController, AlertController, LoadingController, Camera])
+    __metadata("design:paramtypes", [NavController, NavParams, ToastController, AngularFire, FormBuilder, AuthService, ActionSheetController, AlertController, Camera])
 ], AddProductPage);
 export { AddProductPage };
 //# sourceMappingURL=add-product.js.map

@@ -9,6 +9,8 @@ import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { CustomIconsModule } from 'ionic2-custom-icons';
 import { IonicStorageModule } from '@ionic/storage';
+import { BrowserModule } from '@angular/platform-browser';
+import { HttpModule } from '@angular/http';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { SocialSharing } from '@ionic-native/social-sharing';
@@ -17,7 +19,11 @@ import { CallNumber } from '@ionic-native/call-number';
 import { Push } from '@ionic-native/push';
 import { GooglePlus } from '@ionic-native/google-plus';
 import { Facebook } from '@ionic-native/facebook';
+import { Market } from '@ionic-native/market';
 import { MarketPage } from '../pages/market/market';
+import { WaitingApproval } from '../pages/waiting-approval/waiting-approval';
+import { QuickFilterPage } from '../pages/quick-filter/quick-filter';
+import { SearchCategoriesPage } from '../pages/search-categories/search-categories';
 import { PricesPage } from '../pages/prices/prices';
 import { EnquiriesPage } from '../pages/enquiries/enquiries';
 import { NotificationsPage } from '../pages/notifications/notifications';
@@ -33,6 +39,7 @@ import { SendEnquiryPage } from '../pages/send-enquiry/send-enquiry';
 import { EnquirySentPage } from '../pages/enquiry-sent/enquiry-sent';
 import { EnquiryDetailsPage } from '../pages/enquiry-details/enquiry-details';
 import { PostBuyRequirementsPage } from '../pages/post-buy-requirements/post-buy-requirements';
+import { MyRequirementsPage } from '../pages/my-requirements/my-requirements';
 import { BrowseRequirementsPage } from '../pages/browse-requirements/browse-requirements';
 import { SendQuotationPage } from '../pages/send-quotation/send-quotation';
 import { RequirementDetailsPage } from '../pages/requirement-details/requirement-details';
@@ -45,10 +52,7 @@ import { FilterOptionsPage } from '../pages/filter-options/filter-options';
 import { TabContactsPage } from '../pages/tab-contacts/tab-contacts';
 import { TabProfilePage } from '../pages/tab-profile/tab-profile';
 import { TabChatsPage } from '../pages/tab-chats/tab-chats';
-import { ChatChannelPage } from '../pages/chat-channel/chat-channel';
-import { ChatMessagePage } from '../pages/chat-message/chat-message';
 import { LoginPage } from '../pages/login/login';
-import { CreateAccountPage } from '../pages/create-account/create-account';
 import { AboutPage } from '../pages/about/about';
 import { ShareAppPage } from '../pages/share-app/share-app';
 import { ResetpasswordPage } from '../pages/resetpassword/resetpassword';
@@ -58,17 +62,19 @@ import { MetalCalculatorPage } from '../pages/metal-calculator/metal-calculator'
 import { CreateProfilePage } from '../pages/create-profile/create-profile';
 import { ProfileData } from '../providers/profile-data';
 import { ProductData } from '../providers/product-data';
+import { DirectoryProvider } from '../providers/directory-provider';
 import { AuthService } from '../providers/auth.service';
 import { ChatsService } from '../providers/chats.service';
 import { ParallaxHeader } from '../components/parallax-header/parallax-header';
 import { OrderBy } from '../pipes/orderBy';
 import { AngularFireModule } from 'angularfire2';
 export var firebaseConfig = {
-    apiKey: "AIzaSyBQHf2p8RLOuw7i_DHdsfc8HHCFfwcIPEQ",
-    authDomain: "metbazaardev.firebaseapp.com",
-    databaseURL: "https://metbazaardev.firebaseio.com",
-    storageBucket: "metbazaardev.appspot.com",
-    messagingSenderId: "79899062384"
+    apiKey: "AIzaSyBLx3cXHMhd6TOWWDGZS-J1stb2w34B47A",
+    authDomain: "metbazaar.firebaseapp.com",
+    databaseURL: "https://metbazaar.firebaseio.com",
+    projectId: "metbazaar",
+    storageBucket: "metbazaar.appspot.com",
+    messagingSenderId: "639273963235"
 };
 var AppModule = (function () {
     function AppModule() {
@@ -81,6 +87,9 @@ AppModule = __decorate([
             MyApp,
             TabsPage,
             MarketPage,
+            WaitingApproval,
+            QuickFilterPage,
+            SearchCategoriesPage,
             PricesPage,
             NotificationsPage,
             EnquiriesPage,
@@ -98,6 +107,7 @@ AppModule = __decorate([
             EnquiryDetailsPage,
             PostBuyRequirementsPage,
             BrowseRequirementsPage,
+            MyRequirementsPage,
             SendQuotationPage,
             RequirementDetailsPage,
             DirectoryPage,
@@ -107,21 +117,20 @@ AppModule = __decorate([
             TabContactsPage,
             TabProfilePage,
             TabChatsPage,
-            ChatChannelPage,
-            ChatMessagePage,
             LoginPage,
             AboutPage,
             ShareAppPage,
             ResetpasswordPage,
             SignupPage,
             VerifyMobilePage,
-            CreateAccountPage,
             CreateProfilePage,
             OrderBy,
             MetalCalculatorPage,
             FilterOptionsPage
         ],
         imports: [
+            BrowserModule,
+            HttpModule,
             IonicModule.forRoot(MyApp),
             AngularFireModule.initializeApp(firebaseConfig),
             CustomIconsModule,
@@ -132,6 +141,9 @@ AppModule = __decorate([
             MyApp,
             TabsPage,
             MarketPage,
+            WaitingApproval,
+            QuickFilterPage,
+            SearchCategoriesPage,
             PricesPage,
             EnquiriesPage,
             NotificationsPage,
@@ -148,6 +160,7 @@ AppModule = __decorate([
             EnquiryDetailsPage,
             PostBuyRequirementsPage,
             BrowseRequirementsPage,
+            MyRequirementsPage,
             SendQuotationPage,
             RequirementDetailsPage,
             DirectoryPage,
@@ -157,20 +170,17 @@ AppModule = __decorate([
             TabContactsPage,
             TabProfilePage,
             TabChatsPage,
-            ChatChannelPage,
-            ChatMessagePage,
             LoginPage,
             AboutPage,
             ShareAppPage,
             ResetpasswordPage,
             SignupPage,
             VerifyMobilePage,
-            CreateAccountPage,
             CreateProfilePage,
             MetalCalculatorPage,
             FilterOptionsPage
         ],
-        providers: [AuthService, ChatsService, ProfileData, ProductData, StatusBar, SplashScreen, Camera, CallNumber, Push, SocialSharing, GooglePlus, Facebook, { provide: ErrorHandler, useClass: IonicErrorHandler }]
+        providers: [AuthService, ChatsService, ProfileData, ProductData, DirectoryProvider, StatusBar, SplashScreen, Camera, CallNumber, Push, SocialSharing, GooglePlus, Facebook, Market, { provide: ErrorHandler, useClass: IonicErrorHandler }]
     })
 ], AppModule);
 export { AppModule };

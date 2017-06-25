@@ -26,6 +26,14 @@ var FilterOptionsPage = (function () {
         this.category = {};
         this.category.catid = navParams.get("catid");
         this.form = {};
+        this.form.thicknessval = {};
+        this.thicknessval = {};
+        this.form.mmval = {};
+        this.mmval = {};
+        this.thicknessval.lower = 0;
+        this.thicknessval.upper = 10.01;
+        this.mmval.lower = 0;
+        this.mmval.upper = 10.01;
         this.getGrades();
     }
     FilterOptionsPage.prototype.ionViewDidLoad = function () {
@@ -35,10 +43,20 @@ var FilterOptionsPage = (function () {
         this.viewCtrl.dismiss(false); //Send back the form object when closeModal is called
     };
     FilterOptionsPage.prototype.applyFilter = function () {
+        if (this.form.thickness) {
+            this.form.thicknessval.lower = parseFloat(this.thicknessval.lower);
+            this.form.thicknessval.upper = parseFloat(this.thicknessval.upper);
+            console.log(this.thicknessval.lower);
+            console.log(this.thicknessval.upper);
+        }
+        if (this.form.mm) {
+            this.form.mmval.lower = parseFloat(this.mmval.lower);
+            this.form.mmval.upper = parseFloat(this.mmval.upper);
+        }
         this.viewCtrl.dismiss(this.form); //Send back the form object when closeModal is called
     };
     FilterOptionsPage.prototype.consolelog = function () {
-        //console.log(this.weight);
+        console.log(this.form.thickness);
         //console.log(this.weightval);
     };
     FilterOptionsPage.prototype.getGrades = function () {

@@ -9,11 +9,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import { LoadingController, AlertController } from 'ionic-angular';
+import { LoadingController, ToastController } from 'ionic-angular';
 import { FormBuilder, Validators } from '@angular/forms';
-import { AngularFire } from 'angularfire2';
-import { TabsPage } from '../tabs/tabs';
-import { App } from 'ionic-angular';
+import { VerifyMobilePage } from '../verify-mobile/verify-mobile';
+import firebase from 'firebase';
 /*
   Generated class for the CreateProfile page.
 
@@ -21,15 +20,14 @@ import { App } from 'ionic-angular';
   Ionic pages and navigation.
 */
 var CreateProfilePage = (function () {
-    function CreateProfilePage(af, navCtrl, navParams, formBuilder, loadingCtrl, alertCtrl, app) {
-        this.af = af;
+    function CreateProfilePage(navCtrl, navParams, formBuilder, loadingCtrl, toastCtrl) {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
         this.formBuilder = formBuilder;
         this.loadingCtrl = loadingCtrl;
-        this.alertCtrl = alertCtrl;
-        this.app = app;
-        this.userid = navParams.get("userid");
+        this.toastCtrl = toastCtrl;
+        this.currentuser = firebase.auth().currentUser;
+        this.userid = this.currentuser.uid;
         this.profileForm = formBuilder.group({
             //name: ['', Validators.required],
             mobile: ['', Validators.compose([Validators.minLength(10), Validators.required, Validators.maxLength(10)])],
@@ -49,22 +47,15 @@ var CreateProfilePage = (function () {
     CreateProfilePage.prototype.createProfile = function () {
         //this.submitAttempt = true;
         if (!this.profileForm.valid) {
-            console.log(this.profileForm.value);
+            var toast = this.toastCtrl.create({
+                message: 'Invalid Entries',
+                duration: 2000,
+                position: 'middle'
+            });
+            toast.present();
         }
         else {
-            this.af.database.list('/users').update(this.userid, {
-                //name: userdata.value.name,
-                mobile: this.profileForm.value.mobile,
-                companyname: this.profileForm.value.companyname,
-                address: this.profileForm.value.address,
-                companyprofile: this.profileForm.value.companyprofile
-                //email: userdata.value.email,
-                //uid: authdata.auth.uid,
-                //photoURL: data.auth.photoURL,
-                //createdAt: firebase.database['ServerValue']['TIMESTAMP'],
-                //providerData: authdata.auth.provider
-            });
-            this.app.getRootNav().setRoot(TabsPage);
+            this.navCtrl.push(VerifyMobilePage, { form: this.profileForm, type: "social", userid: this.userid });
         }
     };
     return CreateProfilePage;
@@ -74,8 +65,7 @@ CreateProfilePage = __decorate([
         selector: 'page-create-profile',
         templateUrl: 'create-profile.html'
     }),
-    __metadata("design:paramtypes", [AngularFire, NavController, NavParams, FormBuilder, LoadingController,
-        AlertController, App])
+    __metadata("design:paramtypes", [NavController, NavParams, FormBuilder, LoadingController, ToastController])
 ], CreateProfilePage);
 export { CreateProfilePage };
 //# sourceMappingURL=create-profile.js.map

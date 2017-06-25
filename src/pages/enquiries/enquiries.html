@@ -7,12 +7,20 @@
       </button>
     <ion-title>Enquiries</ion-title>
   </ion-navbar>
-    <ion-segment [(ngModel)]="segment" >
+    <ion-segment [(ngModel)]="segment" (ionChange)="segmentChanged()" >
         <ion-segment-button value="received">
             Received
+            <ion-badge *ngIf="(enqobject | async)?.unreadrcv && this.segment != 'received'" color="secondary" item-right>!</ion-badge>
+
         </ion-segment-button>
         <ion-segment-button value="sent">
             Sent
+            <ion-badge *ngIf="(enqobject | async)?.unreadsent && this.segment != 'sent'" color="secondary" item-right>!</ion-badge>
+
+        </ion-segment-button>
+        <ion-segment-button value="support">
+            Support
+            <ion-badge *ngIf="(messageobject | async)?.unread && this.segment != 'support'"  color="secondary" item-right>{{this.supcount}}</ion-badge>
         </ion-segment-button>
     </ion-segment>
 
@@ -56,6 +64,10 @@
                 <div item-left>
                     <div class="gradeCircle2">{{enquiry?.product?.gradeval}}</div>
                 </div>
+
+                <div item-right *ngIf="enquiry?.unread">
+                    <div class="chatCircle"></div>
+                </div>
                 
                     <h2 style="white-space: normal;">{{enquiry?.productName}}</h2>
                 <ion-row class="enq-details"><ion-col *ngIf="enquiry?.product?.sizes">Sizes:{{enquiry?.product?.sizes}} {{enquiry?.product?.sizeunit}}</ion-col> </ion-row>
@@ -78,6 +90,9 @@
                 <div item-left>
                     <div class="gradeCircle2">{{enquiry?.requirement?.grade}}</div>
                 </div>
+                <div item-right *ngIf="enquiry?.unread">
+                    <div class="chatCircle"></div>
+                </div>
                 <h2>Quotation for Requirement</h2>
                 <p>{{enquiry?.requirement?.category}}</p>
                 <!--<p>{{enquiry?.requirement?.quantity}} {{enquiry?requirement?.unit}}</p>-->
@@ -95,6 +110,9 @@
             <div ion-item *ngIf="!enquiry?.quote">
                 <div item-left>
                     <div class="gradeCircle2">{{enquiry?.product?.gradeval}}</div>
+                </div>
+                <div item-right *ngIf="enquiry?.unread">
+                    <div class="chatCircle"></div>
                 </div>
 
                 <h2 style="white-space: normal;">{{enquiry?.productName}}</h2>
@@ -118,6 +136,9 @@
                 <div item-left>
                     <div class="gradeCircle2">{{enquiry?.requirement?.grade}}</div>
                 </div>
+                <div item-right *ngIf="enquiry?.unread">
+                    <div class="chatCircle"></div>
+                </div>
                 <h2>Quotation for Requirement</h2>
                 <p>{{enquiry?.requirement?.category}}</p>
                 <!--<p>{{enquiry?.requirement?.quantity}} {{enquiry?requirement?.unit}}</p>-->
@@ -129,4 +150,44 @@
         </ion-item>
     </ion-list>
 
+
+    
+    
+        <ion-list *ngIf="(this.segment === 'support')" no-lines class="chat" style="margin-bottom:75px;" >
+            <div text-center *ngIf="this.segment === 'support'">
+                <p>Chat with the MetBazaar team and get instant support </p>
+            </div>
+            <div *ngFor="let message of messagesList | async">
+                <div class="spacer-10"></div>
+                <div text-right *ngIf="message.type === 'sent' ">
+                    <div text-wrap class="sent">
+                        <p>{{message.text}}</p>
+                    </div>
+                </div>
+                <div *ngIf="message.type === 'received' ">
+                    <div text-wrap class="received">
+                        <p>{{message.text}}</p>
+                    </div>
+                </div>
+            </div>
+        </ion-list>
+
 </ion-content>
+<ion-footer   style="background-color:#f4f4f4;">
+    <form *ngIf="this.segment === 'support'"  #f="ngForm">
+        <ion-grid>
+            <ion-row>
+                <ion-col col-10>
+                    <ion-input type="text" [(ngModel)]="chatBox" name="chatText" required placeholder="Message..."></ion-input>
+                </ion-col>
+                <ion-col col-2>
+                    <button ion-button clear icon-only (click)="send(f.value,f.valid)" [disabled]="f.valid === false" icon-right>
+
+                        <ion-icon name="send"></ion-icon>
+                    </button>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </form>
+</ion-footer>
+

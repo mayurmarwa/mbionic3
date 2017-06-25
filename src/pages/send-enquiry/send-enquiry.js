@@ -8,7 +8,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Component } from '@angular/core';
-import { NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
+import { NavController, NavParams, AlertController, LoadingController, ViewController } from 'ionic-angular';
 import { FormBuilder, Validators } from '@angular/forms';
 import { AngularFire } from 'angularfire2';
 import { AuthService } from '../../providers/auth.service';
@@ -22,7 +22,7 @@ import firebase from 'firebase';
   Ionic pages and navigation.
 */
 var SendEnquiryPage = (function () {
-    function SendEnquiryPage(navCtrl, navParams, formBuilder, af, alertCtrl, loadingCtrl, authService, storage) {
+    function SendEnquiryPage(navCtrl, navParams, formBuilder, af, alertCtrl, loadingCtrl, authService, storage, viewCtrl) {
         var _this = this;
         this.navCtrl = navCtrl;
         this.navParams = navParams;
@@ -32,59 +32,59 @@ var SendEnquiryPage = (function () {
         this.loadingCtrl = loadingCtrl;
         this.authService = authService;
         this.storage = storage;
-        storage.ready().then(function () {
-            storage.get('currentuser').then(function (val) {
-                _this.currentuser = JSON.parse(val);
-                _this.product = navParams.get("product");
-                _this.sellerID = _this.product.uid;
-                //console.log(this.currentuser);
-                //this.currentuser = firebase.auth().currentUser;
-                _this.userEnquiries = af.database.list('/users/' + _this.currentuser.uid + '/enquiries');
-                _this.sellerEnquiries = af.database.list('/users/' + _this.sellerID + '/enquiries');
-                if (_this.product.mrate) {
-                    _this.productmrate = _this.product.mrate;
-                }
-                else {
-                    _this.productmrate = null;
-                }
-                if (_this.product.krate) {
-                    _this.productkrate = _this.product.krate;
-                }
-                else {
-                    _this.productkrate = null;
-                }
-                _this.productunit = "Kg";
-                _this.authService.getFullProfile(_this.sellerID).first()
-                    .subscribe(function (user) {
-                    //loading.dismiss();
-                    // this.user.displayName = user.displayName;
-                    //this.user.email = user.email || user.providerData[0].email || 'Not set yet.';
-                    //this.user.photoURL = user.photoURL || this.user.photoURL;
-                    _this.seller = user;
-                    //console.log(this.seller);
-                }, function (error) {
-                    //loading.dismiss();
-                    console.log('Error: ' + JSON.stringify(error));
-                });
-                _this.authService.getFullProfile(_this.currentuser.uid).first()
-                    .subscribe(function (user) {
-                    //loading.dismiss();
-                    // this.user.displayName = user.displayName;
-                    //this.user.email = user.email || user.providerData[0].email || 'Not set yet.';
-                    //this.user.photoURL = user.photoURL || this.user.photoURL;
-                    _this.user = user;
-                    //console.log(this.user);
-                }, function (error) {
-                    //loading.dismiss();
-                    console.log('Error: ' + JSON.stringify(error));
-                });
-            })
-                .catch(function (err) {
-                return console.log(err);
-            });
-        }).catch(function (err) {
-            return console.log(err);
+        this.viewCtrl = viewCtrl;
+        this.currentuser = firebase.auth().currentUser;
+        // storage.ready().then(() => {
+        //  storage.get('currentuser').then((val) => {
+        //this.currentuser = JSON.parse(val);
+        this.product = navParams.get("product");
+        this.sellerID = this.product.uid;
+        //console.log(this.currentuser);
+        //this.currentuser = firebase.auth().currentUser;
+        this.userEnquiries = af.database.list('/users/' + this.currentuser.uid + '/enquiries');
+        this.sellerEnquiries = af.database.list('/users/' + this.sellerID + '/enquiries');
+        if (this.product.mrate) {
+            this.productmrate = this.product.mrate;
+        }
+        else {
+            this.productmrate = null;
+        }
+        if (this.product.krate) {
+            this.productkrate = this.product.krate;
+        }
+        else {
+            this.productkrate = null;
+        }
+        this.productunit = "Kg";
+        this.authService.getFullProfile(this.sellerID).first()
+            .subscribe(function (user) {
+            //loading.dismiss();
+            // this.user.displayName = user.displayName;
+            //this.user.email = user.email || user.providerData[0].email || 'Not set yet.';
+            //this.user.photoURL = user.photoURL || this.user.photoURL;
+            _this.seller = user;
+            //console.log(this.seller);
+        }, function (error) {
+            //loading.dismiss();
+            console.log('Error: ' + JSON.stringify(error));
         });
+        this.authService.getFullProfile(this.currentuser.uid).first()
+            .subscribe(function (user) {
+            //loading.dismiss();
+            // this.user.displayName = user.displayName;
+            //this.user.email = user.email || user.providerData[0].email || 'Not set yet.';
+            //this.user.photoURL = user.photoURL || this.user.photoURL;
+            _this.user = user;
+            //console.log(this.user);
+        }, function (error) {
+            //loading.dismiss();
+            console.log('Error: ' + JSON.stringify(error));
+        });
+        //})
+        //  .catch((err) =>
+        //    console.log(err));
+        //}).catch((err) =>
+        //  console.log(err));
         this.enquiryForm = formBuilder.group({
             rate: ['', Validators.required],
             quantity: ['', Validators.required],
@@ -132,55 +132,69 @@ var SendEnquiryPage = (function () {
         this.loading = this.loadingCtrl.create({
             content: 'Sending Enquiry, Please Wait...'
         });
-        this.userEnquiries.push(this.enquiryForm.value).then(function (data) {
-            //console.log(this.enquiryForm.value);
-            _this.af.database.object('users/' + _this.currentuser.uid + '/enquiries/' + data.key).update({
-                type: 'sent',
-                otheruser: _this.sellerID,
-                otheruserName: _this.seller.name,
-                otheruserNo: _this.seller.mobile,
-                product: _this.product,
-                productName: _this.product.name,
-                productUnit: _this.productunit,
-                productMrate: _this.productmrate,
-                productKrate: _this.productkrate,
-                timestamp: firebase.database['ServerValue']['TIMESTAMP']
-                //detials: this.productForm.value.name,
-            }).then(function (info) {
+        this.loading.present().then(function () {
+            _this.userEnquiries.push(_this.enquiryForm.value).then(function (data) {
+                //console.log(this.enquiryForm.value);
+                _this.af.database.object('users/' + _this.currentuser.uid + '/enquiries/' + data.key).update({
+                    type: 'sent',
+                    otheruser: _this.sellerID,
+                    otheruserName: _this.seller.name,
+                    otheruserNo: _this.seller.mobile,
+                    product: _this.product,
+                    productName: _this.product.name,
+                    productUnit: _this.productunit,
+                    productMrate: _this.productmrate,
+                    productKrate: _this.productkrate,
+                    timestamp: firebase.database['ServerValue']['TIMESTAMP']
+                    //detials: this.productForm.value.name,
+                }).then(function (info) {
+                    //console.log("successsent");
+                    //this.navCtrl.pop();
+                    //this.navCtrl.pop();
+                }).catch(function (info) {
+                    //console.log("successsent");
+                    //this.navCtrl.pop();
+                    //this.navCtrl.pop();
+                });
+                _this.af.database.object('users/' + _this.sellerID + '/enquiries/' + data.key).update({
+                    type: 'received',
+                    otheruser: _this.currentuser.uid,
+                    otheruserName: _this.user.name,
+                    otheruserNo: _this.user.mobile,
+                    product: _this.product,
+                    productName: _this.product.name,
+                    productUnit: _this.productunit,
+                    productMrate: _this.productmrate,
+                    productKrate: _this.productkrate,
+                    rate: _this.enquiryForm.value.rate,
+                    quantity: _this.enquiryForm.value.quantity,
+                    unit: _this.enquiryForm.value.unit,
+                    payment: _this.enquiryForm.value.payment,
+                    details: _this.enquiryForm.value.details,
+                    timestamp: firebase.database['ServerValue']['TIMESTAMP']
+                    //detials: this.productForm.value.name,
+                }).then(function (info) {
+                    //console.log("successrcv");
+                    //this.navCtrl.pop();
+                    //this.navCtrl.pop();
+                    _this.loading.dismiss().then(function () {
+                        _this.navCtrl.push(EnquirySentPage, { enquiryID: data.key, sellerID: _this.sellerID, uid: _this.currentuser.uid })
+                            .then(function () {
+                            var index = _this.viewCtrl.index;
+                            _this.navCtrl.remove(index);
+                            _this.navCtrl.remove(index - 1);
+                        });
+                    });
+                }).catch(function (info) {
+                    //console.log("successsent");
+                    //this.navCtrl.pop();
+                    //this.navCtrl.pop();
+                });
+            }).catch(function (info) {
                 //console.log("successsent");
                 //this.navCtrl.pop();
                 //this.navCtrl.pop();
             });
-            _this.af.database.object('users/' + _this.sellerID + '/enquiries/' + data.key).update({
-                type: 'received',
-                otheruser: _this.currentuser.uid,
-                otheruserName: _this.user.name,
-                otheruserNo: _this.user.mobile,
-                product: _this.product,
-                productName: _this.product.name,
-                productUnit: _this.productunit,
-                productMrate: _this.productmrate,
-                productKrate: _this.productkrate,
-                rate: _this.enquiryForm.value.rate,
-                quantity: _this.enquiryForm.value.quantity,
-                unit: _this.enquiryForm.value.unit,
-                payment: _this.enquiryForm.value.payment,
-                details: _this.enquiryForm.value.details,
-                timestamp: firebase.database['ServerValue']['TIMESTAMP']
-                //detials: this.productForm.value.name,
-            }).then(function (info) {
-                //console.log("successrcv");
-                //this.navCtrl.pop();
-                //this.navCtrl.pop();
-            });
-            _this.loading.present();
-            setTimeout(function () {
-                _this.navCtrl.pop({ animate: false });
-                _this.navCtrl.push(EnquirySentPage, { enquiryID: data.key, sellerID: _this.sellerID, uid: _this.currentuser.uid }, { animate: false });
-            }, 1000);
-            setTimeout(function () {
-                _this.loading.dismiss();
-            }, 3000);
         });
     };
     return SendEnquiryPage;
@@ -190,7 +204,7 @@ SendEnquiryPage = __decorate([
         selector: 'page-send-enquiry',
         templateUrl: 'send-enquiry.html'
     }),
-    __metadata("design:paramtypes", [NavController, NavParams, FormBuilder, AngularFire, AlertController, LoadingController, AuthService, Storage])
+    __metadata("design:paramtypes", [NavController, NavParams, FormBuilder, AngularFire, AlertController, LoadingController, AuthService, Storage, ViewController])
 ], SendEnquiryPage);
 export { SendEnquiryPage };
 //# sourceMappingURL=send-enquiry.js.map

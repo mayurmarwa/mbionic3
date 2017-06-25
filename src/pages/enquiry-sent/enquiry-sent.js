@@ -8,10 +8,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Component } from '@angular/core';
-import { NavController, NavParams, LoadingController } from 'ionic-angular';
-import { EnquiriesPage } from '../enquiries/enquiries';
+import { NavController, NavParams, LoadingController, ViewController } from 'ionic-angular';
 import { AuthService } from '../../providers/auth.service';
-import { EnquiryDetailsPage } from '../enquiry-details/enquiry-details';
 import { MyProfilePage } from '../my-profile/my-profile';
 /*
   Generated class for the EnquirySent page.
@@ -20,15 +18,18 @@ import { MyProfilePage } from '../my-profile/my-profile';
   Ionic pages and navigation.
 */
 var EnquirySentPage = (function () {
-    function EnquirySentPage(navCtrl, navParams, loadingCtrl, authService) {
+    function EnquirySentPage(navCtrl, navParams, loadingCtrl, authService, viewCtrl) {
         var _this = this;
         this.navCtrl = navCtrl;
         this.navParams = navParams;
         this.loadingCtrl = loadingCtrl;
         this.authService = authService;
+        this.viewCtrl = viewCtrl;
+        this.tab = this.navCtrl.parent;
         this.sellerID = navParams.get("sellerID");
         this.enquiryID = navParams.get("enquiryID");
         this.uid = navParams.get("uid");
+        console.log(this.enquiryID);
         this.subscription = this.authService.getFullProfile(this.sellerID)
             .first().subscribe(function (user) {
             //loading.dismiss();
@@ -59,30 +60,24 @@ var EnquirySentPage = (function () {
     };
     EnquirySentPage.prototype.sendMessage = function () {
         var _this = this;
-        this.loading = this.loadingCtrl.create({});
-        this.loading.present();
-        setTimeout(function () {
-            _this.navCtrl.popToRoot({ animate: false });
-            _this.navCtrl.setRoot(EnquiriesPage, { animate: false });
-            _this.navCtrl.push(EnquiryDetailsPage, { enquiry: _this.enquiry }, { animate: false });
-            //this.navCtrl.pop({ animate: false });
-        }, 1000);
-        setTimeout(function () {
-            _this.loading.dismiss();
-        }, 2000);
+        this.navCtrl.popToRoot({ animate: false }).then(function () {
+            _this.tab.select(3);
+        });
+        //this.tab.select(3);
+        //this.navCtrl.setRoot(EnquiriesPage,{ animate: false });
+        //this.navCtrl.push(EnquiryDetailsPage, {enquiry: this.enquiry}, { animate: false });
+        //this.navCtrl.pop({ animate: false });
     };
     EnquirySentPage.prototype.viewProfile = function () {
         var _this = this;
-        this.loading = this.loadingCtrl.create({});
-        this.loading.present();
-        setTimeout(function () {
-            //this.navCtrl.pop({ animate: false });          
-            _this.navCtrl.push(MyProfilePage, { userID: _this.sellerID }, { animate: false });
-            //this.navCtrl.pop({ animate: false });
-        }, 1000);
-        setTimeout(function () {
-            _this.loading.dismiss();
-        }, 2000);
+        //this.navCtrl.pop({ animate: false });          
+        this.navCtrl.push(MyProfilePage, { userID: this.sellerID })
+            .then(function () {
+            var index = _this.viewCtrl.index;
+            _this.navCtrl.remove(index);
+            //this.navCtrl.remove(index - 1);
+        });
+        //this.navCtrl.pop({ animate: false });
     };
     return EnquirySentPage;
 }());
@@ -91,7 +86,7 @@ EnquirySentPage = __decorate([
         selector: 'page-enquiry-sent',
         templateUrl: 'enquiry-sent.html'
     }),
-    __metadata("design:paramtypes", [NavController, NavParams, LoadingController, AuthService])
+    __metadata("design:paramtypes", [NavController, NavParams, LoadingController, AuthService, ViewController])
 ], EnquirySentPage);
 export { EnquirySentPage };
 //# sourceMappingURL=enquiry-sent.js.map

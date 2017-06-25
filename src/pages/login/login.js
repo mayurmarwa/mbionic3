@@ -12,7 +12,7 @@ import { NavController, LoadingController, ToastController, AlertController } fr
 import { TabsPage } from '../tabs/tabs';
 import { ResetpasswordPage } from '../resetpassword/resetpassword';
 import { SignupPage } from '../signup/signup';
-import { CreateProfilePage } from '../create-profile/create-profile';
+//import { CreateProfilePage } from '../create-profile/create-profile';
 import { FormBuilder, Validators } from '@angular/forms';
 import { AuthService, AuthMode } from '../../providers/auth.service';
 import { EmailValidator } from '../../validators/email';
@@ -61,34 +61,49 @@ var LoginPage = (function () {
     LoginPage.prototype.loginUser = function () {
         var _this = this;
         this.submitAttempt = true;
-        var loading = this.loadingCtrl.create();
-        loading.present();
-        if (!this.loginForm.valid) {
-            console.log(this.loginForm.value);
-        }
-        else {
-            this.authService.loginUser(this.loginForm.value.email, this.loginForm.value.password).then(function (data) {
-                _this.storage.ready().then(function () {
+        this.loading = this.loadingCtrl.create();
+        this.loading.present().then(function () {
+            if (!_this.loginForm.valid) {
+                _this.loading.dismiss().then(function () {
+                    //console.log(error);
+                    var toast = _this.toastCtrl.create({
+                        message: 'Invalid Entries',
+                        duration: 2000,
+                        position: 'middle'
+                    });
+                    toast.present();
+                });
+            }
+            else {
+                _this.authService.loginUser(_this.loginForm.value.email, _this.loginForm.value.password).then(function () {
+                    _this.loading.dismiss();
+                    //this.storage.ready().then(() => {
                     // set a key/value
-                    _this.storage.set('currentuser', JSON.stringify(data));
+                    //this.storage.set('currentuser', JSON.stringify(data)).then(() => {
+                    //this.loading.dismiss().then(() => {
+                    //console.log(error);
+                    //  this.navCtrl.setRoot(TabsPage);
+                    //});
+                    //}).catch((err) =>
+                    //console.log(err));
                     // Or to get a key/value pair
                     // this.storage.get('currentuser').then((val) => {
                     //     console.log('Current User', JSON.parse(val));
                     //})
-                });
-                loading.dismiss();
-                _this.navCtrl.setRoot(TabsPage);
-            }, function (error) {
-                _this.loading.dismiss().then(function () {
-                    console.log(error);
-                    var alert = _this.alertCtrl.create({
-                        message: error.message,
-                        buttons: [{ text: "Okk", role: 'cancell' }]
+                    //}).catch((err) =>
+                    //console.log(err));
+                }).catch(function (err) {
+                    _this.loading.dismiss().then(function () {
+                        console.log(err);
+                        var alert = _this.alertCtrl.create({
+                            message: err.message,
+                            buttons: [{ text: "Ok", role: 'cancel' }]
+                        });
+                        alert.present();
                     });
-                    alert.present();
                 });
-            });
-        }
+            }
+        });
     };
     LoginPage.prototype.goToResetPassword = function () {
         this.navCtrl.push(ResetpasswordPage);
@@ -101,78 +116,119 @@ var LoginPage = (function () {
     };
     LoginPage.prototype.login = function (mode) {
         var _this = this;
-        var loading = this.loadingCtrl.create();
-        loading.present();
-        this.authService.login(mode)
-            .then(function (data) {
-            _this.authService.getFullProfile(data.uid)
-                .first()
-                .subscribe(function (user) {
-                if (!(user.$value !== null)) {
-                    console.log("Null User");
-                    _this.authService.createAccount(data)
-                        .then(function (_) {
-                        loading.dismiss();
-                        _this.navCtrl.setRoot(CreateProfilePage, { userid: data.uid });
-                    }, function (error) { return _this.showMessage(error.message || 'Unknown error'); });
-                }
-                else {
-                    _this.storage.ready().then(function () {
-                        // set a key/value
-                        _this.storage.set('currentuser', JSON.stringify(data));
-                        // Or to get a key/value pair
-                        // this.storage.get('currentuser').then((val) => {
-                        //     console.log('Current User', JSON.parse(val));
-                        //})
-                    });
-                    loading.dismiss();
-                    _this.navCtrl.setRoot(TabsPage);
-                }
-            }, function (error) {
-                loading.dismiss();
-                _this.showMessage(error.message || 'Unknown error');
+        this.loading = this.loadingCtrl.create({
+            content: 'Connecting To Google, Please Wait...',
+            dismissOnPageChange: true
+        });
+        this.loading.present().then(function () {
+            _this.authService.login(mode)
+                .then(function () {
+                _this.loading.dismiss();
+                /* this.authService.getFullProfile(data.uid)
+                   .first()
+                   .subscribe((user) => {
+                       if (!user.profiledone) {
+                           console.log("Null User");
+                       this.authService.createAccount(data)
+                         .then( _=> {
+                             this.loading.dismiss().then(() => {
+                                 //console.log(error);
+                                 this.navCtrl.setRoot(CreateProfilePage, { userid: data.uid });
+                             });
+                           
+                         }).catch( (error)=> this.showMessage(error.message || 'Unknown error'));
+                       } else {
+         
+                           this.storage.ready().then(() => {
+                               // set a key/value
+                               this.storage.set('currentuser', JSON.stringify(data)).then(() => {
+                                   this.loading.dismiss().then(() => {
+                                       //console.log(error);
+                                       this.navCtrl.setRoot(TabsPage);
+                                   });
+                               }).catch((err) =>
+                                   console.log(err));
+                               // Or to get a key/value pair
+                               // this.storage.get('currentuser').then((val) => {
+                               //     console.log('Current User', JSON.parse(val));
+                               //})
+                           }).catch((err) =>
+                               console.log(err));
+                           
+                       
+                     }
+                   }, (error)=> {
+                       this.loading.dismiss().then(() => {
+                           //console.log(error);
+                           this.showMessage(error.message || 'Unknown error');
+                       });
+                     
+                   });*/
+            })
+                .catch(function (error) {
+                _this.loading.dismiss().then(function () {
+                    //console.log(error);
+                    _this.showMessage(error.message || 'Unknown error');
+                });
             });
-        }, function (error) {
-            loading.dismiss();
-            _this.showMessage(error.message || 'Unknown error');
         });
     };
     LoginPage.prototype.login2 = function () {
         var _this = this;
-        var loading = this.loadingCtrl.create();
-        loading.present();
-        this.authService.login2()
-            .then(function (data) {
-            _this.authService.getFullProfile(data.uid)
+        this.loading = this.loadingCtrl.create({
+            content: 'Connecting To Facebook, Please Wait...',
+            dismissOnPageChange: true
+        });
+        this.loading.present().then(function () {
+            _this.authService.login2();
+            //.then(() => {
+            //  this.loading.dismiss()
+            /*console.log(data);
+            this.authService.getFullProfile(data.uid)
                 .first()
-                .subscribe(function (user) {
-                if (!(user.$value !== null)) {
-                    console.log("Null User");
-                    _this.authService.createAccount(data)
-                        .then(function (_) {
-                        loading.dismiss();
-                        _this.navCtrl.setRoot(CreateProfilePage, { userid: data.uid });
-                    }, function (error) { return _this.showMessage(error.message || 'Unknown error'); });
-                }
-                else {
-                    _this.storage.ready().then(function () {
-                        // set a key/value
-                        _this.storage.set('currentuser', JSON.stringify(data));
-                        // Or to get a key/value pair
-                        // this.storage.get('currentuser').then((val) => {
-                        //     console.log('Current User', JSON.parse(val));
-                        //})
+                .subscribe((user) => {
+                    //console.log();
+                    if (!user.profiledone) {
+                        console.log("Null User");
+                        this.authService.createAccount(data)
+                            .then(_ => {
+                                this.loading.dismiss().then(() => {
+                                    //console.log(error);
+                                    this.navCtrl.setRoot(CreateProfilePage, { userid: data.uid });
+                                });
+                                
+                            }) .catch( (error) => this.showMessage(error.message || 'Unknown error'));
+                    } else {
+
+                        this.storage.ready().then(() => {
+                            // set a key/value
+                            this.storage.set('currentuser', JSON.stringify(data)).then(() => {
+                                this.loading.dismiss().then(() => {
+                                    //console.log(error);
+                                    this.navCtrl.setRoot(TabsPage);
+                                });
+                            }).catch((err) =>
+                                console.log(err));
+                            // Or to get a key/value pair
+                            // this.storage.get('currentuser').then((val) => {
+                            //     console.log('Current User', JSON.parse(val));
+                            //})
+                        }).catch((err) =>
+                            console.log(err));
+                    }
+                }, (error) => {
+                    this.loading.dismiss().then(() => {
+                        //console.log(error);
+                        this.showMessage(error.message || 'Unknown error');
                     });
-                    loading.dismiss();
-                    _this.navCtrl.setRoot(TabsPage);
-                }
-            }, function (error) {
-                loading.dismiss();
-                _this.showMessage(error.message || 'Unknown error');
-            });
-        }, function (error) {
-            loading.dismiss();
-            _this.showMessage(error.message || 'Unknown error');
+                });*/
+            //})
+            //.catch((error) => {
+            //this.loading.dismiss().then(() => {
+            //console.log(error);
+            // this.showMessage(error.message || 'Unknown error');
+            ///});
+            // });
         });
     };
     LoginPage.prototype.showMessage = function (message) {

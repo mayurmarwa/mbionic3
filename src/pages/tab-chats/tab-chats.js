@@ -9,7 +9,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { Component } from '@angular/core';
 import { NavController, NavParams, ModalController } from 'ionic-angular';
-import { ChatChannelPage } from '../chat-channel/chat-channel';
 var TabChatsPage = (function () {
     function TabChatsPage(navCtrl, navParams, modalCtrl) {
         this.navCtrl = navCtrl;
@@ -19,8 +18,8 @@ var TabChatsPage = (function () {
     TabChatsPage.prototype.ionViewDidLoad = function () {
     };
     TabChatsPage.prototype.openChannelPage = function (ev) {
-        var modal = this.modalCtrl.create(ChatChannelPage);
-        modal.present();
+        //let modal = this.modalCtrl.create(ChatChannelPage);
+        //modal.present();
     };
     return TabChatsPage;
 }());

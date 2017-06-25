@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { NavController, NavParams, AlertController, ToastController } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { NavController, NavParams, AlertController, ToastController, Content } from 'ionic-angular';
 import { AngularFire, FirebaseListObservable } from 'angularfire2';
 import { Storage } from '@ionic/storage';
 import { MyProfilePage } from '../my-profile/my-profile';
@@ -20,6 +20,9 @@ import firebase from 'firebase';
 })
 export class EnquiryDetailsPage {
 
+     @ViewChild(Content) content: Content;
+
+
 	public enquiry: any;
 	chatBox: any;
 	currentuser: any;
@@ -27,6 +30,8 @@ export class EnquiryDetailsPage {
     otherUserList: any;
     myenquiries: any;
     otherenquiries: any;
+    public initialLoad: boolean = false;
+
     constructor(public navCtrl: NavController, public navParams: NavParams, public af: AngularFire, public storage: Storage, public alertCtrl: AlertController, public toastCtrl: ToastController) {
 
 
@@ -55,12 +60,108 @@ export class EnquiryDetailsPage {
         //console.log(this.enquiry);
   }
 
+    ionViewWillUnload(){
+    
+        console.log("unload");
+        this.messageList.$ref.off();
+        //this.otherUserList.$ref.off();
+    }
+
   ionViewDidLoad() {
     console.log('ionViewDidLoad EnquiryDetailsPage');
+
+      this.messageList.$ref.on('child_added', (message) => {
+               // console.log(message.val());
+               if (!this.initialLoad ) return;
+
+        if(this.navCtrl.getActive().name === 'EnquiryDetailsPage'){
+        this.af.database.object('/users/' + this.currentuser.uid + '/enquiries/' + this.enquiry.key).update(
+                          {
+                              //name: this.user.name,
+                              unread: false,
+                              //count: 0
+                              //timestamp: firebase.database['ServerValue']['TIMESTAMP'],
+                              //productImage: this.productImageURL
+                          });
+
+            if(this.enquiry.type === 'sent'){
+            this.af.database.object('/users/' + this.currentuser.uid + '/enquiries').update(
+                          {
+                              //name: this.user.name,
+                              unreadsent: false,
+                              //count: 0
+                              //timestamp: firebase.database['ServerValue']['TIMESTAMP'],
+                              //productImage: this.productImageURL
+                          });
+            
+            }
+            else{
+            this.af.database.object('/users/' + this.currentuser.uid + '/enquiries').update(
+                          {
+                              //name: this.user.name,
+                              unreadrcv: false,
+                              //count: 0
+                              //timestamp: firebase.database['ServerValue']['TIMESTAMP'],
+                              //productImage: this.productImageURL
+                          });
+            
+            
+            }
+        setTimeout(()=>{this.content.scrollToBottom();},100); 
+    
+                  }
+           
+        
+         });
+              this.messageList.$ref.once('value', (messages) => {
+           // console.log(messages.val().count);
+                //this.supcount = messages.val().count;
+                this.initialLoad = true;    
+        });
+
+
+             
+      
+  }
+
+    ionViewDidEnter() {
+    this.content.scrollToBottom();
   }
 
   send(chatBox){
 
+      this.af.database.object('/users/' + this.enquiry.otheruser + '/enquiries/' + this.enquiry.key ).update(
+                          {
+                              //name: this.user.name,
+                              unread: true,
+                              //count: this.supcount + 1
+                              //timestamp: firebase.database['ServerValue']['TIMESTAMP'],
+                              //productImage: this.productImageURL
+                          });
+
+      if(this.enquiry.type === 'sent'){
+            this.af.database.object('/users/' + this.enquiry.otheruser + '/enquiries').update(
+                          {
+                              //name: this.user.name,
+                              unreadrcv: true,
+                              //count: 0
+                              //timestamp: firebase.database['ServerValue']['TIMESTAMP'],
+                              //productImage: this.productImageURL
+                          });
+            
+            }
+            else{
+            this.af.database.object('/users/' + this.enquiry.otheruser + '/enquiries').update(
+                          {
+                              //name: this.user.name,
+                              unreadsent: true,
+                              //count: 0
+                              //timestamp: firebase.database['ServerValue']['TIMESTAMP'],
+                              //productImage: this.productImageURL
+                          });
+            
+            
+            }
       console.log(this.enquiry.key);
       console.log(this.enquiry);
 			//console.log(chatBox);
@@ -75,6 +176,8 @@ export class EnquiryDetailsPage {
 				type: 'received'
 			})
 			this.chatBox = '';
+            this.content.scrollToBottom();
+
 
   }
 

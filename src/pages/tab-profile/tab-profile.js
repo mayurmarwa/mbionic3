@@ -7,36 +7,51 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { AlertController, ActionSheetController, LoadingController } from 'ionic-angular';
+import { AlertController, ActionSheetController, LoadingController, ToastController } from 'ionic-angular';
 import { Component } from '@angular/core';
 import { Camera } from '@ionic-native/camera';
 import { AuthService } from '../../providers/auth.service';
 import { ProfileData } from '../../providers/profile-data';
 import firebase from 'firebase';
 var TabProfilePage = (function () {
-    function TabProfilePage(authService, loadingCtrl, profileData, alertCtrl, actionSheetCtrl, camera) {
+    function TabProfilePage(authService, loadingCtrl, toastCtrl, profileData, alertCtrl, actionSheetCtrl, camera) {
         var _this = this;
         this.authService = authService;
         this.loadingCtrl = loadingCtrl;
+        this.toastCtrl = toastCtrl;
         this.profileData = profileData;
         this.alertCtrl = alertCtrl;
         this.actionSheetCtrl = actionSheetCtrl;
         this.camera = camera;
         this.user = {};
-        this.user.photoURL = 'assets/img/noimage.png';
+        //this.user.photoURL = 'assets/img/noimage.png';
         this.profileData = profileData;
         this.currentuser = firebase.auth().currentUser;
-        this.authService.getFullProfile(this.currentuser.uid).first()
-            .subscribe(function (user) {
+        //setTimeout(() => {
+        if (this.currentuser) {
+            this.sub1 = this.authService.getFullProfile(this.currentuser.uid)
+                .subscribe(function (user) {
+                //loading.dismiss();
+                // this.user.displayName = user.displayName;
+                //this.user.email = user.email || user.providerData[0].email || 'Not set yet.';
+                //this.user.photoURL = user.photoURL || this.user.photoURL;
+                _this.userProfile = user;
+            }, function (error) {
+                //loading.dismiss();
+                console.log('Error: ' + JSON.stringify(error));
+            });
+            //this.sub2 = this.authService.currentUser
+            //.subscribe(user => {
             //loading.dismiss();
-            // this.user.displayName = user.displayName;
+            //this.user.displayName = user.displayName;
             //this.user.email = user.email || user.providerData[0].email || 'Not set yet.';
             //this.user.photoURL = user.photoURL || this.user.photoURL;
-            _this.userProfile = user;
-        }, function (error) {
+            //}, (error) => {
             //loading.dismiss();
-            console.log('Error: ' + JSON.stringify(error));
-        });
+            //console.log('Error: ' + JSON.stringify(error));
+            //});
+        }
+        //}, 3000);
         /** this.profileData.getUserProfile().on('value', (data) => {
              this.userProfile = data.val();
              alert(this.userProfile);
@@ -44,20 +59,20 @@ var TabProfilePage = (function () {
          });**/
     }
     TabProfilePage.prototype.ionViewDidLoad = function () {
-        var _this = this;
-        var loading = this.loadingCtrl.create();
-        loading.present();
-        this.authService.currentUser
-            .subscribe(function (user) {
-            loading.dismiss();
-            _this.user.displayName = user.displayName;
-            _this.user.email = user.email || user.providerData[0].email || 'Not set yet.';
-            _this.user.photoURL = user.photoURL || _this.user.photoURL;
-        }, function (error) {
-            loading.dismiss();
-            console.log('Error: ' + JSON.stringify(error));
+        /**if(!this.userProfile)
+        let loading = this.loadingCtrl.create({
+            content: 'Updating...'
         });
-        console.log(this.userProfile);
+  
+        loading.present();
+  
+        setTimeout(() => {
+            loading.dismiss();
+        }, 1500);**/
+    };
+    TabProfilePage.prototype.ionViewDidLeave = function () {
+        this.sub1.unsubscribe();
+        //this.sub2.unsubscribe();
     };
     TabProfilePage.prototype.updateName = function () {
         var _this = this;
@@ -368,6 +383,12 @@ var TabProfilePage = (function () {
         }).then(function (imageData) {
             _this.productImage = imageData;
             _this.profileData.updateImage(_this.productImage);
+            var toast = _this.toastCtrl.create({
+                message: 'Image will be updated shortly',
+                duration: 2000,
+                position: 'middle'
+            });
+            toast.present();
             //this.productPreview = "data:image/jpeg;base64," + imageData;
         }, function (error) {
             console.log("ERROR -> " + JSON.stringify(error));
@@ -387,6 +408,12 @@ var TabProfilePage = (function () {
         }).then(function (imageData) {
             _this.productImage = imageData;
             _this.profileData.updateImage(_this.productImage);
+            var toast = _this.toastCtrl.create({
+                message: 'Image will be updated shortly',
+                duration: 2000,
+                position: 'middle'
+            });
+            toast.present();
             //this.productPreview = "data:image/jpeg;base64," + imageData;
         }, function (error) {
             console.log("ERROR -> " + JSON.stringify(error));
@@ -401,6 +428,7 @@ TabProfilePage = __decorate([
     }),
     __metadata("design:paramtypes", [AuthService,
         LoadingController,
+        ToastController,
         ProfileData,
         AlertController,
         ActionSheetController,

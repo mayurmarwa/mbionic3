@@ -25,7 +25,7 @@ var EditProductPage = (function () {
         this.alertCtrl = alertCtrl;
         this.myproduct = navParams.get("myproduct");
         this.productData = productData;
-        this.productData.getProduct(this.myproduct.$key).first()
+        this.sub1 = this.productData.getProduct(this.myproduct.key)
             .subscribe(function (product) {
             //loading.dismiss();
             // this.user.displayName = user.displayName;
@@ -36,11 +36,13 @@ var EditProductPage = (function () {
             //loading.dismiss();
             console.log('Error: ' + JSON.stringify(error));
         });
+        console.log(this.myproduct.key);
     }
     EditProductPage.prototype.ionViewDidLoad = function () {
         console.log('ionViewDidLoad EditProductPage');
-        console.log(this.myproduct.$key);
-        this.product;
+    };
+    EditProductPage.prototype.ionViewDidLeave = function () {
+        this.sub1.unsubscribe();
     };
     EditProductPage.prototype.updateName = function () {
         var _this = this;
@@ -60,7 +62,7 @@ var EditProductPage = (function () {
                 {
                     text: 'Save',
                     handler: function (data) {
-                        _this.productData.updateName(_this.product.$key, data.name);
+                        _this.productData.updateName(_this.myproduct.key, data.name);
                     }
                 }
             ]
@@ -85,7 +87,7 @@ var EditProductPage = (function () {
                 {
                     text: 'Save',
                     handler: function (data) {
-                        _this.productData.updateGrade(_this.product.$key, data.grade);
+                        _this.productData.updateGrade(_this.myproduct.key, data.grade);
                     }
                 }
             ]
@@ -110,7 +112,7 @@ var EditProductPage = (function () {
                 {
                     text: 'Save',
                     handler: function (data) {
-                        _this.productData.updateFinish(_this.product.$key, data.finish);
+                        _this.productData.updateFinish(_this.myproduct.key, data.finish);
                     }
                 }
             ]
@@ -136,7 +138,7 @@ var EditProductPage = (function () {
                 {
                     text: 'Save',
                     handler: function (data) {
-                        _this.productData.updateThickness(_this.product.$key, data.thickness);
+                        _this.productData.updateThickness(_this.myproduct.key, data.thickness);
                     }
                 }
             ]
@@ -162,7 +164,7 @@ var EditProductPage = (function () {
                 {
                     text: 'Save',
                     handler: function (data) {
-                        _this.productData.updateWidth(_this.product.$key, data.width);
+                        _this.productData.updateWidth(_this.myproduct.key, data.width);
                     }
                 }
             ]
@@ -188,7 +190,7 @@ var EditProductPage = (function () {
                 {
                     text: 'Save',
                     handler: function (data) {
-                        _this.productData.updateLength(_this.product.$key, data.length);
+                        _this.productData.updateLength(_this.myproduct.key, data.length);
                     }
                 }
             ]
@@ -214,7 +216,7 @@ var EditProductPage = (function () {
                 {
                     text: 'Save',
                     handler: function (data) {
-                        _this.productData.updateWeight(_this.product.$key, data.weight);
+                        _this.productData.updateWeight(_this.myproduct.key, data.weight);
                     }
                 }
             ]
@@ -240,7 +242,7 @@ var EditProductPage = (function () {
                 {
                     text: 'Save',
                     handler: function (data) {
-                        _this.productData.updateNos(_this.product.$key, data.nos);
+                        _this.productData.updateNos(_this.myproduct.key, data.nos);
                     }
                 }
             ]
@@ -266,7 +268,7 @@ var EditProductPage = (function () {
                 {
                     text: 'Save',
                     handler: function (data) {
-                        _this.productData.updateMrate(_this.product.$key, data.mrate);
+                        _this.productData.updateMrate(_this.myproduct.key, data.mrate);
                     }
                 }
             ]
@@ -292,7 +294,7 @@ var EditProductPage = (function () {
                 {
                     text: 'Save',
                     handler: function (data) {
-                        _this.productData.updateKrate(_this.product.$key, data.krate);
+                        _this.productData.updateKrate(_this.myproduct.key, data.krate);
                     }
                 }
             ]
@@ -317,7 +319,7 @@ var EditProductPage = (function () {
                 {
                     text: 'Save',
                     handler: function (data) {
-                        _this.productData.updateComposition(_this.product.$key, data.composition);
+                        _this.productData.updateComposition(_this.myproduct.key, data.composition);
                     }
                 }
             ]
@@ -342,7 +344,7 @@ var EditProductPage = (function () {
                 {
                     text: 'Save',
                     handler: function (data) {
-                        _this.productData.updateOrigin(_this.product.$key, data.origin);
+                        _this.productData.updateOrigin(_this.myproduct.key, data.origin);
                     }
                 }
             ]
@@ -367,7 +369,7 @@ var EditProductPage = (function () {
                 {
                     text: 'Save',
                     handler: function (data) {
-                        _this.productData.updateBrand(_this.product.$key, data.brand);
+                        _this.productData.updateBrand(_this.myproduct.key, data.brand);
                     }
                 }
             ]
@@ -392,7 +394,7 @@ var EditProductPage = (function () {
                 {
                     text: 'Save',
                     handler: function (data) {
-                        _this.productData.updateCategory(_this.product.$key, data.category);
+                        _this.productData.updateCategory(_this.myproduct.key, data.category);
                     }
                 }
             ]
@@ -417,7 +419,7 @@ var EditProductPage = (function () {
                 {
                     text: 'Save',
                     handler: function (data) {
-                        _this.productData.updateSizes(_this.product.$key, data.sizes);
+                        _this.productData.updateSizes(_this.myproduct.key, data.sizes);
                     }
                 }
             ]
@@ -442,7 +444,7 @@ var EditProductPage = (function () {
                 {
                     text: 'Save',
                     handler: function (data) {
-                        _this.productData.updateType(_this.product.$key, data.type);
+                        _this.productData.updateType(_this.myproduct.key, data.type);
                     }
                 }
             ]
@@ -467,7 +469,7 @@ var EditProductPage = (function () {
                 {
                     text: 'Save',
                     handler: function (data) {
-                        _this.productData.updateSwg(_this.product.$key, data.swg);
+                        _this.productData.updateSwg(_this.myproduct.key, data.swg);
                     }
                 }
             ]
@@ -492,7 +494,7 @@ var EditProductPage = (function () {
                 {
                     text: 'Save',
                     handler: function (data) {
-                        _this.productData.updateSch(_this.product.$key, data.sch);
+                        _this.productData.updateSch(_this.myproduct.key, data.sch);
                     }
                 }
             ]
@@ -517,7 +519,7 @@ var EditProductPage = (function () {
                 {
                     text: 'Save',
                     handler: function (data) {
-                        _this.productData.updateMm(_this.product.$key, data.mm);
+                        _this.productData.updateMm(_this.myproduct.key, data.mm);
                     }
                 }
             ]
@@ -542,7 +544,7 @@ var EditProductPage = (function () {
                 {
                     text: 'Save',
                     handler: function (data) {
-                        _this.productData.updateQuantity(_this.product.$key, data.quantity);
+                        _this.productData.updateQuantity(_this.myproduct.key, data.quantity);
                     }
                 }
             ]
@@ -567,7 +569,7 @@ var EditProductPage = (function () {
                 {
                     text: 'Save',
                     handler: function (data) {
-                        _this.productData.updateUnit(_this.product.$key, data.unit);
+                        _this.productData.updateUnit(_this.myproduct.key, data.unit);
                     }
                 }
             ]
@@ -592,7 +594,7 @@ var EditProductPage = (function () {
                 {
                     text: 'Save',
                     handler: function (data) {
-                        _this.productData.updateGuarantee(_this.product.$key, data.guarantee);
+                        _this.productData.updateGuarantee(_this.myproduct.key, data.guarantee);
                     }
                 }
             ]
@@ -617,7 +619,7 @@ var EditProductPage = (function () {
                 {
                     text: 'Save',
                     handler: function (data) {
-                        _this.productData.updateQuality(_this.product.$key, data.quality);
+                        _this.productData.updateQuality(_this.myproduct.key, data.quality);
                     }
                 }
             ]
@@ -642,7 +644,7 @@ var EditProductPage = (function () {
                 {
                     text: 'Save',
                     handler: function (data) {
-                        _this.productData.updateMtc(_this.product.$key, data.mtc);
+                        _this.productData.updateMtc(_this.myproduct.key, data.mtc);
                     }
                 }
             ]
@@ -667,7 +669,7 @@ var EditProductPage = (function () {
                 {
                     text: 'Save',
                     handler: function (data) {
-                        _this.productData.updatePtype(_this.product.$key, data.ptype);
+                        _this.productData.updatePtype(_this.myproduct.key, data.ptype);
                     }
                 }
             ]
@@ -686,7 +688,7 @@ var EditProductPage = (function () {
                 {
                     text: 'Confirm',
                     handler: function (data) {
-                        _this.productData.deleteProduct(_this.product.$key);
+                        _this.productData.deleteProduct(_this.myproduct.key);
                         _this.navCtrl.pop();
                     }
                 }

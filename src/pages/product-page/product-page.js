@@ -10,6 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { SendEnquiryPage } from '../send-enquiry/send-enquiry';
+import { ProductData } from '../../providers/product-data';
 import { Storage } from '@ionic/storage';
 /*
   Generated class for the ProductPage page.
@@ -18,16 +19,43 @@ import { Storage } from '@ionic/storage';
   Ionic pages and navigation.
 */
 var ProductPagePage = (function () {
-    function ProductPagePage(navCtrl, navParams, storage) {
+    function ProductPagePage(navCtrl, navParams, productData, storage) {
         var _this = this;
         this.navCtrl = navCtrl;
         this.navParams = navParams;
+        this.productData = productData;
         this.storage = storage;
+        this.prodImg = "";
         storage.ready().then(function () {
             storage.get('currentuser').then(function (val) {
                 _this.currentuser = JSON.parse(val);
                 _this.product = navParams.get("product");
-                //console.log(this.product);
+                console.log(_this.product.catid);
+                if (_this.product.catid == 1 || _this.product.catid === "8a" || _this.product.catid === "9a") {
+                    _this.prodImg = "assets/img/1.png";
+                }
+                else if (_this.product.catid == 2 || _this.product.catid === "8b" || _this.product.catid === "9b") {
+                    _this.prodImg = "assets/img/2.png";
+                }
+                else if (_this.product.catid == 3) {
+                    _this.prodImg = "assets/img/3.png";
+                }
+                else if (_this.product.catid == 4 || _this.product.catid === "4a" || _this.product.catid === "4b" || _this.product.catid === "4c" || _this.product.catid === "4d" || _this.product.catid === "4e" || _this.product.catid === "8c" || _this.product.catid === "8c1" || _this.product.catid === "8c2" || _this.product.catid === "8c3" || _this.product.catid === "8c4" || _this.product.catid === "8c5" || _this.product.catid === "9c" || _this.product.catid === "9c1" || _this.product.catid === "9c2" || _this.product.catid === "9c3" || _this.product.catid === "9c4" || _this.product.catid === "9c5") {
+                    _this.prodImg = "assets/img/4.png";
+                }
+                else if (_this.product.catid == 5) {
+                    _this.prodImg = "assets/img/5.png";
+                }
+                else if (_this.product.catid == 6) {
+                    _this.prodImg = "assets/img/6.png";
+                }
+                else if (_this.product.catid == 7 || _this.product.catid === "8d" || _this.product.catid === "9d") {
+                    _this.prodImg = "assets/img/7.png";
+                }
+                else if (_this.product.catid == 10) {
+                    _this.prodImg = "assets/img/10.png";
+                }
+                _this.productData.setRecent(_this.product);
                 //console.log(this.currentuser);
             })
                 .catch(function (err) {
@@ -50,7 +78,7 @@ ProductPagePage = __decorate([
         selector: 'page-product-page',
         templateUrl: 'product-page.html'
     }),
-    __metadata("design:paramtypes", [NavController, NavParams, Storage])
+    __metadata("design:paramtypes", [NavController, NavParams, ProductData, Storage])
 ], ProductPagePage);
 export { ProductPagePage };
 //# sourceMappingURL=product-page.js.map

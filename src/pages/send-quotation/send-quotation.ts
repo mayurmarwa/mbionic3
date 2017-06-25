@@ -161,6 +161,7 @@ export class SendQuotationPage {
                       otheruserNo: this.user.mobile,
                       requirement: this.requirement,
                       quote: this.quoteForm.value,
+                      unread: true,
                       timestamp: firebase.database['ServerValue']['TIMESTAMP']
                       //detials: this.productForm.value.name,
 

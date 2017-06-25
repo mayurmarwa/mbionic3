@@ -8,12 +8,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, AlertController, ToastController } from 'ionic-angular';
 import { AngularFire } from 'angularfire2';
 import { Storage } from '@ionic/storage';
 import { MyProfilePage } from '../my-profile/my-profile';
 import { ProductPagePage } from '../product-page/product-page';
 import { RequirementDetailsPage } from '../requirement-details/requirement-details';
+import firebase from 'firebase';
 /*
   Generated class for the EnquiryDetails page.
 
@@ -21,31 +22,35 @@ import { RequirementDetailsPage } from '../requirement-details/requirement-detai
   Ionic pages and navigation.
 */
 var EnquiryDetailsPage = (function () {
-    function EnquiryDetailsPage(navCtrl, navParams, af, storage) {
-        var _this = this;
+    function EnquiryDetailsPage(navCtrl, navParams, af, storage, alertCtrl, toastCtrl) {
+        //storage.ready().then(() => {
+        //storage.get('currentuser').then((val) => {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
         this.af = af;
         this.storage = storage;
-        storage.ready().then(function () {
-            storage.get('currentuser').then(function (val) {
-                _this.currentuser = JSON.parse(val);
-                _this.enquiry = navParams.get("enquiry");
-                _this.messageList = af.database.list('/users/' + _this.currentuser.uid + '/enquiries/' + _this.enquiry.$key + '/messgaes/');
-                _this.otherUserList = af.database.list('/users/' + _this.enquiry.otheruser + '/enquiries/' + _this.enquiry.$key + '/messgaes/');
-            })
-                .catch(function (err) {
-                return console.log(err);
-            });
-        }).catch(function (err) {
-            return console.log(err);
-        });
+        this.alertCtrl = alertCtrl;
+        this.toastCtrl = toastCtrl;
+        this.currentuser = firebase.auth().currentUser;
+        // this.currentuser = JSON.parse(val);
+        this.enquiry = navParams.get("enquiry");
+        this.messageList = af.database.list('/users/' + this.currentuser.uid + '/enquiries/' + this.enquiry.key + '/messgaes/');
+        this.otherUserList = af.database.list('/users/' + this.enquiry.otheruser + '/enquiries/' + this.enquiry.key + '/messgaes/');
+        this.myenquiries = af.database.list('/users/' + this.currentuser.uid + '/enquiries');
+        this.otherenquiries = af.database.list('/users/' + this.enquiry.otheruser + '/enquiries');
+        //})
+        //.catch((err) =>
+        //      console.log(err));
+        //}).catch((err) =>
+        //  console.log(err)); 
         //console.log(this.enquiry);
     }
     EnquiryDetailsPage.prototype.ionViewDidLoad = function () {
         console.log('ionViewDidLoad EnquiryDetailsPage');
     };
     EnquiryDetailsPage.prototype.send = function (chatBox) {
+        console.log(this.enquiry.key);
+        console.log(this.enquiry);
         //console.log(chatBox);
         this.messageList.push({
             text: this.chatBox,
@@ -56,6 +61,34 @@ var EnquiryDetailsPage = (function () {
             type: 'received'
         });
         this.chatBox = '';
+    };
+    EnquiryDetailsPage.prototype.confirmDelete = function () {
+        var _this = this;
+        var alert = this.alertCtrl.create({
+            title: 'Delete Enquiry?',
+            message: 'Do you want to delete this enquiry?',
+            buttons: [
+                {
+                    text: 'Cancel',
+                },
+                {
+                    text: 'Confirm',
+                    handler: function (data) {
+                        _this.myenquiries.remove(_this.enquiry.key);
+                        _this.otherenquiries.remove(_this.enquiry.key);
+                        var toast = _this.toastCtrl.create({
+                            message: 'Enquiry will be deleted',
+                            duration: 2000,
+                            position: 'middle'
+                        });
+                        toast.present().then(function () {
+                            _this.navCtrl.pop();
+                        });
+                    }
+                }
+            ]
+        });
+        alert.present();
     };
     EnquiryDetailsPage.prototype.viewProfile = function () {
         this.navCtrl.push(MyProfilePage, { userID: this.enquiry.otheruser });
@@ -73,7 +106,7 @@ EnquiryDetailsPage = __decorate([
         selector: 'page-enquiry-details',
         templateUrl: 'enquiry-details.html'
     }),
-    __metadata("design:paramtypes", [NavController, NavParams, AngularFire, Storage])
+    __metadata("design:paramtypes", [NavController, NavParams, AngularFire, Storage, AlertController, ToastController])
 ], EnquiryDetailsPage);
 export { EnquiryDetailsPage };
 //# sourceMappingURL=enquiry-details.js.map

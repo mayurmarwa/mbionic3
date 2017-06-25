@@ -29,8 +29,19 @@
     
     <div class="fullpage" *ngIf="productListRev?.length === 0">
         <div class="content">
+            
             <div text-center >
-                You have not added any products! Click on add new to get your product listed.
+                
+                    
+                
+                     You have not added any products! Click on add new to get your product listed.
+                <br />
+                <br />
+                Or
+                <br />
+                <button ion-button (click)="addbulk()" round type="submit" style="margin-top:40px;">
+                    Upload Products in Bulk
+                </button>
 
             </div>
         </div>
@@ -46,6 +57,15 @@
   
         </ion-item>
     </ion-list>-->
+    <ion-row *ngIf="productListRev?.length > 0">
+        <ion-col text-center>
+            <button ion-button (click)="addbulk()" round type="submit" style="margin-top:40px;">
+                Upload Products in Bulk
+            </button>
+            <br />
+            <br />
+        </ion-col>
+    </ion-row>
                 <ion-row>
                 <ion-col tappable col-6 col-sm-3 *ngFor="let product of productListRev" (click)="detailpage(product)">
                     <ion-card class="product-card">

@@ -24,5 +24,8 @@ export class AboutPage {
     console.log('ionViewDidLoad AboutPage');
   }
 
+    openPrivacy(){
+        this.navCtrl.push('PrivacyPolicyPage');
+    }
  
 }
