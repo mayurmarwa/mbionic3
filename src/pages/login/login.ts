@@ -1,9 +1,7 @@
 import { Component } from '@angular/core';
-import { NavController, LoadingController, ToastController, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, LoadingController, ToastController, AlertController } from 'ionic-angular';
 
-import { TabsPage } from '../tabs/tabs';
-import { ResetpasswordPage } from '../resetpassword/resetpassword';
-import { SignupPage } from '../signup/signup';
+
 //import { CreateProfilePage } from '../create-profile/create-profile';
 import { FormBuilder, Validators } from '@angular/forms'
 import { AuthService, AuthMode } from '../../providers/auth.service';
@@ -13,12 +11,14 @@ import { NgZone } from '@angular/core';
 import { Storage } from '@ionic/storage';
 
 
+@IonicPage()
+
 @Component({
   selector: 'page-login',
   templateUrl: 'login.html'
 })
 export class LoginPage {
-    homePage: any = TabsPage;
+    homePage: any = 'TabsPage';
     submitAttempt: boolean = false;
     public loading: any;
     public loginForm: any;
@@ -120,11 +120,11 @@ export class LoginPage {
   
 
   goToResetPassword() {
-      this.navCtrl.push(ResetpasswordPage);
+      this.navCtrl.push('ResetpasswordPage');
   }
 
   createAccount() {
-      this.navCtrl.push(SignupPage);
+      this.navCtrl.push('SignupPage');
   }
   ionViewDidLoad() {
       console.log('ionViewDidLoad LoginPage');

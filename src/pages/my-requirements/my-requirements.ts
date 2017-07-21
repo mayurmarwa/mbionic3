@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
-import { RequirementDetailsPage } from '../requirement-details/requirement-details';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import firebase from 'firebase';
 
@@ -14,6 +13,8 @@ import firebase from 'firebase';
   selector: 'page-my-requirements',
   templateUrl: 'my-requirements.html'
 })
+@IonicPage()
+
 export class MyRequirementsPage {
 
     public requirementList: any;
@@ -74,7 +75,7 @@ export class MyRequirementsPage {
 
     openrequirementpage(requirement) {
 
-        this.navCtrl.push(RequirementDetailsPage, { requirement: requirement });
+        this.navCtrl.push('RequirementDetailsPage', { requirement: requirement });
     }
 
     updateList() {

@@ -1,7 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, NavParams, LoadingController, Content } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController, Content } from 'ionic-angular';
 import { AngularFire, FirebaseObjectObservable } from 'angularfire2';
-import { EnquiryDetailsPage } from '../enquiry-details/enquiry-details';
 import { Storage } from '@ionic/storage';
 import firebase from 'firebase';
 import { Observable } from 'rxjs/Observable';
@@ -13,6 +12,7 @@ import 'rxjs/add/observable/of';
   See http://ionicframework.com/docs/v2/components/#navigation for more info on
   Ionic pages and navigation.
 */
+@IonicPage()
 @Component({
   selector: 'page-enquiries',
   templateUrl: 'enquiries.html'
@@ -237,7 +237,7 @@ export class EnquiriesPage {
   openenquirypage(enquiry){
 
       firebase.database().ref('/users/' + this.currentuser.uid + '/enquiries/' + enquiry.key).update({unread: false});
-		this.navCtrl.push(EnquiryDetailsPage, {enquiry: enquiry});  
+		this.navCtrl.push('EnquiryDetailsPage', {enquiry: enquiry});  
   }
 
   updateEnquiryList(type) {

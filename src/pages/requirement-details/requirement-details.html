@@ -62,9 +62,9 @@
             
                 <custom-icon set="mb" name="bidprice" item-left></custom-icon>
                 <p>Bid Price</p>
-                <h2 *ngIf="this.requirement?.btype === 'exv'">{{this.requirement?.bid | currency:"INR":true}}/Kg (+ excise + vat)</h2>
-                <h2 *ngIf="this.requirement?.btype === 'vat'">{{this.requirement?.bid | currency:"INR":true}}/Kg (+ vat)</h2>
-                <h2 *ngIf="!this.requirement?.btype">{{this.requirement?.bid | currency:"INR":true}}/Kg</h2>
+                <!--<h2 *ngIf="this.requirement?.btype === 'exv'">{{this.requirement?.bid | currency:"INR":true}}/Kg (+ excise + vat)</h2>
+                <h2 *ngIf="this.requirement?.btype === 'vat'">{{this.requirement?.bid | currency:"INR":true}}/Kg (+ vat)</h2>-->
+                <h2>{{this.requirement?.bid | currency:"INR":true}}/Kg (+ gst)</h2>
            
         </ion-item>
         <ion-item text-wrap ion-item *ngIf="this.requirement?.details">

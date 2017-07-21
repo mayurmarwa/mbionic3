@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, LoadingController } from 'ionic-angular';
-import { ProductPagePage } from '../product-page/product-page';
+import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 import { AngularFire } from 'angularfire2';
 import { ProductData } from '../../providers/product-data';
 
@@ -12,6 +11,8 @@ import { ProductData } from '../../providers/product-data';
   See http://ionicframework.com/docs/v2/components/#navigation for more info on
   Ionic pages and navigation.
 */
+@IonicPage()
+
 @Component({
   selector: 'page-quick-filter',
   templateUrl: 'quick-filter.html'
@@ -189,7 +190,7 @@ export class QuickFilterPage {
 
     openproductpage(product) {
 
-        this.navCtrl.push(ProductPagePage, { product: product });
+        this.navCtrl.push('ProductPagePage', { product: product });
     }
 
     filterList() {

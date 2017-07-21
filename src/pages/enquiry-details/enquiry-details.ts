@@ -1,10 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, NavParams, AlertController, ToastController, Content } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, ToastController, Content } from 'ionic-angular';
 import { AngularFire, FirebaseListObservable } from 'angularfire2';
 import { Storage } from '@ionic/storage';
-import { MyProfilePage } from '../my-profile/my-profile';
-import { ProductPagePage } from '../product-page/product-page';
-import { RequirementDetailsPage } from '../requirement-details/requirement-details';
 import firebase from 'firebase';
 
 
@@ -14,6 +11,8 @@ import firebase from 'firebase';
   See http://ionicframework.com/docs/v2/components/#navigation for more info on
   Ionic pages and navigation.
 */
+@IonicPage()
+
 @Component({
   selector: 'page-enquiry-details',
   templateUrl: 'enquiry-details.html'
@@ -211,15 +210,15 @@ export class EnquiryDetailsPage {
   }
 
   viewProfile() {
-      this.navCtrl.push(MyProfilePage, {userID: this.enquiry.otheruser});
+      this.navCtrl.push('MyProfilePage', {userID: this.enquiry.otheruser});
   }
 
   viewProduct() {
-      this.navCtrl.push(ProductPagePage, { product: this.enquiry.product });
+      this.navCtrl.push('ProductPagePage', { product: this.enquiry.product });
   }
 
   viewRequirement() {
-      this.navCtrl.push(RequirementDetailsPage, { requirement: this.enquiry.requirement });
+      this.navCtrl.push('RequirementDetailsPage', { requirement: this.enquiry.requirement });
   }
 
 }

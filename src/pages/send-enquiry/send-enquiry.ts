@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, AlertController, LoadingController, ViewController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, LoadingController, ViewController } from 'ionic-angular';
 import { FormBuilder, Validators } from '@angular/forms';
 import { AngularFire } from 'angularfire2';
 import { AuthService } from '../../providers/auth.service';
-import { EnquirySentPage } from '../enquiry-sent/enquiry-sent';
 import { Storage } from '@ionic/storage';
 import firebase from 'firebase';
 
@@ -13,6 +12,8 @@ import firebase from 'firebase';
   See http://ionicframework.com/docs/v2/components/#navigation for more info on
   Ionic pages and navigation.
 */
+@IonicPage()
+
 @Component({
     selector: 'page-send-enquiry',
     templateUrl: 'send-enquiry.html'
@@ -216,7 +217,7 @@ export class SendEnquiryPage {
                     //this.navCtrl.pop();
                     //this.navCtrl.pop();
                     this.loading.dismiss().then(() => {
-                        this.navCtrl.push(EnquirySentPage, { enquiryID: data.key, sellerID: this.sellerID, uid: this.currentuser.uid })
+                        this.navCtrl.push('EnquirySentPage', { enquiryID: data.key, sellerID: this.sellerID, uid: this.currentuser.uid })
                             .then(() => {
                                 const index = this.viewCtrl.index;
                                 this.navCtrl.remove(index);

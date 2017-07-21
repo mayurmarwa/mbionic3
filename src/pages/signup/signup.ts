@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
-import { NavController, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, ToastController } from 'ionic-angular';
 import { FormBuilder, Validators } from '@angular/forms';
-import { VerifyMobilePage } from '../verify-mobile/verify-mobile';
 import { EmailValidator } from '../../validators/email';
 
 
@@ -15,6 +14,8 @@ import { EmailValidator } from '../../validators/email';
     selector: 'page-signup',
     templateUrl: 'signup.html'
 })
+@IonicPage()
+
 export class SignupPage {
     public signupForm;
     emailChanged: boolean = false;
@@ -63,7 +64,7 @@ export class SignupPage {
             });
             toast.present();
         } else {
-            this.nav.push(VerifyMobilePage, { form: this.signupForm, type: "email" });
+            this.nav.push('VerifyMobilePage', { form: this.signupForm, type: "email" });
         }
     }
     ionViewDidLoad() {

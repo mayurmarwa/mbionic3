@@ -1,6 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { Nav, App , Platform, LoadingController, AlertController, ToastController, Keyboard, IonicApp, MenuController } from 'ionic-angular';
-import { Push, RegistrationEventResponse, NotificationEventResponse } from '@ionic-native/push';
+//import { Push, RegistrationEventResponse, NotificationEventResponse } from '@ionic-native/push';
+import { FCM } from '@ionic-native/fcm';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Market } from '@ionic-native/market';
@@ -8,17 +9,6 @@ import { Market } from '@ionic-native/market';
 import firebase from 'firebase';
 
 import { TabsPage } from '../pages/tabs/tabs';
-import { MarketPage } from '../pages/market/market';
-import { WaitingApproval } from '../pages/waiting-approval/waiting-approval';
-import { AboutPage } from '../pages/about/about';
-import { LoginPage } from '../pages/login/login';
-import { TabProfilePage } from '../pages/tab-profile/tab-profile';
-import { MyProductsPage } from '../pages/my-products/my-products';
-import { CreateProfilePage } from '../pages/create-profile/create-profile';
-import { PostBuyRequirementsPage } from '../pages/post-buy-requirements/post-buy-requirements';
-import { BrowseRequirementsPage } from '../pages/browse-requirements/browse-requirements';
-import { DirectoryPage } from '../pages/directory/directory';
-import { SpeedDialPage } from '../pages/speed-dial/speed-dial';
 //import { SettingsPage } from '../pages/settings/settings';
 //import { Storage } from '@ionic/storage';
 import { SocialSharing } from '@ionic-native/social-sharing';
@@ -63,7 +53,8 @@ export class MyApp {
     public keyboard: Keyboard,
     private ionicApp: IonicApp,
     private socialSharing: SocialSharing,
-    private pushplugin: Push,
+    private fcm: FCM,
+    //private pushplugin: Push,
     private splashScreen: SplashScreen,
     public directoryData: DirectoryProvider,   
     private statusBar: StatusBar,
@@ -81,14 +72,14 @@ export class MyApp {
     ];
 
     this.pushPages = [
-        { title: 'Profile', component: TabProfilePage, icon: 'profile' },
-        { title: 'Post Buy Requirement', component: PostBuyRequirementsPage, icon: 'post' },
-        { title: 'Browse Requirements', component: BrowseRequirementsPage, icon: 'search' },
-        { title: 'Sell Products', component: MyProductsPage, icon: 'products' },
-        { title: 'Directory', component: DirectoryPage, icon: 'directory' },
-        { title: 'Speed Dial', component: SpeedDialPage, icon: 'dialer' },
+        { title: 'Profile', component: 'TabProfilePage', icon: 'profile' },
+        { title: 'Post Buy Requirement', component: 'PostBuyRequirementsPage', icon: 'post' },
+        { title: 'Browse Requirements', component: 'BrowseRequirementsPage', icon: 'search' },
+        { title: 'Sell Products', component: 'MyProductsPage', icon: 'products' },
+        { title: 'Directory', component: 'DirectoryPage', icon: 'directory' },
+        { title: 'Speed Dial', component: 'SpeedDialPage', icon: 'dialer' },
         //{ title: 'Settings', component: SettingsPage, icon: 'settings' },        
-        { title: 'About', component: AboutPage, icon: 'about' },
+        { title: 'About', component: 'AboutPage', icon: 'about' },
     ];
    // });
   }
@@ -98,6 +89,29 @@ export class MyApp {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
         this.statusBar.styleDefault();
+
+        if (this.platform.is('cordova')) {
+            this.fcm.onNotification().subscribe(data => {
+                if (data.wasTapped) {
+                    //if (this.loggedin) {
+                        //this.nav.push('DashboardPage');
+                    //}
+                    //else {
+                       // this.nav.push('LoginPage');
+                    //}
+                    console.log("Received in background", data);
+                } else {
+                    console.log("Received in foreground", data);
+                };
+            })
+
+            this.fcm.onTokenRefresh().subscribe(token => {
+                //backend.registerToken(token);
+                firebase.database().ref('/fcmtokens/' + this.currentuser.uid + '/').set({
+                    fcmtoken: token
+                });
+            })
+        }
 
         this.authService.getAuth()
             .map(state => !!state)
@@ -112,6 +126,19 @@ export class MyApp {
                         position: 'bottom'
                     });
                     toast.present();
+
+                    if (this.platform.is('cordova')) {
+                        this.fcm.getToken().then(token => {
+
+                            console.log('fcm:' + token);
+                            firebase.database().ref('/users/' + this.currentuser.uid + '/fcmtokens/').set({
+                                fcmtoken: token
+                            });
+                            firebase.database().ref('/fcmtokens/' + this.currentuser.uid + '/').set({
+                                fcmtoken: token
+                            });
+                        })
+                    }
 
                     this.sub1 = this.authService.getFullProfile(this.currentuser.uid).first()
                         .subscribe(user => {
@@ -132,7 +159,7 @@ export class MyApp {
                                     }, 500);
                                     this.currentprofile = user;
                                     //console.log(user);
-                                    this.rootPage = WaitingApproval;
+                                    this.rootPage = 'WaitingApproval';
                                 }
 
                             }
@@ -145,7 +172,7 @@ export class MyApp {
                                         setTimeout(() => {
                                             this.splashScreen.hide();
                                         }, 500);
-                                        this.rootPage = CreateProfilePage;
+                                        this.rootPage = 'CreateProfilePage';
                                         //});
 
                                     }).catch((error) => {
@@ -197,9 +224,9 @@ export class MyApp {
 
 
                     this.directoryData.setDirectory();
-                    this.checkUpdate();
+                    //this.checkUpdate();
 
-                    this.initPushNotification();
+                    //this.initPushNotification();
 
 
 
@@ -215,7 +242,7 @@ export class MyApp {
                     setTimeout(() => {
                         this.splashScreen.hide();
                     }, 500);
-                    this.rootPage = LoginPage;
+                    this.rootPage = 'LoginPage';
                     //}); 
                 }
                 //this.rootPage = (authenticated) ? TabsPage : LoginPage;
@@ -225,7 +252,7 @@ export class MyApp {
                 setTimeout(() => {
                     this.splashScreen.hide();
                 }, 500);
-                this.rootPage = LoginPage;
+                this.rootPage = 'LoginPage';
                 //});
 
                 console.log('Error: ' + JSON.stringify(error));
@@ -438,6 +465,8 @@ export class MyApp {
 
   }
 
+  /**
+   
   initPushNotification() {
       if (!this.platform.is('cordova')) {
           console.warn("Push notifications not initialized. Cordova is not available - Run in physical device");
@@ -516,7 +545,7 @@ export class MyApp {
       push.on('error').subscribe( (e: Error) => {
           console.log(e.message);
       });
-  }
+  }**/
 
 
   openPage(page) {
@@ -530,7 +559,7 @@ export class MyApp {
   }
 
   logout() {
-      this.nav.setRoot(MarketPage).then(()=>{    this.authService.logout();
+      this.nav.setRoot('MarketPage').then(()=>{    this.authService.logout();
 });
       
     //this.nav.setRoot(LoginPage);

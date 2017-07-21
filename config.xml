@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget android-versionCode="2" id="com.croogster.metbzr" version="1.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget android-versionCode="3" id="com.croogster.metbzr" version="1.2.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>MetBazaar</name>
     <description>Platform for Metal Traders</description>
     <author email="developer@metbazaar.com" href="http://metbazaar.com/">Croogster</author>
@@ -51,7 +51,7 @@
     <preference name="SplashShowOnlyFirstTime" value="false" />
     <preference name="SplashScreen" value="screen" />
     <preference name="SplashScreenDelay" value="30000" />
-    <preference name="android-targetSdkVersion" value="25" />
+    <preference name="android-targetSdkVersion" value="26" />
     <feature name="StatusBar">
         <param name="ios-package" onload="true" value="CDVStatusBar" />
     </feature>
@@ -63,6 +63,7 @@
         <variable name="APP_ID" value="1832286610428036" />
         <variable name="APP_NAME" value="MetBazaar" />
     </plugin>
+    <plugin name="cordova-plugin-fcm" spec="^2.1.2" />
     <plugin name="cordova-plugin-googleplus" spec="~5.1.1">
         <variable name="REVERSED_CLIENT_ID" value="com.googleusercontent.apps.639273963235-hdso68grdhsfpse4mg8d8d567tncoa90" />
     </plugin>
@@ -72,7 +73,4 @@
     <plugin name="cordova-plugin-x-socialsharing" spec="5.1.7" />
     <plugin name="cordova-sqlite-storage" spec="~2.0.2" />
     <plugin name="ionic-plugin-keyboard" spec="~2.2.1" />
-    <plugin name="phonegap-plugin-push" spec="1.8.2">
-        <variable name="SENDER_ID" value="639273963235" />
-    </plugin>
 </widget>

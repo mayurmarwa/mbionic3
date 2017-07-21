@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 import { AngularFire } from 'angularfire2';
-import { ProductPagePage } from '../product-page/product-page';
 import { ProductData } from '../../providers/product-data';
 
 /*
@@ -10,6 +9,8 @@ import { ProductData } from '../../providers/product-data';
   See http://ionicframework.com/docs/v2/components/#navigation for more info on
   Ionic pages and navigation.
 */
+@IonicPage()
+
 @Component({
   selector: 'page-search-categories',
   templateUrl: 'search-categories.html'
@@ -238,7 +239,7 @@ export class SearchCategoriesPage {
 
     openproductpage(product) {
 
-        this.navCtrl.push(ProductPagePage, { product: product });
+        this.navCtrl.push('ProductPagePage', { product: product });
     }
   ionViewDidLoad() {
     console.log('ionViewDidLoad SearchCategoriesPage');

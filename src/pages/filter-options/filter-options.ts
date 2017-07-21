@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ViewController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 import { AngularFire, FirebaseListObservable } from 'angularfire2';
 
 
@@ -9,6 +9,8 @@ import { AngularFire, FirebaseListObservable } from 'angularfire2';
   See http://ionicframework.com/docs/v2/components/#navigation for more info on
   Ionic pages and navigation.
 */
+@IonicPage()
+
 @Component({
   selector: 'page-filter-options',
   templateUrl: 'filter-options.html'

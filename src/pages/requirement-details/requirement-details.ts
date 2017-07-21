@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, AlertController, ViewController, ToastController  } from 'ionic-angular';
-import { SendQuotationPage } from '../send-quotation/send-quotation'
+import { IonicPage, NavController, NavParams, AlertController, ViewController, ToastController  } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { ProductData } from '../../providers/product-data';
 
@@ -14,6 +13,8 @@ import { ProductData } from '../../providers/product-data';
   selector: 'page-requirement-details',
   templateUrl: 'requirement-details.html'
 })
+@IonicPage()
+
 export class RequirementDetailsPage {
 
     public requirement: any;
@@ -47,7 +48,7 @@ export class RequirementDetailsPage {
   }
 
   sendQuote(){
-	 this.navCtrl.push(SendQuotationPage, {requirement: this.requirement});
+	 this.navCtrl.push('SendQuotationPage', {requirement: this.requirement});
 		//console.log('Send Quote');
 		
   }

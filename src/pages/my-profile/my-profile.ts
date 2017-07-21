@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 import { AuthService } from '../../providers/auth.service';
 import { CallNumber } from '@ionic-native/call-number';
 import { Platform } from 'ionic-angular';
@@ -14,6 +14,8 @@ import { Platform } from 'ionic-angular';
   selector: 'page-my-profile',
   templateUrl: 'my-profile.html'
 })
+@IonicPage()
+
 export class MyProfilePage {
 
     public userID: any;

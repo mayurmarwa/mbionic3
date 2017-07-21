@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { CallNumber } from '@ionic-native/call-number';
 import { Platform } from 'ionic-angular';
 
@@ -14,6 +14,8 @@ import { Platform } from 'ionic-angular';
   selector: 'page-member-details',
   templateUrl: 'member-details.html'
 })
+@IonicPage()
+
 export class MemberDetailsPage {
 
     public member: any;

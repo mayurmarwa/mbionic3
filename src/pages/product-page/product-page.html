@@ -55,8 +55,9 @@
                         </ion-col>
                     </ion-row>
                     <ion-row>
-                        <ion-col *ngIf="this.product?.ratetype === 'exv'" text-center>(+ excise + vat)</ion-col>
-                        <ion-col *ngIf="this.product?.ratetype === 'vat'" text-center>(+ vat)</ion-col>
+                        <ion-col text-center>(+ gst)</ion-col>
+                        <!--<ion-col *ngIf="this.product?.ratetype === 'exv'" text-center>(+ excise + vat)</ion-col>
+                        <ion-col *ngIf="this.product?.ratetype === 'vat'" text-center>(+ vat)</ion-col>-->
                     </ion-row>
 
                 </ion-grid>
@@ -188,17 +189,17 @@
             <ion-col col-3 *ngIf="product?.weight">
                 : {{product?.weight}} Kg
             </ion-col>
-            <ion-col col-3 *ngIf="product?.length && !(product?.catid === 2 || product?.catid === 3 || product?.catid === '8b' || product?.catid === '9b')">
+            <ion-col col-3 *ngIf="product?.length && !(product?.catid === 2 || product?.catid === 3 || product?.catid === '8b' || product?.catid === '9b' || product?.catid === '11b' || product?.catid === '11c')">
                 Length
             </ion-col>
-            <ion-col col-3 *ngIf="product?.length && !(product?.catid === 2 || product?.catid === 3 || product?.catid === '8b' || product?.catid === '9b')">
+            <ion-col col-3 *ngIf="product?.length && !(product?.catid === 2 || product?.catid === 3 || product?.catid === '8b' || product?.catid === '9b' || product?.catid === '11b' || product?.catid === '11c')">
                 : {{product?.length}} Mtrs
             </ion-col>
 
-            <ion-col col-3 *ngIf="product?.length && (product?.catid === 2 || product?.catid === 3 || product?.catid === '8b' || product?.catid === '9b')">
+            <ion-col col-3 *ngIf="product?.length && (product?.catid === 2 || product?.catid === 3 || product?.catid === '8b' || product?.catid === '9b' || product?.catid === '11b' || product?.catid === '11c')">
                 Length
             </ion-col>
-            <ion-col col-3 *ngIf="product?.length && (product?.catid === 2 || product?.catid === 3 || product?.catid === '8b' || product?.catid === '9b')">
+            <ion-col col-3 *ngIf="product?.length && (product?.catid === 2 || product?.catid === 3 || product?.catid === '8b' || product?.catid === '9b' || product?.catid === '11b' || product?.catid === '11c')">
                 : {{product?.length}} mm
             </ion-col>
         </ion-row>

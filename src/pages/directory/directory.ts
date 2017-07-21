@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, LoadingController, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController, AlertController } from 'ionic-angular';
 import { ModalController } from 'ionic-angular';
-import { MemberDetailsPage } from '../member-details/member-details';
 import { PopoverController } from 'ionic-angular';
 import { DirectoryProvider } from '../../providers/directory-provider';
 
@@ -11,6 +10,8 @@ import { DirectoryProvider } from '../../providers/directory-provider';
   See http://ionicframework.com/docs/v2/components/#navigation for more info on
   Ionic pages and navigation.
 */
+@IonicPage()
+
 @Component({
     selector: 'page-directory',
     templateUrl: 'directory.html'
@@ -107,7 +108,7 @@ export class DirectoryPage {
   viewDetails(member) {
       //let profileModal = this.modalCtrl.create(MemberDetailsPage, { member: member });
       //profileModal.present();
-      this.navCtrl.push(MemberDetailsPage, { member: member });
+      this.navCtrl.push('MemberDetailsPage', { member: member });
       //let popover = this.popoverCtrl.create(MemberDetailsPage, { member: member }, { cssClass: 'contact-popover' });
       //popover.present();
   }

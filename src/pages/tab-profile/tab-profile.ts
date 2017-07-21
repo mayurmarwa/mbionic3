@@ -1,10 +1,11 @@
-import { AlertController, ActionSheetController, LoadingController, ToastController } from 'ionic-angular';
+import { IonicPage, AlertController, ActionSheetController, LoadingController, ToastController } from 'ionic-angular';
 import { Component } from '@angular/core';
 import { Camera } from '@ionic-native/camera';
 import { AuthService } from '../../providers/auth.service';
 import { ProfileData } from '../../providers/profile-data';
 import firebase from 'firebase';
 
+@IonicPage()
 
 @Component({
   selector: 'page-tab-profile',

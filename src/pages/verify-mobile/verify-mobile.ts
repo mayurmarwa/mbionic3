@@ -1,11 +1,9 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { IonicPage, NavController } from 'ionic-angular';
 import { LoadingController, AlertController, NavParams, ToastController } from 'ionic-angular';
 import { AngularFire } from 'angularfire2';
 import { FormBuilder } from '@angular/forms';
 import { AuthService } from '../../providers/auth.service';
-import { TabsPage } from '../tabs/tabs';
-import { WaitingApproval } from '../waiting-approval/waiting-approval';
 import { App } from 'ionic-angular';
 import { NgZone } from '@angular/core';
 import { Http } from '@angular/http';
@@ -18,6 +16,8 @@ declare var SMS: any;
   See http://ionicframework.com/docs/v2/components/#navigation for more info on
   Ionic pages and navigation.
 */
+@IonicPage()
+
 @Component({
   selector: 'page-verify-mobile',
   templateUrl: 'verify-mobile.html'
@@ -225,7 +225,7 @@ export class VerifyMobilePage {
                                   position: 'middle'
                               });
                               toast.present().then(() => {
-                                  this.app.getRootNav().setRoot(WaitingApproval);
+                                  this.app.getRootNav().setRoot('WaitingApproval');
                               });
 
                           });
@@ -287,7 +287,7 @@ export class VerifyMobilePage {
                           position: 'middle'
                       });
                       toast.present().then(() => {
-                          this.app.getRootNav().setRoot(WaitingApproval);
+                          this.app.getRootNav().setRoot('WaitingApproval');
                       });
                   });
               }, (error) => {

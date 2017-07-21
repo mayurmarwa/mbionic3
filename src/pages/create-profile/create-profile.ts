@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { LoadingController, ToastController } from 'ionic-angular';
 import { FormBuilder, Validators } from '@angular/forms';
-import { VerifyMobilePage } from '../verify-mobile/verify-mobile';
 import firebase from 'firebase';
 
 
@@ -12,6 +11,8 @@ import firebase from 'firebase';
   See http://ionicframework.com/docs/v2/components/#navigation for more info on
   Ionic pages and navigation.
 */
+@IonicPage()
+
 @Component({
   selector: 'page-create-profile',
   templateUrl: 'create-profile.html'
@@ -58,7 +59,7 @@ export class CreateProfilePage {
            toast.present();
        } else {
 
-           this.navCtrl.push(VerifyMobilePage, { form: this.profileForm, type: "social" , userid: this.userid });
+           this.navCtrl.push('VerifyMobilePage', { form: this.profileForm, type: "social" , userid: this.userid });
            
        }
          

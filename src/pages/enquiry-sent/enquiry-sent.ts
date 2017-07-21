@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, LoadingController, Tabs, ViewController  } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController, Tabs, ViewController  } from 'ionic-angular';
 import { AuthService } from '../../providers/auth.service';
-import { MyProfilePage } from '../my-profile/my-profile';
 /*
   Generated class for the EnquirySent page.
 
@@ -12,6 +11,8 @@ import { MyProfilePage } from '../my-profile/my-profile';
   selector: 'page-enquiry-sent',
   templateUrl: 'enquiry-sent.html'
 })
+@IonicPage()
+
 export class EnquirySentPage {
 
     public tab: Tabs;
@@ -90,7 +91,7 @@ export class EnquirySentPage {
 
       
           //this.navCtrl.pop({ animate: false });          
-      this.navCtrl.push(MyProfilePage, { userID: this.sellerID })
+      this.navCtrl.push('MyProfilePage', { userID: this.sellerID })
           .then(() => {
               const index = this.viewCtrl.index;
               this.navCtrl.remove(index);

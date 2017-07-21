@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, LoadingController } from 'ionic-angular';
-import { SelectCategoryPage } from '../select-category/select-category';
-import { EditProductPage } from '../edit-product/edit-product';
+import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import firebase from 'firebase';
 /*
@@ -10,6 +8,8 @@ import firebase from 'firebase';
   See http://ionicframework.com/docs/v2/components/#navigation for more info on
   Ionic pages and navigation.
 */
+@IonicPage()
+
 @Component({
   selector: 'page-my-products',
   templateUrl: 'my-products.html'
@@ -99,11 +99,11 @@ export class MyProductsPage {
 
   detailpage(myproduct) {
 
-      this.navCtrl.push(EditProductPage, { myproduct: myproduct });
+      this.navCtrl.push('EditProductPage', { myproduct: myproduct });
   }
   selectcat() {
 
-      this.navCtrl.push(SelectCategoryPage);
+      this.navCtrl.push('SelectCategoryPage');
   }
     addbulk() {
 
@@ -112,7 +112,7 @@ export class MyProductsPage {
   uploadProduct() {
 
       if (this.segment === 'add') {
-          this.navCtrl.push(SelectCategoryPage);
+          this.navCtrl.push('SelectCategoryPage');
       }
   }
 

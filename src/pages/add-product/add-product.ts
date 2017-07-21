@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ActionSheetController, AlertController,  ToastController} from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ActionSheetController, AlertController,  ToastController} from 'ionic-angular';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Camera } from '@ionic-native/camera';
 import { AngularFire, FirebaseListObservable} from 'angularfire2';
 import { AuthService } from '../../providers/auth.service';
 import firebase from 'firebase';
-import { MyProductsPage } from '../my-products/my-products';
 
 
 /*
@@ -14,6 +13,8 @@ import { MyProductsPage } from '../my-products/my-products';
   See http://ionicframework.com/docs/v2/components/#navigation for more info on
   Ionic pages and navigation.
 */
+@IonicPage()
+
 @Component({
   selector: 'page-add-product',
   templateUrl: 'add-product.html'
@@ -81,7 +82,7 @@ export class AddProductPage {
             weight: ['', Validators.required],
             mrate: ['',],
             krate: ['',],
-            ratetype: ['',],
+            //ratetype: ['',],
             composition: ['',],
             origin: ['',],
             brand: ['',],
@@ -114,7 +115,7 @@ export class AddProductPage {
             nos: ['',],
             mrate: ['',],
             krate: ['',],
-            ratetype: ['',],
+            //ratetype: ['',],
             composition: ['',],
             origin: ['',],
             brand: ['',],
@@ -144,7 +145,7 @@ export class AddProductPage {
             unit: ['Kg', Validators.required],             
             mrate: ['',],
             krate: ['',],   
-            ratetype: ['',],         
+            //ratetype: ['',],         
             origin: ['',],
             brand: ['',],
             mtc: ['',],
@@ -170,7 +171,7 @@ export class AddProductPage {
             unit: ['Kg', Validators.required],
             mrate: ['',],
             krate: ['',],
-            ratetype: ['',],
+            //ratetype: ['',],
             details: ['',],
             origin: ['',],
             brand: ['',],          
@@ -194,7 +195,7 @@ export class AddProductPage {
             unit: ['Mtrs', Validators.required],
             mrate: ['',],
             krate: ['',],
-            ratetype: ['',],
+            //ratetype: ['',],
             origin: ['',],
             brand: ['',],
             mtc: ['',],
@@ -219,7 +220,7 @@ export class AddProductPage {
             length: ['', Validators.required],                     
             mrate: ['',],
             krate: ['',],
-            ratetype: ['',],
+            //ratetype: ['',],
             origin: ['',],
             brand: ['',],
             mtc: ['',],
@@ -248,7 +249,7 @@ export class AddProductPage {
             length: ['', Validators.required],
             mrate: ['',],
             krate: ['',],
-            ratetype: ['',],
+            //ratetype: ['',],
             origin: ['',],
             brand: ['',],
             mtc: ['',],
@@ -267,7 +268,7 @@ export class AddProductPage {
             unit: ['Kg',],
             mrate: ['',],
             krate: ['',],
-            ratetype: ['',],
+            //ratetype: ['',],
             catid: ['', Validators.required],
             uid: ['', Validators.required],
             islive: ['true', Validators.required]
@@ -286,6 +287,9 @@ export class AddProductPage {
         else if (this.category.catid === '9a' || this.category.catid === '9b' || this.category.catid === '9c1' || this.category.catid === '9c2' || this.category.catid === '9c3' || this.category.catid === '9c4' || this.category.catid === '9c5' || this.category.catid === '9d') {
             this.selectedAlloy = 'Hastelloy';
             this.gradecat = 3;
+        } 
+        else if (this.category.catid === '11a' || this.category.catid === '11b' || this.category.catid === '11c' || this.category.catid === '11da' || this.category.catid === '11db' || this.category.catid === '11dc' || this.category.catid === '11dd' || this.category.catid === '11de' || this.category.catid === '11e' || this.category.catid === '11f' || this.category.catid === '11g') {
+            this.gradecat = 9;
         }        
         else {
             this.gradecat = 1;
@@ -326,7 +330,7 @@ export class AddProductPage {
             alert.present();
         }        
         else {
-            if ((this.category.catid == 10 || (this.category.catid == 2 && productForm.value.ptype2 === "Designer" )) && this.productImage == null) {
+            if ((this.category.catid == 10 || (this.category.catid == 2 && productForm.value.ptype2 === "Designer") || (this.category.catid === '11b' && productForm.value.ptype2 === "Designer")) && this.productImage == null) {
                 let alert = this.alertCtrl.create({
                     title: 'Add Image!',
                     subTitle: 'Please add an image for your product',
@@ -343,18 +347,18 @@ export class AddProductPage {
                 productForm.value.ptype = null;
                 
             }
-            if (this.category.catid != 2 ) {
+            if (this.category.catid != 2 && this.category.catid != '11b' ) {
                 productForm.value.ptype2 = null;
             }
 
             /**if (this.category.catid === "8c1" || this.category.catid === "8c2" || this.category.catid === "8c3" || this.category.catid === "8c4" || this.category.catid === "8d" || this.category.catid === "8a" || this.category.catid === "8b" || this.category.catid === "9c1" || this.category.catid === "9c2" || this.category.catid === "9c3" || this.category.catid === "9c4" || this.category.catid === "9d" || this.category.catid === "9a" || this.category.catid === "9b") {
                 productForm.value.gradeval = productForm.value.grade;
             }**/
-            if (this.category.catid === '4a' || this.category.catid === '4c' || this.category.catid === '8c1' || this.category.catid === '9c1' || this.category.catid === '8c3' || this.category.catid === '9c3') {
+            if (this.category.catid === '4a' || this.category.catid === '4c' || this.category.catid === '8c1' || this.category.catid === '9c1' || this.category.catid === '8c3' || this.category.catid === '9c3' || this.category.catid === '11da' || this.category.catid === '11dc') {
                 productForm.value.finish = null;
             }
 
-            if (this.category.catid === "4a" || this.category.catid === "4b" || this.category.catid === "4e" || this.category.catid === "4c" || this.category.catid === "8c1" || this.category.catid === "8c2" || this.category.catid === "8c5" || this.category.catid === "8c3" || this.category.catid === "9c1" || this.category.catid === "9c2" || this.category.catid === "9c5" || this.category.catid === "9c3") {
+            if (this.category.catid === "4a" || this.category.catid === "4b" || this.category.catid === "4e" || this.category.catid === "4c" || this.category.catid === "8c1" || this.category.catid === "8c2" || this.category.catid === "8c5" || this.category.catid === "8c3" || this.category.catid === "9c1" || this.category.catid === "9c2" || this.category.catid === "9c5" || this.category.catid === "9c3" || this.category.catid === '11da' || this.category.catid === '11db' || this.category.catid === '11dc' || this.category.catid === '11de' ) {
                 if (productForm.value.type === "OD") {
                     productForm.value.sch = null;
                     if ((productForm.value.swg == null && productForm.value.mm == null) || ((productForm.value.swg === "" && (productForm.value.mm === "" || productForm.value.mm === null)) || (productForm.value.mm === "" && (productForm.value.swg === "" || productForm.value.swg === null)))) {
@@ -392,7 +396,7 @@ export class AddProductPage {
                 }
 
             }
-            else if (this.category.catid === 3) {
+            else if (this.category.catid === 3 || this.category.catid === '11c') {
                 if (productForm.value.weight == null || productForm.value.weight === "") {
 
                     this.allValid = false;
@@ -437,7 +441,7 @@ export class AddProductPage {
             else {
                 this.priceValid = true;
             }
-            if ((this.category.catid === 1 || this.category.catid === 2 || this.category.catid === '4a' || this.category.catid === '4b' || this.category.catid === '4c' || this.category.catid === '4d' || this.category.catid === '4e') && (productForm.value.ratetype == null || productForm.value.ratetype === "" )){
+            /**if ((this.category.catid === 1 || this.category.catid === 2 || this.category.catid === '4a' || this.category.catid === '4b' || this.category.catid === '4c' || this.category.catid === '4d' || this.category.catid === '4e') && (productForm.value.ratetype == null || productForm.value.ratetype === "" )){
                 this.priceValid = false;
                 let alert = this.alertCtrl.create({
                     title: 'Select Rate Type',
@@ -445,7 +449,7 @@ export class AddProductPage {
                     buttons: ['OK']
                 });
                 alert.present();
-            }
+            }**/
 
         if (this.allValid && this.priceValid && this.imageValid){
             let confirm = this.alertCtrl.create({
@@ -566,7 +570,7 @@ export class AddProductPage {
                                       });
                                       toast.present().then(() => {
                                               this.navCtrl.popToRoot({ animate: false }).then(() => {
-                                              this.navCtrl.push(MyProductsPage, { animate: false });
+                                              this.navCtrl.push('MyProductsPage', { animate: false });
                                           });
                                       });
                                           
@@ -604,7 +608,7 @@ export class AddProductPage {
                                       });
                                       toast.present().then(() => {
                                           this.navCtrl.popToRoot({ animate: false }).then(() => {
-                                              this.navCtrl.push(MyProductsPage, { animate: false });
+                                              this.navCtrl.push('MyProductsPage', { animate: false });
                                           });
                                       });
 
@@ -644,7 +648,7 @@ export class AddProductPage {
                               });
                               toast.present().then(() => {
                                   this.navCtrl.popToRoot({ animate: false }).then(() => {
-                                      this.navCtrl.push(MyProductsPage, { animate: false });
+                                      this.navCtrl.push('MyProductsPage', { animate: false });
                                   });
                               });
 
@@ -679,7 +683,7 @@ export class AddProductPage {
                               });
                               toast.present().then(() => {
                                   this.navCtrl.popToRoot({ animate: false }).then(() => {
-                                      this.navCtrl.push(MyProductsPage, { animate: false });
+                                      this.navCtrl.push('MyProductsPage', { animate: false });
                                   });
                               });
 

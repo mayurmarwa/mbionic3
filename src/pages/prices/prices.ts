@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AngularFire } from 'angularfire2';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
@@ -10,6 +10,7 @@ import 'rxjs/add/observable/of';
   See http://ionicframework.com/docs/v2/components/#navigation for more info on
   Ionic pages and navigation.
 */
+@IonicPage()
 @Component({
   selector: 'page-prices',
   templateUrl: 'prices.html'

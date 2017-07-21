@@ -1,13 +1,6 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ModalController, ToastController } from 'ionic-angular';
-import { NotificationsPage } from '../notifications/notifications';
-import { QuickFilterPage } from '../quick-filter/quick-filter';
-import { SearchCategoriesPage } from '../search-categories/search-categories';
-import { PostBuyRequirementsPage } from '../post-buy-requirements/post-buy-requirements';
-import { CategoryProductsPage } from '../category-products/category-products';
+import { IonicPage, NavController, NavParams, ModalController, ToastController } from 'ionic-angular';
 import { AngularFire, FirebaseListObservable } from 'angularfire2';
-import { ProductPagePage } from '../product-page/product-page';
-import { SelectSubcatPage} from '../select-subcat/select-subcat';
 import { ProductData } from '../../providers/product-data';
 import { Storage } from '@ionic/storage';
 import firebase from 'firebase';
@@ -24,6 +17,7 @@ import 'rxjs/add/observable/of';
   See http://ionicframework.com/docs/v2/components/#navigation for more info on
   Ionic pages and navigation.
 */
+@IonicPage()
 @Component({
   selector: 'page-market',
   templateUrl: 'market.html'
@@ -228,36 +222,36 @@ export class MarketPage {
 
       else {
           
-          this.navCtrl.push(QuickFilterPage, { catid: this.selectedCat, grade: this.selectedGrade, alloy: this.selectedAlloy });
+          this.navCtrl.push('QuickFilterPage', { catid: this.selectedCat, grade: this.selectedGrade, alloy: this.selectedAlloy });
       }
 
   }
 
   openproductpage(product) {
 
-      this.navCtrl.push(ProductPagePage, {product: product});
+      this.navCtrl.push('ProductPagePage', {product: product});
   }
 
   opennotificationsPage(product) {
 
-      this.navCtrl.push(NotificationsPage);
+      this.navCtrl.push('NotificationsPage');
   }
 
   selectSub(catid) {
-      this.navCtrl.push(SelectSubcatPage, { catid: catid });
+      this.navCtrl.push('SelectSubcatPage', { catid: catid });
   }
 
   categoryProducts(catid: string, title: string) {
       //console.log(category);
-      this.navCtrl.push(CategoryProductsPage, { catid: catid, cattitle: title });
+      this.navCtrl.push('CategoryProductsPage', { catid: catid, cattitle: title });
   }
   openNotificationsPage() {
-      this.navCtrl.push(NotificationsPage);
+      this.navCtrl.push('NotificationsPage');
   }
   openSearchPage() {
-      this.navCtrl.push(SearchCategoriesPage);
+      this.navCtrl.push('SearchCategoriesPage');
   }
   openRequirementPage() {
-      this.navCtrl.push(PostBuyRequirementsPage);
+      this.navCtrl.push('PostBuyRequirementsPage');
   }
 }

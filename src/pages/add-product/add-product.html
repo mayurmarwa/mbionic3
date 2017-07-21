@@ -9,7 +9,7 @@
 
 <ion-content text-center padding>
  
-    <div text-center *ngIf="category.catid === 10 || (category.catid == 2 && selptype2 === 'Designer') ">
+    <div text-center *ngIf="category.catid === 10 || (category.catid == 2 && selptype2 === 'Designer') || (category.catid === '11b' && selptype2 === 'Designer') ">
         <img [src]="productImage" *ngIf="productImage != null">
 
         <button ion-button icon-left (click)="presentActionSheet()">
@@ -22,7 +22,7 @@
 
     
 
-    <div *ngIf="category.catid === 1 || category.catid === '8a' || category.catid === '9a' ">
+    <div *ngIf="category.catid === 1 || category.catid === '8a' || category.catid === '9a' || category.catid === '11a' ">
         <form [formGroup]="coilsForm" (submit)="showConfirm(coilsForm)">
 
             <!--<ion-item>
@@ -125,7 +125,7 @@
                     </ion-item>
                 </ion-col>
             </ion-row>  
-            <ion-list item-content radio-group #ratetype formControlName="ratetype">
+            <!--<ion-list item-content radio-group #ratetype formControlName="ratetype">
                 <h4 style="padding-top:10px">Select Rate Type</h4>
                 <ion-item>
                     <ion-label>+ vat</ion-label>
@@ -135,7 +135,7 @@
                     <ion-label>+ excise + vat</ion-label>
                     <ion-radio value="exv" checked></ion-radio>
                 </ion-item>
-            </ion-list>        
+            </ion-list>-->        
 
             <ion-item>
                 <ion-label stacked>Origin (optional)</ion-label>
@@ -180,7 +180,7 @@
     </div>
 
 
-    <div *ngIf="category.catid === 2 || category.catid === 3 || category.catid === '8b' || category.catid === '9b' ">
+    <div *ngIf="category.catid === 2 || category.catid === 3 || category.catid === '8b' || category.catid === '9b' || category.catid === '11b' || category.catid === '11c' ">
         <form [formGroup]="sheetsForm" (submit)="showConfirm(sheetsForm)">
 
             <ion-item *ngIf="category.catid === '9b' ">
@@ -194,7 +194,7 @@
                 </ion-select>
             </ion-item>
 
-            <ion-item *ngIf="category.catid === 2 ">
+            <ion-item *ngIf="category.catid === 2 || category.catid === '11b'">
                 <ion-label stacked>Design Type</ion-label>
                 <ion-select #ptype2 formControlName="ptype2" [(ngModel)]="selptype2">
                     <ion-option value="Standard" selected="true">Standard</ion-option>
@@ -266,25 +266,25 @@
                 </ion-input>
             </ion-item>
 
-            <ion-item *ngIf="category.catid === 3">
+            <ion-item *ngIf="category.catid === 3 || category.catid === '11c'">
                 <ion-label stacked>Weight </ion-label>
                 <ion-input #weight formControlName="weight" type="number"
                            placeholder="Enter Weight (kg)" min="0" step="0.01">
                 </ion-input>
             </ion-item>           
-             <ion-item *ngIf="category.catid != 3">
+             <ion-item *ngIf="category.catid != 3 && category.catid != '11c'">
                 <ion-label stacked>Weight (optional)</ion-label>
                 <ion-input #weight formControlName="weight" type="number"
                            placeholder="Enter Weight (kg)" min="0" step="0.01">
                 </ion-input>
             </ion-item>
-            <ion-item *ngIf="category.catid === 3">
+            <ion-item *ngIf="category.catid === 3 || category.catid === '11c'">
                 <ion-label stacked>Nos.</ion-label>
                 <ion-input #nos formControlName="nos" type="number"
                            placeholder="Enter Quantity" min="0">
                 </ion-input>
             </ion-item>
-            <ion-item *ngIf="category.catid != 3">
+            <ion-item *ngIf="category.catid != 3 && category.catid != '11c'">
                 <ion-label stacked>Nos.(Optional)</ion-label>
                 <ion-input #nos formControlName="nos" type="number"
                            placeholder="Enter Quantity" min="0">
@@ -309,7 +309,7 @@
                     </ion-item>
                 </ion-col>
             </ion-row> 
-            <ion-list item-content radio-group #ratetype formControlName="ratetype">
+           <!-- <ion-list item-content radio-group #ratetype formControlName="ratetype">
                 <h4 style="padding-top:10px">Select Rate Type</h4>
                 <ion-item>
                     <ion-label>+ vat</ion-label>
@@ -319,7 +319,7 @@
                     <ion-label>+ excise + vat</ion-label>
                     <ion-radio value="exv" checked></ion-radio>
                 </ion-item>
-            </ion-list>          
+            </ion-list>-->          
             <ion-item>
                 <ion-label stacked>Origin (optional)</ion-label>
                 <ion-input #origin formControlName="origin" type="text"
@@ -360,7 +360,7 @@
         </form>
     </div>
 
-    <div *ngIf="category.catid === '4a' || category.catid === '4b' || category.catid === '4c' || category.catid === '4e' || category.catid === '8c1'  || category.catid === '8c5' || category.catid === '8c2' || category.catid === '8c3' || category.catid === '9c1' || category.catid === '9c2' || category.catid === '9c5' || category.catid === '9c3' ">
+    <div *ngIf="category.catid === '4a' || category.catid === '4b' || category.catid === '4c' || category.catid === '4e' || category.catid === '8c1'  || category.catid === '8c5' || category.catid === '8c2' || category.catid === '8c3' || category.catid === '9c1' || category.catid === '9c2' || category.catid === '9c5' || category.catid === '9c3' || category.catid === '11da' || category.catid === '11db' || category.catid === '11dc' || category.catid === '11de' ">
         <form [formGroup]="seamlessForm" (submit)="showConfirm(seamlessForm)">
 
            
@@ -467,7 +467,7 @@
                         </ion-col>
                     </ion-row>
                 </ion-grid>
-                <ion-item *ngIf="typeOD === true && (category.catid === '4b' || category.catid === '4e' || category.catid === '8c2' || category.catid === '9c2' || category.catid === '8c5' || category.catid === '9c5' ) ">
+                <ion-item *ngIf="typeOD === true && (category.catid === '4b' || category.catid === '4e' || category.catid === '8c2' || category.catid === '9c2' || category.catid === '8c5' || category.catid === '9c5' || category.catid === '11db' || category.catid === '11de' ) ">
                     <ion-label stacked>Finish</ion-label>
                     <ion-select #finish formControlName="finish">
                         <ion-option value="Polished" selected="true">Polished</ion-option>
@@ -515,7 +515,7 @@
                     </ion-item>
                 </ion-col>
             </ion-row>          
-            <ion-list item-content radio-group #ratetype formControlName="ratetype">
+            <!--<ion-list item-content radio-group #ratetype formControlName="ratetype">
                 <h4 style="padding-top:10px">Select Rate Type</h4>
                 <ion-item>
                     <ion-label>+ vat</ion-label>
@@ -525,7 +525,7 @@
                     <ion-label>+ excise + vat</ion-label>
                     <ion-radio value="exv" checked></ion-radio>
                 </ion-item>
-            </ion-list> 
+            </ion-list>-->
                 <ion-item>
                     <ion-label stacked>Origin (optional)</ion-label>
                     <ion-input #origin formControlName="origin" type="text"
@@ -540,7 +540,7 @@
                     </ion-input>
                 </ion-item>
 
-                <ion-item *ngIf="category.catid != '4c' && category.catid != '8c3' && category.catid != '9c3'  ">
+                <ion-item *ngIf="category.catid != '4c' && category.catid != '8c3' && category.catid != '9c3' && category.catid != '11dc'  ">
                     <ion-label>MTC (optional)</ion-label>
                     <ion-select #mtc formControlName="mtc">
                         <ion-option value="Available">Available</ion-option>
@@ -566,7 +566,7 @@
 </form>
     </div>
 
-    <div *ngIf="category.catid === '4d' || category.catid === '8c4' || category.catid === '9c4' ">
+    <div *ngIf="category.catid === '4d' || category.catid === '8c4' || category.catid === '9c4' || category.catid === '9c5' || category.catid === '11dd' ">
         <form [formGroup]="squareForm" (submit)="showConfirm(squareForm)">
 
             
@@ -681,7 +681,7 @@
                     </ion-item>
                 </ion-col>
             </ion-row>          
-            <ion-list item-content radio-group #ratetype formControlName="ratetype">
+            <!--<ion-list item-content radio-group #ratetype formControlName="ratetype">
                 <h4 style="padding-top:10px">Select Rate Type</h4>
                 <ion-item>
                     <ion-label>+ vat</ion-label>
@@ -691,7 +691,7 @@
                     <ion-label>+ excise + vat</ion-label>
                     <ion-radio value="exv" checked></ion-radio>
                 </ion-item>
-            </ion-list> 
+            </ion-list>--> 
             <ion-item>
                 <ion-label stacked>Origin(optional)</ion-label>
                 <ion-input #origin formControlName="origin" type="text"
@@ -724,7 +724,7 @@
         </form>
     </div>
 
-    <div *ngIf="category.catid === 5">
+    <div *ngIf="category.catid === 5 || category.catid === '11e'">
         <form [formGroup]="flatsForm" (submit)="showConfirm(flatsForm)">
 
             
@@ -814,7 +814,7 @@
                     </ion-item>
                 </ion-col>
             </ion-row> 
-            <ion-list item-content radio-group #ratetype formControlName="ratetype">
+            <!--<ion-list item-content radio-group #ratetype formControlName="ratetype">
                 <h4 style="padding-top:10px">Select Rate Type</h4>
                 <ion-item>
                     <ion-label>+ vat</ion-label>
@@ -824,7 +824,7 @@
                     <ion-label>+ excise + vat</ion-label>
                     <ion-radio value="exv" checked></ion-radio>
                 </ion-item>
-            </ion-list>          
+            </ion-list>-->         
             <ion-item>
                 <ion-label stacked>Origin (optional)</ion-label>
                 <ion-input #origin formControlName="origin" type="text"
@@ -865,7 +865,7 @@
         </form>
     </div>
 
-    <div *ngIf="category.catid === 6">
+    <div *ngIf="category.catid === 6 || category.catid === '11f'">
         <form [formGroup]="anglesForm" (submit)="showConfirm(anglesForm)">
 
            
@@ -961,7 +961,7 @@
                     </ion-item>
                 </ion-col>
             </ion-row>          
-            <ion-list item-content radio-group #ratetype formControlName="ratetype">
+            <!--<ion-list item-content radio-group #ratetype formControlName="ratetype">
                 <h4 style="padding-top:10px">Select Rate Type</h4>
                 <ion-item>
                     <ion-label>+ vat</ion-label>
@@ -971,7 +971,7 @@
                     <ion-label>+ excise + vat</ion-label>
                     <ion-radio value="exv" checked></ion-radio>
                 </ion-item>
-            </ion-list> 
+            </ion-list>--> 
             <ion-item>
                 <ion-label stacked>Origin (optional)</ion-label>
                 <ion-input #origin formControlName="origin" type="text"
@@ -1012,7 +1012,7 @@
         </form>
     </div>
 
-    <div *ngIf="category.catid === 7 || category.catid === '8d' || category.catid === '9d' ">
+    <div *ngIf="category.catid === 7 || category.catid === '8d' || category.catid === '9d' || category.catid === '11g' ">
     <form [formGroup]="roundbarsForm" (submit)="showConfirm(roundbarsForm)">
 
         
@@ -1148,7 +1148,7 @@
                 </ion-item>
             </ion-col>
         </ion-row>          
-        <ion-list item-content radio-group #ratetype formControlName="ratetype">
+        <!--<ion-list item-content radio-group #ratetype formControlName="ratetype">
             <h4 style="padding-top:10px">Select Rate Type</h4>
             <ion-item>
                 <ion-label>+ vat</ion-label>
@@ -1158,7 +1158,7 @@
                 <ion-label>+ excise + vat</ion-label>
                 <ion-radio value="exv" checked></ion-radio>
             </ion-item>
-        </ion-list> 
+        </ion-list>--> 
         <ion-item>
             <ion-label stacked>Origin (optional)</ion-label>
             <ion-input #origin formControlName="origin" type="text"
@@ -1261,7 +1261,7 @@
                     </ion-item>
                 </ion-col>
             </ion-row>
-            <ion-list item-content radio-group #ratetype formControlName="ratetype">
+            <!--<ion-list item-content radio-group #ratetype formControlName="ratetype">
                 <h4 style="padding-top:10px">Select Rate Type</h4>
                 <ion-item>
                     <ion-label>+ vat</ion-label>
@@ -1271,7 +1271,7 @@
                     <ion-label>+ excise + vat</ion-label>
                     <ion-radio value="exv" checked></ion-radio>
                 </ion-item>
-            </ion-list> 
+            </ion-list>-->
             <ion-input type="text" hidden [(ngModel)]="category.catid" formControlName="catid"></ion-input>
             <ion-input type="text" hidden [(ngModel)]="currentuserid" formControlName="uid"></ion-input>
             <ion-input type="text" hidden formControlName="islive"></ion-input>

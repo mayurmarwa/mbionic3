@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, LoadingController, ViewController } from 'ionic-angular';
-import { RequirementDetailsPage } from '../requirement-details/requirement-details';
-import { MyRequirementsPage } from '../my-requirements/my-requirements';
+import { IonicPage, NavController, NavParams, LoadingController, ViewController } from 'ionic-angular';
 import { ProductData } from '../../providers/product-data';
 
 
@@ -12,6 +10,8 @@ import { ProductData } from '../../providers/product-data';
   See http://ionicframework.com/docs/v2/components/#navigation for more info on
   Ionic pages and navigation.
 */
+@IonicPage()
+
 @Component({
   selector: 'page-browse-requirements',
   templateUrl: 'browse-requirements.html'
@@ -166,12 +166,12 @@ export class BrowseRequirementsPage {
 
   openrequirementpage(requirement) {
 
-      this.navCtrl.push(RequirementDetailsPage, {requirement: requirement});
+      this.navCtrl.push('RequirementDetailsPage', {requirement: requirement});
   }
 
   openmyrequirements() {
 
-      this.navCtrl.push(MyRequirementsPage);
+      this.navCtrl.push('MyRequirementsPage');
           //.then(() => {
           // first we find the index of the current view controller:
           //const index = this.viewCtrl.index;

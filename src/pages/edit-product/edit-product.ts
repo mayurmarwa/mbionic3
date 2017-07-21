@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { ProductData } from '../../providers/product-data';
 
 /*
@@ -8,6 +8,8 @@ import { ProductData } from '../../providers/product-data';
   See http://ionicframework.com/docs/v2/components/#navigation for more info on
   Ionic pages and navigation.
 */
+@IonicPage()
+
 @Component({
   selector: 'page-edit-product',
   templateUrl: 'edit-product.html'

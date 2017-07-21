@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, AlertController, ModalController, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, ModalController, LoadingController } from 'ionic-angular';
 import { AngularFire } from 'angularfire2';
-import { ProductPagePage } from '../product-page/product-page';
-import { FilterOptionsPage } from '../filter-options/filter-options';
 import { ProductData } from '../../providers/product-data';
 
 /*
@@ -11,6 +9,8 @@ import { ProductData } from '../../providers/product-data';
   See http://ionicframework.com/docs/v2/components/#navigation for more info on
   Ionic pages and navigation.
 */
+@IonicPage()
+
 @Component({
   selector: 'page-category-products',
   templateUrl: 'category-products.html'
@@ -161,7 +161,7 @@ export class CategoryProductsPage {
 
   openproductpage(product) {
 
-      this.navCtrl.push(ProductPagePage, { product: product });
+      this.navCtrl.push('ProductPagePage', { product: product });
   }
 
   sortList(val: any) {
@@ -314,7 +314,7 @@ export class CategoryProductsPage {
       this.buildArray(this.productList);
   }
   showFilter() {
-      let showFilter = this.modalCtrl.create(FilterOptionsPage, {catid : this.catid});
+      let showFilter = this.modalCtrl.create('FilterOptionsPage', {catid : this.catid});
 
       showFilter.present();
       showFilter.onDidDismiss(data => { //This is a listener which wil get the data passed from modal when the modal's view controller is dismissed

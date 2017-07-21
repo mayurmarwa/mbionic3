@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, AlertController, LoadingController, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, LoadingController, ToastController } from 'ionic-angular';
 import { FormBuilder, Validators } from '@angular/forms';
 import { AngularFire, FirebaseListObservable } from 'angularfire2';
 import firebase from 'firebase';
@@ -10,6 +10,8 @@ import firebase from 'firebase';
   See http://ionicframework.com/docs/v2/components/#navigation for more info on
   Ionic pages and navigation.
 */
+@IonicPage()
+
 @Component({
   selector: 'page-post-buy-requirements',
   templateUrl: 'post-buy-requirements.html'
@@ -48,7 +50,7 @@ export class PostBuyRequirementsPage {
             quantity: ['', Validators.required],
             unit: ['', Validators.required],
             bid: ['',],
-            btype: [''],
+            //btype: [''],
             sizedetails: ['', Validators.required],
             details: ['', ] ,
             uid: ['', Validators.required],
@@ -61,6 +63,12 @@ export class PostBuyRequirementsPage {
             this.nameon = true;
             this.selectalloyoff = true;
             this.gradecat = 1;
+        }
+        if (this.selectedCat == "Aluminium Coils" || this.selectedCat == "Aluminium Sheets" || this.selectedCat == "Aluminium Packets" || this.selectedCat === "Aluminium Seamless Pipes" || this.selectedCat === "Aluminium Welded/ERW Pipes" || this.selectedCat === "Aluminium Semi-Welded/ERW Pipes" || this.selectedCat === "Aluminium Electropolish Pipes" || this.selectedCat === "Aluminium Square & Rectangular Pipes" || this.selectedCat === "Aluminium Flats" || this.selectedCat == "Aluminium Angles" || this.selectedCat == "Aluminium Round Bars") {
+            this.selecton = true;
+            this.nameon = true;
+            this.selectalloyoff = true;
+            this.gradecat = 9;
         }
         else if (this.selectedCat === "Duplex & Super Duplex Coils" || this.selectedCat === "Duplex & Super Duplex Sheets" || this.selectedCat === "Duplex & Super Duplex Seamless Pipes" || this.selectedCat === "Duplex & Super Duplex Welded/ERW Pipes" || this.selectedCat === "Duplex & Super Duplex Semi-Welded/ERW Pipes" || this.selectedCat === "Duplex & Super Duplex Electropolish Pipes" || this.selectedCat === "Duplex & Super Duplex Sqr. & Rect. Pipes" || this.selectedCat === "Duplex & Super Duplex Round Bars" ) {
             this.selecton = true;

@@ -1,12 +1,8 @@
 import { Component } from '@angular/core';
 import { Platform, AlertController} from 'ionic-angular'
-import { MarketPage } from '../market/market';
-import { PricesPage } from '../prices/prices';
-import { EnquiriesPage } from '../enquiries/enquiries';
-import { SpeedDialPage } from '../speed-dial/speed-dial';
-import { MetalCalculatorPage } from '../metal-calculator/metal-calculator';
 import { AngularFire } from 'angularfire2';
 import firebase from 'firebase';
+
 
 
 
@@ -35,11 +31,11 @@ export class TabsPage {
               this.currentuser = firebase.auth().currentUser;
       this.msgbadge = '';
 
-      this.tab1Root = MarketPage;
-      this.tab2Root = PricesPage;
-      this.tab3Root = SpeedDialPage;
-      this.tab4Root = EnquiriesPage;
-      this.tab5Root = MetalCalculatorPage;
+      this.tab1Root = 'MarketPage';
+      this.tab2Root = 'PricesPage';
+      this.tab3Root = 'SpeedDialPage';
+      this.tab4Root = 'EnquiriesPage';
+      this.tab5Root = 'MetalCalculatorPage';
 
         this.enqobject = this.af.database.object('/users/' + this.currentuser.uid + '/enquiries/').subscribe(snapshot => {
             //console.log(snapshot.key)
